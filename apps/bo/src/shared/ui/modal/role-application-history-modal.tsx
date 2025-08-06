@@ -1,4 +1,4 @@
-import RoleManagerService from '@entities/role/api/role-manager';
+import { RoleManagerService } from '@entities/role';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { GridBox } from '@learnway/ui/grid';
 import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';

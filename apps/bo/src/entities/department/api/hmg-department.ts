@@ -1,7 +1,7 @@
-import { Department, DepartmentUser } from '@entities/department/model/department.types';
 import { PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
-import { PageableContent } from '../../../shared/types/page-meta';
+import { PageableContent } from '@shared/types/page-meta';
+import { Department, DepartmentUser } from '../model/department.types';
 
 export class HmgDepartmentService {
   static getDepartmentTree(companyCode: string[]): Promise<Department> {

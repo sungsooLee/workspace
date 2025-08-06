@@ -1,5 +1,5 @@
 import { queryOptions } from '@entities/department';
-import { usersQueryOptions } from '@entities/users/service/users.queries';
+import { usersQueryOptions } from '@entities/users';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { Divider } from '@learnway/ui/elements';

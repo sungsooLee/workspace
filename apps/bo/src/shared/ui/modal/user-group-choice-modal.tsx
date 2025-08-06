@@ -1,5 +1,5 @@
 import { queryOptions as departmentQueryOptions } from '@entities/department';
-import { queryOptions } from '@entities/user-group/service/user-group.queries';
+import { queryOptions } from '@entities/user-group';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { Button } from '@learnway/ui/button';
