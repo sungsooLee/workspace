@@ -2,14 +2,14 @@ import { PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
 
 import { PageableContent } from '@shared/types/page-meta';
-import { Tenant, TenantByRoleId } from '../model/tenant.types';
+import { Tenant, TenantByRoleId, TenantSearchParam } from '../model/tenant.types';
 
 export const tenantApi = {
   fetchTenant: (tenantId: number) => {
-    return httpService.get<any>(`${PMSApiPrefix()}/tenants/${tenantId}`);
+    return httpService.get<Tenant>(`${PMSApiPrefix()}/tenants/${tenantId}`);
   },
 
-  updateTenant: (payload: any) => {
+  updateTenant: (payload: Tenant) => {
     const tenantId = payload.tenantId;
     const reqBody = genTenantUpdate(payload);
     return httpService.put<Tenant>(`${PMSApiPrefix()}/tenants/${tenantId}`, reqBody);
@@ -17,10 +17,10 @@ export const tenantApi = {
   deleteTenant: (tenantId: number) => {
     return httpService.delete<Tenant>(`${PMSApiPrefix()}/tenants${tenantId}`);
   },
-  fetchListTenant: (params: any) => {
-    return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/tenants`, params);
+  fetchListTenant: (params: TenantSearchParam) => {
+    return httpService.get<PageableContent<Tenant>>(`${PMSApiPrefix()}/tenants`, params);
   },
-  createTenant: (payload: any) => {
+  createTenant: (payload: Tenant) => {
     const reqbody = genTenantCreate(payload);
     return httpService.post<Tenant>(`${PMSApiPrefix()}/tenants`, reqbody);
   },
@@ -32,7 +32,7 @@ export const tenantApi = {
   },
   //전체 목록 가지고 오기 임시 (size 값으로)
   fetchAllTenant: async () => {
-    const data = await httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/tenants`, {
+    const data = await httpService.get<PageableContent<Tenant>>(`${PMSApiPrefix()}/tenants`, {
       size: 100000,
     });
 
