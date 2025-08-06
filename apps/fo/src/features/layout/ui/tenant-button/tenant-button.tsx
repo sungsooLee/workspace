@@ -75,7 +75,7 @@ const TenantModal = () => {
 
   return (
     <ModalContainer>
-      <ModalTitle>{t('언어 설정')}</ModalTitle>
+      <ModalTitle>{t('테넌트 선택')}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.tenant_modal}`}>
           <TenantContent />
