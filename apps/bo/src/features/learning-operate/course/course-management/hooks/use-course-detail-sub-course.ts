@@ -61,7 +61,7 @@ export function useCourseDetailSubCourse() {
       await alert(t('과정이 복사 되었습니다.'));
       navigate({
         to: '/learning/course/detail',
-        state: { courseId: response.data, meta: { title: `[${t('복사')}]${courseName}` } },
+        state: { courseId: response, meta: { title: `[${t('복사')}]${courseName}` } },
       });
     },
   });
@@ -71,7 +71,7 @@ export function useCourseDetailSubCourse() {
       await alert(t('과정이 복사 되었습니다.'));
       navigate({
         to: '/learning/course/detail',
-        state: { courseId: response.data, meta: { title: `[${t('번역')}]${courseName}` } },
+        state: { courseId: response, meta: { title: `[${t('번역')}]${courseName}` } },
       });
     },
   });
