@@ -57,7 +57,7 @@
     &[data-align='start'] {
       @apply translate-x-[8px] rounded-tl-none;
       .arrow {
-        @apply left-0 top-0 -mt-[8px] rotate-[180deg];
+        @apply left-0 top-[2px] -mt-[8px] rotate-[180deg];
       }
     }
     &[data-align='end'] {

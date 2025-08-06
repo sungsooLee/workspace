@@ -37,7 +37,7 @@
         @apply w-auto;
       }
     }
-    & > div:has([class*='disabled']) {
+    &:has([class*='disabled']) {
       @apply bg-[var(--gray1)];
     }
   }
