@@ -194,8 +194,8 @@ const TenantHolidayListComponent: FC<any> = () => {
     console.log('### ', data)
     const payload = {
       ...data,
-      startDate: data.dateRange.from && getDateToString(new Date(data.dateRange.from), DATE_TIME_FORMAT.DATE),
-      endDate: data.dateRange.to && getDateToString(new Date(data.dateRange.to), DATE_TIME_FORMAT.DATE),
+      startDate: (data.dateRange && data.dateRange.from) && getDateToString(new Date(data.dateRange.from), DATE_TIME_FORMAT.DATE),
+      endDate: (data.dateRange && data.dateRange.to) && getDateToString(new Date(data.dateRange.to), DATE_TIME_FORMAT.DATE),
     }
     const filteredPayload = Object.fromEntries(
       Object.entries(payload).filter(
