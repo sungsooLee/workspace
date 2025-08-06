@@ -1,13 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { License } from '../../features/platform';
-import { pageRouteConfig } from '../../features/auth';
+import { pageRouteConfig } from '@features/auth';
+import { License } from '@features/platform';
 
-export const Route = createFileRoute('/_layout/license')({
+export const Route = createFileRoute('/_layout/license/')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: '오븐 소스 라이센스',
+      title: '오픈 소스 라이센스',
       mobile: { showHeader: false, showFooter: false, showMainFooter: false },
     },
   }),

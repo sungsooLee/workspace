@@ -35,7 +35,7 @@ export default class LearningSequenceService {
   }
 
   static updateSequenceList(params: any) {
-    return httpService.put(`${LMSApiPrefix()}/sequence/list-update`, params);
+    return httpService.put(`${LMSApiPrefix()}/sequences/list-update`, params);
   }
 
   static updateSequence(sequenceId: number, params: any) {

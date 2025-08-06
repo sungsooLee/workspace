@@ -7,8 +7,8 @@ export function useCourseDetail(id: number) {
   return useQuery<any>(queryOptions.detail(id));
 }
 // 과정 차수 불러오기
-export function useCourseSequences(uuid: string, reqDto: any) {
-  return useQuery<any>(queryOptions.courseSequences(uuid, reqDto));
+export function useCourseSequences(id: number, reqDto: any) {
+  return useQuery<any>(queryOptions.courseSequences(id, reqDto));
 }
 // 과정 차수 단건 불러오기
 export function useCourseSequenceOne(sequenceId: string) {
@@ -29,11 +29,11 @@ export function useCourseSequenceOne(sequenceId: string) {
 
 // 과정 전체 정보 불러오기
 export function useCourseFullDetail(id: number) {
-  const { data: courseData } = useCourseDetail(id);
+  const { data: courseData, isLoading, isError } = useCourseDetail(id);
 
   const data = courseData && mapCourseDetail(courseData);
 
-  return { data };
+  return { data, isLoading, isError };
 }
 
 // 수강신청

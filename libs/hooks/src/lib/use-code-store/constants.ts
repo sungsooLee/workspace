@@ -85,6 +85,7 @@ export const CODE_GROUP = {
   'pms.channel.ChannelCreationType': 'pms.channel.ChannelCreationType',
   'pms.channel.ChannelSecretType': 'pms.channel.ChannelSecretType',
   'pms.channel.ChannelSubscriptionType': 'pms.channel.ChannelSubscriptionType',
+  'pms.channel.ChannelSubscriptionStatType': 'pms.channel.ChannelSubscriptionStatType',
   'pms.channel.ChannelTargetUserSettingType': 'pms.channel.ChannelTargetUserSettingType',
   'pms.channel.ChannelTenatMappingType': 'pms.channel.ChannelTenatMappingType',
   'pms.channel.ChannelType': 'pms.channel.ChannelType',
