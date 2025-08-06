@@ -1,8 +1,8 @@
-import { useState, forwardRef } from 'react';
-import { t } from 'i18next';
-import { UserChoice } from '../components/user-choice';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { t } from 'i18next';
+import { forwardRef, useState } from 'react';
+import { UserChoice } from '../components/user-choice';
 
 type UserChoiceModalComponentProps = {
   title?: string;
@@ -29,7 +29,7 @@ const UserModalComponent = forwardRef(({ title = '유저' }: UserChoiceModalComp
   };
 
   return (
-    <ModalContainer>
+    <ModalContainer width="xl">
       <ModalTitle>{t(`${title} 조회`)}</ModalTitle>
       <ModalBody>
         <UserChoice handleRowSelect={handleRowSelect} />

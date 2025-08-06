@@ -200,7 +200,7 @@ const UserShuttleComponent = ({
   };
 
   return (
-    <ModalContainer className="h-[740]">
+    <ModalContainer width="xl">
       <ModalTitle>{t('유저조회')}</ModalTitle>
       <ModalBody>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />
