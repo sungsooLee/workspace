@@ -134,6 +134,7 @@ export { ReactComponent as IcoLock } from './lib/ic_lock.svg';
 export { ReactComponent as IcLogOut01 } from './lib/ic_log_out_01.svg'; // logout
 export { ReactComponent as IcoMail02 } from './lib/ic_mail-02.svg';
 export { ReactComponent as IcoMail } from './lib/ic_mail.svg';
+export { ReactComponent as IcoMap01 } from './lib/ic_map_01.svg';
 export { ReactComponent as IcoMenu01 } from './lib/ic_menu-01.svg'; // catagory menu
 export { ReactComponent as IcoMenu02 } from './lib/ic_menu-02.svg';
 export { ReactComponent as IcoMessageText } from './lib/ic_message-text-square.svg';

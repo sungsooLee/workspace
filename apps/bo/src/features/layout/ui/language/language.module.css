@@ -5,13 +5,16 @@
     @apply !text-[var(--gray7)];
   }
   &[data-state='open'] {
-    svg {
+    .icon_arrow {
       @apply rotate-180;
       transition: all 0.1s linear;
     }
   }
-  svg {
+  .icon_arrow {
     transition: all 0.1s linear;
+  }
+  .icon_map {
+    @apply mr-[4px] inline-flex items-center;
   }
   .select {
     @apply mr-[8px] inline-block;

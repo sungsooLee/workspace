@@ -31,7 +31,7 @@ export interface ReactSelectComponentProps {
   label?: string;
   hideLabel?: boolean;
   hideArrow?: boolean;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'xs' |'sm' | 'md' | 'lg';
   variant?: 'default' | 'chip' | 'text';
   backgroundType?: 'blue' | 'white';
   className?: string;

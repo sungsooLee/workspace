@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 
-import { IcoAlarmFill, IcoBell03, IcoXclose } from '@learnway/icons';
+import { IcoBell03, IcoBell04, IcoXclose } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { Link } from '@tanstack/react-router';
 
@@ -165,13 +165,13 @@ const NotificationComponent = () => {
   return (
     <Popover popoverContent={<PopoverContent />} side="bottom" align="end" sideOffset={5}>
       <span className={styles.alarm_info}>
-        <IcoAlarmFill width={32} height={32} stroke="#fff" />
+        <IcoBell04 width={24} height={24} stroke="#fff" className={styles.icon_bell} />
         <Badge
           className={styles.count_view}
-          option={{ label: '99', value: 'A' }}
-          variant="number"
+          option={{ label: '', value: 'A' }}
+          variant="dot"
           status="new"
-          size="sm"
+          size="xs"
         />
       </span>
     </Popover>
