@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { CODE_GROUP, useCodeStore, useDynamicForm2 } from '@learnway/hooks';
 
 import { useFetchTenant, useUpdateTenant } from '@entities/tenant';
-import TenantService from '@entities/tenant/api/tenant';
+import { tenantApi } from '@entities/tenant';
 import { DuplicateState } from '@features/form';
 import { EnDeviceType, EnFormMode, EnUseCategory } from '@shared/types/enums';
 import { isEqual } from 'lodash-es';
@@ -65,7 +65,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
   }));
 
   const duplicateCheck = async (tenantName: string) => {
-    const result: boolean = await TenantService.existTenant(tenantName, tenantId);
+    const result: boolean = await tenantApi.existTenant(tenantName, tenantId);
 
     if (result) return DuplicateState.duplicated;
     else return DuplicateState.ok;

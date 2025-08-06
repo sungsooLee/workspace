@@ -6,7 +6,7 @@ import { t } from 'i18next';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { FormItem, FormRow2, SwitchFormField } from '@shared/ui';
 import { ContentsRow } from '@learnway/ui/contents-row';
-import { DateRangePickerFormField, DropdownFormField, InputFormField } from '@features/form';
+import { DateRangePickerFormField, DropdownFormField, DuplicateState, InputFormField } from '@features/form';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
 import { queryOptions as companysQueryOptions } from '@entities/companies';
@@ -14,7 +14,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Input } from '@learnway/ui/input';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { useModal } from '@learnway/ui/modal';
-import { useCreateHoliday } from '@entities/holiday';
+import { useCreateHoliday, useDeleteHoliday, useFetchHoliday, useUpdateHoliday } from '@entities/holiday';
+import { EnFormMode } from '@shared/types/enums';
+import { useToast } from '@learnway/ui/toast';
+import { Textarea } from '@learnway/ui/textarea';
 
 const TenantHolidayDetailComponent = (props: any, ref: any) => {
   const router = useRouter();
@@ -23,10 +26,26 @@ const TenantHolidayDetailComponent = (props: any, ref: any) => {
   const loginUser = getCurrentAuthUser();
   const formRef = useRef<HTMLFormElement>(null);
   const { confirm: openConfirm } = useModal();
+  const { open: openToast } = useToast();
+
+  const {data: holidayInfo, refetch: holidayRefetch} = useFetchHoliday(routerState.location.state?.holidayId)
   const { create } = useCreateHoliday({
     onSuccess: async () => {
+      openToast({ title: t('저장 하였습니다.'), type: 'success' });
       router.navigate({ to: '/tenant/holiday'});
-      }
+    }
+  })
+  const { update } = useUpdateHoliday({
+    onSuccess: async () => {
+      openToast({ title: t('저장 하였습니다.'), type: 'success' });
+      holidayRefetch();
+    }
+  })
+  const { delete: deleteHoliday } = useDeleteHoliday({
+    onSuccess: async () => {
+      openToast({ title: t('삭제 되었습니다.'), type: 'success' });
+      router.navigate({ to: '/tenant/holiday'});
+    }
   })
 
   const [companyOptions, setCompanyOptions] = useState<any[]>([]);
@@ -42,6 +61,7 @@ const TenantHolidayDetailComponent = (props: any, ref: any) => {
     getValues,
     setValue,
     formState,
+    formValues
   } = useDynamicForm2();
 
   useImperativeHandle(ref, () => ({
@@ -57,7 +77,7 @@ const TenantHolidayDetailComponent = (props: any, ref: any) => {
       onFormChange();
     },
     removeData() {
-      console.log('formValue', formRef.current);
+      deleteHoliday(routerState.location.state?.holidayId);
     }
   }));
 
@@ -65,6 +85,7 @@ const TenantHolidayDetailComponent = (props: any, ref: any) => {
     console.log('data {} => ', formData);
     const payload = {
       ...formData,
+      holidayId: routerState.location.state?.holidayId,
       tenantId,
       startDate: getDateToString(new Date(formData.dateRange.from), DATE_TIME_FORMAT.DATE),
       endDate: getDateToString(new Date(formData.dateRange.to), DATE_TIME_FORMAT.DATE),
@@ -79,13 +100,26 @@ const TenantHolidayDetailComponent = (props: any, ref: any) => {
     );
     console.log('payload', filteredPayload);
     if (await openConfirm(t('저장 하시겠습니까?'))) {
-      create(payload);
+      if (props.mode === EnFormMode.VIEW) update(payload);
+      else create(payload);
     }
   }
 
   useEffect(() => {
+    if (props.mode === EnFormMode.VIEW && holidayInfo) {
+      const initialData = {
+        ...holidayInfo,
+        dateRange: {
+          from: holidayInfo.startDate,
+          to: holidayInfo.endDate,
+        },
+      };
+      updateFormData(initialData);
+    }
+  }, [holidayInfo])
+
+  useEffect(() => {
     if( loginUser ) {
-      console.log('## loginUser', loginUser);
       if( loginUser.activeTenant )
         setTenantId(loginUser.activeTenant.tenantId);
       setValue('tenantName', loginUser.activeTenant?.tenantName);
@@ -185,9 +219,8 @@ const TenantHolidayDetailComponent = (props: any, ref: any) => {
             name="holidayDesc"
             label={t('내용')}
             value=""
-            maxLength={500}
             placeholder={t('고객 관리 및 상담 기록 유지')}
-            element={<TextareaFormField resize="none" />}
+            element={<Textarea maxLength={500} resize={'none'} />}
           />
         </ContentsRow>
       </form>

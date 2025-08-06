@@ -11,7 +11,7 @@ import { getQuerySkipToken } from '@learnway/shared';
 import CompaniesService from '@entities/companies/api/companies';
 
 import { Tenant, TenantByRoleId } from '../model/tenant.types';
-import TenantService from '../api/tenant';
+import { tenantApi } from '../api/tenant';
 
 export const tenantQueryKeys = {
   all: ['tenants'] as const,
@@ -24,11 +24,11 @@ export const tenantQueryKeys = {
 export const tenantQueryOptions = {
   all: () => ({
     queryKey: tenantQueryKeys.all,
-    queryFn: async (): Promise<any> => TenantService.fetchAllTenant(),
+    queryFn: async (): Promise<any> => tenantApi.fetchAllTenant(),
   }),
   list: (params: any) => ({
     queryKey: tenantQueryKeys.list,
-    queryFn: () => TenantService.fetchListTenant(params),
+    queryFn: () => tenantApi.fetchListTenant(params),
     cacheTime: 0,
     staleTime: 0,
   }),
@@ -36,7 +36,7 @@ export const tenantQueryOptions = {
     tenantId
       ? {
           queryKey: tenantQueryKeys.detail(tenantId),
-          queryFn: (): Promise<Tenant> => TenantService.fetchTenant(tenantId),
+          queryFn: (): Promise<Tenant> => tenantApi.fetchTenant(tenantId),
         }
       : getQuerySkipToken<Tenant>(),
   tenantCompanys: (tenantIds?: number[]) =>
@@ -44,7 +44,7 @@ export const tenantQueryOptions = {
       ? {
           queryKey: tenantQueryKeys.tenantCompanys(tenantIds),
           queryFn: async () => {
-            const tenantPromise = TenantService.fetchAllTenant();
+            const tenantPromise = tenantApi.fetchAllTenant();
             const companys = (await CompaniesService.fetchAll({})).content;
             const tenantList = (await tenantPromise).filter((item) =>
               tenantIds.includes(item.tenantId),
@@ -59,20 +59,20 @@ export const tenantQueryOptions = {
       : getQuerySkipToken<any[]>(),
   tenantByRoleId: <T = TenantByRoleId[]>(roleId: number): UseQueryOptions<T> => ({
     queryKey: tenantQueryKeys.tenantByRoleId(roleId),
-    queryFn: async (): Promise<T> => TenantService.fetchTenantByRoleId(roleId),
+    queryFn: async (): Promise<T> => tenantApi.fetchTenantByRoleId(roleId),
   }),
 };
 
 export const tenantMutateOptions = {
   create: () => ({
-    mutationFn: (payload: Tenant) => TenantService.createTenant(payload),
+    mutationFn: (payload: Tenant) => tenantApi.createTenant(payload),
   }),
   update: () => ({
-    mutationFn: (payload: Tenant) => TenantService.updateTenant(payload),
+    mutationFn: (payload: Tenant) => tenantApi.updateTenant(payload),
   }),
   delete: () => ({
     mutationFn: (tenantId?: number) =>
-      tenantId ? TenantService.deleteTenant(tenantId) : getQuerySkipToken<Tenant>(),
+      tenantId ? tenantApi.deleteTenant(tenantId) : getQuerySkipToken<Tenant>(),
   }),
 };
 

@@ -8,7 +8,7 @@ import { useModal } from '@learnway/ui/modal';
 
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 
-import TenantService from '@entities/tenant/api/tenant';
+import { tenantApi } from '@entities/tenant';
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
 import { pageRouteConfig } from '@features/auth';
 import { DuplicateState } from '@features/form';
@@ -141,7 +141,7 @@ function RouteComponent() {
 }
 
 const duplicateCheck = async (tenantName: string) => {
-  const result: boolean = await TenantService.existTenant(tenantName, undefined);
+  const result: boolean = await tenantApi.existTenant(tenantName, undefined);
 
   if (result) return DuplicateState.duplicated;
   else return DuplicateState.ok;

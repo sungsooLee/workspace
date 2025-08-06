@@ -37,3 +37,9 @@ export interface PageableContent<T> {
   pageable: Pageable;
   empty: boolean;
 }
+
+export interface PageRequestParam {
+  page?: number;
+  size?: number;
+  sort?: string | [];
+}

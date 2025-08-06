@@ -1,7 +1,12 @@
 import { MutateOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getQuerySkipToken } from '@learnway/shared';
-import { learningResourceApi } from '../api/learning-resource';
-import { BlogResource, Content, EtcContentDownloadReq } from '../types/learning-resource.types';
+
+import {
+  learningResourceApi,
+  BlogResource,
+  Content,
+  EtcContentDownloadReq,
+} from '@entities/learning-resource';
 import {
   CmsEtcResource,
   CmsImageResource,

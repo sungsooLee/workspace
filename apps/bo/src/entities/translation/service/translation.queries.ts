@@ -1,5 +1,5 @@
 import { skipToken } from '@tanstack/react-query';
-import TenantService from '../../tenant/api/tenant';
+import { tenantApi } from '../../tenant/api/tenant';
 import TranslationService from '../api/translation';
 import {
   MultilingualExcel,
@@ -42,8 +42,7 @@ export const mutateOptions = {
       TranslationService.updateTranslation(payload),
   }),
   delete: () => ({
-    mutationFn: (tenantId?: number) =>
-      tenantId ? TenantService.deleteTenant(tenantId) : skipToken,
+    mutationFn: (tenantId?: number) => (tenantId ? tenantApi.deleteTenant(tenantId) : skipToken),
   }),
   deploy: () => ({
     mutationFn: (payload: { locale: string }) => TranslationService.deployTranslation(payload),
