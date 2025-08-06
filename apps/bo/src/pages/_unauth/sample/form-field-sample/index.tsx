@@ -1,5 +1,4 @@
-import LabelMessagesService from '@entities/label-messages-mock/api/label-messages';
-import { DropdownFormField, PeriodPickerFormField } from '@features/form';
+import { PeriodPickerFormField } from '@features/form';
 import { DatePickerFormField2 } from '@features/form/ui';
 import { ChannelListModal } from '@features/learning-operate/course/course-management';
 import { useDynamicForm2 } from '@learnway/hooks';
@@ -251,7 +250,7 @@ function RouteComponent() {
             />
           </ContentsRow>
 
-          <FormSubTitle label={'Dropdown'} />
+          {/* <FormSubTitle label={'Dropdown'} />
           <ContentsRow>
             <FormRow2
               provider={provider}
@@ -311,7 +310,7 @@ function RouteComponent() {
                 />
               }
             />
-          </ContentsRow>
+          </ContentsRow> */}
         </MainContents>
       </PageContainer>
     </form>
