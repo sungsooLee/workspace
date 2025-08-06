@@ -15,7 +15,15 @@ import { useModal } from '@learnway/ui/modal';
 import { Tabs } from '@learnway/ui/tabs';
 import { useToast } from '@learnway/ui/toast';
 import { useRouter, useRouterState } from '@tanstack/react-router';
-import { useEffect, useRef, useState } from 'react';
+import {
+  Dispatch,
+  RefObject,
+  SetStateAction,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import {
   CourseDashboard, // 과정소개
@@ -460,8 +468,36 @@ export function CourseDetailMobile() {
   ];
 
   // 학습유형 리스트 open, close
-  const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(true);
-  const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(true);
+  const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(false);
+  const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(false);
+  const [listCategoryBtnView, setListCategoryBtnView] = useState<boolean>(true);
+  const [listSubTitleBtnView, setListSubTitleBtnView] = useState<boolean>(true);
+  const listCategorySpanRef = useRef<HTMLSpanElement>(null);
+  const listSubTitleSpanRef = useRef<HTMLSpanElement>(null);
+  const manualFoldingToggleRef = useRef(false);
+
+  const checkEllipsis = (
+    ref: RefObject<HTMLSpanElement>,
+    setBtnView: Dispatch<SetStateAction<boolean>>,
+  ) => {
+    if (manualFoldingToggleRef.current) {
+      manualFoldingToggleRef.current = false;
+      return;
+    }
+    const el = ref.current as HTMLSpanElement;
+    if (!el) return;
+
+    const oldWhiteSpace = el.style.whiteSpace;
+    el.style.whiteSpace = 'nowrap';
+    el.style.display = 'inline-block';
+
+    const isEllipsis = el.clientWidth > (el.parentElement?.clientWidth || 0);
+
+    el.style.whiteSpace = oldWhiteSpace;
+    el.style.display = 'inline';
+
+    setBtnView(isEllipsis);
+  };
 
   useEffect(() => {
     if (!courseData?.course.courseLike) return;
@@ -469,6 +505,46 @@ export function CourseDetailMobile() {
     setLikeCount(courseData.course.courseLike);
     setLikeChk(courseData.course.courseLikeChk);
   }, [courseData?.course.courseLike]);
+
+  useEffect(() => {
+    if (!courseData?.isEnrollRequired) return;
+
+    setLikeCount(courseData.course.courseLike);
+    setLikeChk(courseData.course.courseLikeChk);
+  }, [courseData]);
+  useEffect(() => {
+    if (!sequencesData) return;
+
+    setEnableEnrollSequences(
+      sequencesData.filter(
+        (sequence: any) => sequence.sequenceEnrollButtonType === SequenceEnrollButtonType.ENROLL,
+      ),
+    );
+  }, [sequencesData]);
+
+  useLayoutEffect(() => {
+    checkEllipsis(listCategorySpanRef, setListCategoryBtnView);
+
+    const observer = new ResizeObserver(() => {
+      checkEllipsis(listCategorySpanRef, setListCategoryBtnView);
+    });
+    if (listCategorySpanRef.current?.parentElement) {
+      observer.observe(listCategorySpanRef.current?.parentElement);
+    }
+    return () => observer.disconnect();
+  }, [courseData?.course?.data?.category]);
+
+  useLayoutEffect(() => {
+    checkEllipsis(listSubTitleSpanRef, setListSubTitleBtnView);
+
+    const observer = new ResizeObserver(() => {
+      checkEllipsis(listSubTitleSpanRef, setListSubTitleBtnView);
+    });
+    if (listSubTitleSpanRef.current?.parentElement) {
+      observer.observe(listSubTitleSpanRef.current?.parentElement);
+    }
+    return () => observer.disconnect();
+  }, [courseData?.course?.data?.captionLanguage]);
 
   return (
     <div className={`${styles.start} ${styles.package_wrap}`}>
@@ -537,16 +613,19 @@ export function CourseDetailMobile() {
               {courseData?.course?.data.category && (
                 <li className={listCategoryOpen === true ? packageInformationStyles.open : ''}>
                   <IcoCategory width={20} height={20} fill="#4d525c" />
-                  <p>{courseData?.course?.data.category}</p>
-                  {/* <Button
-                    onClick={() =>
-                      listCategoryOpen === true
-                        ? setListCategoryOpen(false)
-                        : setListCategoryOpen(true)
-                    }
-                  >
-                    <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                  </Button> */}
+                  <p>
+                    <span ref={listCategorySpanRef}>{courseData?.course?.data.category}</span>
+                  </p>
+                  {listCategoryBtnView && (
+                    <Button
+                      onClick={() => {
+                        manualFoldingToggleRef.current = true;
+                        setListCategoryOpen((prev) => !prev);
+                      }}
+                    >
+                      <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                    </Button>
+                  )}
                 </li>
               )}
               {/* <li>
@@ -578,16 +657,21 @@ export function CourseDetailMobile() {
               {courseData?.course?.data.captionLanguage && (
                 <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
                   <IcoSubtitles02 width={20} height={20} fill="#4d525c" />
-                  <p>{courseData?.course?.data.captionLanguage}</p>
-                  {/* <Button
-                    onClick={() =>
-                      listSubTitleOpen === true
-                        ? setListSubTitleOpen(false)
-                        : setListSubTitleOpen(true)
-                    }
-                  >
-                    <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                  </Button> */}
+                  <p>
+                    <span ref={listSubTitleSpanRef}>
+                      {courseData?.course?.data.captionLanguage}
+                    </span>
+                  </p>
+                  {listSubTitleBtnView && (
+                    <Button
+                      onClick={() => {
+                        manualFoldingToggleRef.current = true;
+                        setListSubTitleOpen((prev) => prev);
+                      }}
+                    >
+                      <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                    </Button>
+                  )}
                 </li>
               )}
             </ul>
