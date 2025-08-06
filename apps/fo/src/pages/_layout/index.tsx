@@ -1,4 +1,4 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
@@ -50,59 +50,7 @@ function HomeComponent() {
   return (
     <div className="flex flex-col gap-10 p-2">
       <h3>Welcome Home!</h3>
-      <FormSubTitle className="b-0 m-0 p-0" label="학습창 " />
-      <ContentsRow className="m-0">
-        <FormRow className="p-0" provider={provider} name="courseId" />
-        <FormRow className="p-0" provider={provider} name="sequenceId" />
-        <FormRow className="p-0" provider={provider} name="curriculumId" />
-      </ContentsRow>
-      <ContentsRow className="m-0">
-        <FormRow className="p-0" provider={provider} name="moduleId" />
-        <FormRow className="p-0" provider={provider} name="lessonId" />
-        <FormRow className="p-0" provider={provider} name="----">
-          <Button
-            className="mt-12"
-            label="학습창"
-            variant="primary"
-            type="button"
-            size="lg"
-            preventDefault
-            onClick={async () => {
-              const values = getValues();
-
-              const coursePromeis = queryClient.fetchQuery(queryOptions.detail(values.courseId));
-              console.log(coursePromeis);
-              coursePromeis
-                .then((courseData) => {
-                  handleLearningWindow(values, courseData);
-                })
-                .catch((r) => {
-                  handleLearningWindow(values, { courseName: '과정명 없음' });
-                });
-            }}
-          />
-        </FormRow>
-      </ContentsRow>
-      <FormSubTitle className="b-0 m-0 p-0" label="과정 상세  보기" />
-      <ContentsRow className="m-0">
-        <FormRow className="p-0" provider={provider} name="detailCourseId" />
-        <FormRow className="p-0" provider={provider} name="---"></FormRow>
-        <FormRow className="p-0" provider={provider} name="---">
-          <Button
-            className="mt-12"
-            label="과정상세"
-            variant="primary"
-            type="button"
-            size="lg"
-            preventDefault
-            onClick={async () => {
-              const values = getValues();
-
-              handleCourse(values);
-            }}
-          />
-        </FormRow>
-      </ContentsRow>
+      <Link to="/common-popup">테스트 페이지 (common-popup)</Link>
     </div>
   );
 }
