@@ -2,6 +2,7 @@ import {
   IcoArrowDown,
   IcoBook,
   IcoCategory,
+  IcoCaution,
   IcoChair,
   IcoEye,
   IcoLevel,
@@ -9,14 +10,13 @@ import {
   IcoStar,
   IcoSubtitles02,
 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
 import { Accordion } from '@learnway/ui/accordion';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { Tabs } from '@learnway/ui/tabs';
 import { useToast } from '@learnway/ui/toast';
-import { useRouterState } from '@tanstack/react-router';
 import {
   Dispatch,
   RefObject,
@@ -42,8 +42,8 @@ import packageSideStyles from '@learnway/styles/fo/pages/_layout/course-introduc
 import pageContentsStyles from '@learnway/styles/fo/pages/_page-contents.module.css';
 import pageFullInner from '@learnway/styles/fo/widgets/layout/ui/container/page-full-inner.module.css';
 
+import { SequenceEnrollButtonType, useCourseLike, useCourseSequences } from '@entities/course';
 // 이미지
-import { useCourseFullDetail, useCourseLike, useCourseSequences } from '@entities/course';
 import {
   default as bnrImage1,
   default as listImage1,
@@ -52,29 +52,31 @@ import {
 import { useChannelDetail } from '@entities/channel/service/channel.hook';
 import { useGetCurriculumnDetail } from '@entities/curriculum';
 import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail.module.css';
+import { Panel } from '@learnway/ui/panel';
 import { t } from 'i18next';
 
-export function CourseDetail() {
-  const routerState = useRouterState();
-  const courseId = routerState.location.state?.courseId;
+export function CourseDetail({ courseId, courseData }: { courseId: any; courseData: any }) {
   const dashboardRef = useRef(null);
   const introduceRef = useRef(null);
   const educationRef = useRef(null);
   const reviewRef = useRef(null);
 
-  const testCourseId = 7;
-
   const [openingYear, setOpeningYear] = useState(2025);
   const [isAll, setIsAll] = useState(true);
+  const [enableEnrollSequences, setEnableEnrollSequences] = useState([]);
 
-  const { data: courseData } = useCourseFullDetail(courseId || testCourseId);
-  const { data: sequencesData } = useCourseSequences(courseId || testCourseId, {
+  const { data: sequencesData } = useCourseSequences(courseId, {
     openingYear,
     isAll,
   });
-  // const sequencesData = {};
-  const { courseLikeRequest, mutate: toggleLikeMutate, isPending: isLikePending } = useCourseLike();
   console.log('@', courseId, courseData, sequencesData);
+
+  // const sequencesData = {};
+  const {
+    courseLikeRequest,
+    mutateAsync: toggleLikeMutate,
+    isPending: isLikePending,
+  } = useCourseLike();
   const { data: channelData } = useChannelDetail(courseData?.channelUuid || '');
   const { data: curriculumData } = useGetCurriculumnDetail(courseData?.curriculumId);
 
@@ -86,8 +88,12 @@ export function CourseDetail() {
   const [likeChk, setLikeChk] = useState<boolean>(courseData?.course.courseLikeChk);
 
   // 탭 순서
-  const [selectedTabTitle, setSelectedTabTitle] = useState<number>(0); // 탭 타이틀 순서
-  const [selectedTabContent, setSelectedTabContent] = useState<string>('0'); // 탭 컨텐츠 순서
+  const [selectedTabTitle, setSelectedTabTitle] = useState<number>(
+    courseData?.isEnrollRequired ? 1 : 0,
+  ); // 탭 타이틀 순서
+  const [selectedTabContent, setSelectedTabContent] = useState<string>(
+    courseData?.isEnrollRequired ? '1' : '0',
+  ); // 탭 컨텐츠 순서
 
   // 탭 타이틀
   interface TabTitleSwiper {
@@ -340,7 +346,7 @@ export function CourseDetail() {
   const handleCourseLike = async () => {
     if (isLikePending) return;
 
-    await toggleLikeMutate(courseId || testCourseId, {
+    await toggleLikeMutate(courseId, {
       onSuccess: () => {
         setLikeChk((prev) => !prev);
         setLikeCount((prev) => prev + (likeChk ? -1 : 1));
@@ -357,19 +363,6 @@ export function CourseDetail() {
         console.log('좋아요 실패하였습니다');
       },
     });
-    // try {
-
-    //   const data = await courseLikeRequest(courseId || testCourseId);
-    //   if (data) {
-    //     setLikeCount((prev) => prev); // 증가
-    //     setLikeChk(!likeChk);
-    //   } else {
-    //     setLikeCount((prev) => prev - 1); // 감소
-    //     setLikeChk(false);
-    //   }
-    // } catch (err) {
-    //   console.error('like course error', err);
-    // }
   };
 
   const packageCardValueFn = (arr: Array<any>) => {
@@ -490,20 +483,20 @@ export function CourseDetail() {
   //   },
   // ];
 
-  const courseOptions = courseData?.class?.map((c: any) => ({
-    label: c.name,
-    value: c.id,
+  const courseOptions = enableEnrollSequences?.map((c: any) => ({
+    label: c.courseSequenceName,
+    value: c.courseSequenceId,
     original: {
-      number: `${c.number}차`,
-      date: `${c.startDate} ~ ${c.endDate}`,
+      number: `${c.courseSequenceNo}차`,
+      date: `${formatISODateString(c.enrollStartDateTime, DATE_TIME_FORMAT.DATE)} ~ ${formatISODateString(c.enrollEndDateTime, DATE_TIME_FORMAT.DATE)}`,
       info: [
         {
           icon: IcoChair,
-          txt: `${c.remainingSeats}`,
+          txt: `${c.maxEnrollQuota - c.enrollCount}`,
         },
         {
           icon: IcoLocation,
-          txt: `${c.location}`,
+          txt: `${c.learningSpaceNameKeyIn}`,
         },
       ],
     },
@@ -920,13 +913,51 @@ export function CourseDetail() {
 
               {/* 강의 */}
               <div className={packageInformationStyles.lecture_wrap}>
-                {/* 수강 신청 차수 없을 시 */}
-                {/* <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
-                  <div>
-                    <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
-                    <strong>{t('현재 수강 신청 가능한 차수가 없습니다.')}</strong>
-                  </div>
-                </Panel> */}
+                {courseOptions.length ? (
+                  <>
+                    {/* 강의 정보 */}
+                    <OptionCard
+                      cols={1}
+                      size="lg"
+                      value={courseValues}
+                      options={courseOptions}
+                      itemRenderer={({ label, original }: OptionCardItem, index: number) => (
+                        // lectureStyles module
+                        <div
+                          className={`${lectureStyles.start} ${lectureStyles.course_information} ${lectureStyles.course_option}`}
+                          style={{ width: '100%' }}
+                        >
+                          <div className={`${lectureStyles.box}`}>
+                            <p className={lectureStyles.date}>
+                              <span>{original?.date}</span>
+                              <span>{original?.number}</span>
+                            </p>
+                            <strong className={lectureStyles.tit}>{label}</strong>
+                          </div>
+                          <div className={`${lectureStyles.box} `}>
+                            {original.info.map((item: any, index: number) => (
+                              <span key={index} className={`${lectureStyles.info}`}>
+                                <item.icon width={20} height={20} />
+                                {item.txt}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      onOptionSelect={(option: OptionCardItem) => setCourseValues(option.value)}
+                    />
+                  </>
+                ) : (
+                  <>
+                    {/* 수강 신청 차수 없을 시 */}
+                    <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
+                      <div>
+                        <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
+                        <strong>{t('현재 수강 신청 가능한 차수가 없습니다.')}</strong>
+                      </div>
+                    </Panel>
+                  </>
+                )}
                 {/* 인원마감/대기신청 */}
                 {/* <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
                   <div>
@@ -935,42 +966,12 @@ export function CourseDetail() {
                     <p>{t('수강신청일시는 예고없이 변경될수 있습니다.')}</p>
                   </div>
                 </Panel> */}
-                {/* 강의 정보 */}
-                <OptionCard
-                  cols={1}
-                  size="lg"
-                  value={courseValues}
-                  options={courseOptions}
-                  itemRenderer={({ label, original }: OptionCardItem, index: number) => (
-                    // lectureStyles module
-                    <div
-                      className={`${lectureStyles.start} ${lectureStyles.course_information} ${lectureStyles.course_option}`}
-                    >
-                      <div className={`${lectureStyles.box}`}>
-                        <p className={lectureStyles.date}>
-                          <span>{original?.date}</span>
-                          <span>{original?.number}</span>
-                        </p>
-                        <strong className={lectureStyles.tit}>{label}</strong>
-                      </div>
-                      <div className={`${lectureStyles.box} `}>
-                        {original.info.map((item: any, index: number) => (
-                          <span key={index} className={`${lectureStyles.info}`}>
-                            <item.icon width={20} height={20} />
-                            {item.txt}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  onOptionSelect={(option: OptionCardItem) => setCourseValues(option.value)}
-                />
               </div>
 
               {/* 찜/공유 수강신청 Button */}
               <div className={styles.course_btn_wrap}>
                 <CourseFixedButton
-                  course={courseData?.class.length}
+                  enrollEnable={!!enableEnrollSequences?.length}
                   likeCount={likeCount}
                   heart={likeChk}
                   handleCourseLike={handleCourseLike}

@@ -2,19 +2,20 @@ import {
   IcoArrowDown,
   IcoBook,
   IcoCategory,
+  IcoChair,
   IcoEye,
   IcoHeart,
   IcoLevel,
+  IcoLocation,
   IcoSubtitles02,
 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
 import { Accordion } from '@learnway/ui/accordion';
 import { Button } from '@learnway/ui/button';
 import { Carousel } from '@learnway/ui/carousel';
 import { useModal } from '@learnway/ui/modal';
 import { Tabs } from '@learnway/ui/tabs';
 import { useToast } from '@learnway/ui/toast';
-import { useRouter, useRouterState } from '@tanstack/react-router';
 import {
   Dispatch,
   RefObject,
@@ -38,8 +39,8 @@ import packageInformationStyles from '@learnway/styles/fo/pages/_layout/course-i
 import packageSideStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-side.module.css';
 import pageFullInner from '@learnway/styles/fo/widgets/layout/ui/container/page-full-inner.module.css';
 
+import { SequenceEnrollButtonType, useCourseLike, useCourseSequences } from '@entities/course';
 // 이미지
-import { useCourseFullDetail, useCourseLike, useCourseSequences } from '@entities/course';
 import {
   default as bnrImage1,
   default as listImage1,
@@ -52,23 +53,18 @@ import { useGetCurriculumnDetail } from '@entities/curriculum';
 import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail-m.module.css';
 import { t } from 'i18next';
 
-export function CourseDetailMobile() {
-  const router = useRouter();
-  const routerState = useRouterState();
-  const courseId = routerState.location.state?.courseId;
-
+export function CourseDetailMobile({ courseId, courseData }: { courseId: any; courseData: any }) {
   const dashboardRef = useRef(null);
   const introduceRef = useRef(null);
   const educationRef = useRef(null);
   const reviewRef = useRef(null);
 
-  const testCourseId = 7;
-
   const [openingYear, setOpeningYear] = useState(2025);
   const [isAll, setIsAll] = useState(true);
 
-  const { data: courseData } = useCourseFullDetail(courseId || testCourseId);
-  const { data: sequencesData } = useCourseSequences(courseId || testCourseId, {
+  const [enableEnrollSequences, setEnableEnrollSequences] = useState([]);
+
+  const { data: sequencesData } = useCourseSequences(courseId, {
     openingYear,
     isAll,
   });
@@ -192,7 +188,7 @@ export function CourseDetailMobile() {
   const handleCourseLike = async () => {
     if (isLikePending) return;
 
-    toggleLikeMutate(courseId || testCourseId, {
+    toggleLikeMutate(courseId, {
       onSuccess: () => {
         setLikeChk((prev) => !prev);
         setLikeCount((prev) => prev + (likeChk ? -1 : 1));
@@ -466,6 +462,25 @@ export function CourseDetailMobile() {
       ),
     },
   ];
+
+  const courseOptions = enableEnrollSequences?.map((c: any) => ({
+    label: c.courseSequenceName,
+    value: c.courseSequenceId,
+    original: {
+      number: `${c.courseSequenceNo}차`,
+      date: `${formatISODateString(c.enrollStartDateTime, DATE_TIME_FORMAT.DATE)} ~ ${formatISODateString(c.enrollEndDateTime, DATE_TIME_FORMAT.DATE)}`,
+      info: [
+        {
+          icon: IcoChair,
+          txt: `${c.maxEnrollQuota - c.enrollCount}`,
+        },
+        {
+          icon: IcoLocation,
+          txt: `${c.learningSpaceNameKeyIn}`,
+        },
+      ],
+    },
+  }));
 
   // 학습유형 리스트 open, close
   const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(false);
@@ -745,12 +760,13 @@ export function CourseDetailMobile() {
       <MobileContainerFooter>
         {/* 찜/공유 수강신청 Button */}
         <CourseFixedButton
-          course={true}
+          enrollEnable={!!enableEnrollSequences.length}
           likeCount={likeCount}
           heart={likeChk}
           handleCourseLike={handleCourseLike}
           courseValues={courseValues}
           setCourseValues={setCourseValues}
+          courseOptions={courseOptions}
         />
       </MobileContainerFooter>
     </div>

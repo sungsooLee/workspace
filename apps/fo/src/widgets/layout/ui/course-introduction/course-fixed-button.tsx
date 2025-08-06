@@ -13,21 +13,23 @@ import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/c
 import { t } from 'i18next';
 
 interface CourseFixedButton {
-  course?: boolean; // 차수 유/무
+  enrollEnable?: boolean; // 차수 유/무
   likeCount?: number;
   handleCourseLike?: () => void;
   heart?: boolean;
   courseValues?: any;
   setCourseValues?: any;
+  courseOptions?: any;
 }
 
 const CourseFixedButtonComponent = ({
-  course,
+  enrollEnable,
   likeCount,
   handleCourseLike,
   heart = false,
   courseValues,
   setCourseValues,
+  courseOptions,
 }: CourseFixedButton) => {
   const { openModal } = useModal();
 
@@ -57,7 +59,7 @@ const CourseFixedButtonComponent = ({
       </Button>
 
       {/* 수강신청 차수가 있을 때 */}
-      {course && (
+      {enrollEnable && (
         <div className={styles.course}>
           {/* 수강신청 가능 */}
           <Button
@@ -66,7 +68,12 @@ const CourseFixedButtonComponent = ({
               isMobile
                 ? openModal({
                     width: 'm_full',
-                    content: <CourseSelectionPopup setParentCourseValues={setCourseValues} />,
+                    content: (
+                      <CourseSelectionPopup
+                        setParentCourseValues={setCourseValues}
+                        courseOptions={courseOptions}
+                      />
+                    ),
                   })
                 : ''
             }
