@@ -101,7 +101,7 @@ function LearningResourceSharedTableComponent() {
           label: t('발신 테넌트'),
           format: 'object',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
-          value: authUser?.activeTenant?.tenantId,
+          value: '',
         },
         {
           name: 'sourceChannelUuid',
