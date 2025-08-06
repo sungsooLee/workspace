@@ -37,7 +37,7 @@
       }
     }
     .btn_box {
-      @apply flex w-[140px] shrink-0 items-end justify-end pb-[24px];
+      @apply flex min-w-[140px] shrink-0 items-end justify-end pb-[24px] pl-[32px];
     }
     .item_row {
       @apply flex w-full flex-col flex-wrap;
