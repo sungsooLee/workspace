@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 
-import { IcoAlarmFill } from '@learnway/icons';
+import { IcoBell04 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { Badge } from '@learnway/ui/badge';
 import { Popover } from '@learnway/ui/popover';
@@ -70,14 +70,14 @@ const NotificationComponent = () => {
     <Popover popoverContent={<PopoverContent />} side="bottom" align="end" sideOffset={5}>
       {/* <Avatar imageUrl="https://*.png" fallback="Noti" /> */}
       <span className={styles.alarm_info}>
-        <IcoAlarmFill width={32} height={32} stroke="#fff" />
+        <IcoBell04 width={24} height={24} stroke="#fff" className={styles.icon_bell} />
         {count !== 0 && (
           <Badge
             className={styles.count_view}
             option={{ label: `${count}`, value: 'A' }}
-            variant="number"
+            variant="dot"
             status="new"
-            size="sm"
+            size="xs"
           />
         )}
       </span>

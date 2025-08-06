@@ -1,7 +1,10 @@
 .alarm_info {
-  @apply relative flex min-h-[40px] w-[40px] items-center;
+  @apply relative flex min-h-[20px] w-[20px] items-center;
   .count_view {
-    @apply absolute right-[2px] top-[2px];
+    @apply absolute left-[calc(50%+2px)] top-[2px];
+  }
+  .icon_bell path {
+    @apply !fill-white;
   }
 }
 .alarm_wrap {

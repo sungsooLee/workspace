@@ -11,7 +11,7 @@
         @apply flex h-[50px] pt-[5px];
       }
       .title {
-        @apply relative ml-[6px] box-border inline-flex h-[40px] pl-[6px] pt-[15px] text-[16px] font-bold text-white;
+        @apply relative ml-[6px] box-border inline-flex h-[40px] pl-[6px] pt-[15px] text-[20px] font-bold leading-[2.8rem] text-white;
         &::before {
           @apply absolute left-0 top-[33px] -mt-[12px] h-[12px] w-[1px] bg-white opacity-30 content-[''];
         }
@@ -21,9 +21,9 @@
       @apply flex h-[50px] w-full flex-none items-center pr-[120px];
     }
     .util {
-      @apply absolute right-[36px] top-[6px] flex items-center;
+      @apply absolute right-[32px] top-[6px] flex items-center;
       button:not(:nth-child(1)) {
-        @apply ml-[20px];
+        @apply ml-[16px];
       }
     }
     .quick_menu {

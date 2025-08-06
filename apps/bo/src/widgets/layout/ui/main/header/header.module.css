@@ -21,9 +21,9 @@
       @apply flex h-[50px] w-full flex-none items-center pr-[120px];
     }
     .util {
-      @apply absolute right-[36px] top-[6px] flex items-center;
+      @apply absolute right-[32px] top-[6px] flex items-center;
       button:not(:nth-child(1)) {
-        @apply ml-[20px];
+        @apply ml-[16px];
       }
     }
     .quick_menu {
@@ -35,6 +35,15 @@
         @apply ml-0 pl-[4px];
         & + button {
           @apply ml-[16px];
+        }
+      }
+      [class*='nlp--dropdown'] {
+        [class*='nlp-select__control'] {
+          [class*='nlp-select__indicator'] {
+            [class*='nlp--button'] svg circle {
+              @apply !fill-[#6F798B];
+            }
+          }
         }
       }
     }

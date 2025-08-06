@@ -85,12 +85,20 @@
   @screen mobile {
     .start {
       &.alarm_contents {
-        @apply max-h-none pb-0;
-        &::after {
-          @apply hidden;
+        @apply max-h-none p-0 pb-[32px];
+
+        .tab_header {
+          @apply relative;
         }
-        .empty {
-          @apply mt-[42px] justify-start;
+
+        .total_box {
+          @apply mt-[16px];
+        }
+
+        .info_list {
+          .info_item {
+            @apply p-[16px];
+          }
         }
       }
     }

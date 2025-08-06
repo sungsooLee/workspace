@@ -128,6 +128,20 @@ module.exports = {
           },
         },
 
+        // common
+        '.ellipsis': {
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        },
+        '.min-w-auto': {
+          minWidth: 'auto !important',
+        },
+        '.popover-scroll': {
+          'max-height': 'calc(100vh - 170px)',
+          'overflow-y': 'auto',
+        },
+
         // title class add (FO)
         '.title_1_b': {
           ...baseTitle,
@@ -471,19 +485,19 @@ module.exports = {
         // Display
         '.display1': {
           ...baseTitle,
-          fontSize: '4rem',
+          fontSize: '3.8rem',
           fontWeight: '400',
           '@screen mobile': {
-            fontSize: '2.2rem',
+            fontSize: '2.4rem',
           },
         },
 
         '.display1-b': {
           ...baseTitle,
-          fontSize: '4rem',
+          fontSize: '3.8rem',
           fontWeight: '600',
           '@screen mobile': {
-            fontSize: '2.2rem',
+            fontSize: '2.4rem',
           },
         },
 
@@ -535,45 +549,39 @@ module.exports = {
           fontWeight: '600',
         },
 
-        '.ellipsis': {
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-        },
-
         '.title1': {
           ...baseTitle,
-          fontSize: '1.3rem',
+          fontSize: '1.2rem',
           fontWeight: '400',
         },
 
         '.title1-b': {
           ...baseTitle,
-          fontSize: '1.3rem',
+          fontSize: '1.2rem',
           fontWeight: '600',
         },
 
         '.title2': {
           ...baseTitle,
-          fontSize: '1.2rem',
+          fontSize: '1.3rem',
           fontWeight: '400',
         },
 
         '.title2-b': {
           ...baseTitle,
-          fontSize: '1.2rem',
+          fontSize: '1.3rem',
           fontWeight: '600',
         },
 
         '.title3': {
           ...baseTitle,
-          fontSize: '1.3rem',
+          fontSize: '1.4rem',
           fontWeight: '400',
         },
 
         '.title3-b': {
           ...baseTitle,
-          fontSize: '1.3rem',
+          fontSize: '1.4rem',
           fontWeight: '600',
         },
 
@@ -597,6 +605,18 @@ module.exports = {
 
         '.title5-b': {
           ...baseTitle,
+          fontSize: '1.8rem',
+          fontWeight: '600',
+        },
+
+        '.body-xl': {
+          ...bodyTitle,
+          fontSize: '1.8rem',
+          fontWeight: '400',
+        },
+
+        '.body-xl-b': {
+          ...bodyTitle,
           fontSize: '1.8rem',
           fontWeight: '600',
         },
@@ -707,14 +727,6 @@ module.exports = {
           ...baseTitle,
           fontSize: '1.1rem',
           fontWeight: '600',
-        },
-
-        '.min-w-auto': {
-          minWidth: 'auto !important',
-        },
-        '.popover-scroll': {
-          'max-height': 'calc(100vh - 170px)',
-          'overflow-y': 'auto',
         },
       });
     },

@@ -1,8 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@learnway/ui/button';
-import { useToast } from '@learnway/ui/toast';
+import { createFileRoute } from '@tanstack/react-router';
 
 import { IcoAlertCircle } from '@learnway/icons';
+import { Tooltip } from '@learnway/ui/tooltip/tooltip';
 
 export const Route = createFileRoute('/_guide/guide/tooltip')({
   component: RouteComponent,

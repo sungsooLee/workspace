@@ -155,7 +155,7 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
       <AutoCompleteDropdown
         className={'min-w-[180px]'}
         variant="text"
-        size="md"
+        size="xs"
         backgroundType={'blue'}
         value={selectedTenant}
         onChange={(value) => {
@@ -172,7 +172,7 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
       <AutoCompleteDropdown
         className={'min-w-[180px]'}
         variant="text"
-        size="md"
+        size="xs"
         backgroundType={'blue'}
         value={selectedRole}
         onChange={(value) => {

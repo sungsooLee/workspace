@@ -38,6 +38,12 @@
     @apply !text-[var(--gray5)];
   }
 
+  &[class*='nlp--dropdown-xs'] {
+    [class*='nlp-select__control'] {
+      @apply !min-h-[28px];
+    }
+  }
+
   &[class*='nlp--dropdown-sm'] {
     [class*='nlp-select__control'] {
       @apply !min-h-[32px] border-[var(--gray4)];
