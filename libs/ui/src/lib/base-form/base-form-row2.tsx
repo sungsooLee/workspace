@@ -35,7 +35,7 @@ const BaseFormRowComponent: FC<FormRowProps> = ({
   name,
   element,
   formFieldConfig,
-  style,
+  theme,
   infoNode,
   fieldConfig,
 }) => {
@@ -48,7 +48,7 @@ const BaseFormRowComponent: FC<FormRowProps> = ({
         name={name}
         element={element}
         formFieldConfig={formFieldConfig}
-        style={style}
+        theme={theme}
         infoNode={infoNode}
         fieldConfig={fieldConfig}
       />
