@@ -49,7 +49,7 @@ export const accessPageCheck = (menu: Menu[], location: ParsedLocation) => {
 
   // TODO 개발기 prefix 설정이 되어있어 /bo 붙여줌, 추후제거
   const isAccessMenu = menu.some(
-    (menu: any) => menu.path === `${getPrefixUrl()}${location.pathname}`,
+    (menu: any) => `${getPrefixUrl()}${menu.path}` === `${location.pathname}`,
   );
 
   console.log('### 3. 메뉴 체크 - 접근가능 :', isAccessMenu);
@@ -124,9 +124,10 @@ async function authorization({ location, context }: { location: ParsedLocation; 
 
   console.log('### auth authUserQuery ', authUserQuery);
 
+  console.log('### location.pathname', location.pathname);
   // 3번 체크
   if (authUserQuery) {
-    if (location.pathname === '/') return;
+    if (location.pathname === '/' || location.pathname === `${getPrefixUrl()}/`) return;
     // 메뉴별 접근 권한 체크
     accessPageCheck(authUserQuery?.menus, location);
   } else {
@@ -144,7 +145,7 @@ async function authorization({ location, context }: { location: ParsedLocation; 
       authUserFetch.menus = hierachyMenu;
       queryClient.setQueryData(authUserQueryKeys.authUser, authUserFetch);
     }
-    if (location.pathname === '/') return;
+    if (location.pathname === '/' || location.pathname === `${getPrefixUrl()}/`) return;
 
     // 메뉴별 접근 권한 체크
     accessPageCheck(authUserFetch?.menus, location);
