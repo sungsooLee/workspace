@@ -366,11 +366,11 @@ export function CourseDetail({ courseId, courseData }: { courseId: any; courseDa
   };
 
   const packageCardValueFn = (arr: Array<any>) => {
-    return arr.map((a) => ({
-      label: a.type,
-      // imgSrc: a.thumbnail,
+    return arr.map((card) => ({
+      label: card.type,
+      // imgSrc: card.thumbnail,
       imgSrc: listImage1,
-      text: a.name,
+      text: card.name,
     }));
   };
 
@@ -427,16 +427,16 @@ export function CourseDetail({ courseId, courseData }: { courseId: any; courseDa
   //     ),
   //   },
   // ];
-  const accordionValueItems = courseData?.package?.map((p: any) => ({
-    value: p.id,
+  const accordionValueItems = courseData?.package?.map((item: any) => ({
+    value: item.id,
     title: (
       <div className={packageSideStyles.sub_package_title}>
-        <p>{p.name}</p>
+        <p>{item.name}</p>
       </div>
     ),
     children: (
       <PackageCardList
-        cardListData={packageCardValueFn(p.classes)}
+        cardListData={packageCardValueFn(item.classes)}
         className={packageSideStyles.sub_package_content}
       />
     ),
@@ -483,20 +483,20 @@ export function CourseDetail({ courseId, courseData }: { courseId: any; courseDa
   //   },
   // ];
 
-  const courseOptions = enableEnrollSequences?.map((c: any) => ({
-    label: c.courseSequenceName,
-    value: c.courseSequenceId,
+  const courseOptions = enableEnrollSequences?.map((course: any) => ({
+    label: course.courseSequenceName,
+    value: course.courseSequenceId,
     original: {
-      number: `${c.courseSequenceNo}차`,
-      date: `${formatISODateString(c.enrollStartDateTime, DATE_TIME_FORMAT.DATE)} ~ ${formatISODateString(c.enrollEndDateTime, DATE_TIME_FORMAT.DATE)}`,
+      number: `${course.courseSequenceNo}차`,
+      date: `${formatISODateString(course.enrollStartDateTime, DATE_TIME_FORMAT.DATE)} ~ ${formatISODateString(course.enrollEndDateTime, DATE_TIME_FORMAT.DATE)}`,
       info: [
         {
           icon: IcoChair,
-          txt: `${c.maxEnrollQuota - c.enrollCount}`,
+          txt: `${course.maxEnrollQuota - course.enrollCount}`,
         },
         {
           icon: IcoLocation,
-          txt: `${c.learningSpaceNameKeyIn}`,
+          txt: `${course.learningSpaceNameKeyIn}`,
         },
       ],
     },

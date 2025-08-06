@@ -76,13 +76,12 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
   });
 
   const [questionItemList, setQuestionItemList] = useState<QuestionItem[]>([]);
-  const [_selectedQuestions, setSelectedQuestions] = useState<QuestionItem[]>([]);
   const selectedQuestions = useMemo(
     () => questionItemList.filter((q) => q.isUsed),
     [questionItemList],
   );
 
-  const { sensors, handleOnDragEnd } = useQuestionSort({
+  const { dragSensors, handleOnDragEnd } = useQuestionSort({
     contentUuid: examPoolUuid,
     contentType: ContentType.EXAM,
     questionItemList,
@@ -453,7 +452,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     setSelectedQuestionRows,
     handleOnCopyQuestion,
     handleOnDeleteQuestion,
-    dragSensors: sensors,
+    dragSensors,
     handleOnDragEnd,
     handleQuestionMutationSuccessCallback,
   };

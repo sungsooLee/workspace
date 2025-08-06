@@ -1,4 +1,5 @@
 import { useRouterState } from '@tanstack/react-router';
+
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -24,6 +25,12 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
   const { openModal, confirm: openConfirm } = useModal();
 
   const [languageTypeList, setLanguageTypeList] = useState<any[]>([]);
+  const [termsOptions, setTermsOptions] = useState<any[]>([
+    { label: '이용약관_v1.25', value: '0' },
+    { label: '개인정보 처리방침(국내)_v1.25', value: '1' },
+    { label: '개인정보 처리방침(글로벌)_v1.00', value: '2' },
+    { label: '고유식별 정보처리 동의_v1.25', value: '3' },
+  ]);
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
     1: false,
   });
@@ -158,6 +165,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           platformAttributeProperties.isUseOutsourcingTenantCustomOption,
         isWiaTenantCustomOption: platformAttributeProperties.isUseWiaTenantCustomOption,
         isAutoeverTenantCustomOption: platformAttributeProperties.isUseAutoeverTenantCustomOption,
+
+        // 임시 노출 약관
+        terms: ['0', '1', '2', '3'],
       });
     }
   }, [tenantData, formState.isReady]);
@@ -191,6 +201,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         provider={provider}
         languageOptions={languageTypeList}
         duplicateCheck={duplicateCheck}
+        termsOptions={termsOptions}
       />
     </form>
   );

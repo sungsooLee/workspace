@@ -9,7 +9,7 @@ import { IcoCheck02 } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 
-import { useSetLanguage } from '@features/platform';
+import { useSetLanguage } from '@features/layout';
 
 import languagestyles from '@learnway/styles/fo/features/layout/ui/user-avatar/language.module.css';
 import userMyStyles from '@learnway/styles/fo/features/layout/ui/user-avatar/user-my.module.css';

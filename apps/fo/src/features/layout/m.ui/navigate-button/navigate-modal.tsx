@@ -3,13 +3,16 @@ import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useFetchAuthUser, useMenuHierarchy } from '@learnway/auth/entities';
-
 import { Menu } from '@learnway/auth/types';
 import { IcoChart, IcoDocument, IcoPoint } from '@learnway/icons';
-import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-modal.module.css';
+import { getFullImagePath } from '@learnway/shared';
 import { Avatar } from '@learnway/ui/avatar';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
+
+import { AvataFallback } from '@features/layout/ui/user-avatar/user-avatar-fallback';
+
+import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-modal.module.css';
 
 const NavigateModalComponent = () => {
   const { t } = useTranslation();
@@ -41,10 +44,11 @@ const NavigateModalComponent = () => {
         <div className={styles.start}>
           <div className={styles.profile_info}>
             <div className={styles.avatar_img}>
-              {/* 이미지일경우 */}
-              <Avatar imageUrl="https://github.com/shadcn.png" size="2xl" />
-              {/* 텍스트일경우 */}
-              {/* <Avatar fallback="AB" size="2xl" /> */}
+              <Avatar
+                imageUrl={getFullImagePath(authUser?.avataImage)}
+                size="2xl"
+                fallback={<AvataFallback name={authUser?.name} />}
+              />
             </div>
             <div className={styles.profile}>
               <div className={styles.info_box}>
@@ -81,7 +85,7 @@ const NavigateModalComponent = () => {
                   <span className={styles.ico}>
                     <IcoChart />
                   </span>
-                  <span className={styles.txt}>법정교육필수</span>
+                  <span className={styles.txt}>{t('법정필수교육')}</span>
                 </Button>
               </li>
             </ul>

@@ -2,18 +2,19 @@ import { forwardRef, useEffect, useState } from 'react';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui/tabs';
-import { EnChannelDetailButtonLayout } from '../../../types/type';
+import { t } from 'i18next';
+import { EnChannelDetailButtonLayout, EnChannelDetailListType } from '../../../types/type';
 import { ChannelDetailBoardArticle } from './channel-detail-board-article';
 
 interface ChannelDetailBoardProps {
-  onButtonLayoutChange: (layout: EnChannelDetailButtonLayout) => void;
+  onButtonChange: (layout: EnChannelDetailButtonLayout, listType?: EnChannelDetailListType) => void;
 }
 
 const ChannelDetailBoardComponent = (props: ChannelDetailBoardProps, ref: any) => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('manageArticle');
 
   useEffect(() => {
-    props.onButtonLayoutChange && props.onButtonLayoutChange(EnChannelDetailButtonLayout.NONE);
+    props.onButtonChange && props.onButtonChange(EnChannelDetailButtonLayout.NONE);
   }, []);
 
   const handleTabChange = (tabKey: string) => {
@@ -24,12 +25,12 @@ const ChannelDetailBoardComponent = (props: ChannelDetailBoardProps, ref: any) =
 
   const tabItems = [
     {
-      title: '게시물 관리',
+      title: t('게시물 관리'),
       key: 'manageArticle',
       content: <ChannelDetailBoardArticle />,
     },
     {
-      title: '게시판 설정',
+      title: t('게시판 설정'),
       key: 'settingBoard',
       content: 'settingBoard',
     },

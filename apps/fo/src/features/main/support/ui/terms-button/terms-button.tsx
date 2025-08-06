@@ -23,7 +23,7 @@ function TermsButtonComponent({ termsType }: TermsButtonComponentProps) {
   if (data) {
     return (
       <Link to={'/clause/$termsType'} params={{ termsType }}>
-        {t(`CODE.TERMS_TYPE.${termsType}`)}
+        {termsType === 'privacy-policy' ? t('개인정보처리방침') : t('이용약관')}
       </Link>
     );
   }

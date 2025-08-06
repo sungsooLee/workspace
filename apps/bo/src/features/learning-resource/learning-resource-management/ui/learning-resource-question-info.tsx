@@ -141,7 +141,6 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           <LearningResourceTestItemModal
             contentInfo={data as ContentInformation}
             onSuccessCallback={questionCreateSuccessCallback}
-            onDeleteCallback={questionDeleteSuccessCallback}
           />
         ),
       });
@@ -159,6 +158,8 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
             <LearningResourceTestItemModal
               contentInfo={data as ContentInformation}
               questionItemGridRow={item}
+              onDeleteCallback={questionDeleteSuccessCallback}
+              hasMapping={hasMapping}
             />
           ),
         });
@@ -396,6 +397,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
             title: t('문항현황을 확인하세요.'),
             content: t('시험지 문항수와 선택 문항수는 동일해야합니다.'),
           });
+          return;
         }
         await updateQuestionCountInfo();
       },
@@ -482,6 +484,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                 </div>
               }
               className={styles.info_table}
+              showGuideTextBesideTotalCount
               showGuideTextNextLine
               guideText={questionStatusGuideText}
               showErrorMessageBesideGuideText={data?.questionCount !== selectedQuestionCount}

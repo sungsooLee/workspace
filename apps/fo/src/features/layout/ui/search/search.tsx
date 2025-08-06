@@ -1,10 +1,10 @@
-import { memo, useEffect, useRef, useState } from 'react';
-import { IcoSearch } from '@learnway/icons';
 import styles from '@learnway/styles/fo/features/layout/ui/search.module.css';
-import { SearchPopover } from './search-popover';
-import { AutoCompletePopover } from './auto-complete-popover';
-import { Button } from '@learnway/ui/button';
 import { Input } from '@learnway/ui/input';
+import { memo, useEffect, useRef, useState } from 'react';
+import { AutoCompletePopover } from './auto-complete-popover';
+import { SearchPopover } from './search-popover';
+
+import searchImage from '@learnway/styles/fo/assets/images/common/logo_symbol.png';
 
 const MAX_SEARCH_LENGTH = 20;
 const SearchComponent = ({ isMobile }: any) => {
@@ -72,43 +72,63 @@ const SearchComponent = ({ isMobile }: any) => {
   }, []);
 
   return (
-    <div className={`${styles.start} ${styles.search}`} ref={searchContainerRef}>
-      <Input
-        placeholder="현대 자동차"
-        type="text"
-        value={searchValue}
-        onChange={handleInputChange}
-        onFocus={handleInputFocus}
-        onEnterKeyDown={handleSearchClick}
-        maxLength={MAX_SEARCH_LENGTH}
-        hideInputLength={true}
-      />
-      <Button aria-label="search">
-        <IcoSearch width={20} height={20} stroke="#131C30" />
-      </Button>
-      {/* 최근, 추천, 인기 팝오버 */}
-      {isSearchPopoverOpen && (
-        <SearchPopover
-          className={styles.search_popover}
-          // onItemClick={(item) => {
-          //   setSearchValue(item);
-          //   setIsSearchPopoverOpen(false);
-          // }}
+    <>
+      {/*
+            <div className={`${styles.start} ${styles.search}`} ref={searchContainerRef}>
+        <Input
+          placeholder="현대 자동차"
+          type="text"
+          value={searchValue}
+          onChange={handleInputChange}
+          onFocus={handleInputFocus}
+          onEnterKeyDown={handleSearchClick}
+          maxLength={MAX_SEARCH_LENGTH}
+          hideInputLength={true}
         />
-      )}
+        <Button aria-label="search">
+          <IcoSearch width={20} height={20} stroke="#131C30" />
+        </Button>
+        //최근, 추천, 인기 팝오버
+        {isSearchPopoverOpen && (
+          <SearchPopover
+            className={styles.search_popover}
+            // onItemClick={(item) => {
+            //   setSearchValue(item);
+            //   setIsSearchPopoverOpen(false);
+            // }}
+          />
+        )}
 
-      {/* 자동완성 팝오버 */}
-      {isAutoCompleteOpen && (
-        <AutoCompletePopover
-          className={styles.auto_complete_popover}
-          // searchValue={searchValue}
-          // onItemClick={(item) => {
-          //   setSearchValue(item);
-          //   setIsAutoCompleteOpen(false);
-          // }}
-        />
-      )}
-    </div>
+        // 자동완성 팝오버
+        {isAutoCompleteOpen && (
+          <AutoCompletePopover
+            className={styles.auto_complete_popover}
+            // searchValue={searchValue}
+            // onItemClick={(item) => {
+            //   setSearchValue(item);
+            //   setIsAutoCompleteOpen(false);
+            // }}
+          />
+        )}
+      </div>
+      */}
+
+      <div className={`${styles.start} ${styles.search}`}>
+        <i>
+          <img src={searchImage} alt="" />
+        </i>
+        <Input placeholder="검색어를 입력해주세요." type="text" />
+        {/* <Button aria-label="search">
+            <IcoSearch width={20} height={20} stroke="#131C30" />
+          </Button> */}
+
+        {/* 최근, 추천, 인기 popover */}
+        {isSearchPopoverOpen && <SearchPopover className={styles.search_popover} />}
+
+        {/* auto-complete popover */}
+        {isAutoCompleteOpen && <AutoCompletePopover className={styles.auto_complete_popover} />}
+      </div>
+    </>
   );
 };
 

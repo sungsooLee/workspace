@@ -4,21 +4,21 @@ import { useEffect, useState } from 'react';
 import { IcoArray, IcoArrowForward } from '@learnway/icons';
 
 import { useCategoryTree, useCreateRecentCategory } from '@entities/category';
-import { RecentVisits } from '@features/layout';
 import { cn, SelectOption } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/category/category-button.module.css';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
 import { t } from 'i18next';
+import { CategoryRecentVisits } from './category-recent-visits';
 
 interface CategoryPopupProps {
   id: number;
   onNavigate: (categoryId: number, depth: number) => void;
 }
 
-type MainItem = { id: number; label: string; isChild: boolean, depth: number };
-type SubItem = { id: number; label: string; parentId: number; isChild: boolean, depth: number };
-type ChildItem = { id: number; label: string, depth: number };
+type MainItem = { id: number; label: string; isChild: boolean; depth: number };
+type SubItem = { id: number; label: string; parentId: number; isChild: boolean; depth: number };
+type ChildItem = { id: number; label: string; depth: number };
 
 const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
   const [mainData, setMainData] = useState<MainItem[]>([]);
@@ -58,7 +58,9 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
     setActiveSubId(id);
     if (isChild) {
       // 3 Depth
-      const subTreeData = categoryTree?.tree.children.filter((item: any) => item.id === parentId)[0];
+      const subTreeData = categoryTree?.tree.children.filter(
+        (item: any) => item.id === parentId,
+      )[0];
       const twoDepthData = subTreeData.children.filter((item: any) => item.id === id)[0];
       const threeDepthData = twoDepthData.children.map((item: any) => {
         return {
@@ -85,7 +87,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
       }
       return null;
     }
-    const targetMenu = findNodeById(categoryTree?.tree.children, id)
+    const targetMenu = findNodeById(categoryTree?.tree.children, id);
     setActiveChildId(id);
     onNavigate(id, targetMenu.depth);
   };
@@ -104,7 +106,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
         };
       });
       const recent = recentCategory.map((item: any) => {
-        return {label: item.categoryName, value: item.categoryId}
+        return { label: item.categoryName, value: item.categoryId };
       });
 
       setMainData(oneDepthData);
@@ -173,7 +175,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
             </div>
           </div>
           {/* 최근방문 */}
-          <RecentVisits items={recentCategory} handleOnLink={childMenuHandleClick}/>
+          <CategoryRecentVisits items={recentCategory} handleOnLink={childMenuHandleClick} />
         </div>
       </ModalBody>
     </ModalContainer>
@@ -194,15 +196,15 @@ export const CategoryButton = ({ tenantId }: { tenantId?: number }) => {
           ...router.state.location.state,
           tenantId,
           categoryId: data,
-          depth
+          depth,
         },
       });
-    }
-  })
+    },
+  });
 
   const handlerSelectedCategoryClick = (categoryId: number, depth: number) => {
     setDepth(depth);
-    create({categoryId});
+    create({ categoryId });
   };
 
   return (

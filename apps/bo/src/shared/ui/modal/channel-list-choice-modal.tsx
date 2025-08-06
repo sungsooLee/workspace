@@ -10,10 +10,10 @@ import { t } from 'i18next';
 import { useState } from 'react';
 
 type Props = {
-  roleId?: string;
+  roleId: number;
 };
 
-const ChannelListModalComponent = ({ roleId = '' }: Props) => {
+const ChannelListModalComponent = ({ roleId }: Props) => {
   const { closeModal } = useModal();
 
   const searchConfig: SearchBoxConfig = {
@@ -171,7 +171,7 @@ const ChannelListModalComponent = ({ roleId = '' }: Props) => {
   };
 
   return (
-    <ModalContainer>
+    <ModalContainer width="xl">
       <ModalTitle>채널 조회</ModalTitle>
       <ModalBody>
         <div className={popupStyles.wrap}>

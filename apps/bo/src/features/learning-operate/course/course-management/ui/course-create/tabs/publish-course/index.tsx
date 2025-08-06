@@ -5,8 +5,8 @@ import { RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field'
 
 import {
   ChipListFormField,
-  DateRangePickerFormField,
   FormRow2,
+  PeriodPickerFormField,
   ThumbnailListFormField,
 } from '@shared/ui/form';
 import { forwardRef } from 'react';
@@ -50,7 +50,7 @@ const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, r
           label={t('노출 기간')}
           format={'object'}
           validation={{ required: true, format: 'object' }}
-          element={<DateRangePickerFormField displayType={'day-time-h'} />}
+          element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time-h' }} />}
         />
       </ContentsRow>
       {/*썸네일*/}

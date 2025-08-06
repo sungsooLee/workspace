@@ -1,15 +1,15 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { pageRouteConfig } from '@features/auth';
 
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormRow } from '@shared/ui';
 import { queryOptions } from '@entities/course';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FileDownloads, FormRow } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -103,6 +103,12 @@ function RouteComponent() {
           />
         </FormRow>
       </ContentsRow>
+      <FileDownloads fileUuid={'1aff46aa-86b9-4281-8c70-99595eabe637'} />
+      <FileDownloads
+        label={'자료실(files)'}
+        fileUuids={['7485a3b7-c02d-47bd-a86c-59c10d91e8cc', '1aff46aa-86b9-4281-8c70-99595eabe637']}
+      />
+      <FileDownloads label={'자료실(group)'} groupUuid={'e35ca1db-f218-4003-b7dd-bb61dbe964db'} />
     </div>
   );
 }
