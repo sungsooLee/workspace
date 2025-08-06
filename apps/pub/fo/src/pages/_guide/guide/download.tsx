@@ -66,7 +66,7 @@ function RouteComponent() {
   <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
     <div className={pdsStyles.pds_box}>
       <span className={pdsStyles.txt}>
-        <IcoPdf className={pdsStyles.ico_pds} /> 비즈니스 영어 단어&숙어집.pdf
+        <IcoPdf className={pdsStyles.ico} /> 비즈니스 영어 단어&숙어집.pdf
         <IcoLock className={pdsStyles.ico_lock} />
       </span>
       <div className={pdsStyles.info}>
@@ -81,7 +81,7 @@ function RouteComponent() {
   <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
     <div className={pdsStyles.pds_box}>
       <span className={pdsStyles.txt}>
-        <IcoPdf className={pdsStyles.ico_pds} /> 비즈니스 영어 단어&숙어집.pdf
+        <IcoPdf className={pdsStyles.ico} /> 비즈니스 영어 단어&숙어집.pdf
         <IcoLock className={pdsStyles.ico_lock} />
       </span>
       <div className={pdsStyles.info}>
