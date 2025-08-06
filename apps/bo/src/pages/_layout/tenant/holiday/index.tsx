@@ -23,7 +23,7 @@ function RouteComponent() {
         />
       </ContentsButtons>
       <MainContents>
-        <TenantHolidayList rootPath="/"/>
+        <TenantHolidayList />
       </MainContents>
     </PageContainer>
   );
