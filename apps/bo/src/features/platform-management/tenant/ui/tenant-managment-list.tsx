@@ -7,14 +7,20 @@ import { useWatch } from 'react-hook-form';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
 import { Divider } from '@learnway/ui/elements';
-import { GridBox, GridBoxConfig, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import {
+  createGrideBoxColumnHelper,
+  GridBox,
+  GridBoxConfig,
+  useGridBox,
+  useGridBoxConfig,
+} from '@learnway/ui/grid';
 
 import { SearchBoxForm } from '@shared/ui/search-box';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
-import { tenantQueryOptions } from '@entities/tenant';
+import { Tenant, tenantQueryOptions } from '@entities/tenant';
 import { Button } from '@learnway/ui/button';
 import { FormItem, FormRow2, TenantByRoleDropdownFormField } from '@shared/ui';
 import { useCreation } from 'ahooks';
@@ -46,15 +52,15 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
       },
     });
   };
+  const boxHelper = createGrideBoxColumnHelper<Tenant>();
 
   const gridInitConfig = useCreation<useGridBoxConfig>(
     () => ({
       query: tenantQueryOptions.list,
       columns: [
-        {
-          name: 'tenantName',
+        boxHelper.accessor('tenantName', {
           label: t('LABEL.grid.column.tenantName'),
-          render: (info: any) => {
+          render: (info) => {
             return (
               <Button
                 className="link"
@@ -65,67 +71,62 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
             );
           },
           size: 192,
-        },
-        {
-          name: 'companyTenantList',
+        }),
+        boxHelper.accessor('companyTenantList', {
           label: t('LABEL.grid.column.company'),
           enableSorting: false,
-          render: (info: any) => {
+          render: (info) => {
             return (
               info.getValue() &&
               info
                 .getValue()
-                .map((item: any) => item.companyName)
+                .map((item) => item.companyName)
                 .join(',')
             );
           },
           size: 200,
-        },
-        {
-          name: 'tenantUserList',
+        }),
+        boxHelper.accessor('tenantUserList', {
           label: t('LABEL.grid.column.tenantManager'),
           enableSorting: false,
-          render: (info: any) => {
+          render: (info) => {
             return (
               info.getValue() &&
               info
                 .getValue()
-                .map((item: any) => item.userName)
+                .map((item) => item.userName)
                 .join(',')
             );
           },
           size: 120,
-        },
-        {
-          name: 'isUsed',
+        }),
+        boxHelper.accessor('isUsed', {
           label: t('사용여부'),
-          render: (info: any) => {
+          render: (info) => {
             return info.row.original.isUsed ? t('LABEL.common.enable') : t('미사용');
           },
           size: 104,
-        },
-        {
-          name: 'createdDate',
+        }),
+        boxHelper.accessor('createdDate', {
           label: t('등록일시'),
-          render: (info: any) => {
+          render: (info) => {
             return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
           },
           meta: {
             cellAlign: 'center',
           },
           size: 192,
-        },
-        {
-          name: 'modifiedDate',
+        }),
+        boxHelper.accessor('modifiedDate', {
           label: t('수정일시'),
-          render: (info: any) => {
+          render: (info) => {
             return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
           },
           meta: {
             cellAlign: 'center',
           },
           size: 192,
-        },
+        }),
       ],
       data: [],
       gridState: {
@@ -237,7 +238,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
             type="text"
             label={t('LABEL.grid.column.tenantManager', '테넌트 담당자')}
             value=""
-            format="number"
+            format="string"
             element={<InputFormField />}
           />
         </ContentsRow>
