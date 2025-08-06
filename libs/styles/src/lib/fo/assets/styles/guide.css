@@ -165,7 +165,7 @@
         .flex_box {
           @apply relative flex flex-wrap items-center gap-[10px] overflow-x-auto;
           padding: 20px 20px 20px;
-          border: 1px dashed #ccc;
+          border: 1px dashed var(--red50);
           &:has(.desc)::after {
             position: absolute;
             top: 0;
