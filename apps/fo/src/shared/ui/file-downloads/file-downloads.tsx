@@ -36,7 +36,7 @@ type FileProps =
     };
 
 export const FileDownloads = ({ label, fileUuid, fileUuids, groupUuid }: Props & FileProps) => {
-  const { getFileInfo, getGroupInfo } = useFileManager();
+  const { getFileInfo, getGroupInfo, fileDownload, filesDownload } = useFileManager();
   const [files, setFiles] = useState<FileInfo[]>([]);
 
   useEffect(() => {
@@ -74,7 +74,16 @@ export const FileDownloads = ({ label, fileUuid, fileUuids, groupUuid }: Props &
               <em>{files.length}</em>
             </h3>
             {/* 퍼블수정 20250724 사이즈 수정 */}
-            <Button variant="line" size={isMobile ? 'md' : 'lx'} className={styles.btn}>
+            <Button
+              variant="line"
+              size={isMobile ? 'md' : 'lx'}
+              className={styles.btn}
+              onClick={() => {
+                files.length === 1
+                  ? fileDownload(files[0].fileUuid)
+                  : filesDownload(files.map((_) => _.fileUuid));
+              }}
+            >
               전체 다운로드
             </Button>
           </div>
@@ -94,7 +103,14 @@ export const FileDownloads = ({ label, fileUuid, fileUuids, groupUuid }: Props &
                       <span className={pdsStyles.size}>{formatBytes(file.fileSize)}</span>
                     )}
                     {/* 퍼블수정 20250724 버튼 사이즈 수정 */}
-                    <Button variant="line" size="md" className={pdsStyles.btn}>
+                    <Button
+                      variant="line"
+                      size="md"
+                      className={pdsStyles.btn}
+                      onClick={() => {
+                        fileDownload(file.fileUuid);
+                      }}
+                    >
                       {t('다운로드')}
                     </Button>
                   </div>
