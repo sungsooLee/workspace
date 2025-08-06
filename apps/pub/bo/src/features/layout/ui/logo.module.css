@@ -1,5 +1,6 @@
 /* logo.module.css */
 .start {
+  @apply h-[28px];
   .title {
     @apply text-white;
   }
