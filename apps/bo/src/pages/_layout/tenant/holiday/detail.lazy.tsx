@@ -3,7 +3,9 @@ import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/u
 import { Button } from '@learnway/ui/button';
 import { t } from 'i18next';
 import { useRef } from 'react';
-import { TenantUserApplicationDetail } from '@features/tenant-management/tenant/holiday/tenant-holiday-detail';
+import {
+  TenantHolidayDetail,
+} from '@features/tenant-management/tenant/holiday/tenant-holiday-detail';
 import { EnFormMode } from '@shared/types/enums';
 
 export const Route = createLazyFileRoute('/_layout/tenant/holiday/detail')({
@@ -56,7 +58,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <TenantUserApplicationDetail ref={formRef} mode={EnFormMode.VIEW}/>
+        <TenantHolidayDetail ref={formRef} mode={EnFormMode.VIEW}/>
       </MainContents>
     </PageContainer>
   )
