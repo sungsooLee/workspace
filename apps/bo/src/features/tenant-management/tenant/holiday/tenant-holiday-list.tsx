@@ -1,9 +1,9 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useRouter, useRouterState } from '@tanstack/react-router';
-import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useFetchAuthUser, usePersonalInfoCheck } from '@learnway/auth/entities';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { t } from 'i18next';
-import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { DATE_TIME_FORMAT, fileDownload, getDateToString } from '@learnway/shared';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { GridExcelDownloadButton, GridExcelUploadButton, SearchBox } from '@shared/ui';
 import { Divider } from '@learnway/ui/elements';
@@ -14,7 +14,7 @@ import { holidayQueryOptions } from '@entities/holiday/service/holiday.queries';
 import { useCreation } from 'ahooks';
 import { Button } from '@learnway/ui/button';
 import { EnGlobalConst } from '@shared/types/enums';
-import { LMSApiPrefix } from '@learnway/config';
+import { PMSApiPrefix } from '@learnway/config';
 import { IcoDownload } from '@learnway/icons';
 
 const _global = {
@@ -34,6 +34,9 @@ const TenantHolidayListComponent: FC<any> = ({rootPath}) => {
   const queryClient = useQueryClient();
 
   const { data: loginUser } = useFetchAuthUser();
+  const { hasPersonalInfo, currentMenu } = usePersonalInfoCheck();
+
+  const [params, setParams] = useState<Record<string, any>>({});
 
   _global.linkClick = (holidayId: number) => {
     router.navigate({
@@ -182,16 +185,32 @@ const TenantHolidayListComponent: FC<any> = ({rootPath}) => {
     );
     return filteredPayload
   };
-  const { config: gConfig, gridFetch,  } = useGridBox(gridInitConfig, handleOnSearchParam);
+  const { config: gConfig, gridFetch, data } = useGridBox(gridInitConfig, handleOnSearchParam);
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
   const handleOnSearch = () => {
     const payload = handleOnSearchParam();
+    setParams({
+      ...payload
+    });
     gridFetch(payload);
   }
 
   const handleOnExcelUpload = async (data: Record<string, any>[]) => {
     gridFetch();
+  }
+
+  const handleOnExcelDownloadLegalHoliday = async () => {
+    const payload: Record<string, any> = {
+      holidayType: 'LEGAL_HOLIDAY',
+      menuId: currentMenu?.menuId,
+    }
+
+    await fileDownload({
+      url: `${PMSApiPrefix()}/holiday/exceldownload`,
+      params: payload,
+      method: 'get'
+    });
   }
 
   useEffect(() => {
@@ -238,9 +257,11 @@ const TenantHolidayListComponent: FC<any> = ({rootPath}) => {
               onUpload={handleOnExcelUpload}
             />
             <GridExcelDownloadButton
-              url={`${LMSApiPrefix()}/holiday/excelDownload`}
+              url={`${PMSApiPrefix()}/holiday/exceldownload`}
               method="get"
-              params={getValues()}
+              params={params}
+              dataCount={data?.totalElements}
+              disabled={!data?.totalElements}
             />
           </>
         }
@@ -251,6 +272,7 @@ const TenantHolidayListComponent: FC<any> = ({rootPath}) => {
             size="xs"
             label={t('휴일 다운로드')}
             icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+            onClick={handleOnExcelDownloadLegalHoliday}
           />
         }
       />
