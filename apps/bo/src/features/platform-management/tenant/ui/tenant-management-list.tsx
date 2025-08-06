@@ -260,6 +260,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
             name="isUsed"
             label={t('LABEL.form.label.useYn')}
             format={'boolean'}
+            value={''}
             element={
               <DropdownFormField
                 presetOptionLabel={t('LABEL.form.label.all')}
