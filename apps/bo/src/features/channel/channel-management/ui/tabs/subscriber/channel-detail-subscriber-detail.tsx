@@ -15,7 +15,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 
 interface ChannelDetailSubscriberDetailProps {
   userUuid: string;
-  onUnsubscribe: () => void;
+  onCompleted: () => void;
 }
 
 const ChannelDetailSubscriberDetailComponent = (
@@ -66,10 +66,13 @@ const ChannelDetailSubscriberDetailComponent = (
           if (value) {
             console.log('#### cancelSubscribe', value);
             openToast({ title: t('구독을 해지 하였습니다.'), type: 'success' });
-            props.onUnsubscribe();
+            props.onCompleted();
           }
         },
       });
+    },
+    moveList() {
+      props.onCompleted();
     },
   }));
 

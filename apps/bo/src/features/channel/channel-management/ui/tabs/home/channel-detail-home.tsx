@@ -1,6 +1,6 @@
 import { EnFormMode } from '@shared/types/enums';
 import { forwardRef, useEffect, useState } from 'react';
-import { EnChannelDetailButtonLayout } from '../../../types/type';
+import { EnChannelDetailButtonLayout, EnChannelDetailListType } from '../../../types/type';
 import { ChannelDetailHomeBanner } from './channel-detail-home-banner';
 import { ChannelDetailHomeBannerDetail } from './channel-detail-home-banner-detail';
 
@@ -12,7 +12,7 @@ export enum EnChannelDetailHomeMode {
 }
 
 interface ChannelDetailHomeProps {
-  onButtonLayoutChange: (layout: EnChannelDetailButtonLayout) => void;
+  onButtonChange: (layout: EnChannelDetailButtonLayout, listType?: EnChannelDetailListType) => void;
 }
 
 const ChannelDetailHomeComponent = (props: ChannelDetailHomeProps, ref: any) => {
@@ -22,19 +22,22 @@ const ChannelDetailHomeComponent = (props: ChannelDetailHomeProps, ref: any) => 
   const [selectedBannerId, setSelectedBannerId] = useState<number>();
 
   useEffect(() => {
-    if (props.onButtonLayoutChange) {
+    if (props.onButtonChange) {
       switch (homeMode) {
         case EnChannelDetailHomeMode.HOME:
-          props.onButtonLayoutChange(EnChannelDetailButtonLayout.NONE);
+          props.onButtonChange(EnChannelDetailButtonLayout.NONE);
           break;
         case EnChannelDetailHomeMode.BANNER:
         case EnChannelDetailHomeMode.COURSE_KEYWORD:
         case EnChannelDetailHomeMode.PACKAGE_KEYWORD:
-          props.onButtonLayoutChange(EnChannelDetailButtonLayout.RESET_AND_SAVE);
+          props.onButtonChange(
+            EnChannelDetailButtonLayout.RESET_AND_SAVE,
+            EnChannelDetailListType.TAB_LIST,
+          );
           break;
       }
     }
-  }, [props.onButtonLayoutChange, homeMode]);
+  }, [props.onButtonChange, homeMode]);
 
   return (
     <>

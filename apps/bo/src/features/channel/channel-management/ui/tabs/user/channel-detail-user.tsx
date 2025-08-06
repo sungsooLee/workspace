@@ -11,10 +11,10 @@ import { SearchBox } from '@shared/ui/search-box';
 import { createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
-import { EnChannelDetailButtonLayout } from '../../../types/type';
+import { EnChannelDetailButtonLayout, EnChannelDetailListType } from '../../../types/type';
 
 interface ChannelDetailUserProps {
-  onButtonLayoutChange?: (layout: EnChannelDetailButtonLayout) => void;
+  onButtonChange: (layout: EnChannelDetailButtonLayout, listType?: EnChannelDetailListType) => void;
 }
 
 const ChannelDetailUserComponent = (props: ChannelDetailUserProps, ref: any) => {
@@ -34,8 +34,7 @@ const ChannelDetailUserComponent = (props: ChannelDetailUserProps, ref: any) => 
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    props.onButtonLayoutChange &&
-      props.onButtonLayoutChange(EnChannelDetailButtonLayout.RESET_AND_SAVE);
+    props.onButtonChange && props.onButtonChange(EnChannelDetailButtonLayout.RESET_AND_SAVE);
   }, [props]);
 
   useImperativeHandle(ref, () => ({

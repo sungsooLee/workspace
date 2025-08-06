@@ -33,6 +33,9 @@ const ChannelDetailHomeBannerDetailComponent = (props: ChannelHomeBannerDetailPr
     clearForm() {
       onFormChange();
     },
+    moveList() {
+      props.onCompleted();
+    },
   }));
 
   return (

@@ -1,11 +1,11 @@
 import { EnFormMode } from '@shared/types/enums';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import { EnChannelDetailButtonLayout } from '../../../types/type';
+import { EnChannelDetailButtonLayout, EnChannelDetailListType } from '../../../types/type';
 import { ChannelDetailUserGroupDetail } from './channel-detail-user-group-detail';
 import { ChannelDetailUserGroupList } from './channel-detail-user-group-list';
 
 interface ChannelDetailUserGroupProps {
-  onButtonLayoutChange?: (layout: EnChannelDetailButtonLayout) => void;
+  onButtonChange: (layout: EnChannelDetailButtonLayout, listType?: EnChannelDetailListType) => void;
 }
 
 const ChannelDetailUserGroupComponent = (props: ChannelDetailUserGroupProps, ref: any) => {
@@ -13,17 +13,20 @@ const ChannelDetailUserGroupComponent = (props: ChannelDetailUserGroupProps, ref
   const [userGroupId, setUserGroupId] = useState<number>();
 
   useEffect(() => {
-    if (props.onButtonLayoutChange) {
+    if (props.onButtonChange) {
       switch (formMode) {
         case EnFormMode.NONE:
-          props.onButtonLayoutChange(EnChannelDetailButtonLayout.REGISTER);
+          props.onButtonChange(EnChannelDetailButtonLayout.REGISTER);
           break;
         case EnFormMode.VIEW:
         case EnFormMode.ADD:
-          props.onButtonLayoutChange(EnChannelDetailButtonLayout.RESET_AND_SAVE);
+          props.onButtonChange(
+            EnChannelDetailButtonLayout.RESET_AND_SAVE,
+            EnChannelDetailListType.TAB_LIST,
+          );
           break;
         default:
-          props.onButtonLayoutChange(EnChannelDetailButtonLayout.NONE);
+          props.onButtonChange(EnChannelDetailButtonLayout.NONE);
       }
     }
   }, [props, formMode]);
@@ -44,7 +47,14 @@ const ChannelDetailUserGroupComponent = (props: ChannelDetailUserGroupProps, ref
     <>
       {formMode === EnFormMode.NONE && <ChannelDetailUserGroupList onChange={handleOnUserChange} />}
       {formMode !== EnFormMode.NONE && (
-        <ChannelDetailUserGroupDetail ref={ref} mode={formMode} userGroupId={userGroupId} />
+        <ChannelDetailUserGroupDetail
+          ref={ref}
+          mode={formMode}
+          userGroupId={userGroupId}
+          onCompleted={() => {
+            setFormMode(EnFormMode.NONE);
+          }}
+        />
       )}
     </>
   );

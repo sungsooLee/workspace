@@ -13,6 +13,15 @@ export enum EnChannelDetailButtonLayout {
 }
 
 /**
+ * 채널 상세 내 목록 유형
+ * 채널 목록 이동 / 탭 내 목록 이동
+ */
+export enum EnChannelDetailListType {
+  CHANNEL_LIST = 'CHANNEL_LIST',
+  TAB_LIST = 'TAB_LIST',
+}
+
+/**
  * 채널 상세 탭
  */
 export enum EnChannelDetailTabKeys {

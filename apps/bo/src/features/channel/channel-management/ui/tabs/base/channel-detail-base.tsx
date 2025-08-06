@@ -33,7 +33,7 @@ import { TenantShuttleModal, UserShuttleModal } from '@shared/ui/modal';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
 import { getChannelUrl } from '../../../../channel-application/service/channel-application.service';
-import { EnChannelDetailButtonLayout } from '../../../types/type';
+import { EnChannelDetailButtonLayout, EnChannelDetailListType } from '../../../types/type';
 
 export enum EnChannelRegisterMethod {
   REQUEST = 'REQUEST',
@@ -44,7 +44,10 @@ interface ChannelDetailBaseProps {
   mode: EnFormMode;
   method?: EnChannelRegisterMethod;
   requestId?: string;
-  onButtonLayoutChange?: (layout: EnChannelDetailButtonLayout) => void;
+  onButtonChange?: (
+    layout: EnChannelDetailButtonLayout,
+    listType?: EnChannelDetailListType,
+  ) => void;
 }
 
 const ChannelDetailBaseComponent = (props: ChannelDetailBaseProps, ref: any) => {
@@ -107,8 +110,7 @@ const ChannelDetailBaseComponent = (props: ChannelDetailBaseProps, ref: any) => 
 
   useEffect(() => {
     console.log('### props.method', props.method);
-    props.onButtonLayoutChange &&
-      props.onButtonLayoutChange(EnChannelDetailButtonLayout.RESET_AND_SAVE);
+    props.onButtonChange && props.onButtonChange(EnChannelDetailButtonLayout.RESET_AND_SAVE);
 
     if (!loginUser) return;
     console.log('### loginUser', loginUser);
