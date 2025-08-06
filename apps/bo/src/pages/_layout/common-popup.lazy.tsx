@@ -334,7 +334,7 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <ChannelListChoiceModal />,
+                    content: <ChannelListChoiceModal roleId={0} />,
                   });
                 }}
               >
@@ -351,7 +351,7 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <ChannelShuttleModal />,
+                    content: <ChannelShuttleModal roleId={0} />,
                   });
                 }}
               >

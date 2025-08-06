@@ -330,17 +330,15 @@ const TenantDetailBaseFormComponent = ({
       {formMode === EnFormMode.VIEW && termsOptions && (
         <>
           <FormSubTitle label={t('약관 정보')} lineType="dark" />
-          <ContentsRow type={'horizontal'} titleMode>
+          <ContentsRow>
             <FormRow2
               provider={provider}
-              name={'isEnrollOption'}
-              label={t('수강신청')}
-              tooltip={t('과정 등록 필수 값으로 사용 여부 수정이 불가합니다.')}
-              value={true}
-              switchConfig={{
-                label: (value: boolean) => (value ? t('허용') : t('미사용')),
-              }}
-              element={<CheckboxGroupFormField disabled={true} options={termsOptions} />}
+              name={'terms'}
+              label={t('약관정보')}
+              format="array"
+              value={[]}
+              options={termsOptions}
+              element={<CheckboxGroupFormField disabled={true} />}
             />
           </ContentsRow>
         </>
