@@ -79,7 +79,7 @@ const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, RadioGroupFormFi
         defaultValue={value}
         options={radioOptions as RadioGroupOption[]}
         cols={cols}
-        onValueChange={handleValueChange}
+        onValueChange={onChange}
         {...newProps}
       />
     );

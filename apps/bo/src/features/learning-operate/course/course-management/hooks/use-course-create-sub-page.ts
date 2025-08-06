@@ -28,7 +28,8 @@ import { getDummyCourse, getDummyCourse2, getDummyCourse4 } from './course-mock-
 export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const { showSaveComplete, saveConfirm, showDeleteComplete } = useModal();
   const navigate = useNavigate();
-  const { updateFormData, formValues, onSubmit, formState, watch, getValues } = form;
+  const { updateFormData, formValues, onSubmit, formState, watch, getValues, resetDirtyState } =
+    form;
   const lastTriggered = useCourseLastTriggered();
   const { courseId, courseType: initCourseType, activeTab } = useCourseCreateInfo();
   const { setCheckDirtyForm } = useCourseActions();
@@ -53,8 +54,10 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   });
 
   // 각 스텝별 과정 수정 뮤테이션 객체
-  const updateMutations = useUpdateCourseWizardMutations(() => {
-    showSaveComplete();
+  const updateMutations = useUpdateCourseWizardMutations(async () => {
+    await showSaveComplete();
+    // 모든 필드 dirty 초기화
+    resetDirtyState();
     if (activeTab === CourseTab.STEP5) {
       moveCourseDetailPage();
     }

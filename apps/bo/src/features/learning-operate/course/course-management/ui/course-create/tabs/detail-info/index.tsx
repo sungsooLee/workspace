@@ -348,6 +348,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             name={'passOption'}
             label={t('이수기준 설정')}
             format={'object'}
+            validation={{ required: true, format: 'object' }}
             element={<PassOptionFormField />}
           />
         </ContentsRow>
@@ -660,6 +661,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           provider={provider}
           name={'hmgStandardMainCategory'}
           label={t('HMG 과정 데이터 표준 대분류')}
+          validation={{ required: true, format: 'string' }}
           element={
             <DropdownFormField
               optionsConfig={{
@@ -673,6 +675,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           provider={provider}
           name={'hmgStandardSubCategory'}
           label={t('HMG 과정 데이터 표준 중분류')}
+          validation={{ required: true, format: 'string' }}
           element={
             <DropdownFormField
               optionsConfig={{

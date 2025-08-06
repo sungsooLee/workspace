@@ -433,6 +433,7 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 element={
                   <ThumbnailListFormField
                     uuidType={'group'}
+                    showDefault={getValues()?.courseType}
                     uploadConfig={{
                       affairType: 'LMS',
                       s3Path: S3_PATH['upload/course/thumbnail'],

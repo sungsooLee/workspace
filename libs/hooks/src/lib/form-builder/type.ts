@@ -295,6 +295,9 @@ export type UseDynamicFormResult = {
 
   /** 모든 validator를 초기화하는 함수 */
   clearAllValidators?: any;
+
+  /** 모든 필드의 dirty를 false 로 바꾸는 함수*/
+  resetDirtyState: () => void;
 };
 
 // dynamic form config value 추적을 위한 타입 정의
