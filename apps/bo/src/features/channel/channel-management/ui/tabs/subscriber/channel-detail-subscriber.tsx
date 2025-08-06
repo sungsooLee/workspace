@@ -1,19 +1,23 @@
 import { forwardRef, useEffect, useState } from 'react';
-import { EnChannelDetailButtonLayout } from '../../../types/type';
+import { EnChannelDetailButtonLayout, EnChannelDetailListType } from '../../../types/type';
 import { ChannelDetailSubscriberDetail } from './channel-detail-subscriber-detail';
 import { ChannelDetailSubscriberList } from './channel-detail-subscriber-list';
 
 interface ChannelDetailSubscriberProps {
-  onButtonLayoutChange?: (layout: EnChannelDetailButtonLayout) => void;
+  onButtonChange: (layout: EnChannelDetailButtonLayout, listType?: EnChannelDetailListType) => void;
 }
 
 const ChannelDetailSubscriberComponent = (props: ChannelDetailSubscriberProps, ref: any) => {
   const [userUuid, setUserUuid] = useState<string | null>(null);
 
   useEffect(() => {
-    if (props.onButtonLayoutChange) {
-      if (userUuid) props.onButtonLayoutChange(EnChannelDetailButtonLayout.CANCEL_SUBSCRIBE);
-      else props.onButtonLayoutChange(EnChannelDetailButtonLayout.NONE);
+    if (props.onButtonChange) {
+      if (userUuid)
+        props.onButtonChange(
+          EnChannelDetailButtonLayout.CANCEL_SUBSCRIBE,
+          EnChannelDetailListType.TAB_LIST,
+        );
+      else props.onButtonChange(EnChannelDetailButtonLayout.NONE);
     }
   }, [props, userUuid]);
 
@@ -21,7 +25,7 @@ const ChannelDetailSubscriberComponent = (props: ChannelDetailSubscriberProps, r
     setUserUuid(uuid);
   };
 
-  const handleOnUserUnsubscribe = () => {
+  const handleOnCompleted = () => {
     setUserUuid(null);
   };
 
@@ -32,7 +36,7 @@ const ChannelDetailSubscriberComponent = (props: ChannelDetailSubscriberProps, r
         <ChannelDetailSubscriberDetail
           ref={ref}
           userUuid={userUuid}
-          onUnsubscribe={handleOnUserUnsubscribe}
+          onCompleted={handleOnCompleted}
         />
       )}
     </>

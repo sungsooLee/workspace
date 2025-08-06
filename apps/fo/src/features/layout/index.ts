@@ -23,7 +23,6 @@ export * from './ui/integrated-search/integrated-search-shorts';
 export * from './ui/language/language';
 export * from './ui/logo/logo';
 export * from './ui/package-card';
-export * from './ui/recent-visits';
 export * from './ui/search/search';
 
 export * from './m.ui/navigate-button/navigate-button';

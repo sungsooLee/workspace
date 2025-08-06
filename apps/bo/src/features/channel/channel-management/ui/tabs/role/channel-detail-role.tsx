@@ -8,13 +8,13 @@ import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
-import { EnChannelDetailButtonLayout } from '../../../types/type';
+import { EnChannelDetailButtonLayout, EnChannelDetailListType } from '../../../types/type';
 
 interface ChannelDetailRoleProps {
-  onButtonLayoutChange: (layout: EnChannelDetailButtonLayout) => void;
+  onButtonChange: (layout: EnChannelDetailButtonLayout, listType?: EnChannelDetailListType) => void;
 }
 
-const ChannelDetailRoleComponent = ({ onButtonLayoutChange }: ChannelDetailRoleProps) => {
+const ChannelDetailRoleComponent = ({ onButtonChange }: ChannelDetailRoleProps) => {
   const { confirm: openConfirm } = useModal();
 
   const routerState = useRouterState();
@@ -39,7 +39,7 @@ const ChannelDetailRoleComponent = ({ onButtonLayoutChange }: ChannelDetailRoleP
   const [tableInstance, setTableInstance] = useState<Table<any>>();
 
   useEffect(() => {
-    onButtonLayoutChange && onButtonLayoutChange(EnChannelDetailButtonLayout.NONE);
+    onButtonChange && onButtonChange(EnChannelDetailButtonLayout.NONE);
   }, []);
 
   const handleOnSearch = useCallback((data: any) => {

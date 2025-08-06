@@ -2,7 +2,7 @@ import { useMutation, useQuery, UseQueryOptions, UseQueryResult } from '@tanstac
 import { ChannelByRoleId, ChannelParam } from '../model/channel.types';
 import { mutateOptions, queryOptions } from './channel.queries';
 
-export function useGetChannelList(roleId: string, params: ChannelParam) {
+export function useGetChannelList(roleId: number, params: ChannelParam) {
   return useQuery(queryOptions.list(roleId, params));
 }
 
