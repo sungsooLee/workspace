@@ -1560,7 +1560,7 @@ const responseDataToFormData = (d: LearningSequence): any => {
  */
 export const formDataToRequestData = (d: LearningSequence) => {
   console.log('####formDataToRequestData=>', d);
-  d.curriculumId = 0;
+  d.curriculumId = 0; // TODO: 커리큘럼 개발완료되면 넘어온 값으로 대체되어야함
 
   // 수강취소(미사용/사용)
   if (!d.isEnrollCancelDeadLineActivated) {
@@ -1609,9 +1609,9 @@ export const formDataToRequestData = (d: LearningSequence) => {
     d.recognizedStudyPoint = null; // 인정학습점수(학습포인트)
   }
   // 강사 > 강사선택
-  if (d.instructorAssignType === 'REGISTERED') {
-    d.instructorName = null; // 강사 직접입력
-  }
+  // if (d.instructorAssignType === 'REGISTERED') {
+  //   d.instructorName = null; // 강사 직접입력
+  // }
   // 1인당 교육비 > 미사용
   if (d.isUseTrainingCostPerPerson === false) {
     d.trainingCostPerPerson = null; // 1인당 교육비(원)
@@ -1637,11 +1637,7 @@ export const formDataToRequestData = (d: LearningSequence) => {
     d.learningStartDateTime = d.learningStartRange?.from;
     d.learningEndDateTime = d.learningStartRange?.to;
   }
-  //
 
-  // return {
-  //   ...d,
-  // };
   return {
     tenantIds: d.tenantList ? d.tenantList?.map((x: any) => x.tenantId) : [],
     targetList: d.targetList,
