@@ -1,11 +1,19 @@
 import { memo, useState } from 'react';
 
-import { Tenant, useFetchTenantByUser } from '@entities/tenant';
-import { CategoryButton } from '@features/category';
-import { History, Logo, Search, UserAvatar } from '@features/layout';
-import { NotificationButton, TenantButton } from '@features/platform';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Menu } from '@learnway/auth/types';
+
+import { Tenant, useFetchTenantByUser } from '@entities/tenant';
+import { CategoryButton } from '@features/category';
+import {
+  History,
+  Logo,
+  NotificationButton,
+  Search,
+  TenantButton,
+  UserAvatar,
+} from '@features/layout';
+
 import { Navigate } from './navigate/navigate';
 import { NavigateHover } from './navigate/navigate-hover';
 

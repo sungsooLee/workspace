@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLoginTimeout } from '../service/loginTimeout.hooks';
+import { useLoginTimeout } from './loginTimeout.hooks';
 
 export function SessionTimer() {
   const { startSession } = useLoginTimeout();

@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { pageRouteConfig } from '@features/auth';
-import { License } from '@features/platform';
+import { License } from '@features/layout';
 
 export const Route = createFileRoute('/_layout/license/')({
   component: RouteComponent,
