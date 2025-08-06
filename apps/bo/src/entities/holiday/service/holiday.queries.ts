@@ -1,5 +1,5 @@
 import HolidayService from '@entities/holiday/api/holiday';
-import { Holiday } from '../../../types/entities/holiday';
+import { HolidayTypes } from '../types/holiday.types';
 import { getQuerySkipToken } from '@learnway/shared';
 
 export const holidayQueryKeys = {
@@ -33,9 +33,9 @@ export const holidayQueryOptions = {
 
 export const holidayMutateOptions = {
   create: () => ({
-    mutationFn: (payload: Holiday) => HolidayService.createHoliday(payload) }),
+    mutationFn: (payload: HolidayTypes) => HolidayService.createHoliday(payload) }),
   update: () => ({
-    mutationFn: (payload: Holiday) => HolidayService.updateHoliday(payload) }),
+    mutationFn: (payload: HolidayTypes) => HolidayService.updateHoliday(payload) }),
   delete: () => ({
     mutationFn: (holidayId: number) => HolidayService.deleteHoliday(holidayId) })
 }
