@@ -1,4 +1,4 @@
-import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
+import { tenantQueryOptions } from '@entities/tenant';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { Divider } from '@learnway/ui/elements';

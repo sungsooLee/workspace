@@ -8,4 +8,3 @@ export * from './service/tenant-attribute.queries';
 export * from './service/tenant-category.hook';
 export * from './service/tenant-category.queries';
 export * from './service/tenant.hook';
-export * from './service/tenant.queries';
