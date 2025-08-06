@@ -6,6 +6,10 @@ export function useGetChannelList(roleId: string, params: ChannelParam) {
   return useQuery(queryOptions.list(roleId, params));
 }
 
+export function useGetChannelPopup() {
+  return useQuery(queryOptions.popup());
+}
+
 export function useGetChannelDetail(channelUuid: string) {
   return useQuery(queryOptions.detail(channelUuid));
 }
@@ -18,7 +22,8 @@ export function useUpdateChannel(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options });
+    ...options,
+  });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -26,7 +31,8 @@ export function useUpdateChannel(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 /**
@@ -44,10 +50,12 @@ export const useFetchChannelByRoleId = <T = ChannelByRoleId[]>(
 export function useCreateChannel(options: any) {
   const mutation = useMutation({
     ...mutateOptions.create(),
-    ...options });
+    ...options,
+  });
   return {
     create: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
-    ...mutation };
+    ...mutation,
+  };
 }

@@ -35,6 +35,7 @@ import { getLeaningStatusTypeName } from '../constants/constants';
 type SequenceListComponentProps = {
   setMode: (value: string) => void;
   setSequenceId: (value: number) => void;
+  lastTriggered?: any;
   courseId?: number; // 과정key가 없다면 메뉴로 진입한 case
 };
 

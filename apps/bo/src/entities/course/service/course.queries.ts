@@ -62,6 +62,11 @@ export const mutateOptions = {
   copy: () => ({
     mutationFn: (payload: { courseId: number; tenantId: number }) => CourseService.copy(payload),
   }),
+  // 과정 번역
+  translate: () => ({
+    mutationFn: (payload: { courseId: number; tenantId: number }) =>
+      CourseService.translate(payload),
+  }),
   // 과정 수정
   update: () => ({
     mutationFn: (payload: Course) => CourseService.update(payload),

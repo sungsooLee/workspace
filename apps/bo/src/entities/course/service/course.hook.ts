@@ -79,6 +79,19 @@ export const useCopyCourse = (
   });
 };
 /**
+ * 과정을 번역하는 뮤테이션 훅.
+ * 성공 시 'showSaveComplete' 모달을 표시합니다.
+ * @param [options] - 추가 뮤테이션 설정 옵션.
+ */
+export const useTranslateCourse = (
+  options?: MutationHookOptions<Course, Error, { courseId: number; tenantId: number }, unknown>,
+): UseMutationResult<Course, Error, { courseId: number; tenantId: number }, unknown> => {
+  return useMutation({
+    ...mutateOptions.translate(),
+    ...options,
+  });
+};
+/**
  * 기존 코스 정보를 업데이트하는 뮤테이션 훅.
  * 성공 시 'showUpdateComplete' 모달을 표시합니다.
  * @param [options] - 추가 뮤테이션 설정 옵션.

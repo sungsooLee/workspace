@@ -19,7 +19,6 @@ import {
 import { cn } from '@learnway/shared';
 import { Popover } from '@learnway/ui/popover';
 import { Tooltip } from '@learnway/ui/tooltip';
-import { useCreation } from 'ahooks';
 import { t } from 'i18next';
 import { isEmpty } from 'lodash-es';
 import {
@@ -105,9 +104,9 @@ const PageContainerComponent: FC<{
   const { alert: openAlert } = useModal();
 
   // 페이지 타이틀
-  const pageTitle = useCreation(() => {
+  const pageTitle = useMemo(() => {
     return title || meta?.title || t(`HRD_CENTER_MENU.${currentMenu?.menuCode}`);
-  }, [currentMenu]);
+  }, [currentMenu, meta]);
 
   // 페이지 즐겨찾기 여부
   const isFavorite = useMemo(() => {

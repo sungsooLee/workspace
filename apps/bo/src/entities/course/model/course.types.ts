@@ -13,9 +13,17 @@ export interface CourseListItem {
    */
   completedWizardStep: 'STEP1' | 'STEP2' | 'STEP3' | 'STEP4' | 'STEP5' | 'FULL_UPDATE';
   /**
+   * 테넌트 UUID
+   */
+  tenantUuid?: string;
+  /**
    * 테넌트 이름
    */
   tenantName: string;
+  /**
+   * 채널 UUID
+   */
+  channelUuid?: string;
   /**
    * 채널 이름
    */

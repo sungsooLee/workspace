@@ -69,7 +69,7 @@ const Component = () => {
             variant="point"
             size="sm"
             label={'과정 번역'}
-            onClick={() => alert('과정 번역 (m1)')}
+            onClick={() => trigger(TriggerKey.TRANSLATE)}
           />
         )}
         {!!visibleButtons?.isCopy && (

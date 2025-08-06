@@ -1,5 +1,7 @@
 import { CourseListItem, useCopyCourse, useUpdateFavorite } from '@entities/course';
+import { useCourseShare } from '@entities/course-shared/service/course-shared.hook';
 import {
+  CourseShareModal,
   CourseTypeOptionCardModal,
   useCourseListGridConfig,
 } from '@features/learning-operate/course/course-management';
@@ -29,6 +31,15 @@ export const useCoursePage = (): CourseManagementHookResult => {
   const gridConfig = useCourseListGridConfig();
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedRows, setSelectedRows] = useState<CourseListItem[]>([]);
+
+  // 과정 공유 뮤테이션
+  const { courseShare } = useCourseShare({
+    onSuccess: async (response: any) => {
+      console.log('courseShare :: onSuccess', response);
+      await alert(t('과정이 공유 되었습니다.'));
+      gridFetch(getValues());
+    },
+  });
 
   // 과정 복사 뮤테이션
   const { mutate: copyCourse } = useCopyCourse({
@@ -121,9 +132,23 @@ export const useCoursePage = (): CourseManagementHookResult => {
   /**
    * 과정 공유 핸들러
    */
-  const handleShareClick = useCallback(() => {
-    console.log('handleShareClick');
-  }, []);
+  const handleShareClick = useCallback(async () => {
+    openModal({
+      width: 'xl',
+      content: <CourseShareModal />,
+      onClose(data: any) {
+        if (data) {
+          const targetChannelList = data.map((x: any) => x.channelUuid);
+          const payload = {
+            courseId: selectedRows[0].courseId,
+            originChannelUuid: selectedRows[0].channelUuid,
+            targetChannelList,
+          };
+          courseShare(payload);
+        }
+      },
+    });
+  }, [openModal, selectedRows]);
 
   return {
     provider,
