@@ -5,6 +5,7 @@ import { Tabs } from '@learnway/ui/tabs';
 import { ToggleButtonGroup } from '@learnway/ui/toggle-button-group';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useCourseDetailPage } from '../../hooks/use-course-detail-page';
 import { TriggerKey, useCourseActions } from '../../store/use-course-store';
 import { CourseDetailTab } from '../../types/type';
@@ -14,6 +15,7 @@ import { CurriculumByDetail } from './tabs/curriculum';
 import { Sequence } from './tabs/sequence';
 
 const Component = () => {
+  const { t } = useTranslation();
   const { trigger } = useCourseActions();
   const { alert } = useModal();
 
@@ -24,22 +26,22 @@ const Component = () => {
   const tabItems = useMemo(
     () => [
       {
-        title: '과정상세',
+        title: t('과정상세'),
         key: CourseDetailTab.COURSE_DETAIL,
         content: <CourseDetailInfo />,
       },
       {
-        title: '커리큘럼',
+        title: t('커리큘럼'),
         key: CourseDetailTab.CURRICULUM,
         content: <CurriculumByDetail />,
       },
       {
-        title: '차수',
+        title: t('차수'),
         key: CourseDetailTab.SEQUENCE,
         content: <Sequence />,
       },
       {
-        title: '커뮤니티',
+        title: t('커뮤니티'),
         key: CourseDetailTab.COMMUNITY,
         content: <Community />,
       },
@@ -57,8 +59,8 @@ const Component = () => {
         <ToggleButtonGroup
           defaultValue={'과정관리'}
           options={[
-            { label: '과정관리', value: '과정관리' },
-            { label: '수강관리', value: '수강관리' },
+            { label: t('과정관리'), value: '과정관리' },
+            { label: t('수강관리'), value: '수강관리' },
           ]}
           onClick={(value) => value === '수강관리' && moveEnrollmentManagementPage()}
         />

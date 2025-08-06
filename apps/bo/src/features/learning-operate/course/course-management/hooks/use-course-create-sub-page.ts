@@ -22,8 +22,6 @@ import {
   useCourseCreateInfo,
   useCourseLastTriggered,
 } from '../store/use-course-store';
-import { getDummyCourse, getDummyCourse2, getDummyCourse4 } from './course-mock-data';
-
 // 과정 생성/수정 서브페이지 커스텀 훅
 export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const { showSaveComplete, saveConfirm, showDeleteComplete } = useModal();

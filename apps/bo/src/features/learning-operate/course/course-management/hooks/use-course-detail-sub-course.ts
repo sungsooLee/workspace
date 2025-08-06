@@ -1,8 +1,7 @@
 import {
   useCopyCourse,
   useDeleteCourse,
-  useFetchCourse,
-  useFetchCourseConfig,
+  useFetchCourseAndConfig,
   useTranslateCourse,
   useUpdateCourse,
 } from '@entities/course';
@@ -25,7 +24,6 @@ export function useCourseDetailSubCourse() {
   const { t } = useTranslation();
   const { showSaveComplete, alert, saveConfirm, confirm } = useModal();
   const lastTriggered = useCourseLastTriggered();
-  // const { courseId } = useCourseCreateInfo();
   const navigate = useNavigate();
 
   // 라우터 state에서 courseId 가져오기
@@ -34,14 +32,7 @@ export function useCourseDetailSubCourse() {
   const { provider, getValues, updateFormData, formValues, onSubmit, onFormChange } =
     useDynamicForm2();
 
-  const { data: formData } = useFetchCourse(courseId);
-
-  console.log('courseId', courseId);
-
-  const { data: courseConfig } = useFetchCourseConfig({
-    courseType: formData?.courseType,
-    channelUuid: formData?.channelUuid,
-  });
+  const { course: formData, courseConfig } = useFetchCourseAndConfig(courseId);
 
   const { mutate: updateCourse } = useUpdateCourse({
     onSuccess: async (response: any) => {
