@@ -75,18 +75,18 @@ export const FileDownloads = ({ label, fileUuid, fileUuids, groupUuid }: Props &
                 {!fileUuid && <em>{files.length}</em>}
               </h3>
               {/* 퍼블수정 20250724 사이즈 수정 */}
-              <Button
-                variant="line"
-                size={isMobile ? 'md' : 'lx'}
-                className={styles.btn}
-                onClick={() => {
-                  files.length === 1
-                    ? fileDownload(files[0].fileUuid)
-                    : filesDownload(files.map((_) => _.fileUuid));
-                }}
-              >
-                전체 다운로드
-              </Button>
+              {files && files.length > 1 && (
+                <Button
+                  variant="line"
+                  size={isMobile ? 'md' : 'lx'}
+                  className={styles.btn}
+                  onClick={() => {
+                    filesDownload(files.map((_) => _.fileUuid));
+                  }}
+                >
+                  전체 다운로드
+                </Button>
+              )}
             </div>
           )}
           <div className={pdsStyles.start}>
