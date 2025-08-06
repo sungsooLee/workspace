@@ -1,8 +1,3 @@
-import React, { FC, isValidElement, memo, ReactNode, useEffect, useMemo } from 'react';
-import { cn } from '@learnway/shared';
-import boStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import foStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import {
   DynamicFormContextProvider,
   FormConfig,
@@ -10,12 +5,15 @@ import {
   useDynamicFormContext,
   useFormRow2,
 } from '@learnway/hooks';
-import { FormGuideText } from './form-guide-text';
+import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import boStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import foStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
+import React, { FC, isValidElement, memo, ReactNode, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../button/button';
-import { Tooltip } from '../tooltip/tooltip';
-import { DynamicFormField } from '../dynamic-form-field/dynamic-form-field';
 import { DynamicFormField2 } from '../dynamic-form-field/dynamic-form-field2';
+import { Tooltip } from '../tooltip/tooltip';
+import { FormGuideText } from './form-guide-text';
 
 /**
  * FormRowComponent
@@ -67,7 +65,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
   name,
   element,
   formFieldConfig,
-  style = 'bo',
+  theme = 'bo',
   infoNode,
   fieldConfig,
 }) => {
@@ -75,7 +73,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
    * 구조는 동일하고 스타일만 다르다고 전달 받아서 스타일 분리 만 합니다.
    * 만약 구조도 다르게 변경된다면 JSX 를 각 컴포넌트로 분리하는 작업을 진행해야 합니다.
    * */
-  const styles = style === 'bo' ? boStyles : foStyles;
+  const styles = theme === 'bo' ? boStyles : foStyles;
   const { t } = useTranslation();
 
   const { formConfig, isRequired, error, fieldRefs } = useFormRow2(

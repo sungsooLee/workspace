@@ -387,7 +387,7 @@ export interface FormRowProps {
   name: string;
   element?: ReactElement;
   formFieldConfig: FormFieldConfig;
-  style?: 'bo' | 'fo';
+  theme?: 'bo' | 'fo';
   infoNode?: ReactNode;
   fieldConfig?: FormRowFieldConfig; // name이 optional인 필드 설정
 }
