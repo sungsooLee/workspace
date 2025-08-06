@@ -9,7 +9,7 @@ import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { cn, dateDiff } from '@learnway/shared';
 
 import { getSavedUserid, pageRouteConfig, useAuthSignin } from '@features/auth';
-import { useSetLanguage } from '@features/platform';
+import { useSetLanguage } from '@features/layout';
 import { AUTH_CONTAINERS } from '@widgets/layout';
 
 import { AUTH_ERROR_CODE } from '@learnway/auth/features';

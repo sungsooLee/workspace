@@ -4,17 +4,14 @@ import { BrowserView, MobileView } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { CODE_GROUP, getDefaultLang } from '@learnway/config';
 import { useCodeGroup, useLanguageStore } from '@learnway/hooks';
 import { IcoArrowDown, IcoLang } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { Popover } from '@learnway/ui/popover';
 
-import { useCodesByCodeGroup, type Code } from '../../../../entities/platform';
 import { useSetLanguage } from '../../service/i18n.hook';
 
 import { Button } from '@learnway/ui/button';
-import { useCreation } from 'ahooks';
 import { lowerCase } from 'lodash-es';
 import styles from './language.module.css';
 
@@ -26,6 +23,7 @@ const PopoverContent = () => {
   const { data: authUser } = useFetchAuthUser();
   const { data: langCodes } = useCodeGroup('pms.multilingual.LangCountryCode', {});
   const { set: setLanguage } = useSetLanguage();
+  const { lang } = useLanguageStore((state) => state);
 
   // 다국어 공통코드
   const languages = useMemo(() => {
@@ -39,6 +37,7 @@ const PopoverContent = () => {
   }, [langCodes]);
 
   const handleLang = (lang: string) => {
+    console.log('@@@ handleLang', lang);
     setLanguage(lang);
   };
 
@@ -51,7 +50,7 @@ const PopoverContent = () => {
               <li>
                 <Button
                   key={idx}
-                  className={`${styles.btn} ${language.value === getDefaultLang() ? styles.active : ''}`}
+                  className={`${styles.btn} ${language.value === lang ? styles.active : ''}`}
                   onClick={() => handleLang(language.value)}
                 >
                   {`${language.label} (${language.enLabel})`}
@@ -70,13 +69,8 @@ interface LanguageComponentProp {
 }
 
 const LanguageComponent = ({ className }: LanguageComponentProp) => {
-  const { data: authUser } = useFetchAuthUser();
-  const { data: languageCodes } = useCodesByCodeGroup(CODE_GROUP.LANGUAGE_CODE);
   const { data: langCodes } = useCodeGroup('pms.multilingual.LangCountryCode', {});
-  const { lang, setLang } = useLanguageStore((state) => state);
-
-  console.log('@@@ authUser', authUser);
-  console.log('@@@ lang', lang);
+  const { lang } = useLanguageStore((state) => state);
 
   // 현재 선택한 다국어
   const currentLanguage = useMemo(() => {
@@ -88,18 +82,6 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
 
     return lang;
   }, [langCodes, lang]);
-
-  const languages = useCreation(() => {
-    if (!languageCodes) {
-      return [];
-    }
-    if (!authUser) {
-      return languageCodes.filter((code: Code) => DEFAULT_LANGUAGE_CODES.includes(code.code));
-    }
-    return languageCodes;
-  }, [authUser]);
-
-  console.log('@@@ currentLanguage', currentLanguage);
 
   return (
     <>
@@ -127,4 +109,7 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
   );
 };
 
+/**
+ * @description FO 로그인 화면 언어설정
+ */
 export const Language = memo(LanguageComponent);

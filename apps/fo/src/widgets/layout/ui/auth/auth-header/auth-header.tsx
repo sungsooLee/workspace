@@ -1,7 +1,6 @@
 import { memo } from 'react';
 
-import { Logo } from '../../../../../features/layout';
-import { Language } from '../../../../../features/platform';
+import { Language, Logo } from '@features/layout';
 
 import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-header/auth-header.module.css';
 
