@@ -4,13 +4,13 @@ import { FormSubTitle } from '@learnway/ui/base-form';
 import { SplitPanel } from '@learnway/ui/elements';
 import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { GridBox } from '@learnway/ui/grid';
-import { FormRow, FormRow2, SwitchFormField } from '@shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { DateRangePickerFormField, FormRow, FormRow2, SwitchFormField } from '@shared/ui/form';
+
 import { useBulkUpdateSequence } from '@entities/learning-sequence/service/learning-sequence.hook';
-import { DateRangePickerFormField } from '@features/form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { GridImperative } from '@learnway/ui/grid';

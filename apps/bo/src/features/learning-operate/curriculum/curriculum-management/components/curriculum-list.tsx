@@ -8,11 +8,8 @@ import {
 } from '@learnway/hooks';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
-import {
-  SearchBox,
-  TenantByRoleDropdownFormField,
-  TenantChannelDropdownFormField,
-} from '@shared/ui';
+import { TenantByRoleDropdownFormField, TenantChannelDropdownFormField } from '@shared/ui/form';
+import { SearchBox } from '@shared/ui/search-box';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';

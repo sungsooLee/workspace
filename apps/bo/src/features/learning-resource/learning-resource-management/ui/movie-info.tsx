@@ -5,7 +5,7 @@ import { useVideoResource } from '@entities/learning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
 import { DynamicFormProvider, useFileManager } from '@learnway/hooks';
 import { formatBytes } from '@learnway/shared';
-import { PreviewLearningWindow } from '@shared/ui';
+import { PreviewLearningWindow } from '@shared/ui/modal';
 import { t } from 'i18next';
 import { max } from 'lodash-es';
 import { useCallback, useMemo } from 'react';
@@ -26,7 +26,8 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
     processingStatus: status,
     playTime,
     videoResource,
-    handleChangeVideo } = useVideoResource(provider);
+    handleChangeVideo,
+  } = useVideoResource(provider);
 
   const url = useMemo(() => videoResource?.masterVideo, [videoResource]);
   const height = useMemo(
@@ -55,7 +56,8 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
           type={LEARNING_TYPE.VIDEO}
           maxFileCount={1}
         />
-      ) });
+      ),
+    });
     if (!fileUuid) return;
 
     handleChangeVideo(fileUuid);
@@ -64,7 +66,8 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
   const preview = useCallback(() => {
     openModal({
       width: 'full',
-      content: <PreviewLearningWindow contentUuid={contentUuid} /> });
+      content: <PreviewLearningWindow contentUuid={contentUuid} />,
+    });
   }, [contentUuid]);
   // media info_list
   const infoList = [
@@ -85,16 +88,20 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
   const buttons = [
     {
       label: t('원본 다운로드'),
-      onClick: downloadOriginal },
+      onClick: downloadOriginal,
+    },
     {
       label: t('동영상 변경'),
-      onClick: changeFile },
+      onClick: changeFile,
+    },
     {
       label: t('콘텐츠 URL보기'),
-      onClick: () => console.log('btn 3') },
+      onClick: () => console.log('btn 3'),
+    },
     {
       label: t('미리보기'),
-      onClick: preview },
+      onClick: preview,
+    },
   ];
 
   return (

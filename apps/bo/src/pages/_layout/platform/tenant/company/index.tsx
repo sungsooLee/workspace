@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { MainContents, PageContainer } from '@shared/ui';
+import { MainContents, PageContainer } from '@shared/ui/layout';
 
 import { TenantCompanyList } from '@features/platform-management/tenant/company/company-list';
 

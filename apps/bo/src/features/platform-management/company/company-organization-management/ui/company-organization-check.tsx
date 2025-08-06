@@ -1,4 +1,4 @@
-import { SectionLayout } from '@shared/ui';
+import { SectionLayout } from '@shared/ui/layout';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';

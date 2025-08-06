@@ -1,6 +1,5 @@
 import { LESSON_TYPE, MODULE_TYPE, useGetLessonDetail } from '@entities/curriculum';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
-import { DropdownFormField, DurationTimeFormField } from '@features/form/ui';
 import { DynamicFormProvider } from '@learnway/hooks';
 import { IcoPlus } from '@learnway/icons';
 import { getHourValueFromTime } from '@learnway/shared';
@@ -12,7 +11,8 @@ import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { Textarea } from '@learnway/ui/textarea';
 import { DropdownOption } from '@learnway/ui/type';
-import { FormRow2, ResourceChoiceModal } from '@shared/ui';
+import { DropdownFormField, DurationTimeFormField, FormRow2 } from '@shared/ui/form';
+import { ResourceChoiceModal } from '@shared/ui/modal';
 import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
 import { useQuery } from '@tanstack/react-query';
 import { t } from 'i18next';

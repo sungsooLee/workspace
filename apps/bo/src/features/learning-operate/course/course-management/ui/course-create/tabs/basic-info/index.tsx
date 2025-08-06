@@ -1,4 +1,3 @@
-import { DropdownFormField } from '@features/form';
 import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { Badge } from '@learnway/ui/badge';
@@ -15,15 +14,18 @@ import {
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import {
+  DropdownFormField,
   FormRow2,
   TenantByRoleChannelCheckboxFormField,
   TenantChannelDropdownFormField2,
+} from '@shared/ui/form';
+import {
   TrainingPlaceChoiceModal,
   UserChoiceModal,
   UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
-} from '@shared/ui';
-import { forwardRef } from 'react';
+} from '@shared/ui/modal';
+import { forwardRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';
 import { CourseTabBaseProps } from '../../../../types/type';
@@ -37,7 +39,11 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
 
   const { isUpdateMode, initCourseType } = useCourseCreateSubPage(form);
 
-  console.log('initCourseType', initCourseType);
+  useEffect(() => {
+    if (initCourseType) {
+      onFormChange({ courseType: initCourseType });
+    }
+  }, [initCourseType]);
 
   return (
     <form>
@@ -112,7 +118,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
                 labelField: 'categoryPath',
                 valueField: 'categoryId',
                 selectedNodeBeforeLabel: (
-                  <Badge option={{ label: '대표', value: '' }} variant={'text'} status="fill" />
+                  <Badge option={{ label: t('대표'), value: '' }} variant={'text'} status="fill" />
                 ),
               }}
               selectedValue={getValues()?.primaryCategoryId}

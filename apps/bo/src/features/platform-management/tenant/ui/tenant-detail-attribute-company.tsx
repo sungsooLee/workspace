@@ -1,21 +1,16 @@
-import React, { FC, forwardRef, useEffect, useState, useRef, useImperativeHandle } from 'react';
 import { t } from 'i18next';
-import { useRouterState } from '@tanstack/react-router';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
-import { cn } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
+import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-// TODO: Fix unknown imports: DynamicFormField from '@learnway/ui'
-import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
+import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui/form';
 
 /** Hook 정의 */
-import {
-  useTenantAttributeCompany,
-  useUpdateTenantAttributeCompany } from '@entities/tenant/service/tenant-attribute.hook';
+import { useUpdateTenantAttributeCompany } from '@entities/tenant/service/tenant-attribute.hook';
 
 /**
  * 화면번호: NLP_BO_TMS_1003_00_04 (과정등록 연관 설정 figma: NLP_BO_TMS_1003_00-04)
@@ -29,7 +24,8 @@ const TenantDetailAttributeCompanyComponent = (
     attributeData,
     companyId,
     tenantName,
-    onUpdateComplete }: {
+    onUpdateComplete,
+  }: {
     tenantId: number;
     attributeData: any;
     companyId: string;
@@ -47,7 +43,8 @@ const TenantDetailAttributeCompanyComponent = (
     onSuccess: (data: any) => {
       updateFormData(data);
       onUpdateComplete?.();
-    } });
+    },
+  });
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -59,7 +56,8 @@ const TenantDetailAttributeCompanyComponent = (
     },
     clearForm() {
       onFormChange();
-    } }));
+    },
+  }));
 
   const handleOnSubmit = async (payload: any) => {
     console.log('payload {} => ', payload);
@@ -124,7 +122,8 @@ const formConfig: DynamicFormConfig = {
       name: 'tenantName',
       type: 'text',
       label: t('테넌트명'),
-      value: '' },
+      value: '',
+    },
     {
       name: 'isUseApprovalLine',
       type: 'switch',
@@ -132,7 +131,9 @@ const formConfig: DynamicFormConfig = {
       value: false,
       guideText: t('수강 신청할 때 승인하는 결제 라인을 설정합니다.'),
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isLimitLearningTime',
       type: 'switch',
@@ -140,7 +141,9 @@ const formConfig: DynamicFormConfig = {
       value: false,
       guideText: t('정해진 시간에만 학습을 할 수 있도록 설정합니다.'),
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isLimitDailyProgress',
       type: 'switch',
@@ -148,7 +151,9 @@ const formConfig: DynamicFormConfig = {
       value: false,
       guideText: t('하루에 학습할 수 있는 진도 제한을 설정합니다.'),
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isResetProgress',
       type: 'switch',
@@ -156,7 +161,9 @@ const formConfig: DynamicFormConfig = {
       value: false,
       guideText: t('수강했던 학습 자원의 재학습 여부를 설정합니다. '),
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isUseTextbook',
       type: 'switch',
@@ -164,7 +171,9 @@ const formConfig: DynamicFormConfig = {
       value: false,
       guideText: t('과정 등록 시 교재와 교재 정보 사용 여부를 설정합니다.'),
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isUseTextbookShippingAddress',
       type: 'switch',
@@ -172,7 +181,9 @@ const formConfig: DynamicFormConfig = {
       value: false,
       guideText: t('교재를 사용하는 경우 교재 배송지 필요 여부를 설정합니다.'),
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isUseTrainingCostPerPerson',
       type: 'switch',
@@ -180,7 +191,9 @@ const formConfig: DynamicFormConfig = {
       value: false,
       guideText: t('교육비 사용 여부를 설정합니다.'),
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isUseEmploymentInsuranceRefund',
       type: 'switch',
@@ -188,7 +201,9 @@ const formConfig: DynamicFormConfig = {
       value: false,
       guideText: t('과정 등록 시 고융보험 환급 사용 여부를 설정합니다.'),
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isProvideCertificate',
       type: 'switch',
@@ -196,7 +211,9 @@ const formConfig: DynamicFormConfig = {
       value: false,
       guideText: t('과정 이수 시 수료증 제공 여부를 설정합니다. '),
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isUseLearningPoint',
       type: 'switch',
@@ -204,7 +221,9 @@ const formConfig: DynamicFormConfig = {
       value: false,
       guideText: t('학습 포인트 사용 여부를 설정합니다. '),
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isUsePreLevelTest',
       type: 'switch',
@@ -212,7 +231,9 @@ const formConfig: DynamicFormConfig = {
       value: false,
       guideText: t('학습자가 해당 과청 수강 신청 시 사전 레벨 테스트 필요 여부를 설정합니다.'),
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isUseCourseFlag',
       type: 'switch',
@@ -222,13 +243,16 @@ const formConfig: DynamicFormConfig = {
         ' 수강신청 마스터, 과정 추출, 교육 통계에 사용하는 과정 분류 값 사용 여부를 설정합니다. ',
       ),
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'companyId',
       type: 'text',
       format: 'number',
       label: '',
-      value: 1 },
+      value: 1,
+    },
   ],
   validator: {
     tenantName: { required: true },
@@ -241,4 +265,6 @@ const formConfig: DynamicFormConfig = {
     isLearningDeviceRestricted: { required: true },
     isContentSecurityEnabled: { required: true },
     isCourseBudgetUsed: { required: true },
-    isEmploymentInsuranceRefundEnabled: { required: true } } };
+    isEmploymentInsuranceRefundEnabled: { required: true },
+  },
+};

@@ -10,13 +10,9 @@ import { useBlogContentForm } from '@features/learning-resource/learning-resourc
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType } from '@shared/types/enums';
-import {
-  ContentsButtons,
-  MainContents,
-  PageContainer,
-  PreviewLearningWindow,
-  SubContents,
-} from '@shared/ui';
+
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui/layout';
+import { PreviewLearningWindow } from '@shared/ui/modal';
 import { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './blog-detail.module.css';

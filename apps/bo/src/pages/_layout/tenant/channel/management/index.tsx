@@ -7,7 +7,7 @@ import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { EnGlobalConst } from '@shared/types/enums';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { SearchBox } from '@shared/ui/search-box';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { useCreation } from 'ahooks';

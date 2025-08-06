@@ -1,7 +1,6 @@
 import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { memo, useState } from 'react';
 
-import { IcoChair, IcoLocation } from '@learnway/icons';
 
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '@learnway/ui/modal';
 import {
@@ -13,49 +12,51 @@ import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction
 
 const CourseSelectionPopupComponent = ({
   setParentCourseValues,
+  courseOptions,
 }: {
   setParentCourseValues?: any;
+  courseOptions?: any;
 }) => {
   // 퍼블수정 20250703 초기값 추가 및 임의 날짜 데이터 수정
   const [courseValues, setCourseValues] = useState<string | undefined>(undefined);
-  const courseOptions = [
-    {
-      label: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축',
-      value: 'a',
-      original: {
-        number: '1차',
-        date: '2026-01-15 ~ 2026-01-20',
-        info: [
-          {
-            icon: IcoChair,
-            txt: '999',
-          },
-          {
-            icon: IcoLocation,
-            txt: '온라인',
-          },
-        ],
-      },
-    },
-    {
-      label: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축',
-      value: 'b',
-      original: {
-        number: '2차',
-        date: '2026-01-15 ~ 2026-01-20',
-        info: [
-          {
-            icon: IcoChair,
-            txt: '999',
-          },
-          {
-            icon: IcoLocation,
-            txt: '온라인',
-          },
-        ],
-      },
-    },
-  ];
+  // const courseOptions = [
+  //   {
+  //     label: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축',
+  //     value: 'a',
+  //     original: {
+  //       number: '1차',
+  //       date: '2026-01-15 ~ 2026-01-20',
+  //       info: [
+  //         {
+  //           icon: IcoChair,
+  //           txt: '999',
+  //         },
+  //         {
+  //           icon: IcoLocation,
+  //           txt: '온라인',
+  //         },
+  //       ],
+  //     },
+  //   },
+  //   {
+  //     label: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축',
+  //     value: 'b',
+  //     original: {
+  //       number: '2차',
+  //       date: '2026-01-15 ~ 2026-01-20',
+  //       info: [
+  //         {
+  //           icon: IcoChair,
+  //           txt: '999',
+  //         },
+  //         {
+  //           icon: IcoLocation,
+  //           txt: '온라인',
+  //         },
+  //       ],
+  //     },
+  //   },
+  // ];
 
   return (
     <ModalContainer>
@@ -72,6 +73,7 @@ const CourseSelectionPopupComponent = ({
               // lectureStyles module
               <div
                 className={`${lectureStyles.start} ${lectureStyles.course_information} ${lectureStyles.course_option}`}
+                style={{ width: '100%' }}
               >
                 <div className={`${lectureStyles.box}`}>
                   <p className={lectureStyles.date}>
@@ -99,7 +101,7 @@ const CourseSelectionPopupComponent = ({
       </ModalBody>
       <ModalFooter>
         {/* 찜/공유 수강신청 Button */}
-        <CourseFixedButton course={true} courseValues={courseValues} />
+        <CourseFixedButton enrollEnable={!!courseOptions.length} courseValues={courseValues} />
       </ModalFooter>
     </ModalContainer>
   );

@@ -7,7 +7,7 @@ import { UseDynamicFormResult } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { SplitPanel } from '@learnway/ui/elements';
 
-import { ContentBaseInfo } from '@entities/learning-resource';
+import { ContentBaseInfo, QuestionBasicInfoDetail } from '@entities/learning-resource';
 import { getQuestionBankRequestData } from '@features/learning-resource/learning-resource-management/service/question-bank/common';
 import {
   QuestionBankFormData,
@@ -16,7 +16,7 @@ import {
 import { isLocalhost } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
-import { FormRow2 } from '@shared/ui';
+import { FormRow2 } from '@shared/ui/form';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
@@ -25,16 +25,17 @@ import { LearningResourceBaseForm } from './learning-resource-base-form';
 type QuestionBankDetailProps = {
   form: UseDynamicFormResult;
   isExamMapping?: boolean;
+  content?: QuestionBasicInfoDetail;
 };
 
 const LearningResourceQuestionBankDetailComponent = forwardRef<
   QuestionBankTabFormRef,
   QuestionBankDetailProps
->(({ form, isExamMapping }, ref) => {
+>(({ form, isExamMapping, content }, ref) => {
   const { t } = useTranslation();
 
   const { confirm: openConfirm } = useModal();
-  const { baseInfo, formMode, createQuestionBank } = useLearningResourceQuestionDetailForm();
+  const { formMode, createQuestionBank } = useLearningResourceQuestionDetailForm();
 
   const { provider, getValues, updateFormData } = form;
 
@@ -56,19 +57,16 @@ const LearningResourceQuestionBankDetailComponent = forwardRef<
   }));
 
   useEffect(() => {
-    if (!baseInfo) return;
+    if (!content) return;
 
-    console.log('baseInfo', baseInfo);
     updateFormData({
-      ...baseInfo,
+      ...content,
       contentUseDate: {
-        from: baseInfo.contentUseStartDate
-          ? dayjs(baseInfo.contentUseStartDate).toDate()
-          : undefined,
-        to: baseInfo.contentUseEndDate ? dayjs(baseInfo.contentUseEndDate).toDate() : undefined,
+        from: content.contentUseStartDate ? dayjs(content.contentUseStartDate).toDate() : undefined,
+        to: content.contentUseEndDate ? dayjs(content.contentUseEndDate).toDate() : undefined,
       },
     });
-  }, [baseInfo]);
+  }, [content]);
 
   return (
     <SplitPanel size={['auto', 416]} divider>

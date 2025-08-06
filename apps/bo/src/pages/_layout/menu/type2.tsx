@@ -1,4 +1,3 @@
-import { DropdownFormField } from '@features/form';
 import {
   CODE_GROUP,
   DynamicFormConfig,
@@ -9,7 +8,8 @@ import {
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui/form-field';
-import { ContentsButtons, FormRow, MainContents, PageContainer, SubContents } from '@shared/ui';
+import { DropdownFormField, FormRow } from '@shared/ui/form';
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
 import { MovieInfo } from '@widgets/contents/movie-info';
 import { useEffect, useState } from 'react';

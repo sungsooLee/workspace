@@ -1,7 +1,7 @@
 import { getRowSelectionByList } from '@learnway/shared';
 import { GridBox } from '@learnway/ui/grid';
 import { TreeBox, TreeNode } from '@learnway/ui/tree-view';
-import { SectionLayout } from '@shared/ui';
+import { SectionLayout } from '@shared/ui/layout';
 import { useRouterState } from '@tanstack/react-router';
 import { CellContext, createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';

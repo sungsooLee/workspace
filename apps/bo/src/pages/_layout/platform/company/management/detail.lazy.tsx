@@ -2,7 +2,7 @@ import { CompanyDetail, CompanyDetailHR } from '@features/platform-management/co
 import { Button } from '@learnway/ui/button';
 import { Tabs } from '@learnway/ui/tabs';
 import { EnFormMode } from '@shared/types/enums';
-import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useEffect, useRef, useState } from 'react';

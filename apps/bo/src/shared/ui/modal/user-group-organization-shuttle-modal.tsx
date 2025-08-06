@@ -1,9 +1,10 @@
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { CombineUserGroup } from '@shared/types/user-group';
-import { UserGroupOrganization } from '@shared/ui';
+
 import { t } from 'i18next';
 import { useState } from 'react';
+import { UserGroupOrganization } from '../components';
 
 type Props = {
   tenantIds: number[];

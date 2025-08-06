@@ -2,7 +2,7 @@ import { PassCriteriaData } from '@entities/course';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import { Input } from '@learnway/ui/input';
-import { NoticeBox } from '@shared/ui';
+import { NoticeBox } from '@shared/ui/notice-box';
 import { forwardRef, useCallback, useEffect, useState } from 'react';
 import styles from './pass-option-form-field.module.css';
 

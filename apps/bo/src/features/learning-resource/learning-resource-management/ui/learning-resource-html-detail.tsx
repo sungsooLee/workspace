@@ -1,9 +1,7 @@
 import { HtmlVideoDetailRes } from '@entities/learning-resource';
-import { MediaContentRequiredCheckFormField } from '@features/form/ui';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { UseDynamicFormResult } from '@learnway/hooks';
 import { cn, isEmptyData } from '@learnway/shared';
-import { ContentsHistoryInfoFormField } from '@shared/ui';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import { useRoleInfo } from '../service/util';
@@ -11,6 +9,8 @@ import { LearningResourceBaseForm } from './learning-resource-base-form';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { ContentsRow } from '@learnway/ui/contents-row';
+
+import { ContentsHistoryInfoFormField, MediaContentRequiredCheckFormField } from '@shared/ui/form';
 
 type HtmlDetailProps = {
   form: UseDynamicFormResult;

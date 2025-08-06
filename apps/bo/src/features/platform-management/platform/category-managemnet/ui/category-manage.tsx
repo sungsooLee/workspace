@@ -13,7 +13,14 @@ import {
   useMoveCategory,
   useUpdateCategory,
 } from '@entities/category';
-import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
+
+import {
+  DuplicateCheckInputFormField,
+  DuplicateState,
+  FormRow,
+  SwitchFormField,
+} from '@shared/ui/form';
+
 import {
   findMenuPathById,
   findNodeByMenuId,
@@ -35,7 +42,6 @@ import {
   TreeEventPayload,
   TreeNode,
 } from '@learnway/ui/tree-view';
-import { FormRow, SwitchFormField } from '@shared/ui';
 
 const FORM_MODE = {
   NONE: 'NONE',

@@ -1,6 +1,6 @@
 import { useApproveRequestChannel, useRejectRequestChannel } from '@entities/channel';
 import { useModal } from '@learnway/ui/modal';
-import { RejectModal } from '@shared/ui';
+import { RejectModal } from '@shared/ui/modal';
 import { t } from 'i18next';
 
 export const getChannelUrl = (channelMainId: string) => {

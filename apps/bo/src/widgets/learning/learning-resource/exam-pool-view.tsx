@@ -12,7 +12,8 @@ import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
 import { Tabs } from '@learnway/ui/tabs';
 import { ContentCreateType, EnFormMode } from '@shared/types/enums';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -32,7 +33,7 @@ function ExamPoolViewComponent({ content }: Props) {
   const contentUuid = content?.contentUuid ?? '';
   const isExamMapping = watch('isExamMapping');
 
-  const { formMode, setBaseInfo } = useLearningResourceQuestionDetailForm();
+  const [saved, setSaved] = useState<boolean>(false);
 
   const baseInfoRef = useRef<QuestionBankTabFormRef>(null);
   const questionInfoRef = useRef<QuestionBankTabFormRef>(null);
@@ -45,8 +46,8 @@ function ExamPoolViewComponent({ content }: Props) {
 
   const handleBeforeTabChange = useCallback(
     async (currentTabKey: string, nextTabKey: string) => {
-      if (nextTabKey === QuestionTab.QUESTION_ITEM && formMode === EnFormMode.ADD) {
-        alert({
+      if (nextTabKey === QuestionTab.QUESTION_ITEM && !saved) {
+        await alert({
           title: t('입력한 정보를 저장하세요.'),
           content: t('저장된 적 없는 경우 다음 단계로 이동할 수 없습니다.'),
         });
@@ -61,7 +62,7 @@ function ExamPoolViewComponent({ content }: Props) {
 
       return true;
     },
-    [contentUuid],
+    [contentUuid, saved],
   );
 
   const tabItems = useMemo(
@@ -73,6 +74,7 @@ function ExamPoolViewComponent({ content }: Props) {
           <LearningResourceQuestionBankDetail
             ref={baseInfoRef}
             form={basicInfoForm}
+            content={content}
             isExamMapping={isExamMapping}
           />
         ),
@@ -83,6 +85,7 @@ function ExamPoolViewComponent({ content }: Props) {
         content: (
           <LearningResourceQuestionBankQuestion
             ref={questionInfoRef}
+            content={content}
             isExamMapping={isExamMapping}
           />
         ),
@@ -100,7 +103,9 @@ function ExamPoolViewComponent({ content }: Props) {
   };
 
   useEffect(() => {
-    setBaseInfo(contentUuid);
+    if (contentUuid) {
+      setSaved(true);
+    }
   }, [contentUuid]);
 
   return (

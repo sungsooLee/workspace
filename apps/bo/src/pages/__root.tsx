@@ -8,7 +8,7 @@ import { PageRouteContext, setupErrorToastListener } from '@learnway/shared';
 import { ModalWrapper } from '@learnway/ui/modal';
 import { useModalStore } from '@learnway/ui/stores';
 import { ToastWrapper } from '@learnway/ui/toast';
-import { MinWidthRequired } from '@shared/ui';
+import { MinWidthRequired } from '@shared/ui/min-width-required';
 import { useBreakpointModalClose } from '../shared/lib/breakpoint-modal.hook';
 
 const TanStackRouterDevtools = lazy(() =>

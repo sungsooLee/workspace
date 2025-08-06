@@ -36,12 +36,9 @@ import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
 import { Tooltip } from '@learnway/ui/tooltip';
 import { ContentCreateType } from '@shared/types/enums';
-import {
-  GridExcelDownloadButton,
-  PreviewLearningWindow,
-  TenantByRoleDropdownFormField,
-  TenantChannelDropdownFormField,
-} from '@shared/ui';
+import { GridExcelDownloadButton } from '@shared/ui/buttons';
+import { TenantByRoleDropdownFormField, TenantChannelDropdownFormField } from '@shared/ui/form';
+import { PreviewLearningWindow } from '@shared/ui/modal';
 import { SearchBox } from '@shared/ui/search-box';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';

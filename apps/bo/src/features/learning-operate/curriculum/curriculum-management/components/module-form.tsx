@@ -1,14 +1,14 @@
 import { useGetScormDetail } from '@entities/contents';
 import { MODULE_TYPE, useGetModuleDetail } from '@entities/curriculum';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
-import { DurationTimeFormField } from '@features/form/ui';
 import { DynamicFormProvider } from '@learnway/hooks';
 import { getHourValueFromTime } from '@learnway/shared';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
 import { Textarea } from '@learnway/ui/textarea';
-import { FormRow2, ResourceChoiceModal } from '@shared/ui';
+import { DurationTimeFormField, FormRow2 } from '@shared/ui/form';
+import { ResourceChoiceModal } from '@shared/ui/modal';
 import { useQuery } from '@tanstack/react-query';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';

@@ -14,11 +14,12 @@ import { Badge } from '@learnway/ui/badge';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ProgressBar } from '@learnway/ui/progress';
-import { NoticeBox } from '@shared/ui';
+
 import { compact } from 'lodash-es';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
+import { NoticeBox } from '../notice-box';
 
 interface ExcelUploadModalProps {
   validateUrl: string;

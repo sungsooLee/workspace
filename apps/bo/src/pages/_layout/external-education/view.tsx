@@ -6,7 +6,8 @@ import {
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { Tabs } from '@learnway/ui/tabs';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { Popup } from '../../../features/external-education/components/-tabs/popup';

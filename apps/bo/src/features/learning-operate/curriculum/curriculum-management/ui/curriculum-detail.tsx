@@ -4,7 +4,7 @@ import { useDynamicForm2 } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { FORM_MODE } from '@shared/const';
-import { SectionLayout } from '@shared/ui';
+import { SectionLayout } from '@shared/ui/layout';
 import { useQueryClient } from '@tanstack/react-query';
 import { t } from 'i18next';
 import { useEffect, useRef, useState } from 'react';

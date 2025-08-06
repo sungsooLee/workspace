@@ -3,7 +3,7 @@ import { Divider } from '@learnway/ui/elements';
 import { useModal } from '@learnway/ui/modal';
 import { Tabs } from '@learnway/ui/tabs';
 import { ToggleButtonGroup } from '@learnway/ui/toggle-button-group';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { useMemo } from 'react';
 import { useCourseDetailPage } from '../../hooks/use-course-detail-page';
 import { TriggerKey, useCourseActions } from '../../store/use-course-store';

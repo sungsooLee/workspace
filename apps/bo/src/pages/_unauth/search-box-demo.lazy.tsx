@@ -1,15 +1,16 @@
 import { ALL_OPTION, SelectOption, useSearchBox } from '@learnway/hooks';
 import { formUtils } from '@learnway/shared';
-import { MainContents, PageContainer } from '@shared/ui';
+import { MainContents, PageContainer } from '@shared/ui/layout';
 import { SearchBox } from '@shared/ui/search-box';
 import { createLazyFileRoute } from '@tanstack/react-router';
 
+import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
 import { useEffect } from 'react';
 import { useWatch } from 'react-hook-form';
-import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
 
 export const Route = createLazyFileRoute('/_unauth/search-box-demo')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 function ModalComponent({ values }: { values: Record<string, any> }) {
   return (
@@ -64,7 +65,8 @@ const channel = {
     { value: 'channel5-3', label: '채널5-3' },
     { value: 'channel5-4', label: '채널5-4' },
     { value: 'channel5-5', label: '채널5-5' },
-  ] };
+  ],
+};
 
 function RouteComponent() {
   const { openModal } = useModal();
@@ -79,7 +81,9 @@ function RouteComponent() {
           value: '',
           presetOptionLabel: '선택',
           optionsConfig: {
-            options: tenants } },
+            options: tenants,
+          },
+        },
         {
           name: 'channelUuid',
           type: 'dropdown',
@@ -87,7 +91,9 @@ function RouteComponent() {
           value: '',
           presetOptionLabel: '선택',
           optionsConfig: {
-            options: [] } },
+            options: [],
+          },
+        },
         {
           name: 'multi-dropdown',
           type: 'dropdown',
@@ -102,7 +108,9 @@ function RouteComponent() {
               { value: 'optionB', label: '옵션B' },
               { value: 'optionC', label: '옵션C' },
               { value: 'optionD', label: '옵션D' },
-            ] } },
+            ],
+          },
+        },
       ],
       [
         {
@@ -115,7 +123,9 @@ function RouteComponent() {
             options: [
               { value: 'true', label: '사용' },
               { value: 'false', label: '미사용' },
-            ] } },
+            ],
+          },
+        },
         {
           name: 'single-input-dropdown',
           type: 'dropdown',
@@ -129,12 +139,15 @@ function RouteComponent() {
               { value: 'banana', label: '바나나' },
               { value: 'cherry', label: '체리' },
               { value: 'grape', label: '포도' },
-            ] } },
+            ],
+          },
+        },
         {
           name: 'text-input',
           type: 'text',
           label: '텍스트 입력',
-          value: '' },
+          value: '',
+        },
       ],
       [
         {
@@ -143,13 +156,17 @@ function RouteComponent() {
           label: '기간 입력',
           value: {
             from: formUtils.now(),
-            to: formUtils.now({ unit: 'day', offset: 7 }) } },
+            to: formUtils.now({ unit: 'day', offset: 7 }),
+          },
+        },
       ],
     ],
     validator: {
       tenantUuid: true,
       channelUuid: true,
-      'multi-dropdown': true } };
+      'multi-dropdown': true,
+    },
+  };
 
   const { provider, getValues, setValue, setOptions } = useSearchBox(searchConfig);
 
@@ -173,7 +190,8 @@ function RouteComponent() {
   const handleSearch = (data: Record<string, any>) => {
     openModal({
       width: 'sm',
-      content: <ModalComponent values={data} /> });
+      content: <ModalComponent values={data} />,
+    });
   };
 
   return (

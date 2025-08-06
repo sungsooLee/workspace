@@ -1,8 +1,8 @@
-import { DropdownFormField, FormDisplay } from '@features/form';
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
 import { CourseChoiceModal } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import { SplitPanel } from '@learnway/ui/elements';
 import {
   CheckboxGroupFormField,
@@ -10,13 +10,19 @@ import {
   InputModalSelectorFormField,
   RadioGroupFormField,
 } from '@learnway/ui/form-field';
-import { FormRow, FormRow2, PassOptionFormField, SwitchFormField } from '@shared/ui';
+import { Input } from '@learnway/ui/input';
+import {
+  DropdownFormField,
+  FormDisplay,
+  FormRow,
+  FormRow2,
+  PassOptionFormField,
+  SwitchFormField,
+} from '@shared/ui/form';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';
 import { CourseTabBaseProps } from '../../../../types/type';
-import { ContentsRow } from '@learnway/ui/contents-row';
-import { Input } from '@learnway/ui/input';
 
 const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) => {
   const { t } = useTranslation();
@@ -44,7 +50,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           name={'isLearnEnvEnabled'}
           label={t('학습환경')}
           format={'boolean'}
-          element={<SwitchFormField disabled={courseConfig?.learningEnvOption === 'IMPOSSIBLE'} />}
+          element={<SwitchFormField disabled={courseConfig?.learningEnvOption !== 'OPTIONAL'} />}
         />
       </ContentsRow>
       {/* 기기 제한, 네트워크 제한, 학습시간 제한 */}
@@ -166,7 +172,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           format={'boolean'}
           label={t('학습제어')}
           element={
-            <SwitchFormField disabled={courseConfig?.learningControlOption === 'IMPOSSIBLE'} />
+            <SwitchFormField disabled={courseConfig?.learningControlOption !== 'OPTIONAL'} />
           }
         />
       </ContentsRow>
@@ -280,7 +286,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           name={'isUsePassOption'}
           label={t('이수기준')}
           format={'boolean'}
-          element={<SwitchFormField disabled={courseConfig?.passOption === 'IMPOSSIBLE'} />}
+          element={<SwitchFormField disabled={courseConfig?.passOption !== 'OPTIONAL'} />}
         />
       </ContentsRow>
       <FormDisplay provider={provider} dependencies={[{ name: 'isUsePassOption', value: true }]}>
@@ -348,6 +354,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             name={'passOption'}
             label={t('이수기준 설정')}
             format={'object'}
+            validation={{ required: true, format: 'object' }}
             element={<PassOptionFormField />}
           />
         </ContentsRow>
@@ -411,9 +418,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           name={'isCommunicationToolEnabled'}
           label={t('커뮤니티 및 공유설정')}
           format={'boolean'}
-          element={
-            <SwitchFormField disabled={courseConfig?.communicationOption === 'IMPOSSIBLE'} />
-          }
+          element={<SwitchFormField disabled={courseConfig?.communicationOption !== 'OPTIONAL'} />}
         />
       </ContentsRow>
       {/* 커뮤니티 및 공유 설정 */}
@@ -490,7 +495,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           name={'isInstructorAssigned'}
           label={t('강사')}
           format={'boolean'}
-          element={<SwitchFormField disabled={courseConfig?.instructorOption === 'IMPOSSIBLE'} />}
+          element={<SwitchFormField disabled={courseConfig?.instructorOption !== 'OPTIONAL'} />}
         />
       </ContentsRow>
       {/* 강사 */}
@@ -557,7 +562,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           name={'isTextbookProvided'}
           label={t('교재')}
           format={'boolean'}
-          element={<SwitchFormField disabled={courseConfig?.textBookOption === 'IMPOSSIBLE'} />}
+          element={<SwitchFormField disabled={courseConfig?.textBookOption !== 'OPTIONAL'} />}
         />
       </ContentsRow>
       <FormDisplay provider={provider} dependencies={[{ name: 'isTextbookProvided', value: true }]}>
@@ -588,9 +593,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           name={'isRelatedPrerequisiteCourseExisted'}
           label={t('사전/연관학습')}
           format={'boolean'}
-          element={
-            <SwitchFormField disabled={courseConfig?.relatedCourseOption === 'IMPOSSIBLE'} />
-          }
+          element={<SwitchFormField disabled={courseConfig?.relatedCourseOption !== 'OPTIONAL'} />}
         />
       </ContentsRow>
       <FormDisplay
@@ -664,6 +667,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           provider={provider}
           name={'hmgStandardMainCategory'}
           label={t('HMG 과정 데이터 표준 대분류')}
+          validation={{ required: true, format: 'string' }}
           element={
             <DropdownFormField
               optionsConfig={{
@@ -677,6 +681,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           provider={provider}
           name={'hmgStandardSubCategory'}
           label={t('HMG 과정 데이터 표준 중분류')}
+          validation={{ required: true, format: 'string' }}
           element={
             <DropdownFormField
               optionsConfig={{

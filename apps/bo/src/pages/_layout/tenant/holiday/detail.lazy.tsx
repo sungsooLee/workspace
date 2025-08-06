@@ -1,14 +1,14 @@
-import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
+import { TenantHolidayDetail } from '@features/tenant-management/tenant/holiday/tenant-holiday-detail';
 import { Button } from '@learnway/ui/button';
+import { EnFormMode } from '@shared/types/enums';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
+import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useRef } from 'react';
-import { TenantUserApplicationDetail } from '@features/tenant-management/tenant/holiday/tenant-holiday-detail';
-import { EnFormMode } from '@shared/types/enums';
 
 export const Route = createLazyFileRoute('/_layout/tenant/holiday/detail')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   const router = useRouter();
@@ -23,12 +23,12 @@ function RouteComponent() {
   const handleResetClick = () => {
     const detail: any = formRef.current;
     detail.clearForm();
-  }
+  };
 
   const handleRemoveClick = () => {
     const detail: any = formRef.current;
     detail.removeData();
-  }
+  };
 
   const handleListClick = () => {
     router.navigate({ to: '/tenant/holiday' });
@@ -42,12 +42,11 @@ function RouteComponent() {
             {t('LABEL.button.list')}
           </Button>
         </LinkBox>
-        {
-          routerState.location.state.mode !== EnFormMode.ADD &&
-            <Button variant="point" size="sm" onClick={handleRemoveClick}>
-              {t('삭제')}
-            </Button>
-        }
+        {routerState.location.state.mode !== EnFormMode.ADD && (
+          <Button variant="point" size="sm" onClick={handleRemoveClick}>
+            {t('삭제')}
+          </Button>
+        )}
         <Button variant="point" size="sm" onClick={handleResetClick}>
           {t('초기화')}
         </Button>
@@ -56,8 +55,8 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <TenantUserApplicationDetail ref={formRef} mode={EnFormMode.VIEW}/>
+        <TenantHolidayDetail ref={formRef} mode={EnFormMode.VIEW} />
       </MainContents>
     </PageContainer>
-  )
+  );
 }

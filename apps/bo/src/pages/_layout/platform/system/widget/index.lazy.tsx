@@ -1,16 +1,17 @@
-import React, { useCallback } from 'react';
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { useSearchBox } from '@learnway/hooks';
-import { useCreation } from 'ahooks';
 import { widgetsQueryOptions } from '@entities/widgets';
-import { SearchBox } from '@shared/ui';
 import { WidgetPreviewButton } from '@features/platform';
+import { useSearchBox } from '@learnway/hooks';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
-import { MainContents, PageContainer } from '@shared/ui';
+import { MainContents, PageContainer } from '@shared/ui/layout';
+import { SearchBox } from '@shared/ui/search-box';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { useCreation } from 'ahooks';
+import { useCallback } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/platform/system/widget/')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 function RouteComponent() {
   const router = useRouter();
@@ -23,7 +24,8 @@ function RouteComponent() {
         {
           name: 'no1',
           label: 'NO.',
-          type: 'numbering' },
+          type: 'numbering',
+        },
         { name: 'widgetName', label: '위젯명', meta: { size: 'auto' } },
         { name: 'deviceNames', label: '디바이스', meta: { size: 'auto' } },
         { name: 'status', label: '상태', meta: { size: 'auto' } },
@@ -31,14 +33,17 @@ function RouteComponent() {
           name: 'preview',
           label: '미리보기',
           render: ({ row }: any) => <WidgetPreviewButton widget={row.original} />,
-          meta: { size: 'auto' } },
+          meta: { size: 'auto' },
+        },
       ],
       data: [],
       pagination: {
         pageSize: 10,
         pageIndex: 0,
-        totalRows: 0 },
-      height: 450 }),
+        totalRows: 0,
+      },
+      height: 450,
+    }),
     [],
   );
 
@@ -59,7 +64,8 @@ function RouteComponent() {
           onRowSelect={(row: any) => {
             router.navigate({
               to: '/platform/system/widget/view',
-              state: { widgetCode: row?.widgetCode } });
+              state: { widgetCode: row?.widgetCode },
+            });
           }}
         />
       </MainContents>
@@ -79,11 +85,14 @@ const searchConfig: any = {
           { value: '', label: '전체' },
           { value: 'true', label: '사용' },
           { value: 'false', label: '사용불가' },
-        ] },
+        ],
+      },
       {
         name: 'widgetName',
         type: 'text',
         label: '위젯명',
-        value: '' },
+        value: '',
+      },
     ],
-  ] };
+  ],
+};

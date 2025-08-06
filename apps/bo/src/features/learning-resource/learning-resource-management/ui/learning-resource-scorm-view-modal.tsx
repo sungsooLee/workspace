@@ -4,7 +4,7 @@ import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@l
 
 import { ScormOrgn } from '@entities/learning-resource';
 import { GridBox } from '@learnway/ui/grid';
-import { PreviewLearningWindow } from '@shared/ui';
+import { PreviewLearningWindow } from '@shared/ui/modal';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { flatten } from 'lodash-es';

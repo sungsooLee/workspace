@@ -582,15 +582,18 @@ export enum EnQuestionLevel {
   MEDIUM = 'MEDIUM',
   EASY = 'EASY',
 }
+
 export interface QuestionItem {
   sortSeq: number;
+  contentUuid: string;
   examQuestionUuid: string;
   questionText: string;
   questionType: EnQuestionType;
   explainText: string;
   questionLevel: EnQuestionLevel;
   fileUuid: string;
-  optionCount: number;
+  fileType: string;
+  optionCount?: number;
   isUsed: boolean;
   options: QuestionItemOption[];
 }

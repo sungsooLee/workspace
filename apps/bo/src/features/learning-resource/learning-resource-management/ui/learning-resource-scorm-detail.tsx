@@ -1,8 +1,8 @@
 //  IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002 / 교육자원조회_나의 교육자원_등록_동영상(자체)
 
-import { MediaContentRequiredCheckFormField } from '@features/form/ui';
+import { ContentsHistoryInfoFormField, MediaContentRequiredCheckFormField } from '@shared/ui/form';
+
 import { DynamicFormProvider } from '@learnway/hooks';
-import { ContentsHistoryInfoFormField } from '@shared/ui';
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 
 interface Props {

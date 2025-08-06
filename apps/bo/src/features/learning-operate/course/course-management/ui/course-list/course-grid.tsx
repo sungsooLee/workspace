@@ -1,7 +1,7 @@
 import { CourseListItem } from '@entities/course';
 import { Button } from '@learnway/ui/button';
 import { GridBox } from '@learnway/ui/grid';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseButtonState } from '../../types/type';

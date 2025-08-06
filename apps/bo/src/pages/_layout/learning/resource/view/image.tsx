@@ -1,26 +1,28 @@
-import {
-  DateRangePickerFormField,
-  ResourceImageListFormField,
-  SharedChannelGridFormField,
-} from '@features/form/ui';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { getRandomId } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { InputModalSelectorFormField } from '@learnway/ui/form-field';
 import {
-  ChannelChoiceModal,
+  ContentsHistoryInfoFormField,
+  DateRangePickerFormField,
+  FormDisplay,
+  FormGroup,
+  FormRow,
+  ResourceImageListFormField,
+  SharedChannelGridFormField,
+} from '@shared/ui/form';
+import {
   ContentsButtons,
   LinkBox,
   MainContents,
-  ManagerChoiceModal,
   PageContainer,
   SubContents,
-} from '@shared/ui';
+} from '@shared/ui/layout';
+import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui/modal';
+
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { FormDisplay } from '../../../../../features/form/ui/form-display';
-import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 
 export const Route = createFileRoute('/_layout/learning/resource/view/image')({
   component: RouteComponent,

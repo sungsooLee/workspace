@@ -1,3 +1,4 @@
+import { useCourseFullDetail } from '@entities/course';
 import { CourseDetail } from '@features/course/detail/course-detail';
 import { CourseDetailMobile } from '@features/course/detail/course-detail.mobile';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
@@ -16,13 +17,19 @@ function RouteComponent() {
   //   if (!courseId) router.navigate({ to: '/course/detail' });
   // }, [courseId, router]);
 
+  const testCourseId = 7;
+  const { data: courseData, isLoading, isError } = useCourseFullDetail(courseId || testCourseId);
+
+  if (isLoading) return <div>로딩</div>;
+  if (isError) return <div>에러발생</div>;
+
   return (
     <>
       <BrowserView>
-        <CourseDetail />
+        <CourseDetail courseId={courseId || testCourseId} courseData={courseData} />
       </BrowserView>
       <MobileView>
-        <CourseDetailMobile />
+        <CourseDetailMobile courseId={courseId || testCourseId} courseData={courseData} />
       </MobileView>
     </>
   );

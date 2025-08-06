@@ -108,9 +108,9 @@ export const formDataToRequestData = (d: Course) => {
   }
 
   // 강사 > 강사선택
-  if (d.instructorAssignType === 'REGISTERED') {
-    d.instructorName = undefined; // 강사 직접입력
-  }
+  // if (d.instructorAssignType === 'REGISTERED') {
+  //   d.instructorName = undefined; // 강사 직접입력
+  // }
 
   // 1인당 교육비 > 미사용
   if (d.isUseTrainingCostPerPerson === false) {

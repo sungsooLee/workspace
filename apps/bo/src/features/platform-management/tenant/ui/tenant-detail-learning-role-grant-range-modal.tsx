@@ -17,8 +17,8 @@ import { FormSubTitle } from '@learnway/ui/base-form';
 import { Tooltip } from '@learnway/ui/tooltip';
 
 import { useSaveUsers } from '@entities/role/service/role-manage.hook';
-import { DateRangePickerFormField } from '@features/form';
-import { FormRow } from '@shared/ui';
+
+import { DateRangePickerFormField, FormRow } from '@shared/ui/form';
 
 /**
  * 화면번호: NLP_BO_PMS_1111 (데이터접근범위 일괄적용)

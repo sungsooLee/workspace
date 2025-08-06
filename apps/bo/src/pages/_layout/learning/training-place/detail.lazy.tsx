@@ -1,7 +1,7 @@
 import { TrainingPlaceDetail } from '@features/learning-operate-support/learning-space/learning-space-management/training-place-detail';
 import { Button } from '@learnway/ui/button';
 import { EnFormMode, EnPageMode } from '@shared/types/enums';
-import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useEffect, useRef } from 'react';

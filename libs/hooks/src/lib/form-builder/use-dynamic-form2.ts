@@ -477,6 +477,16 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     return (formState as any).values;
   }, [formState]);
 
+  // 모든 필드를 dirty 를 false로 만드는 함수
+  const resetDirtyState = () => {
+    // 폼의 현재 값들을 가져옵니다.
+    const currentValues = getValues();
+
+    // reset 함수에 현재 값들을 새로운 defaultValues로 전달합니다.
+    // 이렇게 하면 isDirty 상태가 false로 재설정됩니다.
+    reset(currentValues);
+  };
+
   // provider 객체 반환
   return {
     provider,
@@ -496,5 +506,6 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     getInitByBuilders,
     clearAllValidators,
     onReset: onFormChange,
+    resetDirtyState,
   };
 };

@@ -10,7 +10,7 @@ import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
 import { EnGlobalConst } from '@shared/types/enums';
 import { RoleInfo } from '@shared/types/role-application';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useRouterState } from '@tanstack/react-router';

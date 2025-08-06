@@ -7,7 +7,7 @@ import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
 import { EnGlobalConst } from '@shared/types/enums';
-import { GridExcelUploadButton } from '@shared/ui';
+import { GridExcelUploadButton } from '@shared/ui/buttons';
 import { SearchBox } from '@shared/ui/search-box';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';

@@ -1,5 +1,5 @@
 import { Tabs } from '@learnway/ui/tabs';
-import { SectionLayout } from '@shared/ui';
+import { SectionLayout } from '@shared/ui/layout';
 import { FC } from 'react';
 
 /* styles */

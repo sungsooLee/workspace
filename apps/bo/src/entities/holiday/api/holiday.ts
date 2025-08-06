@@ -1,10 +1,11 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 import { PageableContent } from '@shared/types/page-meta';
+import { HolidayParams, HolidayResponse } from '@entities/holiday/types/holiday.types';
 
 export default class HolidayService {
-  static fetchListHoliday(params: any) {
-    return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/holiday`, params);
+  static fetchListHoliday(params: HolidayParams) {
+    return httpService.get<PageableContent<HolidayResponse>>(`${PMSApiPrefix()}/holiday`, params);
   }
   static fetchHoliday(holidayId: number) {
     return httpService.get(`${PMSApiPrefix()}/holiday/${holidayId}`);

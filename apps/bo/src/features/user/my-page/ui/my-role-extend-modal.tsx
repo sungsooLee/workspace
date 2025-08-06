@@ -7,8 +7,6 @@ import {
   useCreateMyRoleApplication,
   useGetMyRoleApplication,
 } from '@entities/role/service/role-manage.hook';
-import { DateRangePickerFormField } from '@features/form/ui';
-import { FormDisplay } from '@features/form/ui/form-display';
 import { useDynamicForm } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
@@ -17,7 +15,8 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { Textarea } from '@learnway/ui/textarea';
-import { FormRow } from '@shared/ui';
+
+import { DateRangePickerFormField, FormDisplay, FormRow } from '@shared/ui/form';
 
 // request - 연장신청, view 보기, approvel - 승인/반려
 type MyRoleModal = 'request' | 'view' | 'approvel';

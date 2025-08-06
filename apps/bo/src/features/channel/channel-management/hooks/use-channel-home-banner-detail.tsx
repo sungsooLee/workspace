@@ -7,7 +7,7 @@ import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
 import { EnFormMode, EnGlobalConst } from '@shared/types/enums';
-import { CourseChoiceModal, PackageChoiceModal } from '@shared/ui';
+import { CourseChoiceModal, PackageChoiceModal } from '@shared/ui/modal';
 import { useRouterState } from '@tanstack/react-router';
 import dayjs from 'dayjs';
 import { t } from 'i18next';

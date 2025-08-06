@@ -8,7 +8,14 @@ import {
   useMoveMenu,
   useUpdateMenu,
 } from '@entities/menu';
-import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
+
+import {
+  DuplicateCheckInputFormField,
+  DuplicateState,
+  FormRow,
+  SwitchFormField,
+} from '@shared/ui/form';
+
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
@@ -28,7 +35,6 @@ import {
   TreeNode,
 } from '@learnway/ui/tree-view';
 import { ApiMappingMenuDetail, MenuDetail } from '@shared/types/menu';
-import { FormRow, SwitchFormField } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';

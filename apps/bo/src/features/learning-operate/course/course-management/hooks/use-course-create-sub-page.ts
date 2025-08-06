@@ -28,25 +28,14 @@ import { getDummyCourse, getDummyCourse2, getDummyCourse4 } from './course-mock-
 export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const { showSaveComplete, saveConfirm, showDeleteComplete } = useModal();
   const navigate = useNavigate();
-  const { updateFormData, formValues, onSubmit, formState, watch } = form;
+  const { updateFormData, formValues, onSubmit, formState, watch, getValues, resetDirtyState } =
+    form;
   const lastTriggered = useCourseLastTriggered();
   const { courseId, courseType: initCourseType, activeTab } = useCourseCreateInfo();
   const { setCheckDirtyForm } = useCourseActions();
 
-  const courseType = watch('courseType');
-  const channelUuid = watch('channelUuid');
-
-  // courseData를 먼저 가져와서 channelUuid를 확보
-
-  // const { data: courseData } = useFetchCourse(courseId);
-
-  // const { data: courseConfig } = useFetchCourseConfig(
-  //   useMemo(() => ({ courseType, channelUuid }), [courseType, channelUuid]),
-  // );
-
+  // 과정 상세 정보, 과정 설정 정보 조회
   const { course: courseData, courseConfig } = useFetchCourseAndConfig(courseId);
-
-  // 과정 설정 정보(courseConfig) 조회
 
   // 과정 생성 뮤테이션
   const { mutate: createCourse } = useCreateCourse({
@@ -65,8 +54,10 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   });
 
   // 각 스텝별 과정 수정 뮤테이션 객체
-  const updateMutations = useUpdateCourseWizardMutations(() => {
-    showSaveComplete();
+  const updateMutations = useUpdateCourseWizardMutations(async () => {
+    await showSaveComplete();
+    // 모든 필드 dirty 초기화
+    resetDirtyState();
     if (activeTab === CourseTab.STEP5) {
       moveCourseDetailPage();
     }
@@ -104,23 +95,6 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     deleteCourse(courseId);
   }, [courseId]);
 
-  // 테스트용 더미 데이터 로드
-  const loadMockData = useCallback((type = 1) => {
-    const dummyData =
-      type === 1
-        ? getDummyCourse()
-        : type === 2
-          ? getDummyCourse2()
-          : type === 4
-            ? getDummyCourse4()
-            : getDummyCourse();
-    // setData((prev) => ({
-    //   ...prev,
-    //   formData: dummyData as Course,
-    //   courseConfig: getDummyCourseConfig(),
-    // }));
-  }, []);
-
   // 수정 모드 여부
   const isUpdateMode = useMemo(() => !!courseData?.courseId, [courseData]);
 
@@ -155,31 +129,11 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
 
   // 과정 상세 조회시 폼 데이터 갱신
   useEffect(() => {
-    console.log('1111', { courseData, courseConfig });
     if (courseData) {
       const formData = responseDataToFormData(courseData, courseConfig);
       updateFormData(formData);
     }
   }, [courseData, courseConfig]);
-
-  // 등록 최초에 과정유형 기본값 선택 (dwondown 기능 개발 되면 삭제 예정)
-  useEffect(() => {
-    if (initCourseType) {
-      console.log('222222', initCourseType);
-      updateFormData({ courseType: initCourseType });
-    }
-  }, [initCourseType]);
-
-  // 과정 상세 조회시 폼 데이터 갱신
-  // useEffect(() => {
-  //   if (courseData && courseConfig) {
-  //     const formData = responseDataToFormData(courseData, courseConfig);
-  //     updateFormData(formData);
-  //   } else if (!courseData && !courseConfig) {
-  //     // 등록 최초에 과정유형 기본값 선택
-  //     updateFormData({ courseType: initCourseType, channelUuid });
-  //   }
-  // }, [courseData, courseConfig, initCourseType, channelUuid]);
 
   // form state 변경 시 코스 생성 정보 업데이트 - 무한 반복 방지를 위해 제거
   useEffect(() => {
@@ -189,7 +143,6 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
 
   return {
     isUpdateMode,
-    loadMockData,
     courseConfig,
     initCourseType,
   };

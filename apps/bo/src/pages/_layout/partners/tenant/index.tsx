@@ -1,13 +1,14 @@
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
 import { FC, useEffect } from 'react';
 import { FormRow } from '../../../../shared/ui/form';
-import { Button } from '@learnway/ui/button';
-import { ContentsRow } from '@learnway/ui/contents-row';
 
 export const Route = createFileRoute('/_layout/partners/tenant/')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 const formConfig: DynamicFormConfig = {
   builders: [
@@ -15,17 +16,20 @@ const formConfig: DynamicFormConfig = {
       name: 'channel',
       label: '폼A 채널',
       type: 'text',
-      value: '' },
+      value: '',
+    },
     {
       name: 'channel2',
       label: '채널2',
       type: 'text',
-      value: '' },
+      value: '',
+    },
   ],
   validator: {
     /*channel: z.string().required(),
     channel2: z.string().required(),*/
-  } };
+  },
+};
 
 function RouteComponent() {
   const { provider, onSubmit, onFormChange, setFormError, formState } = useDynamicForm(formConfig);
@@ -36,7 +40,7 @@ function RouteComponent() {
 
   const handleSetError = () => {
     console.log('set error');
-    setFormError('channel2', 'custom message' + String(Math.floor(Math.random() * 100)));
+    setFormError('channel2', `custom message${String(Math.floor(Math.random() * 100))}`);
   };
 
   useEffect(() => {

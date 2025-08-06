@@ -1,4 +1,3 @@
-import { FormDisplay } from '@features/form';
 import { DynamicFormConfig, SearchBoxConfig, useDynamicForm, useSearchBox } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
@@ -6,7 +5,9 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { Divider } from '@learnway/ui/elements';
 import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
-import { FormItem, FormRow, SearchBox, UserGroupOrganizationShuttleModal } from '@shared/ui';
+import { FormDisplay, FormItem, FormRow } from '@shared/ui/form';
+import { UserGroupOrganizationShuttleModal } from '@shared/ui/modal';
+import { SearchBox } from '@shared/ui/search-box';
 import { createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
