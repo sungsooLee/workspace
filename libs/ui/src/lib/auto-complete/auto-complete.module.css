@@ -23,6 +23,14 @@
         }
       }
     }
+    &.xs {
+      [class*='nlp-select__control'] {
+        @apply min-h-[28px] h-[28px];
+        .nlp-select__indicators {
+          @apply h-[28px];
+        }
+      }
+    }
     &.sm {
       [class*='nlp-select__control'] {
         @apply min-h-[32px];

@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 
-import { IcoArrowDown, IcoCheck02 } from '@learnway/icons';
+import { IcoArrowDown, IcoCheck02, IcoMap01 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { Popover } from '@learnway/ui/popover';
@@ -54,8 +54,9 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
       align="end"
       sideOffset={5}
     >
+      <IcoMap01 width={24} height={24} className={styles.icon_map} />
       <span className={styles.select}>{'KR'}</span>
-      <IcoArrowDown width={16} height={16} stroke="#ffffff" />
+      <IcoArrowDown width={16} height={16} stroke="#ffffff" className={styles.icon_arrow} />
     </Popover>
   );
 };
