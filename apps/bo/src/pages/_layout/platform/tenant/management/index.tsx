@@ -3,11 +3,12 @@ import { t } from 'i18next';
 
 import { PageContainer, MainContents, ContentsButtons } from '@shared/ui';
 
-import { TenantManagmentList } from '@features/platform-management/tenant/ui/tenant-managment-list';
+import { TenantManagmentList } from '@features/platform-management/tenant/ui/tenant-management-list';
 import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 function RouteComponent() {
   const router = useRouter();
