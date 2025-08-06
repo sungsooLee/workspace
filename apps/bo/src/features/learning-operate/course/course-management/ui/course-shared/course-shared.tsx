@@ -88,12 +88,11 @@ const CourseSharedComponent = () => {
     );
     console.log('originResult=>', originResult);
     if (originResult) {
-      const options = originResult.map((x) => {
-        return {
-          label: x.channelName,
-          value: x.channelUuid,
-        };
-      });
+      const options = Array.from(
+        new Map(
+          originResult.map((x) => [x.channelUuid, { label: x.channelName, value: x.channelUuid }]),
+        ).values(),
+      );
       setOptions('originChannelUuid', options);
     }
   };
@@ -132,14 +131,14 @@ const CourseSharedComponent = () => {
 
   // TODO: 과정명 미리보기 띄워야함
   _global.linkClickCourseName = (payload: any) => {
-    // navigate({
-    //   to: '/learning/course/detail',
-    //   state: {
-    //     courseId: payload.courseId,
-    //     courseName: payload.courseName,
-    //     meta: { title: payload.courseName },
-    //   },
-    // });
+    navigate({
+      to: '/learning/course/detail',
+      state: {
+        courseId: payload.courseId,
+        courseName: payload.courseName,
+        meta: { title: payload.courseName },
+      },
+    });
   };
 
   // 가져간 이력
@@ -198,8 +197,8 @@ const CourseSharedComponent = () => {
       ],
     ],
     validator: {
-      // originChannelUuid: true,
-      // targetChannelUuid: true,
+      originChannelUuid: true,
+      targetChannelUuid: true,
     },
   };
 
@@ -275,6 +274,7 @@ const CourseSharedComponent = () => {
           );
         },
         enableGrouping: false,
+        enableSorting: false,
         size: 86,
       }),
       columnHelper.accessor('getCourse', {
@@ -292,6 +292,7 @@ const CourseSharedComponent = () => {
           );
         },
         enableGrouping: false,
+        enableSorting: false,
         size: 80,
       }),
     ] as ColumnDef<any, unknown>[];
@@ -309,18 +310,18 @@ const CourseSharedComponent = () => {
 
   const handleOnSearch = useCallback((data: any) => {
     console.log('## handleOnSearch', data);
-    // const payload = {
-    //   originChannelUuid: data.originChannelUuid,
-    //   targetChannelUuid: data.targetChannelUuid,
-    //   courseName: data.courseName,
-    //   isComplete: data.isComplete,
-    // };
     const payload = {
-      originChannelUuid: 'd4bf5f43-3184-445b-8985-f316619909db',
-      targetChannelUuid: '67bbca16-4180-4982-a4e0-d192212dd7c8',
-      courseName: '',
-      isComplete: false,
+      originChannelUuid: data.originChannelUuid,
+      targetChannelUuid: data.targetChannelUuid,
+      courseName: data.courseName,
+      isComplete: data.isComplete,
     };
+    // const payload = {
+    //   originChannelUuid: 'd4bf5f43-3184-445b-8985-f316619909db',
+    //   targetChannelUuid: '67bbca16-4180-4982-a4e0-d192212dd7c8',
+    //   courseName: '',
+    //   isComplete: false,
+    // };
 
     gridFetch(payload);
   }, []);
