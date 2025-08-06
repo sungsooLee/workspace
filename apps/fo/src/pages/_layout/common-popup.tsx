@@ -1,15 +1,15 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { pageRouteConfig } from '@features/auth';
 
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormRow } from '@shared/ui';
 import { queryOptions } from '@entities/course';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FileDownloads, FormRow } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -103,6 +103,7 @@ function RouteComponent() {
           />
         </FormRow>
       </ContentsRow>
+      <FileDownloads />
     </div>
   );
 }
