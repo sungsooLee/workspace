@@ -9,7 +9,7 @@ import { DropdownFormField } from './dropdown-form-field';
 const TenantByRoleDropdownFormFieldComponent = forwardRef<
   HTMLInputElement,
   BaseFormFieldProps<any>
->(({ value, onChange, ...props }, ref) => {
+>(({ value, onChange, presetOptionLabel, ...props }, ref) => {
   const { data } = useFetchAuthUser<AuthUser>();
   const { data: tenant } = useFetchTenantByRoleId(data?.activeRole?.roleId as number);
 
@@ -47,7 +47,7 @@ const TenantByRoleDropdownFormFieldComponent = forwardRef<
       ref={ref}
       options={options}
       value={value ?? ''}
-      presetOptionLabel={t('LABEL.form.label.select')}
+      presetOptionLabel={presetOptionLabel || t('LABEL.form.label.select')}
       onChange={(v: number) => {
         // 테넌트 선택 동기화 로직
         localStorage.setItem('TENANT_ID', String(v));

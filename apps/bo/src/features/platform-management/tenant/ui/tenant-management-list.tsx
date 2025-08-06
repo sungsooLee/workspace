@@ -207,6 +207,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
             label={t('LABEL.form.label.tenant', '테넌트')}
             value=""
             format="number"
+            placeholder={t('입력 또는 선택')}
             validation={{
               required: !isPlatformManager,
               conditions: [
@@ -220,7 +221,17 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
                 },
               ],
             }}
-            element={<TenantByRoleDropdownFormField />}
+            element={
+              <TenantByRoleDropdownFormField
+                presetOptionLabel={t('입력 선택')}
+                dropdownConfig={{
+                  onchange: () => {
+                    return '';
+                  },
+                  isSearchable: true,
+                }}
+              />
+            }
           />
           <FormRow2
             provider={searchProvider}
@@ -233,6 +244,12 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
               <DropdownFormField
                 options={companyOptions}
                 presetOptionLabel={t('LABEL.form.label.select')}
+                dropdownConfig={{
+                  onchange: () => {
+                    return '';
+                  },
+                  isSearchable: true,
+                }}
               />
             }
           />
