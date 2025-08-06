@@ -2,10 +2,12 @@
 
 import { FileInfo, useFileManager } from '@learnway/hooks';
 import { IcoLock, IcoPdf } from '@learnway/icons';
+import { formatBytes } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/dashboard.module.css';
 import pdsStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/pds.module.css';
 import { Button } from '@learnway/ui/button';
 import { Panel } from '@learnway/ui/panel';
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
@@ -69,7 +71,7 @@ export const FileDownloads = ({ label, fileUuid, fileUuids, groupUuid }: Props &
           <div className={styles.tit_box}>
             <h3>
               {label}
-              <em>2</em>
+              <em>{files.length}</em>
             </h3>
             {/* 퍼블수정 20250724 사이즈 수정 */}
             <Button variant="line" size={isMobile ? 'md' : 'lx'} className={styles.btn}>
@@ -77,40 +79,28 @@ export const FileDownloads = ({ label, fileUuid, fileUuids, groupUuid }: Props &
             </Button>
           </div>
           <div className={pdsStyles.start}>
-            <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
-              <div className={pdsStyles.pds_box}>
-                <span className={pdsStyles.txt}>
-                  {/* 퍼블수정 20250724 pdf 원복 */}
-                  <IcoPdf className={styles.ico_pdf} />
-                  <span>비즈니스 영어 단어&숙어집.pdf</span>
-                  <IcoLock className={styles.ico_lock} />
-                </span>
-                <div className={pdsStyles.info}>
-                  {/* 퍼블수정 20250724 mobile에서 hide */}
-                  {isMobile || <span className={pdsStyles.size}>200MB</span>}
-                  {/* 퍼블수정 20250724 버튼 사이즈 수정 */}
-                  <Button variant="line" size="md" className={pdsStyles.btn}>
-                    다운로드
-                  </Button>
+            {files?.map((file) => (
+              <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
+                <div className={pdsStyles.pds_box}>
+                  <span className={pdsStyles.txt}>
+                    {/* 퍼블수정 20250724 pdf 원복 */}
+                    <IcoPdf className={styles.ico_pdf} />
+                    <span>{file.originalFileName}</span>
+                    {file.isSecured && <IcoLock className={styles.ico_lock} />}
+                  </span>
+                  <div className={pdsStyles.info}>
+                    {/* 퍼블수정 20250724 mobile에서 hide */}
+                    {isMobile || (
+                      <span className={pdsStyles.size}>{formatBytes(file.fileSize)}</span>
+                    )}
+                    {/* 퍼블수정 20250724 버튼 사이즈 수정 */}
+                    <Button variant="line" size="md" className={pdsStyles.btn}>
+                      {t('다운로드')}
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </Panel>
-
-            <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
-              <div className={pdsStyles.pds_box}>
-                <span className={pdsStyles.txt}>
-                  <IcoPdf className={styles.ico_pdf} />
-                  <span>비즈니스 영어 단어&숙어집.pdf</span>
-                  <IcoLock className={styles.ico_lock} />
-                </span>
-                <div className={pdsStyles.info}>
-                  {isMobile || <span className={pdsStyles.size}>200MB</span>}
-                  <Button variant="line" size="md" className={pdsStyles.btn}>
-                    다운로드
-                  </Button>
-                </div>
-              </div>
-            </Panel>
+              </Panel>
+            ))}
           </div>
         </div>
       </div>
