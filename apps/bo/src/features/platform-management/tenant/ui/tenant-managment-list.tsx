@@ -223,7 +223,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
             type="dropdown"
             label={t('LABEL.grid.column.company', '회사')}
             value=""
-            format="number"
+            format="string"
             element={
               <DropdownFormField
                 options={companyOptions}
