@@ -1,11 +1,11 @@
 import { PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
-import { ChannelByRoleId, ChannelParam, ChannelResponse } from '../model/channel.types';
 import { PaginationResponse } from '../../../shared/types/api';
+import { ChannelByRoleId, ChannelParam, ChannelResponse } from '../model/channel.types';
 
 export default class ChannelService {
   static async getChannelList(
-    roleId: string,
+    roleId: number,
     params: ChannelParam,
   ): Promise<PaginationResponse<ChannelResponse>> {
     return httpService.get(`${PMSApiPrefix()}/channel`, {
