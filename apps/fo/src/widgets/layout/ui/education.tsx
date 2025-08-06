@@ -13,7 +13,12 @@ import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { CourseCancelReasonPopup, EducationPlacePopup } from '../../../features/layout';
 
-import { useCourseEnrollWaiting, useCourseEnrollWaitingCancle } from '@entities/course';
+import {
+  InstructorType,
+  InstructorTypeLabel,
+  useCourseEnrollWaiting,
+  useCourseEnrollWaitingCancle,
+} from '@entities/course';
 import {
   useDeleteCourseApplication,
   useDeleteCourseWaiting,
@@ -24,7 +29,6 @@ import styles from '@learnway/styles/fo/features/layout/ui/education.module.css'
 import bulletStyles from '@learnway/styles/fo/shared/ui/list/bullet.module.css';
 import { useModalStore } from '@learnway/ui/stores';
 import { useNavigate } from '@tanstack/react-router';
-import { InstructorType, InstructorTypeLabel } from '@types';
 
 interface EducationProps {
   className?: string;

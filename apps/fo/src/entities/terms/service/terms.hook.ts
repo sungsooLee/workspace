@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import type { TermsType, Terms, TermsVersion } from '../../../types';
+import type { TermsType } from '../model/terms.types';
 
 import { queryOptions } from './terms.queries';
 

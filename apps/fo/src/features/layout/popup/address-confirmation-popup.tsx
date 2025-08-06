@@ -3,7 +3,7 @@ import { memo } from 'react';
 import styles from '@learnway/styles/fo/features/layout/popup/address-confirmation-popup.module.css';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
-import { Address } from '@types';
+import { Address } from '@shared/types/common';
 
 interface Props {
   address: Address;

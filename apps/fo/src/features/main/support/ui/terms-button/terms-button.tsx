@@ -1,13 +1,13 @@
-import { useTranslation } from 'react-i18next';
 import { Link } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
-import type { TermsType } from '../../../../../types';
+import type { TermsType } from '@entities/terms';
 
-import { TermsModal } from './terms-modal';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
+import { TermsModal } from './terms-modal';
 
 interface TermsButtonComponentProps {
   termsType: TermsType;

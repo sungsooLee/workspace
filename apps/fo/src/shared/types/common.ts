@@ -4,6 +4,7 @@ export type Address = {
   jibunAddress?: string; // 지번 주소 (선택)
   detail?: string;
 };
+export type ISODateString = string;
 
 export type AddressSearchResult = {
   admCd: string;

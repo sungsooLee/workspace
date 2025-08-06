@@ -7,8 +7,8 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { PhoneNumber } from '@learnway/ui/phone-number';
+import { Address, AddressSearchResult } from '@shared/types/common';
 import { AddressSearchModal } from '@shared/ui';
-import { Address, AddressSearchResult } from '@types';
 import { ChangeEvent, useState } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 

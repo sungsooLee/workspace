@@ -4,7 +4,7 @@ import { memo } from 'react';
 // import logoImage from '@assets/images/logo.png';
 import logoImage from '@learnway/styles/fo/assets/images/logo.png';
 
-import { Tenant } from '@types';
+import { Tenant } from '@entities/tenant';
 
 import styles from '@learnway/styles/fo/features/layout/ui/logo.module.css';
 

@@ -1,9 +1,9 @@
-import { UseMutationOptions } from '@tanstack/react-query';
 import {
-  MutateQueryOption,
   UpdateChangePhoneNumberRequest,
   UpdateVerificationsChangePasswordRequest,
-} from '@types';
+} from '@entities/user';
+import { MutateQueryOption } from '@shared/types/api';
+import { UseMutationOptions } from '@tanstack/react-query';
 import UserService from '../api/user';
 
 export const queryKeys = {

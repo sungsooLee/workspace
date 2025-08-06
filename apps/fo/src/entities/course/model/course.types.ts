@@ -1,4 +1,4 @@
-import { ISODateString } from '@types';
+import { ISODateString } from '@shared/types/common';
 
 // 과정 이수 처리 방식
 export enum PassMethodType {

@@ -1,7 +1,4 @@
-import { httpService } from '@learnway/shared';
-import { PMSApiPrefix } from '@learnway/config';
-
-import { CodeRole } from '../model/code';
+import { CodeRole } from '../model/code.types';
 
 import codeMock from '../../mock/code.json';
 

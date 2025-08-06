@@ -1,14 +1,13 @@
-import { useState, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useCreation } from 'ahooks';
+import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { HtmlContent } from '@learnway/ui/html-content';
 
-import { useFetchTermsVersions, useFetchTerms } from '../../../../../entities/terms';
-import type { TermsType } from '../../../../../types';
+import type { TermsType } from '@entities/terms';
+import { useFetchTerms, useFetchTermsVersions } from '../../../../../entities/terms';
 
 import styles from '@learnway/styles/fo/features/auth/ui/terms-button/terms-modal.module.css';
-// TODO: Fix unknown imports:  from '@learnway/ui'
 import { Button } from '@learnway/ui/button';
 import { Dropdown } from '@learnway/ui/dropdown';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';

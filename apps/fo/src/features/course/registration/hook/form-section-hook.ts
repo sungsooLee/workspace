@@ -1,5 +1,6 @@
+import { BookDeliveryInfo, LangLevelTest } from '@entities/enroll';
 import { useInput } from '@learnway/hooks';
-import { Address, BookDeliveryInfo, LangLevelTest } from '@types';
+import { Address } from '@shared/types/common';
 import { useState } from 'react';
 
 const useFormSection = () => {

@@ -1,11 +1,7 @@
-import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
+import { httpService } from '@learnway/shared';
 
-import type { TermsType, Terms, TermsVersion } from '../../../types';
-
-import termsMock from '../../mock/terms.json';
-import termsLatestMock from '../../mock/terms-latest.json';
-import termsVersionsMock from '../../mock/terms-version.json';
+import type { Terms, TermsType, TermsVersion } from '../model/terms.types';
 
 export default class TermsService {
   static fetchTermsVersions(termsTypeCode: TermsType, locale: string): Promise<TermsVersion[]> {

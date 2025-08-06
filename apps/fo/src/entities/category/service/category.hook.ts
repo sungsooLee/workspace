@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { categoryMutateOptions, queryOptions } from './category.queries';
 import { useRouter } from '@tanstack/react-router';
-import { Category } from '../../../types/entities/category';
+import { Category } from '../model/category.types';
+import { categoryMutateOptions, queryOptions } from './category.queries';
 
 export function useFetchCategories() {
   return useQuery(queryOptions.all());
@@ -32,11 +32,11 @@ export const useCategoryNavigation = () => {
 
 export const useCategoryTree = (tenantId: number) => {
   return useQuery(queryOptions.tree(tenantId));
-}
+};
 
 export const useFetchCategoryDetail = (categoryId: number) => {
   return useQuery(queryOptions.detail(categoryId));
-}
+};
 
 export const useCreateRecentCategory = (options: any) => {
   const queryClient = useQueryClient();
@@ -48,7 +48,8 @@ export const useCreateRecentCategory = (options: any) => {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options });
+    ...options,
+  });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -56,5 +57,6 @@ export const useCreateRecentCategory = (options: any) => {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
-}
+    data: mutation.data,
+  };
+};

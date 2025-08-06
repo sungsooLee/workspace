@@ -1,4 +1,5 @@
-import { ISODateString, SortRequest } from '@types';
+import { SortRequest } from '@shared/types/api';
+import { ISODateString } from '@shared/types/common';
 
 export interface CourseEnrollResponse {
   courseEnrollId: number;

@@ -7,8 +7,8 @@ import educationStyles from '@learnway/styles/fo/pages/_layout/course/education.
 import styles from '@learnway/styles/fo/pages/_layout/course/registration.module.css';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
+import { Address } from '@shared/types/common';
 import { createFileRoute, useRouterState } from '@tanstack/react-router';
-import { Address } from '@types';
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import { isMobile } from 'react-device-detect';

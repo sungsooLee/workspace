@@ -1,6 +1,5 @@
-import { queryOptions } from '@entities/enroll';
+import { EnrollDeleteRequest, EnrollRequest, queryOptions } from '@entities/enroll';
 import { useMutation, UseMutationOptions, useQuery } from '@tanstack/react-query';
-import { EnrollDeleteRequest, EnrollRequest } from '@types';
 
 export function useFetchCourseRegistrationDetails(sequenceUuid: string) {
   return useQuery(queryOptions.courseRegistrationDetails(sequenceUuid));

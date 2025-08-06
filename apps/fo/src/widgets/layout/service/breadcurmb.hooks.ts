@@ -1,8 +1,7 @@
-import {  useRouter } from '@tanstack/react-router';
-import { Category } from '../../../types';
-import { useEffect, useState } from 'react';
+import { Category, useCategoryTree } from '@entities/category';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { useCategoryTree } from '@entities/category';
+import { useRouter } from '@tanstack/react-router';
+import { useEffect, useState } from 'react';
 
 function useCategoryBreadcrumbs(currentCategoryId: number | null, tenantId: number) {
   const { data: categories } = useCategoryTree(tenantId);
@@ -44,7 +43,7 @@ function useShowBreadcrumbs() {
   const router = useRouter();
   const [shouldShow, setShouldShow] = useState({
     isShow: false,
-    tenantId: 0
+    tenantId: 0,
   });
 
   useEffect(() => {
@@ -52,13 +51,13 @@ function useShowBreadcrumbs() {
       const currentPath = router.state.location.pathname;
       setShouldShow({
         isShow: currentPath.includes('/category'),
-        tenantId: (loginUser && loginUser.activeTenant) ? loginUser?.activeTenant?.tenantId : 0
+        tenantId: loginUser && loginUser.activeTenant ? loginUser?.activeTenant?.tenantId : 0,
       });
     });
 
     setShouldShow({
       isShow: router.state.location.pathname.includes('/category'),
-      tenantId: (loginUser && loginUser.activeTenant) ? loginUser?.activeTenant?.tenantId : 0
+      tenantId: loginUser && loginUser.activeTenant ? loginUser?.activeTenant?.tenantId : 0,
     });
 
     return () => {

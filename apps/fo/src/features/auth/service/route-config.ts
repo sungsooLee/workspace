@@ -11,7 +11,7 @@ import { ERROR, tokenService } from '@learnway/config';
 import type { PageRouteConfig } from '@learnway/shared';
 import { buildJodObject, convertHierarchyToList, dateDiff } from '@learnway/shared';
 
-import type { PageMeta } from '../../../types';
+import type { PageMeta } from '@shared/types/page-meta';
 // import { ErrorComponent } from '@features/layout';
 import { QueryClient } from '@tanstack/react-query';
 
