@@ -1,22 +1,25 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 
-import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
 import { Divider } from '@learnway/ui/elements';
-import { GridBox, useGridBox } from '@learnway/ui/grid';
-import { SearchBox } from '@shared/ui/search-box';
+import { GridBox, GridBoxConfig, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+
+import { SearchBoxForm } from '@shared/ui/search-box';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 import { tenantQueryOptions } from '@entities/tenant';
 import { Button } from '@learnway/ui/button';
-import { TenantByRoleDropdownFormField } from '@shared/ui';
+import { FormItem, FormRow2, TenantByRoleDropdownFormField } from '@shared/ui';
 import { useCreation } from 'ahooks';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { DropdownFormField, InputFormField } from '@features/form';
 
 /**
  * 화면번호 : NLP_BO_TMS_1000
@@ -26,6 +29,8 @@ import { useCreation } from 'ahooks';
 const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
   const router = useRouter();
   const routerState = useRouterState();
+
+  const [companyOptions, setCompanyOptions] = useState<SelectOption[]>([]);
 
   const { data: loginUser } = useFetchAuthUser();
   const queryClient = useQueryClient();
@@ -41,74 +46,8 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
       },
     });
   };
-  const searchConfig: SearchBoxConfig = useMemo(
-    () => ({
-      builders: [
-        [
-          {
-            name: 'tenantId',
-            type: 'custom',
-            label: t('LABEL.form.label.tenant', '테넌트'),
-            value: '',
-            format: 'number',
-            element: <TenantByRoleDropdownFormField />, // presetOptionLabel: t('LABEL.form.label.select', '선택')
-            //
-          },
-          {
-            name: 'companyCode',
-            type: 'dropdown',
-            label: t('LABEL.grid.column.company'),
-            presetOptionLabel: t('LABEL.form.label.select'),
-            value: '',
-            options: [],
-          },
-          {
-            name: 'tenantManagerName',
-            type: 'text',
-            label: t('LABEL.grid.column.tenantManager'),
-            value: '',
-          },
-        ],
-        [
-          {
-            name: 'companyManagerName',
-            type: 'text',
-            label: t('LABEL.grid.column.companyManager'),
-            value: '',
-          },
-          {
-            name: 'isUsed',
-            type: 'dropdown',
-            label: t('LABEL.form.label.useYn'),
-            value: '',
-            options: [
-              { value: '', label: t('LABEL.all') },
-              { value: 'true', label: t('LABEL.common.enable') },
-              { value: 'false', label: t('LABEL.common.disable') },
-            ],
-          },
-        ],
-      ],
-      validator: {
-        tenantId: {
-          required: !isPlatformManager,
-          conditions: [
-            {
-              fn: (values: any) => {
-                if (isPlatformManager) return false;
-                console.log(values);
-                return !values.tenantId;
-              },
-              message: t('{{type}}를 선택해주세요.', { type: t('테넌트') }),
-            },
-          ],
-        },
-      },
-    }),
-    [roleInfo],
-  );
 
-  const gridInitConfig = useCreation(
+  const gridInitConfig = useCreation<useGridBoxConfig>(
     () => ({
       query: tenantQueryOptions.list,
       columns: [
@@ -203,9 +142,9 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
     getValues,
     onFormChange,
     onFormValid,
-    setOptions,
     setValue,
-  } = useSearchBox(searchConfig);
+    onSubmit,
+  } = useDynamicForm2();
   const { config: gConfig, gridFetch } = useGridBox(gridInitConfig, getValues);
 
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
@@ -229,12 +168,6 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
   useEffect(() => {
     if (!loginUser) return;
 
-    const tenantIdOptions = loginUser.tenants.map((tenant) => ({
-      value: tenant.tenantId,
-      label: tenant.tenantName,
-    }));
-    const tenantIds = tenantIdOptions.map((item) => item.value);
-    setOptions('tenantId', tenantIdOptions);
     if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
   }, [loginUser]);
 
@@ -251,16 +184,88 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
           value: item.companyCode,
         }));
         console.log(companyIdOptions);
-        setOptions('companyCode', companyIdOptions);
+        setCompanyOptions(companyIdOptions);
       })();
     } else {
-      setOptions('companyCode', []);
+      setCompanyOptions([]);
     }
   }, [tenantIdWatch]);
 
   return (
     <>
-      <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+      <SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
+        <ContentsRow>
+          <FormRow2
+            provider={searchProvider}
+            name="tenantId"
+            type="custom"
+            label={t('LABEL.form.label.tenant', '테넌트')}
+            value=""
+            format="number"
+            validation={{
+              required: !isPlatformManager,
+              conditions: [
+                {
+                  fn: (values: any) => {
+                    if (isPlatformManager) return false;
+                    console.log(values);
+                    return !values.tenantId;
+                  },
+                  message: t('{{type}}를 선택해주세요.', { type: t('테넌트') }),
+                },
+              ],
+            }}
+            element={<TenantByRoleDropdownFormField />}
+          />
+          <FormRow2
+            provider={searchProvider}
+            name="companyCode"
+            type="dropdown"
+            label={t('LABEL.grid.column.company', '회사')}
+            value=""
+            format="number"
+            element={
+              <DropdownFormField
+                options={companyOptions}
+                presetOptionLabel={t('LABEL.form.label.select')}
+              />
+            }
+          />
+          <FormRow2
+            provider={searchProvider}
+            name="tenantManagerName"
+            type="text"
+            label={t('LABEL.grid.column.tenantManager', '테넌트 담당자')}
+            value=""
+            format="number"
+            element={<InputFormField />}
+          />
+        </ContentsRow>
+        <ContentsRow>
+          <FormRow2
+            provider={searchProvider}
+            name="companyManagerName"
+            type="text"
+            label={t('LABEL.grid.column.companyManager')}
+            value=""
+            element={<InputFormField />}
+          />
+          <FormRow2
+            provider={searchProvider}
+            name="isUsed"
+            label={t('LABEL.form.label.useYn')}
+            format={'boolean'}
+            element={
+              <DropdownFormField
+                presetOptionLabel={t('LABEL.form.label.all')}
+                optionsConfig={{
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
+              />
+            }
+          />
+        </ContentsRow>
+      </SearchBoxForm>
       <Divider />
       {/*<GridBox config={gConfig} columns={columns} showNumberingColumn />*/}
       <GridBox config={gConfig} showNumberingColumn />
