@@ -103,7 +103,7 @@ function RouteComponent() {
           />
         </FormRow>
       </ContentsRow>
-      <FileDownloads />
+      <FileDownloads label={'자료실'} />
     </div>
   );
 }

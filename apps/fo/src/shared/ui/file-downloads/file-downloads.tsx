@@ -22,7 +22,8 @@ export const FileDownloads = ({ label, groupUuid, fileUuids, fileUuid }: Props) 
           {/* 퍼블수정 20250723 자료 개수 추가 및 버튼 수정 */}
           <div className={styles.tit_box}>
             <h3>
-              자료실<em>2</em>
+              {label}
+              <em>2</em>
             </h3>
             {/* 퍼블수정 20250724 사이즈 수정 */}
             <Button variant="line" size={isMobile ? 'md' : 'lx'} className={styles.btn}>
