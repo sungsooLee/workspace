@@ -446,7 +446,7 @@ export interface ExcelConfig {
   onBeforeUpload?: (executeUpload: () => Promise<void>) => Promise<void>;
 }
 
-export type GrideBoxColumnHelper<TData extends RowData> = {
+export type GridBoxColumnHelper<TData extends RowData> = {
   accessor: <TAccessor extends DeepKeys<TData>, TValue extends DeepValue<TData, TAccessor>>(
     accessor: TAccessor,
     column: GridBoxColumnBase<TData, TValue>,
@@ -457,7 +457,7 @@ export type GrideBoxColumnHelper<TData extends RowData> = {
  * gridConfig의 column 생성 helper
  * @returns
  */
-export function createGrideBoxColumnHelper<TData extends RowData>(): GrideBoxColumnHelper<TData> {
+export function createGridBoxColumnHelper<TData extends RowData>(): GridBoxColumnHelper<TData> {
   return {
     accessor: (accessor, column) => ({
       ...column,

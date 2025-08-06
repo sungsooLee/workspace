@@ -8,7 +8,7 @@ import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
 import { Divider } from '@learnway/ui/elements';
 import {
-  createGrideBoxColumnHelper,
+  createGridBoxColumnHelper,
   GridBox,
   GridBoxConfig,
   useGridBox,
@@ -52,7 +52,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
       },
     });
   };
-  const boxHelper = createGrideBoxColumnHelper<Tenant>();
+  const boxHelper = createGridBoxColumnHelper<Tenant>();
 
   const gridInitConfig = useCreation<useGridBoxConfig>(
     () => ({
