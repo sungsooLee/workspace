@@ -1,4 +1,5 @@
 import { FormRowProps as BaseFormRowProps, FormRowFieldConfig } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
 import { BaseFormRow2 } from '@learnway/ui/base-form';
 import { FC, memo } from 'react';
 import { formFieldConfig } from './form-field-config';
@@ -18,7 +19,9 @@ import { formFieldConfig } from './form-field-config';
  * @param labelKey - 번역 키 (label 대신 사용)
  */
 type FormRowProps = Omit<BaseFormRowProps, 'formFieldConfig' | 'fieldConfig'> &
-  Partial<Omit<FormRowFieldConfig, 'name'>>;
+  Partial<Omit<FormRowFieldConfig, 'name'>> & {
+    cols?: number;
+  };
 
 const FormRowComponent: FC<FormRowProps> = ({
   className,
@@ -41,6 +44,7 @@ const FormRowComponent: FC<FormRowProps> = ({
   validation,
   maxLength,
   options,
+  cols,
   ...restProps
 }) => {
   // validation prop이 있으면 동적으로 등록
@@ -68,12 +72,30 @@ const FormRowComponent: FC<FormRowProps> = ({
     ...restProps,
   };
 
+  // cols에 따른 flex 클래스 결정
+  const getFlexClass = (cols?: number) => {
+    if (!cols) return undefined;
+
+    // 일반적으로 사용되는 flex 비율들
+    const flexClasses: Record<number, string> = {
+      1: 'flex-1',
+      2: 'flex-[2]',
+      3: 'flex-[3]',
+      4: 'flex-[4]',
+      5: 'flex-[5]',
+      6: 'flex-[6]',
+      12: 'flex-[12]',
+    };
+
+    return flexClasses[cols] || 'flex-1'; // 기본값으로 flex-1 사용
+  };
+
   return (
     <BaseFormRow2
       provider={provider}
       name={name}
       formFieldConfig={formFieldConfig}
-      className={className}
+      className={cn(className, getFlexClass(cols))}
       children={children}
       element={element}
       infoNode={infoNode}

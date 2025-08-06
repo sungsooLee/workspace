@@ -25,7 +25,7 @@ import {
   UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
 } from '@shared/ui/modal';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';
 import { CourseTabBaseProps } from '../../../../types/type';

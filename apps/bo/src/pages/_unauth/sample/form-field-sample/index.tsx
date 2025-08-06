@@ -1,7 +1,5 @@
-import { useDynamicForm2 } from '@learnway/hooks';
-import { PeriodPickerFormField } from '@features/form';
-import { DatePickerFormField2 } from '@features/form/ui';
 import { ChannelListModal } from '@features/learning-operate/course/course-management';
+import { useDynamicForm2 } from '@learnway/hooks';
 import { SelectOption } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
@@ -9,7 +7,8 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { InputModalSelectorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
-import { DateRangePickerFormField, FormRow2, PeriodPickerFormField } from '@shared/ui/form';
+import { FormRow2, PeriodPickerFormField } from '@shared/ui/form';
+import { DatePickerFormField2 } from '@shared/ui/form/ui/date-picker-form-field2';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
@@ -21,13 +20,6 @@ export const Route = createFileRoute('/_unauth/sample/form-field-sample/')({
 function RouteComponent() {
   const { openModal, saveConfirm } = useModal();
   const { provider, onSubmit, getValues, watch, onFormValid } = useDynamicForm2();
-
-  // DropdownCodeGroup 필드 값 감시
-  // const radioCodeGroup = watch('radioCodeGroup');
-  // const dropdownCodeGroup = watch('DropdownCodeGroup');
-  const dropdownCodeGroup = 'test';
-
-  // console.log('radioCodeGroup => ', radioCodeGroup);
 
   const handleSetValue = () => {
     const { onFormChange } = provider;
