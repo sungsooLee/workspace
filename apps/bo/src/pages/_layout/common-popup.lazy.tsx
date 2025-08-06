@@ -257,13 +257,7 @@ function RouteComponent() {
                 size={'xs'}
                 className="btn_table flex-1"
                 variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <CompanyChoiceModal />,
-                  });
-                }}
+                onClick={(e) => openModal({ content: <CompanyChoiceModal /> })}
               >
                 {'회사 조회'}
               </Button>
@@ -274,14 +268,7 @@ function RouteComponent() {
                 size={'xs'}
                 className="btn_table flex-1"
                 variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    height: 'fix',
-                    content: <CompanyShuttleModal />,
-                  });
-                }}
+                onClick={(e) => openModal({ content: <CompanyShuttleModal /> })}
               >
                 {'회사 조회(셔틀)'}
               </Button>
@@ -295,13 +282,7 @@ function RouteComponent() {
                 size={'xs'}
                 className="btn_table flex-1"
                 variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <TenantChoiceModal />,
-                  });
-                }}
+                onClick={(e) => openModal({ content: <TenantChoiceModal /> })}
               >
                 {'테넌트 조회'}
               </Button>
@@ -312,13 +293,7 @@ function RouteComponent() {
                 size={'xs'}
                 className="btn_table flex-1"
                 variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <TenantShuttleModal />,
-                  });
-                }}
+                onClick={(e) => openModal({ content: <TenantShuttleModal /> })}
               >
                 {'테넌트 조회(셔틀)'}
               </Button>
@@ -330,13 +305,7 @@ function RouteComponent() {
                 size={'xs'}
                 className="btn_table flex-1"
                 variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <ChannelListChoiceModal roleId={0} />,
-                  });
-                }}
+                onClick={(e) => openModal({ content: <ChannelListChoiceModal roleId={0} /> })}
               >
                 {'채널 조회'}
               </Button>
@@ -347,13 +316,7 @@ function RouteComponent() {
                 size={'xs'}
                 className="btn_table flex-1"
                 variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <ChannelShuttleModal roleId={0} />,
-                  });
-                }}
+                onClick={(e) => openModal({ content: <ChannelShuttleModal roleId={0} /> })}
               >
                 {'채널 조회(셔틀)'}
               </Button>

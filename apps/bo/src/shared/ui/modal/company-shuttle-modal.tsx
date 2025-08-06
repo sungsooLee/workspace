@@ -41,7 +41,7 @@ const CompanyShuttleComponent = () => {
   };
 
   return (
-    <ModalContainer>
+    <ModalContainer width="xl">
       <ModalTitle>{t('회사 조회')}</ModalTitle>
       <ModalBody>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />

@@ -123,7 +123,7 @@ const CompanyModalComponent = forwardRef((props, ref) => {
    */
 
   return (
-    <ModalContainer>
+    <ModalContainer width="xl">
       <ModalTitle>{t('회사 조회')}</ModalTitle>
       <ModalBody>
         <div className={popupStyles.wrap}>
