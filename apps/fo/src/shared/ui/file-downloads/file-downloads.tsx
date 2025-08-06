@@ -5,16 +5,48 @@ import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/d
 import pdsStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/pds.module.css';
 import { Button } from '@learnway/ui/button';
 import { Panel } from '@learnway/ui/panel';
+import { useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 
 interface Props {
   label?: string;
-  groupUuid?: string;
-  fileUuids?: string[];
-  fileUuid?: string;
 }
 
-export const FileDownloads = ({ label, groupUuid, fileUuids, fileUuid }: Props) => {
+/**
+ * fileUuid, fileUuids, grouUuid 세 props중 하나만 입력해야 합니다.
+ */
+type FileProps =
+  | {
+      fileUuid: string;
+      fileUuids?: never;
+      groupUuid?: never;
+    }
+  | {
+      fileUuid?: never;
+      fileUuids: string[];
+      groupUuid?: never;
+    }
+  | {
+      fileUuid?: never;
+      fileUuids?: never;
+      groupUuid: string;
+    };
+
+export const FileDownloads = ({ label, fileUuid, fileUuids, groupUuid }: Props & FileProps) => {
+  useEffect(() => {
+    if (fileUuid) {
+      return;
+    }
+
+    if (fileUuids?.length) {
+      return;
+    }
+
+    if (groupUuid) {
+      return;
+    }
+  }, [groupUuid, fileUuids, fileUuid]);
+
   return (
     <div className={styles.start}>
       <div className={`${styles.info_box} ${styles.curriculum}`}>

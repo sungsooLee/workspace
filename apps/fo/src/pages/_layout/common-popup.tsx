@@ -103,7 +103,9 @@ function RouteComponent() {
           />
         </FormRow>
       </ContentsRow>
-      <FileDownloads label={'자료실'} />
+      <FileDownloads label={'자료실'} fileUuid={''} />
+      <FileDownloads label={'자료실'} fileUuids={[]} />
+      <FileDownloads label={'자료실'} groupUuid={''} />
     </div>
   );
 }
