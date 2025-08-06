@@ -1,11 +1,12 @@
 // IA285 / NLP_FO_CLA_1008_1/2 강의실_자료실_상세(파일다운로드_공통/DRM)
 
+import { FileInfo, useFileManager } from '@learnway/hooks';
 import { IcoLock, IcoPdf } from '@learnway/icons';
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/dashboard.module.css';
 import pdsStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/pds.module.css';
 import { Button } from '@learnway/ui/button';
 import { Panel } from '@learnway/ui/panel';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
 interface Props {
@@ -33,16 +34,29 @@ type FileProps =
     };
 
 export const FileDownloads = ({ label, fileUuid, fileUuids, groupUuid }: Props & FileProps) => {
+  const { getFileInfo, getGroupInfo } = useFileManager();
+  const [files, setFiles] = useState<FileInfo[]>([]);
+
   useEffect(() => {
     if (fileUuid) {
+      (async () => {
+        setFiles([await getFileInfo(fileUuid)]);
+      })();
       return;
     }
 
     if (fileUuids?.length) {
+      (async () => {
+        setFiles(await Promise.all(fileUuids.map(async (fileUuid) => getFileInfo(fileUuid))));
+      })();
       return;
     }
 
     if (groupUuid) {
+      (async () => {
+        const groupInfo = await getGroupInfo(groupUuid);
+        setFiles(groupInfo.files);
+      })();
       return;
     }
   }, [groupUuid, fileUuids, fileUuid]);
