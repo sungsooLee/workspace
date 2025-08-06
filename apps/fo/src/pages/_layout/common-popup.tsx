@@ -103,12 +103,12 @@ function RouteComponent() {
           />
         </FormRow>
       </ContentsRow>
-      <FileDownloads label={'자료실1'} fileUuid={'1aff46aa-86b9-4281-8c70-99595eabe637'} />
+      <FileDownloads fileUuid={'1aff46aa-86b9-4281-8c70-99595eabe637'} />
       <FileDownloads
-        label={'자료실2'}
+        label={'자료실(files)'}
         fileUuids={['7485a3b7-c02d-47bd-a86c-59c10d91e8cc', '1aff46aa-86b9-4281-8c70-99595eabe637']}
       />
-      <FileDownloads label={'자료실3'} groupUuid={'e35ca1db-f218-4003-b7dd-bb61dbe964db'} />
+      <FileDownloads label={'자료실(group)'} groupUuid={'e35ca1db-f218-4003-b7dd-bb61dbe964db'} />
     </div>
   );
 }
