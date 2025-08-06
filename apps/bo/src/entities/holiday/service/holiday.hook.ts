@@ -6,7 +6,7 @@ import {
 } from './holiday.queries';
 
 export const useFetchHoliday = (holidayId: number) => {
-  return useQuery(queryOptions.detail(holidayId));
+  return useQuery({ ...queryOptions.detail(holidayId) });
 }
 
 export const useCreateHoliday = (options: any) => {
@@ -47,4 +47,25 @@ export const useUpdateHoliday = (options: any) => {
     isError: mutation.isError,
     data: mutation.data
   };
+}
+
+export const useDeleteHoliday = (options: any) => {
+  const mutation = useMutation({
+    ...holidayMutateOptions.delete(),
+    onSuccess: async (data: any, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options
+  })
+
+  return {
+    delete: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data
+  }
 }

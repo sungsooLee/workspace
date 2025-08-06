@@ -1,5 +1,6 @@
 import HolidayService from '@entities/holiday/api/holiday';
 import { Holiday } from '../../../types/entities/holiday';
+import { getQuerySkipToken } from '@learnway/shared';
 
 export const holidayQueryKeys = {
   list: ['holiday-page'] as const,
@@ -12,11 +13,14 @@ export const holidayQueryOptions = {
   list: (params: any) => ({
     query: holidayQueryKeys.list,
     queryFn: () => HolidayService.fetchListHoliday(params),
+    cacheTime: 0,
+    staleTime: 0,
   }),
-  detail: (holidayId: number) => ({
-    queryKey: holidayQueryKeys.detail,
-    queryFn: () => HolidayService.fetchHoliday(holidayId),
-  }),
+  detail: (holidayId: number) =>
+    holidayId ? {
+      queryKey: holidayQueryKeys.detail,
+      queryFn: (): Promise<any> => HolidayService.fetchHoliday(holidayId)
+    } : getQuerySkipToken<any>(),
   upload: (params: any) => ({
     queryKey: holidayQueryKeys.upload,
     queryFn: () => HolidayService.excelUploadHoliday(params),

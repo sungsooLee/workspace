@@ -5,7 +5,7 @@ import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { t } from 'i18next';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
-import { SearchBox } from '@shared/ui';
+import { GridExcelDownloadButton, GridExcelUploadButton, SearchBox } from '@shared/ui';
 import { Divider } from '@learnway/ui/elements';
 import { queryOptions as companysQueryOptions } from '@entities/companies';
 import { useQueryClient } from '@tanstack/react-query';
@@ -14,6 +14,8 @@ import { holidayQueryOptions } from '@entities/holiday/service/holiday.queries';
 import { useCreation } from 'ahooks';
 import { Button } from '@learnway/ui/button';
 import { EnGlobalConst } from '@shared/types/enums';
+import { LMSApiPrefix } from '@learnway/config';
+import { IcoDownload } from '@learnway/icons';
 
 const _global = {
   linkClick: (holidayId: number) => {
@@ -170,7 +172,6 @@ const TenantHolidayListComponent: FC<any> = ({rootPath}) => {
     console.log('### ', data)
     const payload = {
       ...data,
-      dateRange: null,
       startDate: data.dateRange.from && getDateToString(new Date(data.dateRange.from), DATE_TIME_FORMAT.DATE),
       endDate: data.dateRange.to && getDateToString(new Date(data.dateRange.to), DATE_TIME_FORMAT.DATE),
     }
@@ -187,6 +188,10 @@ const TenantHolidayListComponent: FC<any> = ({rootPath}) => {
   const handleOnSearch = () => {
     const payload = handleOnSearchParam();
     gridFetch(payload);
+  }
+
+  const handleOnExcelUpload = async (data: Record<string, any>[]) => {
+    gridFetch();
   }
 
   useEffect(() => {
@@ -224,6 +229,30 @@ const TenantHolidayListComponent: FC<any> = ({rootPath}) => {
       <Divider />
       <GridBox
         config={gConfig}
+        excelButtons={
+          <>
+            <GridExcelUploadButton
+              validateUrl={'/holiday/excelUpload'}
+              affairsType="PMS"
+              formDataName="multipartFile"
+              onUpload={handleOnExcelUpload}
+            />
+            <GridExcelDownloadButton
+              url={`${LMSApiPrefix()}/holiday/excelDownload`}
+              method="get"
+              params={getValues()}
+            />
+          </>
+        }
+        showExcelDownload={true}
+        customButtonNode={
+          <Button
+            variant="text"
+            size="xs"
+            label={t('휴일 다운로드')}
+            icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}
+          />
+        }
       />
     </>
   );
