@@ -26,9 +26,19 @@ const EditInputDateCell = <T extends EduRow>({
   const { table, row, cell, getValue } = info;
   const { learningStartType, learningEndDateTime, learningStartDays } = row.original;
 
-  const [value, setValue] = useState<any>(getValue());
+  const [value, setValue] = useState<any>(
+    learningStartType === 'DAYS_AFTER_ENROLL' ? learningStartDays : learningEndDateTime,
+  );
+
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastSavedValueRef = useRef<any>(getValue());
+
+  useEffect(() => {
+    const newValue =
+      learningStartType === 'DAYS_AFTER_ENROLL' ? learningStartDays : learningEndDateTime;
+    setValue(newValue);
+    lastSavedValueRef.current = newValue;
+  }, []);
 
   const saveValue = (newValue: any) => {
     if (newValue !== lastSavedValueRef.current) {
@@ -63,16 +73,20 @@ const EditInputDateCell = <T extends EduRow>({
     inputProps?.onKeyDown?.(e);
   };
 
+  const getSafeDate = (val: any): Date | undefined => {
+    if (!val) return undefined;
+    if (val instanceof Date) return val;
+    if (typeof val === 'string' || typeof val === 'number') {
+      const date = new Date(val);
+      return isNaN(date.getTime()) ? undefined : date;
+    }
+    return undefined;
+  };
+
   const handleDateChange = (newDate: any) => {
     setValue(newDate);
     saveValue(newDate);
   };
-
-  useEffect(() => {
-    const newValue = getValue();
-    setValue(newValue);
-    lastSavedValueRef.current = newValue;
-  }, [getValue]);
 
   useEffect(() => {
     return () => {
@@ -86,7 +100,7 @@ const EditInputDateCell = <T extends EduRow>({
       <Input
         {...inputProps}
         type="number"
-        value={learningStartDays}
+        value={value}
         onChange={handleInputChange}
         onBlur={handleInputBlur}
         onKeyDown={handleInputKeyDown}
@@ -96,7 +110,7 @@ const EditInputDateCell = <T extends EduRow>({
     return (
       <DatePicker
         displayType="day-time-h"
-        value={learningEndDateTime}
+        value={getSafeDate(value)}
         size="md"
         onChange={handleDateChange}
       />

@@ -1,4 +1,4 @@
-import { TenantUserApplicationDetail } from '@features/tenant-management/tenant/holiday/tenant-holiday-detail';
+import { TenantHolidayDetail } from '@features/tenant-management/tenant/holiday/tenant-holiday-detail';
 import { Button } from '@learnway/ui/button';
 import { EnFormMode } from '@shared/types/enums';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
@@ -55,7 +55,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <TenantUserApplicationDetail ref={formRef} mode={EnFormMode.VIEW} />
+        <TenantHolidayDetail ref={formRef} mode={EnFormMode.VIEW} />
       </MainContents>
     </PageContainer>
   );

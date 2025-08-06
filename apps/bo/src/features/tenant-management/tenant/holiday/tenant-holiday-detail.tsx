@@ -239,4 +239,4 @@ const TenantHolidayDetailComponent = (props: any, ref: any) => {
   );
 };
 
-export const TenantUserApplicationDetail = forwardRef(TenantHolidayDetailComponent);
+export const TenantHolidayDetail = forwardRef(TenantHolidayDetailComponent);
