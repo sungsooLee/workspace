@@ -2,20 +2,29 @@ import {
   IcoArrowDown,
   IcoBook,
   IcoCategory,
+  IcoChair,
   IcoEye,
   IcoHeart,
   IcoLevel,
+  IcoLocation,
   IcoSubtitles02,
 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
 import { Accordion } from '@learnway/ui/accordion';
 import { Button } from '@learnway/ui/button';
 import { Carousel } from '@learnway/ui/carousel';
 import { useModal } from '@learnway/ui/modal';
 import { Tabs } from '@learnway/ui/tabs';
 import { useToast } from '@learnway/ui/toast';
-import { useRouter, useRouterState } from '@tanstack/react-router';
-import { useEffect, useRef, useState } from 'react';
+import {
+  Dispatch,
+  RefObject,
+  SetStateAction,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import {
   CourseDashboard, // 과정소개
@@ -30,8 +39,8 @@ import packageInformationStyles from '@learnway/styles/fo/pages/_layout/course-i
 import packageSideStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-side.module.css';
 import pageFullInner from '@learnway/styles/fo/widgets/layout/ui/container/page-full-inner.module.css';
 
+import { SequenceEnrollButtonType, useCourseLike, useCourseSequences } from '@entities/course';
 // 이미지
-import { useCourseFullDetail, useCourseLike, useCourseSequences } from '@entities/course';
 import {
   default as bnrImage1,
   default as listImage1,
@@ -44,23 +53,18 @@ import { useGetCurriculumnDetail } from '@entities/curriculum';
 import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail-m.module.css';
 import { t } from 'i18next';
 
-export function CourseDetailMobile() {
-  const router = useRouter();
-  const routerState = useRouterState();
-  const courseId = routerState.location.state?.courseId;
-
+export function CourseDetailMobile({ courseId, courseData }: { courseId: any; courseData: any }) {
   const dashboardRef = useRef(null);
   const introduceRef = useRef(null);
   const educationRef = useRef(null);
   const reviewRef = useRef(null);
 
-  const testCourseId = 7;
-
   const [openingYear, setOpeningYear] = useState(2025);
   const [isAll, setIsAll] = useState(true);
 
-  const { data: courseData } = useCourseFullDetail(courseId || testCourseId);
-  const { data: sequencesData } = useCourseSequences(courseId || testCourseId, {
+  const [enableEnrollSequences, setEnableEnrollSequences] = useState([]);
+
+  const { data: sequencesData } = useCourseSequences(courseId, {
     openingYear,
     isAll,
   });
@@ -184,7 +188,7 @@ export function CourseDetailMobile() {
   const handleCourseLike = async () => {
     if (isLikePending) return;
 
-    toggleLikeMutate(courseId || testCourseId, {
+    toggleLikeMutate(courseId, {
       onSuccess: () => {
         setLikeChk((prev) => !prev);
         setLikeCount((prev) => prev + (likeChk ? -1 : 1));
@@ -459,9 +463,56 @@ export function CourseDetailMobile() {
     },
   ];
 
+  const courseOptions = enableEnrollSequences?.map((c: any) => ({
+    label: c.courseSequenceName,
+    value: c.courseSequenceId,
+    original: {
+      number: `${c.courseSequenceNo}차`,
+      date: `${formatISODateString(c.enrollStartDateTime, DATE_TIME_FORMAT.DATE)} ~ ${formatISODateString(c.enrollEndDateTime, DATE_TIME_FORMAT.DATE)}`,
+      info: [
+        {
+          icon: IcoChair,
+          txt: `${c.maxEnrollQuota - c.enrollCount}`,
+        },
+        {
+          icon: IcoLocation,
+          txt: `${c.learningSpaceNameKeyIn}`,
+        },
+      ],
+    },
+  }));
+
   // 학습유형 리스트 open, close
-  const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(true);
-  const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(true);
+  const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(false);
+  const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(false);
+  const [listCategoryBtnView, setListCategoryBtnView] = useState<boolean>(true);
+  const [listSubTitleBtnView, setListSubTitleBtnView] = useState<boolean>(true);
+  const listCategorySpanRef = useRef<HTMLSpanElement>(null);
+  const listSubTitleSpanRef = useRef<HTMLSpanElement>(null);
+  const manualFoldingToggleRef = useRef(false);
+
+  const checkEllipsis = (
+    ref: RefObject<HTMLSpanElement>,
+    setBtnView: Dispatch<SetStateAction<boolean>>,
+  ) => {
+    if (manualFoldingToggleRef.current) {
+      manualFoldingToggleRef.current = false;
+      return;
+    }
+    const el = ref.current as HTMLSpanElement;
+    if (!el) return;
+
+    const oldWhiteSpace = el.style.whiteSpace;
+    el.style.whiteSpace = 'nowrap';
+    el.style.display = 'inline-block';
+
+    const isEllipsis = el.clientWidth > (el.parentElement?.clientWidth || 0);
+
+    el.style.whiteSpace = oldWhiteSpace;
+    el.style.display = 'inline';
+
+    setBtnView(isEllipsis);
+  };
 
   useEffect(() => {
     if (!courseData?.course.courseLike) return;
@@ -469,6 +520,46 @@ export function CourseDetailMobile() {
     setLikeCount(courseData.course.courseLike);
     setLikeChk(courseData.course.courseLikeChk);
   }, [courseData?.course.courseLike]);
+
+  useEffect(() => {
+    if (!courseData?.isEnrollRequired) return;
+
+    setLikeCount(courseData.course.courseLike);
+    setLikeChk(courseData.course.courseLikeChk);
+  }, [courseData]);
+  useEffect(() => {
+    if (!sequencesData) return;
+
+    setEnableEnrollSequences(
+      sequencesData.filter(
+        (sequence: any) => sequence.sequenceEnrollButtonType === SequenceEnrollButtonType.ENROLL,
+      ),
+    );
+  }, [sequencesData]);
+
+  useLayoutEffect(() => {
+    checkEllipsis(listCategorySpanRef, setListCategoryBtnView);
+
+    const observer = new ResizeObserver(() => {
+      checkEllipsis(listCategorySpanRef, setListCategoryBtnView);
+    });
+    if (listCategorySpanRef.current?.parentElement) {
+      observer.observe(listCategorySpanRef.current?.parentElement);
+    }
+    return () => observer.disconnect();
+  }, [courseData?.course?.data?.category]);
+
+  useLayoutEffect(() => {
+    checkEllipsis(listSubTitleSpanRef, setListSubTitleBtnView);
+
+    const observer = new ResizeObserver(() => {
+      checkEllipsis(listSubTitleSpanRef, setListSubTitleBtnView);
+    });
+    if (listSubTitleSpanRef.current?.parentElement) {
+      observer.observe(listSubTitleSpanRef.current?.parentElement);
+    }
+    return () => observer.disconnect();
+  }, [courseData?.course?.data?.captionLanguage]);
 
   return (
     <div className={`${styles.start} ${styles.package_wrap}`}>
@@ -537,16 +628,19 @@ export function CourseDetailMobile() {
               {courseData?.course?.data.category && (
                 <li className={listCategoryOpen === true ? packageInformationStyles.open : ''}>
                   <IcoCategory width={20} height={20} fill="#4d525c" />
-                  <p>{courseData?.course?.data.category}</p>
-                  {/* <Button
-                    onClick={() =>
-                      listCategoryOpen === true
-                        ? setListCategoryOpen(false)
-                        : setListCategoryOpen(true)
-                    }
-                  >
-                    <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                  </Button> */}
+                  <p>
+                    <span ref={listCategorySpanRef}>{courseData?.course?.data.category}</span>
+                  </p>
+                  {listCategoryBtnView && (
+                    <Button
+                      onClick={() => {
+                        manualFoldingToggleRef.current = true;
+                        setListCategoryOpen((prev) => !prev);
+                      }}
+                    >
+                      <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                    </Button>
+                  )}
                 </li>
               )}
               {/* <li>
@@ -578,16 +672,21 @@ export function CourseDetailMobile() {
               {courseData?.course?.data.captionLanguage && (
                 <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
                   <IcoSubtitles02 width={20} height={20} fill="#4d525c" />
-                  <p>{courseData?.course?.data.captionLanguage}</p>
-                  {/* <Button
-                    onClick={() =>
-                      listSubTitleOpen === true
-                        ? setListSubTitleOpen(false)
-                        : setListSubTitleOpen(true)
-                    }
-                  >
-                    <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                  </Button> */}
+                  <p>
+                    <span ref={listSubTitleSpanRef}>
+                      {courseData?.course?.data.captionLanguage}
+                    </span>
+                  </p>
+                  {listSubTitleBtnView && (
+                    <Button
+                      onClick={() => {
+                        manualFoldingToggleRef.current = true;
+                        setListSubTitleOpen((prev) => prev);
+                      }}
+                    >
+                      <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                    </Button>
+                  )}
                 </li>
               )}
             </ul>
@@ -661,12 +760,13 @@ export function CourseDetailMobile() {
       <MobileContainerFooter>
         {/* 찜/공유 수강신청 Button */}
         <CourseFixedButton
-          course={true}
+          enrollEnable={!!enableEnrollSequences.length}
           likeCount={likeCount}
           heart={likeChk}
           handleCourseLike={handleCourseLike}
           courseValues={courseValues}
           setCourseValues={setCourseValues}
+          courseOptions={courseOptions}
         />
       </MobileContainerFooter>
     </div>

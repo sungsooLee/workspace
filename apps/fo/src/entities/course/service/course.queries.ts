@@ -15,7 +15,7 @@ import CourseService from '../api/course';
 
 export const queryKeys = {
   course: (id: number) => ['course', id] as const,
-  sequences: (id: string, openingYear: string, isAll: boolean) =>
+  sequences: (id: number, openingYear: string, isAll: boolean) =>
     ['sequences', id, openingYear, isAll] as const,
   sequenceOne: (sequenceId: string) => ['sequence', sequenceId] as const,
   package: (id: string) => ['package', id] as const,
@@ -30,7 +30,7 @@ export const queryOptions = {
   }),
   // 과정 차수 불러오기
   courseSequences: (
-    id: string,
+    id: number,
     reqDto: { openingYear: string; isAll: boolean },
   ): UseQueryOptions => ({
     queryKey: queryKeys.sequences(id, reqDto.openingYear, reqDto.isAll),
