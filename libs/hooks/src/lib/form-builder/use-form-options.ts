@@ -67,8 +67,8 @@ const useFormOptionsHook = (
         codeGroup,
       )
     ) {
-      // 5초 지연 후 mockOptions 반환
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // 100ms 지연 후 mockOptions 반환
+      await new Promise((resolve) => setTimeout(resolve, 100));
       const mockOptions = getMockCodeGroupOption(codeGroup);
       return applyFieldMapping(mockOptions);
     }

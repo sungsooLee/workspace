@@ -23,7 +23,7 @@ import {
   UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
 } from '@shared/ui';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';
 import { CourseTabBaseProps } from '../../../../types/type';
@@ -36,6 +36,12 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
   const { provider, getValues, onFormChange } = form;
 
   const { isUpdateMode, initCourseType } = useCourseCreateSubPage(form);
+
+  useEffect(() => {
+    if (initCourseType) {
+      onFormChange({ courseType: initCourseType });
+    }
+  }, [initCourseType]);
 
   return (
     <form>
@@ -110,7 +116,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
                 labelField: 'categoryPath',
                 valueField: 'categoryId',
                 selectedNodeBeforeLabel: (
-                  <Badge option={{ label: '대표', value: '' }} variant={'text'} status="fill" />
+                  <Badge option={{ label: t('대표'), value: '' }} variant={'text'} status="fill" />
                 ),
               }}
               selectedValue={getValues()?.primaryCategoryId}

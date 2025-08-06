@@ -45,7 +45,7 @@ const RadioGroupComponent = forwardRef<
     // options 배열이 이전 값과 동일하면 useEffect가 재실행되지 않도록 JSON.stringify로 비교
 
     useEffect(() => {
-      const optionsString = stringify({ options, value });
+      const optionsString = stringify(options);
       // options가 이전과 동일하면 실행하지 않음
       if (prevOptionsRef.current === optionsString) {
         return;
@@ -55,10 +55,26 @@ const RadioGroupComponent = forwardRef<
       // 첫 번째 옵션 값 설정
       const firstValue = options?.[0]?.value;
       if (firstValue !== undefined) {
+        console.log('radio-group useEffect', { options, firstValue });
         handleValueChange(firstValue);
       }
-      console.log('radio-group options', options);
-    }, [options, value]);
+    }, [options]);
+
+    // useEffect(() => {
+    //   console.log('radio-group useEffect', { options, value });
+    //   const optionsString = stringify({ options, value });
+    //   // options가 이전과 동일하면 실행하지 않음
+    //   if (prevOptionsRef.current === optionsString) {
+    //     return;
+    //   }
+    //   // options 값 업데이트
+    //   prevOptionsRef.current = optionsString;
+    //   // 첫 번째 옵션 값 설정
+    //   const firstValue = options?.[0]?.value;
+    //   if (firstValue !== undefined) {
+    //     handleValueChange(firstValue);
+    //   }
+    // }, [options, value]);
 
     return (
       <Primitive.Root

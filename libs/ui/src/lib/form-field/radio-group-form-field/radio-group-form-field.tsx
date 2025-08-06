@@ -1,6 +1,6 @@
 import { BaseFormFieldProps, OptionsConfig, useFormOptions } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
 import { RadioGroup } from '../../radio-group/radio-group';
 import { RadioGroupOption } from '../../radio-group/type';
 import styles from './radio-group-form-field.module.css';
@@ -38,6 +38,18 @@ const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, RadioGroupFormFi
       });
     }, [options, optionsConfig?.optionsNode]);
 
+    const handleValueChange = useCallback(
+      (newValue: string) => {
+        // if (value !== newValue) {
+        console.log('bbbbbbb', { value, newValue });
+        if (value === undefined) {
+          console.log('bbbbbbbb > 22', { value, newValue });
+          onChange(newValue);
+        }
+      },
+      [value],
+    );
+
     const {
       clearAllValidators,
       addValidator,
@@ -66,7 +78,7 @@ const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, RadioGroupFormFi
         defaultValue={value}
         options={radioOptions as RadioGroupOption[]}
         cols={cols}
-        onValueChange={onChange}
+        onValueChange={handleValueChange}
         {...newProps}
       />
     );
