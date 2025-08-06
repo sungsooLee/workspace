@@ -7,7 +7,7 @@ body.scrolled {
   @apply overflow-x-auto overflow-y-hidden;
   .layout_wrap {
     header {
-      @apply !h-[50px] !overflow-hidden;
+      @apply !h-[50px] !overflow-hidden !pt-0;
       h1,
       .util,
       .option_menu {

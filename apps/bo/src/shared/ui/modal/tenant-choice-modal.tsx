@@ -1,12 +1,12 @@
-import { FC, useState, forwardRef, useCallback } from 'react';
-import { t } from 'i18next';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
+import { t } from 'i18next';
+import { FC, forwardRef, useCallback, useState } from 'react';
 
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { tenantQueryOptions } from '@entities/tenant';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
@@ -149,7 +149,7 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
   };
 
   return (
-    <ModalContainer>
+    <ModalContainer width="xl">
       <ModalTitle>테넌트 조회</ModalTitle>
       <ModalBody>
         <div className={popupStyles.wrap}>

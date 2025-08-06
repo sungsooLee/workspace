@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { HtmlContent } from '@learnway/ui/html-content';
 
 import type { TermsType } from '@entities/terms';
-import { useFetchTerms, useFetchTermsVersions } from '../../../../../entities/terms';
+import { findTermsType, useFetchTerms, useFetchTermsVersions } from '@entities/terms';
 
 import styles from '@learnway/styles/fo/features/auth/ui/terms-button/terms-modal.module.css';
 import { Button } from '@learnway/ui/button';
@@ -22,9 +22,9 @@ function TermsModalComponent({ termsType }: TermsModalComponentProps) {
 
   const ref = useRef<any>();
   const [termsId, setTermsId] = useState<string | undefined>();
-
-  const { data } = useFetchTerms(termsType, Number(termsId));
-  const { data: versions } = useFetchTermsVersions(termsType);
+  const termsTypeCode = findTermsType(termsType);
+  const { data } = useFetchTerms(termsTypeCode, Number(termsId));
+  const { data: versions } = useFetchTermsVersions(termsTypeCode);
 
   const options = useCreation(() => {
     if (!versions) {

@@ -25,7 +25,7 @@ export const useQuestionBankInfoInput = (contentUuid: string) => {
 
   const { data: questionList = [], refetch } = useGetQuestionItemList(contentUuid);
 
-  const { sensors, handleOnDragEnd } = useQuestionSort({
+  const { dragSensors, handleOnDragEnd } = useQuestionSort({
     contentUuid,
     contentType: ContentType.EXAM_POOL,
     questionItemList,
@@ -47,14 +47,27 @@ export const useQuestionBankInfoInput = (contentUuid: string) => {
     updateCountInfo(payload);
   }, [contentUuid, questionItemList]);
 
+  const handleQuestionMutationSuccessCallback = useCallback(async () => {
+    const { data: refetchResult = [] } = await refetch();
+    setQuestionItemList(refetchResult);
+  }, []);
+
   const questionCreateSuccessCallback = useCallback(async () => {
     openToast({
       title: t('저장되었습니다.'),
       type: 'success',
     });
 
-    const { data: refetchResult = [] } = await refetch();
-    setQuestionItemList(refetchResult);
+    await handleQuestionMutationSuccessCallback();
+  }, []);
+
+  const questionDeleteSuccessCallback = useCallback(async () => {
+    openToast({
+      title: t('삭제되었습니다.'),
+      type: 'success',
+    });
+
+    await handleQuestionMutationSuccessCallback();
   }, []);
 
   const { copy: copyQuestions } = useCopyQuestionsToExamPaper({
@@ -66,8 +79,7 @@ export const useQuestionBankInfoInput = (contentUuid: string) => {
         });
 
         setTimeout(async () => {
-          const { data: refetchResult = [] } = await refetch();
-          setQuestionItemList(refetchResult);
+          await handleQuestionMutationSuccessCallback();
         }, 100);
       }
     },
@@ -95,8 +107,7 @@ export const useQuestionBankInfoInput = (contentUuid: string) => {
         });
 
         setTimeout(async () => {
-          const { data: refetchResult = [] } = await refetch();
-          setQuestionItemList(refetchResult);
+          await handleQuestionMutationSuccessCallback();
         }, 100);
       }
     },
@@ -129,10 +140,11 @@ export const useQuestionBankInfoInput = (contentUuid: string) => {
     setSelectedQuestionRows,
     handleUpdateQuestionCountInfo,
     questionCreateSuccessCallback,
+    questionDeleteSuccessCallback,
     refetchQuestionItemList: refetch,
     handleOnCopyQuestion,
     handleOnDeleteQuestion,
-    dragSensors: sensors,
+    dragSensors,
     handleOnDragEnd,
   };
 };

@@ -33,6 +33,18 @@
         }
       }
     }
+    [class*='nlp--thumbnail-list'] {
+      [class*='nlp--thumbnail'] {
+        [class*='image_wrap'] {
+          & > [class*='start'] {
+            @apply aspect-auto w-[];
+            img {
+              @apply rounded-[4px];
+            }
+          }
+        }
+      }
+    }
   }
   .btn_file {
     @apply box-border flex h-[84px] min-w-[128px] flex-col items-center justify-center rounded-[4px] border border-solid border-[var(--gray3)] bg-[var(--gray1)];

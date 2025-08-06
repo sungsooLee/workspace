@@ -12,10 +12,10 @@ import { t } from 'i18next';
 import { useRef, useState } from 'react';
 
 type Props = {
-  roleId?: string;
+  roleId: number;
 };
 
-const ChannelShuttleModalComponent = ({ roleId = '' }: Props) => {
+const ChannelShuttleModalComponent = ({ roleId }: Props) => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
   const { closeModal } = useModal();
 
@@ -123,7 +123,7 @@ const ChannelShuttleModalComponent = ({ roleId = '' }: Props) => {
   };
 
   return (
-    <ModalContainer>
+    <ModalContainer width="xl">
       <ModalTitle>채널 조회</ModalTitle>
       <ModalBody>
         <div className={popupStyles.wrap}>

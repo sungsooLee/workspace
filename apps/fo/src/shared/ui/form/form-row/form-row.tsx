@@ -1,6 +1,6 @@
-import React, { FC, memo } from 'react';
-import { BaseFormRow } from '@learnway/ui/base-form';
 import { FormRowProps as BaseFormRowProps } from '@learnway/hooks';
+import { BaseFormRow } from '@learnway/ui/base-form';
+import { FC, memo } from 'react';
 import { formFieldConfig } from '../form-field-config';
 
 /**
@@ -26,7 +26,7 @@ const FormRowComponent: FC<FormRowProps> = ({ className, provider, children, nam
       className={className}
       children={children}
       element={element}
-      style={'fo'}
+      theme={'fo'}
     />
   );
 };
