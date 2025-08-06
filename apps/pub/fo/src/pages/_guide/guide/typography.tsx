@@ -101,6 +101,8 @@ function RouteComponent() {
     {
       groupName: 'Body',
       items: [
+        { title: 'Body', className: 'body-xl', tag: 'span' },
+        { title: 'Body', className: 'body-xl-b', tag: 'span' },
         { title: 'Body', className: 'body-lg', tag: 'span' },
         { title: 'Body', className: 'body-lg-b', tag: 'span' },
         { title: 'Body', className: 'body-md', tag: 'span' },
