@@ -13,10 +13,8 @@ import bnrCImage2 from '../../../assets/images/banner/banner_category_02.png';
 import { IcoArray, IcoArrowDown, IcoDotpoints } from '@learnway/icons';
 import { useFetchCategoryDetail } from '@entities/category';
 import CategoryService from '@entities/category/api/category';
-import { CategoryDetailComponentProps } from '@pages/_layout/_category/category';
 
 import { Carousel } from '@learnway/ui/carousel';
-import { ContentsRow } from '@learnway/ui/contents-row';
 import { Dropdown } from '@learnway/ui/dropdown';
 import { Input } from '@learnway/ui/input';
 import { Button } from '@learnway/ui/button';
@@ -24,6 +22,7 @@ import { Popover } from '@learnway/ui/popover';
 import { EmptyText } from '@learnway/ui/empty-text';
 import { Pagination } from '@learnway/ui/pagination';
 import { ThumbnailList } from '@shared/ui/thumnail/list/thumbnail-list';
+import { CategoryDetailComponentProps, collectDepths, findNodeById } from '@features/category';
 
 // 배너 관리 더미 데이터
 const items = [
@@ -37,51 +36,6 @@ const items = [
     <img src={bnrCImage1} alt="" />
   </Link>,
 ];
-
-function findNodeById(tree: any[], targetId: number): any | null {
-  for (const node of tree) {
-    if (node.id === targetId) return node;
-
-    if (node.children) {
-      const found = findNodeById(node.children, targetId);
-      if (found) return found;
-    }
-  }
-  return null;
-}
-
-function collectDepths(treeNode: any): {
-  depth4: { label: string; value: number }[];
-  depth5: { parentId?: number; label: string; value: number }[];
-} {
-  const depth4: { label: string; value: number }[] = [
-    {label: t('대분류'), value: 0}
-  ];
-  const depth5: { parentId?: number; label: string; value: number }[] = [
-    {label: t('소분류'), value: 0}
-  ];
-
-  if (!treeNode?.children) return { depth4, depth5 };
-
-  for (const node4 of treeNode.children) {
-    depth4.push({
-      label: node4.name,
-      value: node4.id,
-    });
-
-    if (node4.children) {
-      for (const node5 of node4.children) {
-        depth5.push({
-          parentId: node4.id,
-          label: node5.name,
-          value: node5.id,
-        });
-      }
-    }
-  }
-
-  return { depth4, depth5 };
-}
 
 type TopOptionsType = { label: string; value: number; }
 type MiddleOptionsType = { parentId?: number; label: string; value: number; };
