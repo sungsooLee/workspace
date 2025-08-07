@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
+import { useState } from 'react';
 
 import { IcoBell03, IcoXclose } from '@learnway/icons';
-import { cn } from '@learnway/shared';
 
-import styles from './notification.module.css';
 import { Button } from '@learnway/ui/button';
+import styles from './notification.module.css';
 
 interface NotificationInfo {
   id: number;
@@ -67,7 +66,7 @@ const initialNotifications: NotificationInfo[] = [
   },
 ];
 
-const NotificationComponent = ({ userUUID }: any) => {
+const NotificationContentsComponent = ({ userUUID }: any) => {
   const [notifications, setNotifications] = useState<NotificationInfo[]>(initialNotifications);
 
   const handleDelete = (id: number) => {
@@ -127,4 +126,4 @@ const NotificationComponent = ({ userUUID }: any) => {
   );
 };
 
-export const Notification = NotificationComponent;
+export const NotificationContents = NotificationContentsComponent;

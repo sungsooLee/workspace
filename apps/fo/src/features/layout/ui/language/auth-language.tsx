@@ -13,8 +13,8 @@ import { useSetLanguage } from '@features/layout/service/i18n.hook';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
 
+import popoverInnerStyles from '@learnway/styles/fo/features/layout/ui/popover-inner.module.css';
 import styles from './language.module.css';
-import popoverInnerStyles from './popover-inner.module.css';
 
 const LanguageContent = () => {
   const { t } = useTranslation();
