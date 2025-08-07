@@ -1,9 +1,9 @@
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 
-import { CODE_GROUP, SearchBoxConfig, useDynamicForm2, useSearchBox } from '@learnway/hooks';
-import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
+import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 
@@ -15,10 +15,8 @@ import { useModal } from '@learnway/ui/modal';
 import { EnGlobalConst } from '@shared/types/enums';
 import { CombineUserGroup } from '@shared/types/user-group';
 import { UserGroupChoiceModal } from '@shared/ui/modal';
-import { SearchBox, SearchBoxForm } from '@shared/ui/search-box';
+import { SearchBoxForm } from '@shared/ui/search-box';
 import { useCreation } from 'ahooks';
-import { queryOptions as companysQueryOptions } from '@entities/companies';
-import { useWatch } from 'react-hook-form';
 import {
   DropdownFormField,
   FormItem,
@@ -27,7 +25,6 @@ import {
   PeriodPickerFormField,
   TenantByRoleDropdownFormField,
 } from '@shared/ui/form';
-import { useQueryClient } from '@tanstack/react-query';
 import { ContentsRow } from '@learnway/ui/contents-row';
 
 const _global = {
@@ -41,15 +38,12 @@ const _global = {
  * @param param0
  * @returns
  */
-const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => {
+const TenantUserGroupManualManagementListComponent: FC<any> = () => {
   const router = useRouter();
   const routerState = useRouterState();
-  const queryClient = useQueryClient();
 
   const { data: loginUser } = useFetchAuthUser();
   const { openModal } = useModal();
-
-  const [companyOptions, setCompanyOptions] = useState<SelectOption[]>([]);
 
   _global.linkClick = (userGroupId: number) => {
     router.navigate({
@@ -228,14 +222,6 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
     [],
   );
 
-  const {
-    provider: searchProvider,
-    getValues,
-    setValue,
-    onFormChange,
-    onFormValid,
-    onSubmit,
-  } = useDynamicForm2();
   const handleOnSearchParam = () => {
     const data = getValues();
     const payload = {
@@ -253,6 +239,14 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
     );
     return filteredPayload;
   };
+  const {
+    provider: searchProvider,
+    getValues,
+    setValue,
+    onFormChange,
+    onFormValid,
+    onSubmit,
+  } = useDynamicForm2();
   const { config: gConfig, gridFetch } = useGridBox(gridInitConfig, handleOnSearchParam);
 
   const handleOnSearch = () => {

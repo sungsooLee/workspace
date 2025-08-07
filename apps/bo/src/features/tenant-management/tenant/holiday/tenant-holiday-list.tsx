@@ -93,31 +93,6 @@ const TenantHolidayListComponent: FC<any> = () => {
           },
         },
         {
-          name: 'tenantName',
-          label: t('테넌트명'),
-          size: 132,
-        },
-        {
-          name: 'companyName',
-          label: t('회사'),
-          size: 132,
-        },
-        {
-          name: 'holidayName',
-          label: t('휴일명'),
-          render: (info: any) => {
-            return (
-              <Button
-                className="link"
-                onClick={() => _global.linkClick(info.row.original.holidayId)}
-              >
-                {info.getValue()}
-              </Button>
-            );
-          },
-          size: 132,
-        },
-        {
           name: 'startDate',
           label: t('휴일 기간'),
           render: (info: any) => {
