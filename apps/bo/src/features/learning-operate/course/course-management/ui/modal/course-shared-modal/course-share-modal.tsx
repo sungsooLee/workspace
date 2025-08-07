@@ -132,7 +132,7 @@ const CourseShareModalComponent = () => {
   };
 
   return (
-    <ModalContainer className="h-[740]">
+    <ModalContainer width="xl" className="h-[740]">
       <ModalTitle>{t('공유')}</ModalTitle>
       <ModalBody>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />

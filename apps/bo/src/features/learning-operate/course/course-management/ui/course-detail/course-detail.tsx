@@ -46,7 +46,7 @@ const Component = () => {
         content: <Community />,
       },
     ];
-    // sequence만 제외한 탭만 남기는 변수
+    // sequence만 제외한 탭
     const excludeSequenceTab = tabs.filter((tab) => tab.key !== CourseDetailTab.SEQUENCE);
     // 수강신청이 없는 과정  [이러닝, 라이브, 평가]
     const isNoEnrollment = ['ELEARNING1', 'LIVE', 'EXAM'].includes(courseType ?? '');
