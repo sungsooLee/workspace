@@ -23,7 +23,8 @@ import {
   initStatisticRow,
   updateNewStatistics,
 } from '../../service/learning-resource-question-service';
-import { QuestionBankTabFormRef, QuestionStatisticRow } from '../../service/question-bank/type';
+import { QuestionStatisticRow } from '@features/learning-resource/learning-resource-management';
+import { QuestionBankTabFormRef } from '../../service/question-bank/type';
 import { useQuestionBankInfoInput } from '../../service/question-bank/use-question-bank-info-input';
 import { LearningResourceQuestionShuttleModal } from './modal/learning-resource-question-shuttle-modal';
 import { LearningResourceTestItemModal } from './modal/learning-resource-test-item-modal';

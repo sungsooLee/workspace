@@ -1,4 +1,4 @@
-import { ContentBaseInfo, EnQuestionType } from '@entities/learning-resource';
+import { ContentBaseInfo } from '@entities/learning-resource';
 
 export enum QuestionTab {
   QUESTION_BASE = 'QUESTION_BASE',
@@ -13,11 +13,3 @@ export interface QuestionBankTabFormRef {
 export interface QuestionBankFormData extends ContentBaseInfo {
   contentUseDate?: { from: Date | undefined; to: Date | undefined };
 }
-
-export type QuestionStatisticRow = {
-  title: string;
-  hard: number;
-  medium: number;
-  easy: number;
-  type: EnQuestionType;
-};
