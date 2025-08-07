@@ -1,35 +1,38 @@
 import { QuestionListForRetrieveRes } from '@entities/learning-resource';
-import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { useQuestionImport } from '@features/learning-resource/learning-resource-management';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ShuttleGridToGrid, ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
-import { TenantByRoleDropdownFormField, TenantChannelDropdownFormField } from '@shared/ui/form';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { TFunction } from 'i18next';
 import { useCallback, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
-import { useQuestionSearchAndCopy } from '../service/learning-resource-question-import.hook';
+import { CopyQuestionSearchForm } from '../components/learning-resource-question-search-form';
 import { LearningResourceQuestionItemInfoModal } from './learning-resource-question-item-info-modal';
 
-import { SearchBox } from '@shared/ui/search-box';
-import { getDropdownOptions } from '../service/test-paper/common';
 type QuestionShuttleModalProps = {
   examPoolUuid: string;
+  languageCountryCode?: string;
 };
 
-const LearningResourceQuestionShuttleComponent = ({ examPoolUuid }: QuestionShuttleModalProps) => {
+const LearningResourceQuestionShuttleComponent = ({
+  examPoolUuid,
+  languageCountryCode = 'KO',
+}: QuestionShuttleModalProps) => {
   const { t } = useTranslation();
 
   const ref = useRef<ShuttleGridToGridImperative>(null);
 
   const { openModal, closeModal } = useModal();
 
-  const { provider: sProvider } = useSearchBox(questionSearchConfig(t));
-
-  const { handleOnSearch, gridData, handleSelectQuestions, handleCopyQuestions } =
-    useQuestionSearchAndCopy(examPoolUuid);
+  const {
+    handleOnSearch,
+    provider,
+    onSubmit,
+    gridData,
+    handleSelectQuestions,
+    handleCopyQuestions,
+  } = useQuestionImport(examPoolUuid);
 
   const handleViewQuestionButtonClick = useCallback(async (item: QuestionListForRetrieveRes) => {
     await openModal({
@@ -80,7 +83,12 @@ const LearningResourceQuestionShuttleComponent = ({ examPoolUuid }: QuestionShut
     <ModalContainer>
       <ModalTitle>{t('문항 선택')}</ModalTitle>
       <ModalBody>
-        <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+        <CopyQuestionSearchForm
+          provider={provider}
+          onSubmit={onSubmit}
+          onSearch={handleOnSearch}
+          languageCountryCode={languageCountryCode}
+        />
         <Divider />
         <ShuttleGridToGrid
           ref={ref}
@@ -108,64 +116,5 @@ const LearningResourceQuestionShuttleComponent = ({ examPoolUuid }: QuestionShut
 };
 
 LearningResourceQuestionShuttleComponent.displayName = 'LearningResourceQuestionShuttleModal';
-
-const questionSearchConfig = (t: TFunction<'translation', undefined>): SearchBoxConfig => ({
-  builders: [
-    [
-      {
-        name: 'tenantId',
-        type: 'custom',
-        label: t('LABEL.form.label.tenant'),
-        format: 'object',
-        value: '',
-        element: <TenantByRoleDropdownFormField />,
-      },
-      {
-        name: 'channelUuid',
-        type: 'custom',
-        label: t('LABEL.form.label.channel'),
-        format: 'object',
-        value: '',
-        element: <TenantChannelDropdownFormField enableFilter />,
-      },
-      {
-        name: 'contentName',
-        type: 'text',
-        label: t('문제은행'),
-        value: '',
-      },
-    ],
-    [
-      {
-        name: 'languageCountryCode',
-        label: t('문항언어'),
-        type: 'dropdown',
-        value: 'KO',
-        optionsConfig: {
-          codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
-        },
-        readOnly: true,
-      },
-      {
-        name: 'questionType',
-        label: t('문항유형'),
-        type: 'dropdown',
-        value: '',
-        options: [{ value: '', label: t('전체') }, ...getDropdownOptions(QUESTION_TYPES(t))],
-      },
-      {
-        name: 'questionLevel',
-        label: t('난이도'),
-        type: 'dropdown',
-        value: '',
-        options: [{ value: '', label: t('전체') }, ...getDropdownOptions(QUESTION_LEVELS(t))],
-      },
-    ],
-  ],
-  validator: {
-    tenantId: true,
-    channelUuid: true,
-  },
-});
 
 export const LearningResourceQuestionShuttleModal = LearningResourceQuestionShuttleComponent;

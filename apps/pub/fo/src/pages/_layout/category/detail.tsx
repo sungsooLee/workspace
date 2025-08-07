@@ -29,7 +29,7 @@ import { EmptyText } from '@learnway/ui/empty-text';
 import { Input } from '@learnway/ui/input';
 import { Pagination } from '@learnway/ui/pagination';
 import { Popover } from '@learnway/ui/popover';
-import ThumbnailList from '../../-components/thumb/thumb-nail-list';
+import ThumbnailList from '../../../shared/ui/thumnail/list/thumbnail-list';
 
 export const Route = createFileRoute('/_layout/category/detail')({
   component: RouteComponent,

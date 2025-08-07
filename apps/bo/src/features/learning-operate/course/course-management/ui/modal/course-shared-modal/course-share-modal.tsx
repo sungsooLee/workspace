@@ -79,21 +79,25 @@ const CourseShareModalComponent = () => {
         const tenant = info.row.original.tenantList.find((x: any) => x.tenantId === tenantIdWatch);
         return tenant.tenantName || '';
       },
+      enableSorting: false,
     }),
     columnHelper.accessor('channelName', {
       header: t('채널'),
       size: 132,
       cell: (info) => info.getValue(),
+      enableSorting: false,
     }),
     columnHelper.accessor('channelOwnerId', {
       header: t('채널 소유자'),
       size: 132,
       cell: (info: any) => info.getValue(),
+      enableSorting: false,
     }),
     columnHelper.accessor('isUsed', {
       header: t('사용여부'),
       size: 132,
       cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
+      enableSorting: false,
     }),
   ] as ColumnDef<any, unknown>[];
 
@@ -132,7 +136,7 @@ const CourseShareModalComponent = () => {
   };
 
   return (
-    <ModalContainer className="h-[740]">
+    <ModalContainer width="xl" className="h-[740]">
       <ModalTitle>{t('공유')}</ModalTitle>
       <ModalBody>
         <SearchBox provider={sProvider} onSearch={handleOnSearch} />

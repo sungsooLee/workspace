@@ -478,7 +478,13 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 name={'isEnrollRequired'}
                 label={t('수강신청')}
                 format={'boolean'}
-                element={<SwitchFormField disabled={courseConfig?.enrollOption !== 'OPTIONAL'} />}
+                element={
+                  <SwitchFormField
+                    disabled={['MANDATORY', 'IMPOSSIBLE'].includes(
+                      courseConfig?.enrollOption ?? '',
+                    )}
+                  />
+                }
               />
             </ContentsRow>
             {/*승인 결재 라인, 정원*/}
@@ -605,7 +611,11 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 name={'isUsePassOption'}
                 label={t('이수기준')}
                 format={'boolean'}
-                element={<SwitchFormField disabled={courseConfig?.passOption !== 'OPTIONAL'} />}
+                element={
+                  <SwitchFormField
+                    disabled={['MANDATORY', 'IMPOSSIBLE'].includes(courseConfig?.passOption ?? '')}
+                  />
+                }
               />
             </ContentsRow>
             <FormDisplay
@@ -740,7 +750,11 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 label={t('학습환경')}
                 format={'boolean'}
                 element={
-                  <SwitchFormField disabled={courseConfig?.learningEnvOption !== 'OPTIONAL'} />
+                  <SwitchFormField
+                    disabled={['MANDATORY', 'IMPOSSIBLE'].includes(
+                      courseConfig?.learningEnvOption ?? '',
+                    )}
+                  />
                 }
               />
             </ContentsRow>
@@ -866,7 +880,11 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 format={'boolean'}
                 label={t('학습제어')}
                 element={
-                  <SwitchFormField disabled={courseConfig?.learningControlOption !== 'OPTIONAL'} />
+                  <SwitchFormField
+                    disabled={['MANDATORY', 'IMPOSSIBLE'].includes(
+                      courseConfig?.learningControlOption ?? '',
+                    )}
+                  />
                 }
               />
             </ContentsRow>
@@ -981,7 +999,11 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 label={t('강사')}
                 format={'boolean'}
                 element={
-                  <SwitchFormField disabled={courseConfig?.instructorOption !== 'OPTIONAL'} />
+                  <SwitchFormField
+                    disabled={['MANDATORY', 'IMPOSSIBLE'].includes(
+                      courseConfig?.instructorOption ?? '',
+                    )}
+                  />
                 }
               />
             </ContentsRow>
@@ -1027,7 +1049,13 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 name={'isTextbookProvided'}
                 label={t('교재')}
                 format={'boolean'}
-                element={<SwitchFormField disabled={courseConfig?.textBookOption !== 'OPTIONAL'} />}
+                element={
+                  <SwitchFormField
+                    disabled={['MANDATORY', 'IMPOSSIBLE'].includes(
+                      courseConfig?.textBookOption ?? '',
+                    )}
+                  />
+                }
               />
             </ContentsRow>
             <FormDisplay
@@ -1062,7 +1090,11 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 label={t('사전/연관학습')}
                 format={'boolean'}
                 element={
-                  <SwitchFormField disabled={courseConfig?.relatedCourseOption !== 'OPTIONAL'} />
+                  <SwitchFormField
+                    disabled={['MANDATORY', 'IMPOSSIBLE'].includes(
+                      courseConfig?.relatedCourseOption ?? '',
+                    )}
+                  />
                 }
               />
             </ContentsRow>

@@ -1,11 +1,11 @@
 import { IcoArrowDown, IcoClose02, IcoLang } from '@learnway/icons';
+import popoverInnerStyles from '@learnway/styles/fo/features/layout/ui/popover-inner.module.css';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
 import { Popover } from '@learnway/ui/popover';
 import { memo, useState } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import styles from './language.module.css';
-import popoverInnerStyles from './popover-inner.module.css';
 const PopoverContent = () => {
   const [selectedLang, setSelectedLang] = useState('한국어');
   const languages = [

@@ -1,11 +1,11 @@
 import { useCodeGroup } from '@learnway/hooks';
 import { IcoArrowBackward, IcoClose02 } from '@learnway/icons';
 
+import popoverInnerStyles from '@learnway/styles/fo/features/layout/ui/popover-inner.module.css';
 import { Avatar } from '@learnway/ui/avatar';
 import { Button } from '@learnway/ui/button';
 import { Popover } from '@learnway/ui/popover';
 import { memo, useState } from 'react';
-import popoverInnerStyles from './popover-inner.module.css';
 import styles from './user-avatar.module.css';
 
 import { UserMy } from './user-my';

@@ -17,25 +17,24 @@ import { GridBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
-import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
+import { QUESTION_LEVELS, QUESTION_TYPES } from '../../service/exam-util';
 import {
   initStatisticRow,
   updateNewStatistics,
-} from '../service/learning-resource-question-service';
-
-import { QuestionBankTabFormRef } from '../service/question-bank/type';
-import { useQuestionBankInfoInput } from '../service/question-bank/use-question-bank-info-input';
-import { LearningResourceQuestionShuttleModal } from './learning-resource-question-shuttle-modal';
-import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
+} from '../../service/learning-resource-question-service';
+import { QuestionBankTabFormRef } from '../../service/question-bank/type';
+import { useQuestionBankInfoInput } from '../../service/question-bank/use-question-bank-info-input';
+import { LearningResourceQuestionShuttleModal } from './modal/learning-resource-question-shuttle-modal';
+import { LearningResourceTestItemModal } from './modal/learning-resource-test-item-modal';
 
 // Drag and Drop 관련
 import { closestCenter, DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
-import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
+import { QuestionDragHandle } from './components/learning-resource-question-drag-handle';
 
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
-import { QuestionStatisticRow } from '../service/test-paper/type';
+import { QuestionStatisticRow } from '../../service/test-paper/type';
 
 interface QuestionBankQuestionProps {
   content?: QuestionBasicInfoDetail;

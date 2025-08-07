@@ -17,7 +17,7 @@ import avatarImg from '@learnway/styles/fo/assets/images/menu/course/img_avatar.
 import { Button } from '@learnway/ui/button';
 import { ImageFallBack } from '@learnway/ui/image-fallback/image-fallback';
 import { Link } from '@tanstack/react-router';
-import ThumbnailList from '../../../../pages/-components/thumb/thumb-nail-list';
+import ThumbnailList from '../../../../shared/ui/thumnail/list/thumbnail-list';
 import styles from './search-submitted.module.css';
 
 type linkListProps = {

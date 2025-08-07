@@ -4,9 +4,9 @@ import { IcoBell02, IcoClose02 } from '@learnway/icons';
 import { Popover } from '@learnway/ui/popover';
 import { NotificationContents } from '../../layout';
 
+import popoverInnerStyles from '@learnway/styles/fo/features/layout/ui/popover-inner.module.css';
 import { Button } from '@learnway/ui/button';
 import styles from './notification.module.css';
-import popoverInnerStyles from './popover-inner.module.css';
 
 const PopoverContent = () => {
   return (

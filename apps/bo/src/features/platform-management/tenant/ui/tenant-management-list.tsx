@@ -263,8 +263,6 @@ const TenantManagementListComponent: FC<any> = ({ rootPath, roleInfo }) => {
             format="string"
             element={<InputFormField />}
           />
-        </ContentsRow>
-        <ContentsRow>
           <FormRow2
             provider={searchProvider}
             name="companyManagerName"
@@ -273,6 +271,8 @@ const TenantManagementListComponent: FC<any> = ({ rootPath, roleInfo }) => {
             value=""
             element={<InputFormField />}
           />
+        </ContentsRow>
+        <ContentsRow>
           <FormRow2
             provider={searchProvider}
             name="isUsed"
@@ -288,6 +288,8 @@ const TenantManagementListComponent: FC<any> = ({ rootPath, roleInfo }) => {
               />
             }
           />
+          <FormItem />
+          <FormItem />
           <FormItem />
         </ContentsRow>
       </SearchBoxForm>

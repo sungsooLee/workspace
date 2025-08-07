@@ -1,9 +1,9 @@
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 
-import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { CODE_GROUP, SearchBoxConfig, useDynamicForm2, useSearchBox } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 
@@ -15,8 +15,20 @@ import { useModal } from '@learnway/ui/modal';
 import { EnGlobalConst } from '@shared/types/enums';
 import { CombineUserGroup } from '@shared/types/user-group';
 import { UserGroupChoiceModal } from '@shared/ui/modal';
-import { SearchBox } from '@shared/ui/search-box';
+import { SearchBox, SearchBoxForm } from '@shared/ui/search-box';
 import { useCreation } from 'ahooks';
+import { queryOptions as companysQueryOptions } from '@entities/companies';
+import { useWatch } from 'react-hook-form';
+import {
+  DropdownFormField,
+  FormItem,
+  FormRow2,
+  InputFormField,
+  PeriodPickerFormField,
+  TenantByRoleDropdownFormField,
+} from '@shared/ui/form';
+import { useQueryClient } from '@tanstack/react-query';
+import { ContentsRow } from '@learnway/ui/contents-row';
 
 const _global = {
   linkClick: (userGroupId: number) => {
@@ -32,10 +44,12 @@ const _global = {
 const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
   const routerState = useRouterState();
+  const queryClient = useQueryClient();
 
   const { data: loginUser } = useFetchAuthUser();
-
   const { openModal } = useModal();
+
+  const [companyOptions, setCompanyOptions] = useState<SelectOption[]>([]);
 
   _global.linkClick = (userGroupId: number) => {
     router.navigate({
@@ -217,16 +231,32 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
   const {
     provider: searchProvider,
     getValues,
-    setOptions,
     setValue,
     onFormChange,
     onFormValid,
-  } = useSearchBox(searchConfig());
-  const { config: gConfig, gridFetch } = useGridBox(gridInitConfig);
+    onSubmit,
+  } = useDynamicForm2();
+  const handleOnSearchParam = () => {
+    const data = getValues();
+    const payload = {
+      ...data,
+      modifiedStartDate: data.dateRange && data.dateRange.from &&
+        getDateToString(new Date(data.dateRange.from), 'YYYY-MM-DDTHH:mm:ss'),
+      modifiedEndDate: data.dateRange && data.dateRange.to &&
+        getDateToString(new Date(data.dateRange.to), 'YYYY-MM-DDTHH:mm:ss'),
+      dateRange: null,
+    };
+    const filteredPayload = Object.fromEntries(
+      Object.entries(payload).filter(
+        ([_, value]) => value !== null && value !== undefined && value !== '',
+      ),
+    );
+    return filteredPayload;
+  };
+  const { config: gConfig, gridFetch } = useGridBox(gridInitConfig, handleOnSearchParam);
 
-  const handleOnSearch = (data: any) => {
-    console.log('search', data);
-    gridFetch(data);
+  const handleOnSearch = () => {
+    gridFetch(handleOnSearchParam());
   };
 
   useEffect(() => {
@@ -235,7 +265,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
       if (listParam) {
         onFormChange(listParam);
         if (await onFormValid()) {
-          handleOnSearch(getValues());
+          handleOnSearch();
         }
       }
     };
@@ -244,183 +274,96 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
 
   useEffect(() => {
     if (!loginUser) return;
-
-    const tenantIdOptions = loginUser.tenants.map((tenant) => ({
-      value: tenant.tenantId,
-      label: tenant.tenantName,
-    }));
-
-    setOptions('tenantId', tenantIdOptions);
     if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
   }, [loginUser]);
 
   return (
     <>
-      <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+      <SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
+        <ContentsRow>
+          <FormRow2
+            provider={searchProvider}
+            name={'tenantId'}
+            type="custom"
+            label={t('LABEL.form.label.tenant', '테넌트')}
+            value=""
+            format="number"
+            element={<TenantByRoleDropdownFormField />}
+          />
+          <FormRow2
+            provider={searchProvider}
+            name="userGroupOriginType"
+            type="dropdown"
+            label={t('유저그룹유형')}
+            value=""
+            format="string"
+            element={
+              <DropdownFormField
+                optionsConfig={{ codeGroup: CODE_GROUP['pms.user.UserGroupOriginType'] }}
+                presetOptionLabel={t('LABEL.form.label.all')}
+              />
+            }
+          />
+          <FormRow2
+            provider={searchProvider}
+            name="channelName"
+            type="text"
+            label={t('채널')}
+            value=""
+            format="string"
+            placeholder={t('입력')}
+            element={<InputFormField />}
+          />
+          <FormRow2
+            provider={searchProvider}
+            name="personName"
+            type="text"
+            label={t('개인')}
+            value=""
+            format="string"
+            placeholder={t('입력')}
+            element={<InputFormField />}
+          />
+        </ContentsRow>
+        <ContentsRow>
+          <FormRow2
+            provider={searchProvider}
+            name="userGroupName"
+            type="text"
+            label={t('유저그룹명')}
+            value=""
+            format="string"
+            placeholder={t('입력')}
+            element={<InputFormField />}
+          />
+          <FormRow2
+            provider={searchProvider}
+            name="isUsed"
+            label={t('LABEL.form.label.useYn')}
+            format={'boolean'}
+            element={
+              <DropdownFormField
+                presetOptionLabel={t('LABEL.form.label.select')}
+                optionsConfig={{
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
+              />
+            }
+          />
+          <FormRow2
+            provider={searchProvider}
+            name={'dateRange'}
+            label={t('수정기간')}
+            format={'object'}
+            element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day' }} />}
+          />
+          <FormItem />
+        </ContentsRow>
+      </SearchBoxForm>
       <Divider />
-      {/*<GridBox config={gConfig} columns={columns} />*/}
       <GridBox config={gConfig} />
     </>
   );
 };
 
 export const TenantUserGroupManualManagementList = TenantUserGroupManualManagementListComponent;
-
-const searchConfig = (): SearchBoxConfig => ({
-  builders: [
-    [
-      {
-        name: 'tenantId',
-        type: 'dropdown',
-        label: t('테넌트'),
-        format: 'object',
-        value: '',
-        presetOptionLabel: t('LABEL.form.label.select'),
-        options: [],
-      },
-      {
-        name: 'userGroupOriginType',
-        type: 'dropdown',
-        label: t('유저그룹유형'),
-        value: '',
-        presetOptionLabel: t('전체'),
-        optionsConfig: {
-          codeGroup: CODE_GROUP['pms.user.UserGroupOriginType'],
-        },
-      },
-      {
-        name: 'originName',
-        type: 'text',
-        label: t('채널'),
-        value: '',
-      },
-      {
-        name: 'originName',
-        type: 'text',
-        label: t('개인'),
-        value: '',
-      },
-    ],
-    [
-      {
-        name: 'userGroupName',
-        type: 'text',
-        label: t('유저그룹명'),
-        value: '',
-      },
-      {
-        name: 'isUsed',
-        type: 'dropdown',
-        label: t('사용여부'),
-        value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: 'true', label: t('사용') },
-          { value: 'false', label: t('미사용') },
-        ],
-      },
-      {
-        name: 'dateRange',
-        type: 'date-range',
-        label: t('수정기간'),
-        format: 'object',
-        value: { from: undefined, to: undefined },
-      },
-      {
-        name: '',
-        type: 'hidden',
-        value: '',
-      },
-    ],
-  ],
-  validator: {
-    tenantId: true,
-  },
-});
-
-// const gridConfig = {
-//   query: '',
-//   columns: [],
-//   data: [],
-//
-//   pagination: {
-//     pageSize: 20,
-//     pageIndex: 0,
-//     totalRows: 0,
-//   },
-// };
-//
-// const columnHelper = createColumnHelper<any>();
-// const columns = [
-//   columnHelper.accessor('no', {
-//     cell: (info) => info.row.index + 1,
-//     header: t('NO.'),
-//     size: 64,
-//   }),
-//   columnHelper.accessor('tenantName', {
-//     cell: (info) => info.getValue(),
-//     header: t('테넌트명'),
-//     size: 159,
-//   }),
-//   columnHelper.accessor('opt1', {
-//     cell: (info) => info.getValue(),
-//     header: t('유저그룹유형'),
-//     size: 163,
-//   }),
-//   columnHelper.accessor('opt2', {
-//     cell: (info) => info.getValue(),
-//     header: t('채널'),
-//     size: 106,
-//   }),
-//   columnHelper.accessor('opt3', {
-//     cell: (info) => info.getValue(),
-//     header: t('개인별'),
-//     size: 101,
-//   }),
-//   columnHelper.accessor('opt4', {
-//     cell: (info) => (
-//       <Link to={info.row.original.tenantSite} className="link">
-//         {info.row.original.tenantId}
-//       </Link>
-//     ),
-//     header: t('유저그룹명'),
-//     size: 207,
-//   }),
-//   columnHelper.accessor('opt5', {
-//     cell: (info) => info.getValue(),
-//     header: t('대상자'),
-//     size: 127,
-//   }),
-//   columnHelper.accessor('opt6', {
-//     cell: (info) => info.getValue(),
-//     header: t('확인'),
-//     size: 96,
-//   }),
-//   columnHelper.accessor('isUsed', {
-//     cell: (info) => {
-//       return info.row.original.isUsed ? t('사용') : t('미사용');
-//     },
-//     header: t('사용여부'),
-//     size: 88,
-//   }),
-//   columnHelper.accessor('createdDate', {
-//     cell: (info) => {
-//       return getDateToString(
-//         new Date(info.row.original.createdDate),
-//         DATE_TIME_FORMAT.DATETIME_SEC,
-//       );
-//     },
-//     header: t('등록일'),
-//     size: 194,
-//   }),
-//   columnHelper.accessor('modifyedDate', {
-//     cell: (info) => {
-//       return getDateToString(
-//         new Date(info.row.original.modifiedDate),
-//         DATE_TIME_FORMAT.DATETIME_SEC,
-//       );
-//     },
-//     header: t('등록일'),
-//     size: 194,
-//   }),
-// ] as ColumnDef<any, unknown>[];
