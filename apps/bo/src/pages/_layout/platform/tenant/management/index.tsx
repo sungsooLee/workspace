@@ -3,7 +3,7 @@ import { t } from 'i18next';
 
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 
-import { TenantManagmentList } from '@features/platform-management/tenant/ui/tenant-management-list';
+import { TenantManagementList } from '@features/platform-management/tenant/ui/tenant-management-list';
 import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/')({
@@ -25,7 +25,7 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <TenantManagmentList rootPath="/platform" roleInfo={'PLATFORM'} />
+        <TenantManagementList rootPath="/platform" roleInfo={'PLATFORM'} />
       </MainContents>
     </PageContainer>
   );
