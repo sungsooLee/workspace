@@ -1,4 +1,4 @@
-import { isLocalhost } from '@learnway/shared';
+import { getLocalStorage, isLocalhost, setLocalStorage } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
@@ -20,7 +20,6 @@ const CourseListComponent = () => {
     buttonState,
     handleOnSearch,
     handleGridRowsSelect,
-    handleBatchUploadClick,
     handleCourseOpenClick,
     handleCopyClick,
     handleShareClick,
@@ -31,13 +30,6 @@ const CourseListComponent = () => {
       <ContentsButtons>
         {/* 테스트 링크 박스 */}
         {isLocalhost() && <TestLinkBox />}
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={t('LABEL.button.courseBatchUpload')}
-          onClick={handleBatchUploadClick}
-        />
         <Button
           type="button"
           variant="primary"
@@ -76,13 +68,14 @@ export const CourseList = CourseListComponent;
 
 // 테스트 링크 박스
 const TestLinkBox = () => {
-  const [courseId, setCourseId] = useState(7);
+  const [courseId, setCourseId] = useState(getLocalStorage('temp.course.courseId'));
   return (
     <>
       <input
         type="text"
         value={courseId}
         onChange={(e: any) => setCourseId(e.target.value)}
+        onBlur={(e: any) => setLocalStorage('temp.course.courseId', e.target.value)}
         className="w-[50px]"
         aria-label="Course ID"
       />

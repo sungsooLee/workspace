@@ -1,17 +1,19 @@
 /* IA118 / NLP_BO_CMS_1220 - 나의 학습자원 > 문제은행 등록 및 상세 */
 import { QuestionBasicInfoDetail } from '@entities/learning-resource';
-import { ContentTopButtons, getTooltipContent } from '@features/learning-resource';
-import { useLearningResourceQuestionDetailForm } from '@features/learning-resource/learning-resource-management/service/learning-resource-question-detail-from.hook';
+import {
+  ContentTopButtons,
+  getTooltipContent,
+  LearningResourceQuestionBankDetail,
+  LearningResourceQuestionBankQuestion,
+} from '@features/learning-resource';
 import {
   QuestionBankTabFormRef,
   QuestionTab,
 } from '@features/learning-resource/learning-resource-management/service/question-bank/type';
-import { LearningResourceQuestionBankDetail } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank-detail';
-import { LearningResourceQuestionBankQuestion } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank-question';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
 import { Tabs } from '@learnway/ui/tabs';
-import { ContentCreateType, EnFormMode } from '@shared/types/enums';
+import { ContentCreateType } from '@shared/types/enums';
 
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';

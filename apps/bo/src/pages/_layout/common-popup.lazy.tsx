@@ -1,4 +1,4 @@
-import LabelMessagesService from '@entities/label-messages/api/label-messages';
+import { LabelMessagesService } from '@entities/label-messages';
 import langCodes from '@entities/mock/i18n-resource-ko.json';
 import { useDeployTranslation } from '@entities/translation/service/translation.hook';
 import { DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';

@@ -1,11 +1,10 @@
 import { ReactNode } from 'react';
+import { BrowserView } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
-import { MobileView, BrowserView } from 'react-device-detect';
 
 import { useCurrentRoute } from '@learnway/hooks';
 
 import { AuthFooter } from './auth-footer/auth-footer';
-import { MobileAuthContainerHeader } from '../../../m.ui/auth/auth-container/auth-container-header';
 
 //import styles from './auth-container.module.css';
 import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-container/auth-container.module.css';
@@ -25,9 +24,9 @@ function AuthContainerComponent({ children }: AuthContainerComponentProps) {
         <BrowserView>
           <h2>{t(meta?.title ?? '')}</h2>
         </BrowserView>
-        <MobileView>
+        {/* <MobileView>
           <MobileAuthContainerHeader />
-        </MobileView>
+        </MobileView> */}
 
         <div className={`${styles.auth_inner} `}>{children}</div>
       </div>
@@ -38,4 +37,7 @@ function AuthContainerComponent({ children }: AuthContainerComponentProps) {
   );
 }
 
+/**
+ * @description FO _auth 전체 컨테이너
+ */
 export const AuthContainer = AuthContainerComponent;

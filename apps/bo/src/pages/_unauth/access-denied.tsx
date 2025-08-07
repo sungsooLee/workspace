@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { ErrorComponent } from '@features/layout/ui/error-component';
+import { ErrorComponent } from '@features/layout/ui';
 import { ERROR } from '@learnway/config';
 
 export const Route = createFileRoute('/_unauth/access-denied')({

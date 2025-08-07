@@ -1,49 +1,48 @@
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 
-import { getRandomId } from '@learnway/shared';
 import {
-  IcoHeart,
-  IcoStar,
+  IcoArrowDown,
   IcoBook,
   IcoBuilding,
   IcoCategory,
+  IcoChevronDown,
   IcoDivice,
+  IcoEye,
+  IcoHeart,
   IcoLevel,
   IcoLocation,
+  IcoPlay,
   IcoPrize,
+  IcoStar,
   IcoSubtitles02,
   IcoTime,
-  IcoEye,
-  IcoArrowDown,
-  IcoPlay,
-  IcoChevronDown,
 } from '@learnway/icons';
+import { getRandomId } from '@learnway/shared';
 import {
   CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
-import ThumbnailList from '../../-components/thumb/thumb-nail-list';
+import ThumbnailList from '../../../shared/ui/thumnail/list/thumbnail-list';
 
 import pageContentsStyles from '../../_page-contents.module.css';
-import operatorStyles from './operator.module.css';
 import definitionListStyles from './definition-list.module.css';
+import operatorStyles from './operator.module.css';
 import packageInformationStyles from './package-information.module.css';
 
 import styles from './package.module.css';
 
 // 이미지
+import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
+import avatarDefault from '@learnway/styles/fo/assets/images/common/img_avatar.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import package1 from '@learnway/styles/fo/assets/images/temp/img_package_01.png';
-import logoHyundai from '@learnway/styles/fo/assets/images/common/logo_hyundai.png';
-import avatarDefault from '@learnway/styles/fo/assets/images/common/img_avatar.png';
-import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
-import { SelectOption } from '@learnway/ui/type';
-import { Badge } from '@learnway/ui/badge';
-import { useToast } from '@learnway/ui/toast';
-import { Button } from '@learnway/ui/button';
-import { ChipList } from '@learnway/ui/chips';
 import { Accordion } from '@learnway/ui/accordion';
 import { Avatar } from '@learnway/ui/avatar';
+import { Badge } from '@learnway/ui/badge';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { useToast } from '@learnway/ui/toast';
+import { SelectOption } from '@learnway/ui/type';
 
 export const Route = createFileRoute('/_layout/course-introduction/package')({
   component: RouteComponent,

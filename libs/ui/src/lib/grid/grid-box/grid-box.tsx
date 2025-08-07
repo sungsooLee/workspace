@@ -176,6 +176,8 @@ const GridBoxComponent = <T extends object>(
     () => {
       // 전체 행 선택
       tableInstance?.toggleAllRowsSelected(true);
+      // callback
+      onSelectAllClick?.();
     },
     [tableInstance], // 의존성 배열: gridFetch와 page 객체 참조
   );

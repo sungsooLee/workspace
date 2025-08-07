@@ -1,3 +1,7 @@
+import { useCallback, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { useDynamicForm2 } from '@learnway/hooks';
 import {
   learningResourceQueryOptions,
   MutationResponse,
@@ -8,11 +12,9 @@ import {
 } from '@entities/learning-resource';
 import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
-import { useQueryClient } from '@tanstack/react-query';
-import { t } from 'i18next';
-import { useCallback, useState } from 'react';
 
-export const useQuestionSearchAndCopy = (examPoolUuid: string) => {
+export const useQuestionImport = (examPoolUuid: string) => {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   const { closeModal } = useModal();
@@ -20,6 +22,8 @@ export const useQuestionSearchAndCopy = (examPoolUuid: string) => {
 
   const [gridData, setGridData] = useState<QuestionListForRetrieveRes[]>([]);
   const [questionsToCopy, setQuestionsToCopy] = useState<string[]>([]);
+
+  const { provider, onSubmit } = useDynamicForm2();
 
   const handleOnSearch = useCallback(async (params: Record<string, any>) => {
     console.log(params);
@@ -59,6 +63,8 @@ export const useQuestionSearchAndCopy = (examPoolUuid: string) => {
   }, [examPoolUuid, questionsToCopy]);
 
   return {
+    provider,
+    onSubmit,
     handleOnSearch,
     gridData,
     questionsToCopy,

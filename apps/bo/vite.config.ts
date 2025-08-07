@@ -10,11 +10,12 @@ import { defineConfig, loadEnv } from 'vite';
 // vitest automatically sets NODE_ENV to 'test' when running tests
 const isTest = process.env.NODE_ENV === 'test';
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const basePath = env.VITE_BO_BASE_PATH || '';
   const isProduction = mode === 'production';
   const isDevelopment = mode === 'development';
+  const isBuild = command === 'build';
 
   return {
     root: __dirname,
@@ -54,7 +55,7 @@ export default defineConfig(({ mode }) => {
       nxCopyAssetsPlugin(['*.md']),
       !isTest &&
         tanstackRouter({
-          autoCodeSplitting: false, // 일시적으로 비활성화
+          autoCodeSplitting: isBuild,
           generatedRouteTree: './src/routeTree.gen.ts',
         }),
       svgr({
@@ -83,6 +84,10 @@ export default defineConfig(({ mode }) => {
         { find: '@shared', replacement: path.resolve(__dirname, 'src/shared') },
         { find: '@types', replacement: path.resolve(__dirname, 'src/types') },
         { find: '@widgets', replacement: path.resolve(__dirname, 'src/widgets') },
+        {
+          find: '@learnway/styles',
+          replacement: path.resolve(__dirname, '../../libs/styles/src/lib'),
+        },
       ],
     },
     esbuild: {

@@ -7,7 +7,6 @@ import { Button } from '@learnway/ui/button';
 import { useTranslation } from 'react-i18next';
 
 /* company logo image */
-// import imgLogo from '../../../../assets/images/temp/img_temp_company_logo.png';
 export const Route = createFileRoute('/_layout/my-page/info/')({
   component: RouteComponent,
   ...pageRouteConfig({}),

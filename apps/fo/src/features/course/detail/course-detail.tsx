@@ -49,7 +49,7 @@ import {
   default as listImage1,
 } from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
-import { useChannelDetail } from '@entities/channel/service/channel.hook';
+import { useChannelDetail } from '@entities/channel';
 import { useGetCurriculumnDetail } from '@entities/curriculum';
 import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail.module.css';
 import { Panel } from '@learnway/ui/panel';

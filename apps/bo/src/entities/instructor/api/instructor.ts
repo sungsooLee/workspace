@@ -1,11 +1,7 @@
-import {
-  Instructor,
-  InstructorHistory,
-  Instructors,
-} from '@entities/instructor/model/instructor.types';
 import { LMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
 import { PageableContent } from '@shared/types/page-meta';
+import { Instructor, InstructorHistory, Instructors } from '../model/instructor.types';
 
 export default class InstructorService {
   static fetchRolesByTenantId(payload: number) {

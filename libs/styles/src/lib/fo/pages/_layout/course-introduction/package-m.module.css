@@ -84,6 +84,23 @@
       }
       .sub_package_content {
         @apply mt-[24px] pl-[40px];
+        .btn_box {
+          @apply pt-[24px];
+          button {
+            @apply label-lg-b flex w-full items-center gap-[4px] !px-[12px] text-[var(--gray35)];
+            svg {
+              @apply mx-0;
+            }
+          }
+        }
+        [class*='thumbnail_list'] {
+          [class*='tag_list'] {
+            @apply !mt-0;
+          }
+          [class*='count_info_node'] {
+            @apply !mt-[4px];
+          }
+        }
       }
     }
     .operator_box {

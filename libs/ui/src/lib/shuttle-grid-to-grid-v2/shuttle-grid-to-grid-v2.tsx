@@ -187,12 +187,27 @@ const ShuttleGridToGridV2Component = (
   };
 
   /**
+   * 좌측 그리드의 '전체 선택' 버튼 클릭 핸들러
+   * 기존에 있던 행 + 새로 선택된 행 모두
+   */
+  const handleLeftGridSelectAll = useCallback(() => {
+    const leftData = leftTableInstance?.getRowModel().rows.map((row) => row.original) || [];
+    setRightGridData((rightData) => {
+      const newSelection = leftData.filter(
+        (left) => !rightData.find((right) => left[rowKey] === right[rowKey]),
+      );
+      return [...rightData, ...newSelection.map((_) => ({ ..._, isUserSelected: true }))];
+    });
+  }, [leftTableInstance, rightGridData]);
+
+  /**
    * 우측 그리드의 '전체 삭제' 버튼 클릭 시 호출되는 핸들러.
    * 우측 그리드의 모든 데이터를 비웁니다.
    */
   const handleRightGridRemoveAll = () => {
     // 좌측 그리드 전체 행 선택 해제, 로직 실행하면 handleLeftGridRowsSelect 실행됨
     leftTableInstance?.setRowSelection({});
+    setRightGridData([]);
   };
 
   /**
@@ -268,6 +283,7 @@ const ShuttleGridToGridV2Component = (
           showNumberingColumn={showNumberingColumn} // 번호 매김 컬럼 표시 여부
           onTableInstanceChange={(table: Table<any>) => setLeftTableInstance(table)} // 테이블 인스턴스 변경 시 상태 업데이트
           visibleRowCount={visibleRowCount} // 표시할 행 개수
+          onSelectAllClick={handleLeftGridSelectAll}
         />
       </div>
       {/* 그리드 사이의 구분 및 이동 아이콘 */}

@@ -19,12 +19,12 @@
       "@learnway/styles/*": ["../../libs/styles/src/lib/*"],
       "@learnway/types": ["../../libs/types/src/index.ts"],
       "@app/*": ["src/app/*"],
-      "@assets/*": ["src/assets/*"],
       "@entities/*": ["src/entities/*"],
       "@features/*": ["src/features/*"],
       "@pages/*": ["src/pages/*"],
       "@shared/*": ["src/shared/*"],
       "@widgets/*": ["src/widgets/*"]
+      // "@styles/*": ["../../libs/styles/src/lib/*"]
     }
   },
   "files": [],

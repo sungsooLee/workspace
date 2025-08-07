@@ -10,7 +10,7 @@ import { AssignmentBasicInfoFormData, AssignmentTabRef } from '../service/assign
 import { useAssignmentBasicInfoForm } from '../service/assignment/use-assignment-basic-info-form';
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 
-import previewImg from '@assets/images/temp/img_exam_basic.jpg';
+import previewImg from '@learnway/styles/bo/assets/images/temp/img_exam_basic.jpg';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/assignment-detail.module.css';
 

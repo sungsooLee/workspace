@@ -1,10 +1,10 @@
-import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
+import { memo } from 'react';
 
 import { cn } from '@learnway/shared';
 
-import logoImage from '../../../../assets/images/logo.png';
-import logoAuthImage from '../../../../assets/images/logo_auth.png';
+import logoImage from '@learnway/styles/bo/assets/images/logo.png';
+import logoAuthImage from '@learnway/styles/bo/assets/images/logo_auth.png';
 import styles from './logo.module.css';
 
 interface LogoComponentProp {

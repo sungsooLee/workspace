@@ -1,4 +1,4 @@
-import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
+import { useMenuManageFetchTree } from '@entities/menu';
 import {
   copyTreeNode,
   deleteNodeByNode,

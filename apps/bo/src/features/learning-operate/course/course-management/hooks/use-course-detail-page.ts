@@ -104,6 +104,8 @@ export const useCourseDetailPage = () => {
   return {
     // 과정명
     courseName,
+    // 과정 유형
+    courseType,
     // 현재 활성화된 탭
     activeTab,
     // 탭별 ref 객체

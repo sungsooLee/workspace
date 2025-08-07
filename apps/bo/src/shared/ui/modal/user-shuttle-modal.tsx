@@ -1,6 +1,6 @@
 import { queryOptions } from '@entities/department';
 import { useSaveUsers } from '@entities/role';
-import { usersQueryOptions } from '@entities/users/service/users.queries';
+import { usersQueryOptions } from '@entities/users';
 
 import {
   CODE_GROUP,

@@ -58,6 +58,7 @@ function VideoViewComponent({ content, hasMapping }: Props) {
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer
+        title={t('동영상 상세')}
         tooltipProps={{
           show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
           content: t(getTooltipContent(content?.createType)),

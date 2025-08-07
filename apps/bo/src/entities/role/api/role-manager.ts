@@ -7,7 +7,7 @@ import { RoleApplication } from '@shared/types/role-application';
 /**
  * PMS > 역할관리 API 모음
  */
-export default class RoleManagerService {
+export class RoleManagerService {
   /**
    * 특정 역할 조회
    * @param roleCode 역할 코드

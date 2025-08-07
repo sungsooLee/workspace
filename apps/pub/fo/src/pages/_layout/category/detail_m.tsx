@@ -17,7 +17,7 @@ import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { Pagination } from '@learnway/ui/pagination';
 import { Popover } from '@learnway/ui/popover';
-import ThumbnailList from '../../-components/thumb/thumb-nail-list';
+import ThumbnailList from '../../../shared/ui/thumnail/list/thumbnail-list';
 
 export const Route = createFileRoute('/_layout/category/detail_m')({
   component: RouteComponent,

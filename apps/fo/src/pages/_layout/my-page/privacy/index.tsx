@@ -2,34 +2,26 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { IcoImage01 } from '@learnway/icons';
-// TODO: Fix unknown imports: DynamicFormField from '@learnway/ui'
-import {
-  // ChangeUserIdFormField,
-  // ChangePhoneNumberFormField,
-  // ChangePasswordFormField,
-  // WithdrawMembershipButton,
-  useFetchAuthUser,
-  useUserDetail,
-} from '@learnway/auth/entities';
+import { useFetchAuthUser, useUserDetail } from '@learnway/auth/entities';
 import {
   ChangePasswordFormField,
   ChangePhoneNumberFormField,
   ChangeUserIdFormField,
   WithdrawMembershipButton,
 } from '@learnway/auth/features';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { IcoImage01 } from '@learnway/icons';
 import { Avatar } from '@learnway/ui/avatar';
 import { ContentsRow } from '@learnway/ui/contents-row';
 
-import { pageRouteConfig } from '../../../../features/auth';
-import { MAIN_CONTAINERS } from '../../../../widgets/layout';
+import { pageRouteConfig } from '@features/auth';
+import { MAIN_CONTAINERS } from '@widgets/layout';
 
-import { FormRow, NoticeBox } from '../../../../shared/ui';
+import { FormRow, NoticeBox } from '@shared/ui';
 
 import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/change-information.module.css';
 
-import { AvataFallback } from '@features/layout/ui/user-avatar/user-avatar-fallback';
+import { AvataFallback } from '@features/layout/ui/user-avatar';
 import { useCurrentRoute } from '@learnway/hooks';
 export const Route = createFileRoute('/_layout/my-page/privacy/')({
   component: RouteComponent,

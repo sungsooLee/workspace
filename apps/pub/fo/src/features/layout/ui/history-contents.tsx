@@ -3,8 +3,8 @@ import { Button } from '@learnway/ui/button';
 import { Popover } from '@learnway/ui/popover';
 import { memo } from 'react';
 import { BrowserView } from 'react-device-detect';
-import popoverInnerStyles from './popover-inner.module.css';
 
+import popoverInnerStyles from '@learnway/styles/fo/features/layout/ui/popover-inner.module.css';
 import styles from './history-contents.module.css';
 
 // 퍼블수정 20250801 전체 수정

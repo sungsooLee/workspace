@@ -2,7 +2,7 @@ import TenantMenuManageService from '@entities/menu/api/menu-tenant-manage';
 import { getQuerySkipToken } from '@learnway/shared';
 import { Role } from '@shared/types/role';
 import { RoleApplicationParam } from '@shared/types/role-application';
-import RoleManagerService from '../api/role-manager';
+import { RoleManagerService } from '../api/role-manager';
 
 export const roleQueryKeys = {
   list: ['role-page'] as const,

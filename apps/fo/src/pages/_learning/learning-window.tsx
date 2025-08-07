@@ -11,8 +11,8 @@ import {
 
 import { useGetCurriculumnDetail } from '@entities/curriculum';
 
-import { learningResourceApi } from '@entities/learning-resource/api/learning-resource';
 import {
+  learningResourceApi,
   useEtcContentManager,
   useGetBlogResource,
   useGetEtcResource,
@@ -21,15 +21,44 @@ import {
   useGetScormScoInfo,
   useGetVideoWatchInitialize,
   useVideoWatchLog,
-} from '@entities/learning-resource/service/learning-resource.hook';
+} from '@entities/learning-resource';
 import {
   CmsEnContentType,
   CmsVideoWatchLogReq,
   CmsVideoWatchLogStatisticsReq,
 } from '@learnway/types';
 
+import { pageRouteConfig } from '@features/auth';
+import { useModal } from '@learnway/ui/modal';
+
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
+  ...pageRouteConfig({
+    validateState: {
+      learningInfo: {
+        format: 'object',
+        conditions: [
+          {
+            fn: (values: any) => {
+              if (
+                !values.learningInfo.curriculumId ||
+                !values.learningInfo.courseId ||
+                !values.learningInfo.sequenceId
+              )
+                return true;
+              return false;
+            },
+          },
+        ],
+      },
+    },
+  }),
+  errorComponent: ({ error }: any) => {
+    // 공통 예외 처리
+    console.log('learning window error', error);
+    // Render an error message
+    return <LearningWindowError />;
+  },
 });
 
 function RouteComponent() {
@@ -239,4 +268,23 @@ function RouteComponent() {
   }, []);
 
   return <LearnwayLearningWindowLayout />;
+}
+
+function LearningWindowError() {
+  const router = useRouter();
+  const { alert: openAlert } = useModal();
+  useEffect(() => {
+    (async () => {
+      await openAlert({
+        content: (
+          <>
+            page access is incorrect.
+            <br /> Go To Home
+          </>
+        ),
+      });
+      router.navigate({ to: '/' });
+    })();
+  }, []);
+  return <></>;
 }

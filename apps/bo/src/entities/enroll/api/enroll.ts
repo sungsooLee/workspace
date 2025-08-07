@@ -1,6 +1,6 @@
-import { DeliveryAddress } from '@entities/enroll/model/enroll.types';
 import { LMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
+import { DeliveryAddress } from '../model/enroll.types';
 
 /**
  * 수강 관리 API

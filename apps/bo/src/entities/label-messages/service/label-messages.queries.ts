@@ -1,6 +1,6 @@
 import { PaginationResponse } from '@shared/types/api';
 import { UseQueryOptions } from '@tanstack/react-query';
-import LabelMessagesService from '../api/label-messages';
+import { LabelMessagesService } from '../api/label-messages';
 import { LabelMessage, LabelMessagesQueryParams } from '../model/label-meesage.types';
 
 export const queryKeys = {

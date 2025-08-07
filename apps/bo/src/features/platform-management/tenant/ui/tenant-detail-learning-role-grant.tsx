@@ -22,7 +22,7 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import { FieldValues, useWatch } from 'react-hook-form';
 import { TenantDetailLearningRoleGrantRangeModal } from './tenant-detail-learning-role-grant-range-modal';
 
-import RoleManagerService from '@entities/role/api/role-manager';
+import { RoleManagerService } from '@entities/role';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
