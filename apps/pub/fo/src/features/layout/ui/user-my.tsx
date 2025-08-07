@@ -126,18 +126,18 @@ const UserMyComponent = ({ onChangeType, onParentChangeType }: ContentTypeProps)
 
   const handleClickAlert2 = () => {
     openConfirm({
-      title: <>로그인 시간을 연장하시겠습니까?</>,
+      title: <>로그인 시간을 유지할까요?</>,
       content: (
         <>
-          로그인 후 2시간이 남은 시간 경과 후 로그아웃 됩니다.
+          잠시 후 자동 로그아웃됩니다.
           <br />
-          로그인 시간을 연장하시겠습니까?
+          계속 사용하려면 시간을 연장하세요.
           <div className="time">
             남은시간 : <strong>4분 59초</strong>
           </div>
         </>
       ),
-      okButtonLabel: '로그인연장',
+      okButtonLabel: '확인',
       cancelButtonLabel: '취소',
     });
   };
