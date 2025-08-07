@@ -91,7 +91,13 @@ export const FileDownloads = ({ label, fileUuid, fileUuids, groupUuid }: Props &
           )}
           <div className={pdsStyles.start}>
             {files?.map((file) => (
-              <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
+              <Panel
+                key={file.fileUuid}
+                hideHeaderUnderline
+                actions=""
+                className="w_full"
+                type="rounded"
+              >
                 <div className={pdsStyles.pds_box}>
                   <span className={pdsStyles.txt}>
                     {/* 퍼블수정 20250724 pdf 원복 */}
