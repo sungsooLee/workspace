@@ -124,18 +124,18 @@ class FSDChecker {
     if (!match) return null;
 
     const [, layer, remainingPath] = match;
-    
+
     // segment 디렉토리를 찾을 때까지 경로를 탐색
     const pathParts = remainingPath.split('/');
     const segmentNames = ['ui', 'api', 'model', 'service', 'lib', 'config'];
-    
+
     // segment를 찾기 전까지의 경로를 모듈로 간주
     for (let i = 0; i < pathParts.length; i++) {
       if (segmentNames.includes(pathParts[i])) {
         return pathParts.slice(0, i).join('/');
       }
     }
-    
+
     // segment를 찾지 못한 경우 전체 경로를 모듈로 간주
     return remainingPath.split('/')[0];
   }
@@ -148,18 +148,18 @@ class FSDChecker {
     if (!match) return null;
 
     const [, layer, remainingPath] = match;
-    
+
     // segment 디렉토리를 찾을 때까지 경로를 탐색
     const pathParts = remainingPath.split('/');
     const segmentNames = ['ui', 'api', 'model', 'service', 'lib', 'config'];
-    
+
     // segment를 찾기 전까지의 경로를 모듈로 간주
     for (let i = 0; i < pathParts.length; i++) {
       if (segmentNames.includes(pathParts[i])) {
         return pathParts.slice(0, i).join('/');
       }
     }
-    
+
     // segment를 찾지 못한 경우 전체 경로를 모듈로 간주
     return remainingPath.split('/')[0];
   }
@@ -214,9 +214,11 @@ class FSDChecker {
         // segment들 중에 실제 파일이 있는지 확인
         const hasFiles = subdirs.some((subdir) => {
           if (this.isSegmentDirectory(subdir)) {
-            return glob.sync(`${subdir}/**/*.{ts,tsx,js,jsx}`, {
-              ignore: ['**/node_modules/**', '**/dist/**'],
-            }).length > 0;
+            return (
+              glob.sync(`${subdir}/**/*.{ts,tsx,js,jsx}`, {
+                ignore: ['**/node_modules/**', '**/dist/**'],
+              }).length > 0
+            );
           }
           return false;
         });
@@ -244,9 +246,21 @@ class FSDChecker {
   isSegmentDirectory(dirPath) {
     const dirName = path.basename(dirPath);
     const segmentNames = [
-      'ui', 'api', 'model', 'service', 'lib', 'config',
-      'hooks', 'store', 'utils', 'types', 'constants',
-      'm.ui', 'styles', 'assets', 'components'
+      'ui',
+      'api',
+      'model',
+      'service',
+      'lib',
+      'config',
+      'hooks',
+      'store',
+      'utils',
+      'types',
+      'constants',
+      'm.ui',
+      'styles',
+      'assets',
+      'components',
     ];
     return segmentNames.includes(dirName);
   }
@@ -318,8 +332,14 @@ class FSDChecker {
 
         const importLayer = this.getLayerFromImport(importPath);
 
-        // 계층 간 의존성 위반 검사
-        if (this.checkLayerViolation(fileLayer, importLayer)) {
+        // shared/ui/components와 shared/ui/modal 폴더는 예외 처리 (비즈니스 로직이 포함된 공통 컴포넌트)
+        const isSharedComponentException =
+          fileLayer === 'shared' &&
+          // (filePath.includes('/shared/ui/components/') || filePath.includes('/shared/ui/modal/')) &&
+          (importLayer === 'entities' || importLayer === 'features');
+
+        // 계층 간 의존성 위반 검사 (예외 제외)
+        if (!isSharedComponentException && this.checkLayerViolation(fileLayer, importLayer)) {
           this.addViolation({
             type: 'layer_violation',
             file: filePath,

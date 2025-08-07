@@ -1,12 +1,10 @@
+import { useLogoutUser } from '@learnway/auth/entities';
+import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/gnb-popup-m.module.css';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
-
-import { UserAvatarContents } from '@features/layout/ui/user-avatar/user-avatar-contents';
-import { useLogoutUser } from '@learnway/auth/entities';
-
-import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/gnb-popup-m.module.css';
 import { useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+import { UserAvatarContents } from '../../ui/user-avatar/user-avatar-contents';
 
 const UserMyModalComponent = () => {
   const { t } = useTranslation();

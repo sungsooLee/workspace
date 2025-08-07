@@ -1,12 +1,12 @@
-import StaticFileService from '@entities/static-file/api/static-file';
 import { getQuerySkipToken } from '@learnway/shared';
-import { StaticFileTypes } from '@entities/static-file/types/static-file.types';
+import { StaticFileService } from '../api/static-file';
+import { StaticFileTypes } from '../types/static-file.types';
 
 export const staticFileQueryKey = {
   list: ['static-file-page'] as const,
   detail: ['static-file-detail'] as const,
   downloadUrl: ['static-file-download-url'] as const,
-}
+};
 
 export const staticFileQueryOptions = {
   list: (params: any) => ({
@@ -16,21 +16,26 @@ export const staticFileQueryOptions = {
     staleTime: 0,
   }),
   detail: (fileUuid: string) =>
-    fileUuid ? {
-      queryKey: staticFileQueryKey.detail,
-      queryFn: (): Promise<any> => StaticFileService.fetchStaticFile(fileUuid)
-    } : getQuerySkipToken<any>(),
+    fileUuid
+      ? {
+          queryKey: staticFileQueryKey.detail,
+          queryFn: (): Promise<any> => StaticFileService.fetchStaticFile(fileUuid),
+        }
+      : getQuerySkipToken<any>(),
   downloadUrl: (fileUuid: string) => ({
     queryKey: staticFileQueryKey.downloadUrl,
-    queryFn: (): Promise<any> => StaticFileService.fetchStaticFileDownloadUrl(fileUuid)
+    queryFn: (): Promise<any> => StaticFileService.fetchStaticFileDownloadUrl(fileUuid),
   }),
-}
+};
 
 export const staticFileMutateOptions = {
   create: () => ({
-    mutationFn: (payload: StaticFileTypes) => StaticFileService.createStaticFile(payload) }),
+    mutationFn: (payload: StaticFileTypes) => StaticFileService.createStaticFile(payload),
+  }),
   update: () => ({
-    mutationFn: (payload: StaticFileTypes) => StaticFileService.updateStaticFile(payload) }),
+    mutationFn: (payload: StaticFileTypes) => StaticFileService.updateStaticFile(payload),
+  }),
   delete: () => ({
-    mutationFn: (fileUuid: string) => StaticFileService.deleteStaticFile(fileUuid) })
-}
+    mutationFn: (fileUuid: string) => StaticFileService.deleteStaticFile(fileUuid),
+  }),
+};

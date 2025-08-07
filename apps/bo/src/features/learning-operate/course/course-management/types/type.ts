@@ -82,7 +82,7 @@ export interface CourseManagementHookResult {
 /**
  * 과정 유형 타입 (문자열)
  */
-export type CourseType = string;
+// export type CourseType = string;
 
 // ===== 과정 상세 탭 타입 =====
 
