@@ -24,7 +24,7 @@ function RouteComponent() {
         />
       </ContentsButtons>
       <MainContents>
-        <TenantUserGroupManualManagementList rootPath="/platform" />
+        <TenantUserGroupManualManagementList />
       </MainContents>
     </PageContainer>
   );

@@ -1,15 +1,17 @@
 import { queryOptions } from '@entities/companies';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { EnGlobalConst } from '@shared/types/enums';
-import { SearchBox } from '@shared/ui/search-box';
+import { SearchBoxForm } from '@shared/ui/search-box';
 import { Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { DropdownFormField, FormRow2, InputFormField, PeriodPickerFormField } from '@shared/ui/form';
 
 const TenantCompanyListComponent = () => {
   const { data: loginUser } = useFetchAuthUser();
@@ -23,16 +25,18 @@ const TenantCompanyListComponent = () => {
       companyType: data.companyType,
       name: data.name,
       isUsed: data.isUsed,
-      modifyStartDate: data.modifyDate.from
-        ? getDateToString(new Date(data.modifyDate.from), 'YYYYMMDD')
-        : '',
-      modifyEndDate: data.modifyDate.to
-        ? getDateToString(new Date(data.modifyDate.to), 'YYYYMMDD')
-        : '',
+      modifyStartDate: data.modifyDate &&  data.modifyDate.from &&
+        getDateToString(new Date(data.modifyDate.from), 'YYYYMMDD'),
+      modifyEndDate: data.modifyDate &&  data.modifyDate.from &&
+        getDateToString(new Date(data.modifyDate.to), 'YYYYMMDD'),
     };
     return searchData;
   };
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig());
+  const {
+    provider: searchProvider,
+    getValues,
+    onSubmit,
+  } = useDynamicForm2();
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, searchParam);
 
   const handleOnSearch = () => {
@@ -59,7 +63,75 @@ const TenantCompanyListComponent = () => {
 
   return (
     <>
-      <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+      {/*<SearchBox provider={searchProvider} onSearch={handleOnSearch} />*/}
+      <SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
+        <ContentsRow>
+          <FormRow2
+            provider={searchProvider}
+            name="companyType"
+            type="dropdown"
+            label={t('그룹')}
+            value=""
+            format="string"
+            element={
+              <DropdownFormField
+                optionsConfig={{ codeGroup: CODE_GROUP['pms.company.CompanyType'] }}
+                presetOptionLabel={t('LABEL.form.label.all')}
+              />
+            }
+          />
+          <FormRow2
+            provider={searchProvider}
+            name="name"
+            type="text"
+            label={t('회사명')}
+            value=""
+            format="string"
+            placeholder={t('입력')}
+            element={<InputFormField />}
+          />
+          <FormRow2
+            provider={searchProvider}
+            name="isUsed"
+            type="dropdown"
+            label={t('회사정보 사용')}
+            value=""
+            format="string"
+            element={
+              <DropdownFormField
+                options={[
+                  { value: '', label: t('전체') },
+                  { value: true, label: t('사용') },
+                  { value: false, label: t('미사용') },
+                ]}
+              />
+            }
+          />
+          <FormRow2
+            provider={searchProvider}
+            name={'modifyDate'}
+            label={t('수정기간')}
+            format={'object'}
+            element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day' }} />}
+            validation={{
+              conditions: [
+                {
+                  fn: (values: any) => !values.modifyDate?.from && values.modifyDate?.to,
+                  message: t('시작 날짜를 선택하세요'),
+                },
+                {
+                  fn: (values: any) => values.modifyDate?.from && !values.modifyDate?.to,
+                  message: t('종료 날짜를 선택하세요.'),
+                },
+                {
+                  fn: (values: any) => values.modifyDate.from > values.modifyDate.to,
+                  message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+                },
+              ],
+            }}
+          />
+        </ContentsRow>
+      </SearchBoxForm>
       <Divider />
       <GridBox config={gConfig} columns={columns()} showNumberingColumn title={t('회사 목록')} />
     </>
@@ -67,68 +139,6 @@ const TenantCompanyListComponent = () => {
 };
 
 export const TenantCompanyList = TenantCompanyListComponent;
-
-const searchConfig = (): SearchBoxConfig => ({
-  builders: [
-    [
-      {
-        name: 'companyType',
-        type: 'dropdown',
-        label: t('그룹'),
-        value: '',
-        optionsConfig: {
-          options: [{ value: '', label: t('전체') }],
-          codeGroup: CODE_GROUP['pms.company.CompanyType'],
-        },
-      },
-      {
-        name: 'name',
-        type: 'text',
-        label: t('회사명'),
-        value: '',
-        placeholder: '',
-      },
-      {
-        name: 'isUsed',
-        type: 'dropdown',
-        label: t('회사정보 사용'),
-        value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: true, label: t('사용') },
-          { value: false, label: t('미사용') },
-        ],
-      },
-      {
-        name: 'modifyDate',
-        type: 'date-range',
-        label: t('수정 기간'),
-        value: {
-          from: undefined,
-          to: undefined,
-        },
-      },
-    ],
-  ],
-  validator: {
-    modifyDate: {
-      conditions: [
-        {
-          fn: (values: any) => !values.modifyDate?.from && values.modifyDate?.to,
-          message: t('시작 날짜를 선택하세요'),
-        },
-        {
-          fn: (values: any) => values.modifyDate?.from && !values.modifyDate?.to,
-          message: t('종료 날짜를 선택하세요.'),
-        },
-        {
-          fn: (values: any) => values.modifyDate.from > values.modifyDate.to,
-          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
-        },
-      ],
-    },
-  },
-});
 
 const gridConfig: useGridBoxConfig = {
   query: queryOptions.list,
