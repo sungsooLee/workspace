@@ -133,7 +133,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     }
   }, [courseData, courseConfig]);
 
-  // form state 변경 시 코스 생성 정보 업데이트 - 무한 반복 방지를 위해 제거
+  // form state 변경 시 폼 더티 체크 함수 설정
   useEffect(() => {
     // console.log('use-course-create-sub-page : useEffect.formState', formState.isDirty);
     setCheckDirtyForm(() => formState.isDirty);

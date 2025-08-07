@@ -32,6 +32,7 @@ const SequenceComponent = forwardRef<HTMLElement, CourseDetailTabBaseProps>((_, 
     setCourseCreateInfo({ sequenceId: courseSequenceId });
   }, [sequenceId]);
 
+  // form state 변경 시 폼 더티 체크 함수 설정
   // useEffect(() => {
   //   // console.log('use-course-create-sub-page : useEffect.formState', formState.isDirty);
   //   setCheckDirtyForm(() => formState.isDirty);
