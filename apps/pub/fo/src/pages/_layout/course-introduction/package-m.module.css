@@ -93,6 +93,14 @@
             }
           }
         }
+        [class*='thumbnail_list'] {
+          [class*='tag_list'] {
+            @apply !mt-0;
+          }
+          [class*='count_info_node'] {
+            @apply !mt-[4px];
+          }
+        }
       }
     }
     .operator_box {

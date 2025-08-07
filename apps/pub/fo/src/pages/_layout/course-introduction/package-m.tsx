@@ -1,47 +1,47 @@
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 
-import { getRandomId } from '@learnway/shared';
 import {
-  IcoHeart,
   IcoArrowDown,
-  IcoEye,
-  IcoStar,
   IcoBook,
   IcoBuilding,
   IcoCategory,
+  IcoChevronDown,
   IcoDivice,
+  IcoEye,
+  IcoHeart,
   IcoLevel,
   IcoLocation,
   IcoPrize,
+  IcoStar,
   IcoSubtitles02,
   IcoTime,
-  IcoPlay,
-  IcoChevronDown,
 } from '@learnway/icons';
+import { getRandomId } from '@learnway/shared';
 import { MobileView } from 'react-device-detect';
-import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
+import ThumbnailList from '../../-components/thumb/thumb-nail-list';
 import {
   CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
-import ThumbnailList from '../../-components/thumb/thumb-nail-list';
+import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
-import operatorStyles from './operator.module.css';
 import definitionListStyles from './definition-list.module.css';
+import operatorStyles from './operator.module.css';
 import packageInformationStyles from './package-information.module.css';
 import styles from './package-m.module.css';
 
 // 예시 이미지
+import { SelectOption } from '@learnway/hooks';
+import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
+import avatarDefault from '@learnway/styles/fo/assets/images/common/img_avatar.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import package1 from '@learnway/styles/fo/assets/images/temp/img_package_01.png';
-import avatarDefault from '@learnway/styles/fo/assets/images/common/img_avatar.png';
-import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
-import { Badge } from '@learnway/ui/badge';
-import { useToast } from '@learnway/ui/toast';
-import { Button } from '@learnway/ui/button';
-import { ChipList } from '@learnway/ui/chips';
 import { Accordion } from '@learnway/ui/accordion';
 import { Avatar } from '@learnway/ui/avatar';
+import { Badge } from '@learnway/ui/badge';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { useToast } from '@learnway/ui/toast';
 
 export const Route = createFileRoute('/_layout/course-introduction/package-m')({
   component: RouteComponent,
@@ -64,7 +64,7 @@ function RouteComponent() {
       imageUrl: bannerImg,
       title:
         '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
-      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      tagLabels: ['이러닝', '니즈파악'],
       labelCustomNode: [
         <Badge
           variant="text"
@@ -72,36 +72,8 @@ function RouteComponent() {
           size="xs"
           option={{ label: 'New', value: `${getRandomId()}` }}
         />,
-        <Badge
-          variant="text"
-          status="gray"
-          size="xs"
-          option={{ label: '접수중', value: `${getRandomId()}` }}
-        />,
-        <Badge
-          variant="text"
-          status="caution"
-          size="xs"
-          option={{ label: 'D-7', value: `${getRandomId()}` }}
-        />,
       ],
-      infoCustomNode: [
-        <span>{'이러닝'}</span>,
-        <span>
-          <IcoPlay width={16} height={16} stroke="#4C515E" />
-          {'05:00'}
-        </span>,
-      ],
-      toggleButton: true,
       countInfoNode: [
-        <span>
-          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
-          <em>{'4.2'}</em>
-        </span>,
-        <span>
-          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
-          <em>{'78,800'}</em>
-        </span>,
         <span>
           <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
           <em>{'153'}</em>
@@ -112,7 +84,7 @@ function RouteComponent() {
       imageUrl: bannerImg,
       title:
         '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
-      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      tagLabels: ['이러닝', '니즈파악'],
       labelCustomNode: [
         <Badge
           variant="text"
@@ -120,36 +92,8 @@ function RouteComponent() {
           size="xs"
           option={{ label: 'New', value: `${getRandomId()}` }}
         />,
-        <Badge
-          variant="text"
-          status="gray"
-          size="xs"
-          option={{ label: '접수중', value: `${getRandomId()}` }}
-        />,
-        <Badge
-          variant="text"
-          status="caution"
-          size="xs"
-          option={{ label: 'D-7', value: `${getRandomId()}` }}
-        />,
       ],
-      infoCustomNode: [
-        <span>{'이러닝'}</span>,
-        <span>
-          <IcoPlay width={16} height={16} stroke="#4C515E" />
-          {'05:00'}
-        </span>,
-      ],
-      toggleButton: true,
       countInfoNode: [
-        <span>
-          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
-          <em>{'4.2'}</em>
-        </span>,
-        <span>
-          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
-          <em>{'78,800'}</em>
-        </span>,
         <span>
           <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
           <em>{'153'}</em>
@@ -160,7 +104,7 @@ function RouteComponent() {
       imageUrl: bannerImg,
       title:
         '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
-      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      tagLabels: ['이러닝', '니즈파악'],
       labelCustomNode: [
         <Badge
           variant="text"
@@ -168,36 +112,8 @@ function RouteComponent() {
           size="xs"
           option={{ label: 'New', value: `${getRandomId()}` }}
         />,
-        <Badge
-          variant="text"
-          status="gray"
-          size="xs"
-          option={{ label: '접수중', value: `${getRandomId()}` }}
-        />,
-        <Badge
-          variant="text"
-          status="caution"
-          size="xs"
-          option={{ label: 'D-7', value: `${getRandomId()}` }}
-        />,
       ],
-      infoCustomNode: [
-        <span>{'이러닝'}</span>,
-        <span>
-          <IcoPlay width={16} height={16} stroke="#4C515E" />
-          {'05:00'}
-        </span>,
-      ],
-      toggleButton: true,
       countInfoNode: [
-        <span>
-          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
-          <em>{'4.2'}</em>
-        </span>,
-        <span>
-          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
-          <em>{'78,800'}</em>
-        </span>,
         <span>
           <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
           <em>{'153'}</em>
@@ -208,7 +124,7 @@ function RouteComponent() {
       imageUrl: bannerImg,
       title:
         '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
-      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      tagLabels: ['이러닝', '니즈파악'],
       labelCustomNode: [
         <Badge
           variant="text"
@@ -216,36 +132,8 @@ function RouteComponent() {
           size="xs"
           option={{ label: 'New', value: `${getRandomId()}` }}
         />,
-        <Badge
-          variant="text"
-          status="gray"
-          size="xs"
-          option={{ label: '접수중', value: `${getRandomId()}` }}
-        />,
-        <Badge
-          variant="text"
-          status="caution"
-          size="xs"
-          option={{ label: 'D-7', value: `${getRandomId()}` }}
-        />,
       ],
-      infoCustomNode: [
-        <span>{'이러닝'}</span>,
-        <span>
-          <IcoPlay width={16} height={16} stroke="#4C515E" />
-          {'05:00'}
-        </span>,
-      ],
-      toggleButton: true,
       countInfoNode: [
-        <span>
-          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
-          <em>{'4.2'}</em>
-        </span>,
-        <span>
-          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
-          <em>{'78,800'}</em>
-        </span>,
         <span>
           <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
           <em>{'153'}</em>
@@ -256,7 +144,7 @@ function RouteComponent() {
       imageUrl: bannerImg,
       title:
         '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
-      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      tagLabels: ['이러닝', '니즈파악'],
       labelCustomNode: [
         <Badge
           variant="text"
@@ -264,36 +152,8 @@ function RouteComponent() {
           size="xs"
           option={{ label: 'New', value: `${getRandomId()}` }}
         />,
-        <Badge
-          variant="text"
-          status="gray"
-          size="xs"
-          option={{ label: '접수중', value: `${getRandomId()}` }}
-        />,
-        <Badge
-          variant="text"
-          status="caution"
-          size="xs"
-          option={{ label: 'D-7', value: `${getRandomId()}` }}
-        />,
       ],
-      infoCustomNode: [
-        <span>{'이러닝'}</span>,
-        <span>
-          <IcoPlay width={16} height={16} stroke="#4C515E" />
-          {'05:00'}
-        </span>,
-      ],
-      toggleButton: true,
       countInfoNode: [
-        <span>
-          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
-          <em>{'4.2'}</em>
-        </span>,
-        <span>
-          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
-          <em>{'78,800'}</em>
-        </span>,
         <span>
           <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
           <em>{'153'}</em>
@@ -304,7 +164,7 @@ function RouteComponent() {
       imageUrl: bannerImg,
       title:
         '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
-      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      tagLabels: ['이러닝', '니즈파악'],
       labelCustomNode: [
         <Badge
           variant="text"
@@ -312,36 +172,8 @@ function RouteComponent() {
           size="xs"
           option={{ label: 'New', value: `${getRandomId()}` }}
         />,
-        <Badge
-          variant="text"
-          status="gray"
-          size="xs"
-          option={{ label: '접수중', value: `${getRandomId()}` }}
-        />,
-        <Badge
-          variant="text"
-          status="caution"
-          size="xs"
-          option={{ label: 'D-7', value: `${getRandomId()}` }}
-        />,
       ],
-      infoCustomNode: [
-        <span>{'이러닝'}</span>,
-        <span>
-          <IcoPlay width={16} height={16} stroke="#4C515E" />
-          {'05:00'}
-        </span>,
-      ],
-      toggleButton: true,
       countInfoNode: [
-        <span>
-          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
-          <em>{'4.2'}</em>
-        </span>,
-        <span>
-          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
-          <em>{'78,800'}</em>
-        </span>,
         <span>
           <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
           <em>{'153'}</em>
