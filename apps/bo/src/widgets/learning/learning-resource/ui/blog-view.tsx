@@ -7,15 +7,11 @@ import {
 } from '@features/learning-resource';
 import { useBlogContentForm } from '@features/learning-resource/learning-resource-management';
 import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
-import defaultImage from '@learnway/styles/bo/assets/images/thumb/img_thumb_default.jpg';
-import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType } from '@shared/types/enums';
 
-import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui/layout';
-import { PreviewLearningWindow } from '@shared/ui/modal';
-import { useCallback, useRef } from 'react';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from './blog-detail.module.css';
 
 interface Props {
   content?: ContentInformation;
@@ -32,15 +28,6 @@ function BlogViewComponent({ content, hasMapping }: Props) {
 
   const form = useDynamicForm2();
   const { provider, onSubmit } = form;
-
-  const { openModal } = useModal();
-
-  const openBlogPreviewPopup = useCallback(async () => {
-    await openModal({
-      width: 'full',
-      content: <PreviewLearningWindow contentUuid={content?.contentUuid} />,
-    });
-  }, [content?.contentUuid]);
 
   const { handleOnSubmit } = useBlogContentForm({ provider });
 
@@ -66,20 +53,6 @@ function BlogViewComponent({ content, hasMapping }: Props) {
             hasMapping={hasMapping}
           />
         </MainContents>
-
-        <SubContents>
-          <div className={styles.sub_container}>
-            <strong className={styles.title}>{t('cms.content.ContentType.BLOG')}</strong>
-            {content?.contentUuid && (
-              <p className={styles.preview} onClick={openBlogPreviewPopup}>
-                {t('LABEL.button.preview')}
-              </p>
-            )}
-          </div>
-          <div className={styles.thumbnail_container}>
-            <img width="100%" src={defaultImage} alt="" />
-          </div>
-        </SubContents>
       </PageContainer>
     </form>
   );
