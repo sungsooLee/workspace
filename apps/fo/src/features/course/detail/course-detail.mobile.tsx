@@ -463,20 +463,20 @@ export function CourseDetailMobile({ courseId, courseData }: { courseId: any; co
     },
   ];
 
-  const courseOptions = enableEnrollSequences?.map((c: any) => ({
-    label: c.courseSequenceName,
-    value: c.courseSequenceId,
+  const courseOptions = enableEnrollSequences?.map((course: any) => ({
+    label: course.courseSequenceName,
+    value: course.courseSequenceId,
     original: {
-      number: `${c.courseSequenceNo}차`,
-      date: `${formatISODateString(c.enrollStartDateTime, DATE_TIME_FORMAT.DATE)} ~ ${formatISODateString(c.enrollEndDateTime, DATE_TIME_FORMAT.DATE)}`,
+      number: `${course.courseSequenceNo}차`,
+      date: `${formatISODateString(course.enrollStartDateTime, DATE_TIME_FORMAT.DATE)} ~ ${formatISODateString(course.enrollEndDateTime, DATE_TIME_FORMAT.DATE)}`,
       info: [
         {
           icon: IcoChair,
-          txt: `${c.maxEnrollQuota - c.enrollCount}`,
+          txt: `${course.maxEnrollQuota - course.enrollCount}`,
         },
         {
           icon: IcoLocation,
-          txt: `${c.learningSpaceNameKeyIn}`,
+          txt: `${course.learningSpaceNameKeyIn}`,
         },
       ],
     },

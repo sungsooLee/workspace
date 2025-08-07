@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+import { isMobile } from 'react-device-detect';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
@@ -20,27 +21,26 @@ function TermsButtonComponent({ termsType }: TermsButtonComponentProps) {
   const { data } = useFetchAuthUser();
 
   // 세션 정보가 있는 경우 routing
-  if (data) {
+  if (isMobile) {
+    return (
+      <Button
+        onClick={() =>
+          openModal({
+            width: 'm_full',
+            content: <TermsModal termsType={termsType} />,
+          })
+        }
+      >
+        {termsType === 'privacy-policy' ? t('개인정보처리방침') : t('이용약관')}
+      </Button>
+    );
+  } else {
     return (
       <Link to={'/clause/$termsType'} params={{ termsType }}>
-        {t(`CODE.TERMS_TYPE.${termsType}`)}
+        {termsType === 'privacy-policy' ? t('개인정보처리방침') : t('이용약관')}
       </Link>
     );
   }
-
-  // 세션 정보가 없는 경우 Modal
-  return (
-    <Button
-      onClick={() =>
-        openModal({
-          width: 'sm',
-          content: <TermsModal termsType={termsType} />,
-        })
-      }
-    >
-      {t(`CODE.TERMS_TYPE.${termsType}`)}
-    </Button>
-  );
 }
 
 export const TermsButton = TermsButtonComponent;

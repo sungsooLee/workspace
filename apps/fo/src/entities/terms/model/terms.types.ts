@@ -1,8 +1,15 @@
 export type TermsType =
-  | 'TERMS_OF_SERVICE' // 이용약관
-  | 'PRIVACY_POLICY' // 개인정보처리방침
-  | 'SENSITIVE_PERSONAL_INFO' // 민감개인정보수집동의
-  | 'PERSONAL_INFO_COLLECTION'; // 개인정보수집동의
+  | 'terms-of-service' // 이용약관
+  | 'privacy-policy' // 개인정보처리방침
+  | 'sensitive-personal-info' // 민감개인정보수집동의
+  | 'personal-info-collection'; // 개인정보수집동의
+
+export enum TermsTypeCode {
+  TERMS_OF_SERVICE = 'TERMS_OF_SERVICE',
+  PRIVACY_POLICY = 'PRIVACY_POLICY',
+  SENSITIVE_PERSONAL_INFO = 'SENSITIVE_PERSONAL_INFO',
+  PERSONAL_INFO_COLLECTION = 'PERSONAL_INFO_COLLECTION',
+}
 
 export interface Terms {
   termsId: number;

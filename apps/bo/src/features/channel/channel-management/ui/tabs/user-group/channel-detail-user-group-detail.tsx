@@ -15,6 +15,7 @@ import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 
 interface ChannelDetailUserGroupDetailProps {
   mode: EnFormMode;
   userGroupId?: number;
+  onCompleted: () => void;
 }
 
 const ChannelDetailUserGroupDetailComponent = (
@@ -79,6 +80,9 @@ const ChannelDetailUserGroupDetailComponent = (
     },
     clearForm() {
       onFormChange();
+    },
+    moveList() {
+      props.onCompleted();
     },
   }));
 

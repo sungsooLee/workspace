@@ -11,15 +11,15 @@ import { PageContainer } from '@shared/ui/layout';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import {
+  AssignmentView,
   BlogView,
   EtcView,
+  ExamPoolView,
+  ExamView,
   HtmlView,
   ScormView,
   VideoView,
 } from '@widgets/learning/learning-resource';
-import { AssignmentView } from '@widgets/learning/learning-resource/assignment-view';
-import { ExamPoolView } from '@widgets/learning/learning-resource/exam-pool-view';
-import { ExamView } from '@widgets/learning/learning-resource/exam-view';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/view')({
   component: RouteComponent,

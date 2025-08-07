@@ -116,7 +116,7 @@ const CourseShareModalComponent = () => {
   }, [channelOptions]);
 
   const handleOnSearch = async (data: any) => {
-    const roleId = authUser?.activeRole?.roleId.toString();
+    const roleId = authUser?.activeRole?.roleId;
     if (!roleId) return;
     const response = await queryClient.fetchQuery(channelQueryOptions.list(roleId, data));
     setGridData(response.content);

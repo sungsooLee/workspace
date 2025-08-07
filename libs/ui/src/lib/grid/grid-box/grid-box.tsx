@@ -310,7 +310,6 @@ const GridBoxComponent = <T extends object>(
         <div className={styles.title_info}>
           {/* 제목 */}
           <div className={styles.title}>{title || t('LABEL.grid.title.list', '목록')}</div>
-
           {/* 전체 개수  */}
           {showTotalCount && (
             <CountText
@@ -320,16 +319,15 @@ const GridBoxComponent = <T extends object>(
           )}
           {/* 좌측 타이틀 영역 커스텀 (전체 카운트와 가이드 텍스트 중간 영역) */}
           {titleCustomNode && <div className={styles.custom_node}>{titleCustomNode}</div>}
-
-          {/* 가이드 텍스트 */}
-          {/* {guideText && (
-            <p className={cn(styles.guide_text, showGuideTextNextLine && styles.next_line)}>
-              {guideText}
-              {showErrorMessageBesideGuideText && (
-                <span className={styles.error_text}>{errorMessageBesideGuideText}</span>
-              )}
-            </p>
-          )} */}
+          {/*가이드 텍스트*/}
+          {/*{guideText && (*/}
+          {/*  <p className={cn(styles.guide_text, showGuideTextNextLine && styles.next_line)}>*/}
+          {/*    {guideText}*/}
+          {/*    {showErrorMessageBesideGuideText && (*/}
+          {/*      <span className={styles.error_text}>{errorMessageBesideGuideText}</span>*/}
+          {/*    )}*/}
+          {/*  </p>*/}
+          {/*)}*/}
         </div>
 
         <div className={styles.button_info}>

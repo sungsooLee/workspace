@@ -121,7 +121,7 @@ function RouteComponent() {
     onFormValid,
   } = useSearchBox(searchConfig);
 
-  const roleId = loginUser?.activeRole?.roleId;
+  const roleId = loginUser?.activeRole?.roleId ?? 0;
 
   useEffect(() => {
     const init = async () => {
@@ -148,7 +148,7 @@ function RouteComponent() {
 
   const gridInitConfig = useCreation(
     () => ({
-      query: (data: ChannelParam) => queryOptions.list(`${roleId}`, data),
+      query: (data: ChannelParam) => queryOptions.list(roleId, data),
       columns: [
         {
           name: 'channelCreationType',

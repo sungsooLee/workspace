@@ -31,8 +31,8 @@ import { LearningResourceTestItemModal } from './learning-resource-test-item-mod
 // Drag and Drop 관련
 import { closestCenter, DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
-
 import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
+
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 
@@ -58,6 +58,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
     setSelectedQuestionRows,
     handleUpdateQuestionCountInfo,
     questionCreateSuccessCallback,
+    questionDeleteSuccessCallback,
     refetchQuestionItemList,
     handleOnCopyQuestion,
     handleOnDeleteQuestion,
@@ -87,6 +88,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
           <LearningResourceTestItemModal
             contentInfo={content}
             questionItemGridRow={questionItemRow}
+            onDeleteCallback={questionDeleteSuccessCallback}
           />
         ),
       });

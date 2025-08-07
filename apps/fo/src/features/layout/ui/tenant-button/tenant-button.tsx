@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useFetchAuthUser, useUpdateTenantRoleLastSelect } from '@learnway/auth/entities';
@@ -13,7 +13,7 @@ import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/mo
 import { useRouter } from '@tanstack/react-router';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 
-const TenantContent = () => {
+const TenantContent = ({ setIsOpen }: any) => {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -32,6 +32,9 @@ const TenantContent = () => {
 
       // 일부 alert는 result가 undefined 이므로 무조건 확인시 실행
       if (result === true) {
+        console.log('@@@ call');
+
+        setIsOpen?.(false);
         // onSelect(tenant);
         updateTenantRole({
           lastVisitedFoTenantId: tenant.tenantId,
@@ -72,7 +75,7 @@ const TenantModal = () => {
 
   return (
     <ModalContainer>
-      <ModalTitle>{t('언어 설정')}</ModalTitle>
+      <ModalTitle>{t('테넌트 선택')}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.tenant_modal}`}>
           <TenantContent />
@@ -85,12 +88,16 @@ const TenantModal = () => {
 const TenantComponent = () => {
   const { data } = useFetchAuthUser();
   const { openModal } = useModal();
+  const [isOpen, setIsOpen] = useState(false);
 
+  console.log('@@@ isOpen', isOpen);
   return (
     <>
       <BrowserView>
         <Popover
-          popoverContent={<TenantContent />}
+          open={isOpen}
+          onOpenChange={(open) => setIsOpen(open)}
+          popoverContent={<TenantContent setIsOpen={setIsOpen} />}
           className={styles.btn_tenant}
           side="bottom"
           align="end"

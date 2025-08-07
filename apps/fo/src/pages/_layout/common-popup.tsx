@@ -1,15 +1,17 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { pageRouteConfig } from '@features/auth';
 
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormRow } from '@shared/ui';
 import { queryOptions } from '@entities/course';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FileDownloads, FormRow } from '@shared/ui';
+import { useModal } from '@learnway/ui/modal';
+import { OpensourceLicenseModal } from '@features/main/support/ui/terms-button/opensource-license-modal';
 
 export const Route = createFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -22,6 +24,7 @@ function RouteComponent() {
   const router = useRouter();
   const { t, i18n } = useTranslation();
   const queryClient = useQueryClient();
+  const { openModal } = useModal();
 
   const { provider, getValues, control } = useDynamicForm(formConfig);
   const handleLearningWindow = (values: any, courseData: any) => {
@@ -103,6 +106,28 @@ function RouteComponent() {
           />
         </FormRow>
       </ContentsRow>
+      <ContentsRow>
+        <Button
+          className="mt-12"
+          label="오픈소스 라이선스"
+          variant="primary"
+          type="button"
+          size="lg"
+          preventDefault
+          onClick={() => {
+            openModal({
+              width: 'm_full',
+              content: <OpensourceLicenseModal />,
+            });
+          }}
+        />
+      </ContentsRow>
+      <FileDownloads fileUuid={'1aff46aa-86b9-4281-8c70-99595eabe637'} />
+      <FileDownloads
+        label={'자료실(files)'}
+        fileUuids={['7485a3b7-c02d-47bd-a86c-59c10d91e8cc', '1aff46aa-86b9-4281-8c70-99595eabe637']}
+      />
+      <FileDownloads label={'자료실(group)'} groupUuid={'e35ca1db-f218-4003-b7dd-bb61dbe964db'} />
     </div>
   );
 }

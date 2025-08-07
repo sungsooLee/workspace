@@ -5,7 +5,11 @@ import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/u
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useRef, useState } from 'react';
-import { EnChannelDetailButtonLayout, EnChannelDetailTabKeys } from '../types/type';
+import {
+  EnChannelDetailButtonLayout,
+  EnChannelDetailListType,
+  EnChannelDetailTabKeys,
+} from '../types/type';
 import { ChannelDetailBase } from './tabs/base/channel-detail-base';
 import { ChannelDetailBoard } from './tabs/board/channel-detail-board';
 import { ChannelDetailHome } from './tabs/home/channel-detail-home';
@@ -45,12 +49,20 @@ const ChannelDetailComponent = () => {
   };
 
   const handleOnList = () => {
-    const listParam = routerState.location.state?.listParam;
-    router.navigate({ to: '/tenant/channel/management', state: { listParam } });
+    console.log('### handleOnList', buttonListType);
+    if (buttonListType === EnChannelDetailListType.CHANNEL_LIST) {
+      const listParam = routerState.location.state?.listParam;
+      router.navigate({ to: '/tenant/channel/management', state: { listParam } });
+    } else if (buttonListType === EnChannelDetailListType.TAB_LIST) {
+      const formRef = getFormRef();
+      console.log('### formRef', formRef?.current);
+      if (formRef?.current?.moveList) formRef.current.moveList();
+    }
   };
 
   const handleOnSave = () => {
     const formRef = getFormRef();
+    console.log('### formRef', formRef?.current);
     if (formRef?.current?.saveData) formRef.current.saveData();
   };
 
@@ -70,9 +82,14 @@ const ChannelDetailComponent = () => {
   };
 
   const [buttonLayout, setButtonLayout] = useState(EnChannelDetailButtonLayout.NONE);
+  const [buttonListType, setButtonListType] = useState(EnChannelDetailListType.CHANNEL_LIST);
 
-  const handleButtonLayoutChange = (layout: EnChannelDetailButtonLayout) => {
+  const handleButtonChange = (
+    layout: EnChannelDetailButtonLayout,
+    listType?: EnChannelDetailListType,
+  ) => {
     setButtonLayout(layout);
+    setButtonListType(listType ?? EnChannelDetailListType.CHANNEL_LIST);
   };
 
   const handleOnTabChange = (value: string) => {
@@ -90,54 +107,42 @@ const ChannelDetailComponent = () => {
         <ChannelDetailBase
           ref={baseFormRef}
           mode={EnFormMode.VIEW}
-          onButtonLayoutChange={handleButtonLayoutChange}
+          onButtonChange={handleButtonChange}
         />
       ),
     },
     {
       title: t('사용자 관리'),
       key: EnChannelDetailTabKeys.USER,
-      content: (
-        <ChannelDetailUser ref={userFormRef} onButtonLayoutChange={handleButtonLayoutChange} />
-      ),
+      content: <ChannelDetailUser ref={userFormRef} onButtonChange={handleButtonChange} />,
     },
     {
       title: t('홈 설정'),
       key: EnChannelDetailTabKeys.HOME,
-      content: (
-        <ChannelDetailHome ref={homeFormRef} onButtonLayoutChange={handleButtonLayoutChange} />
-      ),
+      content: <ChannelDetailHome ref={homeFormRef} onButtonChange={handleButtonChange} />,
     },
     {
       title: t('게시판 관리'),
       key: EnChannelDetailTabKeys.BOARD,
-      content: (
-        <ChannelDetailBoard ref={boardFormRef} onButtonLayoutChange={handleButtonLayoutChange} />
-      ),
+      content: <ChannelDetailBoard ref={boardFormRef} onButtonChange={handleButtonChange} />,
     },
     {
       title: t('구독자 관리'),
       key: EnChannelDetailTabKeys.SUBSCRIBER,
       content: (
-        <ChannelDetailSubscriber
-          ref={subscriberFormRef}
-          onButtonLayoutChange={handleButtonLayoutChange}
-        />
+        <ChannelDetailSubscriber ref={subscriberFormRef} onButtonChange={handleButtonChange} />
       ),
     },
     {
       title: t('담당자 역할 관리'),
       key: EnChannelDetailTabKeys.MANAGER_ROLE,
-      content: <ChannelDetailRole onButtonLayoutChange={handleButtonLayoutChange} />,
+      content: <ChannelDetailRole onButtonChange={handleButtonChange} />,
     },
     {
       title: t('채널 유저 그룹'),
       key: EnChannelDetailTabKeys.USER_GROUP,
       content: (
-        <ChannelDetailUserGroup
-          ref={userGroupFormRef}
-          onButtonLayoutChange={handleButtonLayoutChange}
-        />
+        <ChannelDetailUserGroup ref={userGroupFormRef} onButtonChange={handleButtonChange} />
       ),
     },
   ];

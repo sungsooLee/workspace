@@ -8,10 +8,18 @@ import { HtmlContent } from '@learnway/ui/html-content';
 
 import { pageRouteConfig } from '../../../features/auth';
 
-import { TermsType, useFetchTerms, useFetchTermsVersions } from '@entities/terms';
+import {
+  findTermsType,
+  TermsType,
+  TermsTypeCode,
+  useFetchTerms,
+  useFetchTermsVersions,
+} from '@entities/terms';
 
 import styles from '@learnway/styles/fo/pages/_layout/terms/terms.module.css';
 import { Dropdown } from '@learnway/ui/dropdown';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { SelectOption } from '@learnway/ui/type';
 
 export const Route = createFileRoute('/_layout/clause/$termsType')({
   component: RouteComponent,
@@ -19,10 +27,10 @@ export const Route = createFileRoute('/_layout/clause/$termsType')({
     validateParam: {
       termsType: {
         format: 'string',
-        default: 'TERMS_OF_SERVICE',
+        default: 'terms-of-service',
         conditions: [
           {
-            fn: (values: any) => !['TERMS_OF_SERVICE', 'PRIVACY_POLICY'].includes(values.termsType),
+            fn: (values: any) => !['terms-of-service', 'privacy-policy'].includes(values.termsType),
           },
         ],
       },
@@ -37,48 +45,61 @@ function RouteComponent() {
   const { t } = useTranslation();
   const { params } = useCurrentRoute(Route);
 
-  const termsType = params.termsType;
+  const { data: authUser } = useFetchAuthUser();
+  const [termsId, setTermsId] = useState<number>();
+  const [options, setOptions] = useState<SelectOption[]>([]);
 
-  const [termsId, setTermsId] = useState<string | undefined>();
+  const termsTypeCode = findTermsType(params.termsType);
 
-  const { data } = useFetchTerms(termsType as TermsType, Number(termsId));
-  const { data: versions } = useFetchTermsVersions(termsType as TermsType);
+  const { data } = useFetchTerms(termsTypeCode, termsId, authUser?.locale);
+  const { data: versions } = useFetchTermsVersions(
+    termsTypeCode,
+    authUser?.activeTenant?.tenantId,
+    authUser?.locale,
+  );
 
   // paramter 변경 시 상태 초기화
   useEffect(() => {
     //console.log(params?.termsType);
     setTermsId(undefined);
-  }, [termsType]);
+  }, [termsTypeCode]);
 
-  const options = useCreation(() => {
-    if (!versions) {
-      return [];
-    }
-    return versions.map((version) => ({
-      value: String(version.termsId),
+  useEffect(() => {
+    if (!versions) return;
+    const options = versions.map((version) => ({
+      value: version.termsId,
       label: version.termsVersion,
     }));
+    setOptions(options);
   }, [versions]);
 
   return (
-    <div className={styles.start} key={termsType}>
+    <div className={styles.start} key={termsTypeCode}>
       <div className={styles.title_box}>
-        <h2>{t(`CODE.TERMS_TYPE.${termsType}`)}</h2>
+        <h2>
+          {termsTypeCode === TermsTypeCode.PRIVACY_POLICY ? t('개인정보처리방침') : t('이용약관')}
+        </h2>
 
         <Dropdown
           value={termsId}
           size="lg"
           options={options}
-          onChange={(value: string) => {
+          onChange={(value) => {
             setTermsId(value);
           }}
-          placeholder={t('LABEL.common.previousTerms', {
-            type: t(`CODE.TERMS_TYPE.${termsType}`),
+          placeholder={t('이전 {{type}}', {
+            type:
+              termsTypeCode === TermsTypeCode.PRIVACY_POLICY
+                ? t('개인정보처리방침')
+                : t('이용약관'),
           })}
           className={styles.select}
         />
       </div>
-      <HtmlContent className={styles.details}>{data?.translation?.termsContents}</HtmlContent>
+      <HtmlContent className={styles.details}>
+        {!data && t('약관 정보가 없습니다.')}
+        {data && data?.translation?.termsContents}
+      </HtmlContent>
     </div>
   );
 }

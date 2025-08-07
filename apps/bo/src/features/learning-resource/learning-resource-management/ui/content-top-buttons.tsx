@@ -14,7 +14,6 @@ import { ContentCourseMappingModal } from '@shared/ui/modal';
 import { useBlocker, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useCallback, useMemo } from 'react';
-import { getDetailPathByContentType } from '../service/util';
 import { TranslationListModal } from './learning-resource-translation-list-modal';
 
 interface Props {
@@ -66,10 +65,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
     },
   });
 
-  const detailUrl = useMemo(
-    () => getDetailPathByContentType(contentType) || '/learning/learning-resource',
-    [contentType],
-  );
+  const detailUrl = useMemo(() => '/learning/learning-resource/view', [contentType]);
 
   const { exportContent } = usePostContentExport({
     onSuccess: (result: ContentExportRes) => {
@@ -158,7 +154,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
           <Button
             variant="point"
             size="sm"
-            disabled={createType !== ContentCreateType.MANUAL}
+            disabled={createType === ContentCreateType.TRANSLATE}
             onClick={handleTranslationList}
           >
             {t('번역현황')}
@@ -180,7 +176,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
         <Button
           variant="point"
           size="sm"
-          disabled={createType !== ContentCreateType.MANUAL}
+          disabled={createType === ContentCreateType.TRANSLATE}
           onClick={handleTranslateAction}
         >
           {t('번역')}

@@ -33,6 +33,7 @@ export interface FileInfo {
   deleteYn?: boolean;
   useYn?: boolean;
   fileUrl?: string;
+  isSecured?: boolean;
 }
 // 파일 그룹 정보
 export interface FileGroupInfo {

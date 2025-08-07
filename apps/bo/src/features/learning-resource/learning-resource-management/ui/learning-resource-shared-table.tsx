@@ -5,11 +5,7 @@ import {
   SharedBoxContent,
   usePostContentExport,
 } from '@entities/learning-resource';
-import {
-  getDetailPathByContentType,
-  getDetailRouterState,
-  LearingResourceSharedInfoModal,
-} from '@features/learning-resource';
+import { LearingResourceSharedInfoModal } from '@features/learning-resource';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import {
   ALL_OPTION,
@@ -101,7 +97,7 @@ function LearningResourceSharedTableComponent() {
           label: t('발신 테넌트'),
           format: 'object',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
-          value: authUser?.activeTenant?.tenantId,
+          value: '',
         },
         {
           name: 'sourceChannelUuid',
@@ -210,12 +206,9 @@ function LearningResourceSharedTableComponent() {
               onClick={(e) => {
                 e.stopPropagation();
                 router.navigate({
-                  to: getDetailPathByContentType(_.row.original.sourceContentType),
+                  to: '/learning/learning-resource/view',
                   state: {
-                    ...getDetailRouterState(
-                      _.row.original.sourceContentUuid,
-                      _.row.original.sourceContentType,
-                    ),
+                    contentUuid: _.row.original.sourceContentUuid,
                     listParam: params,
                   },
                 });

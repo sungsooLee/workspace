@@ -109,6 +109,9 @@
     [class*='divider'] {
       @apply mx-[16px] h-[28px];
     }
+    div + [class*='nlp--button'] {
+      @apply ml-[8px];
+    }
   }
 
   /* notice */

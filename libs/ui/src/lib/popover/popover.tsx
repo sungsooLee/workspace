@@ -1,5 +1,5 @@
-import { forwardRef, ReactNode, useState } from 'react';
 import { cn } from '@learnway/shared';
+import { forwardRef, ReactNode, useEffect, useState } from 'react';
 
 import * as Primitive from '@radix-ui/react-popover';
 import styles from './popover.module.css';
@@ -45,7 +45,12 @@ const PopoverComponent = forwardRef<
     const { activeModal } = useModalStore();
     const currentActiveModal = activeModal();
 
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(open || false);
+
+    useEffect(() => {
+      if (open === undefined) return;
+      setIsOpen(open);
+    }, [open]);
 
     return (
       <Primitive.Root

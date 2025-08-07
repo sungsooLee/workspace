@@ -30,10 +30,10 @@ function FooterComponent() {
             <div className={styles.info_menu}>
               <ul>
                 <li>
-                  <TermsButton termsType="TERMS_OF_SERVICE" />
+                  <TermsButton termsType="terms-of-service" />
                 </li>
                 <li>
-                  <TermsButton termsType="PRIVACY_POLICY" />
+                  <TermsButton termsType="privacy-policy" />
                 </li>
                 {/* <li>
                   <Link to={'/license'}>오픈소스 라이선스</Link>

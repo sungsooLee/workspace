@@ -12,7 +12,6 @@ import {
   usePostDraftVideos,
 } from '@entities/learning-resource';
 import {
-  getDetailPathByContentType,
   LearningResourceFileUploadModal,
   LearningTypeChoiceModal,
 } from '@features/learning-resource';
@@ -41,7 +40,7 @@ function RouteComponent() {
     onSuccess: (result: PostDraftVideosRes) => {
       if (result.contents.length === 1) {
         return router.navigate({
-          to: getDetailPathByContentType(LEARNING_TYPE.VIDEO),
+          to: '/learning/learning-resource/view',
           state: {
             contentUuid: result.contents[0].contentUuid,
           },
@@ -66,7 +65,7 @@ function RouteComponent() {
     onSuccess: (result: PostDraftScormRes) => {
       if (result.contents.length === 1) {
         return router.navigate({
-          to: getDetailPathByContentType(LEARNING_TYPE.SCORM),
+          to: '/learning/learning-resource/view',
           state: {
             contentUuid: result.contents[0].contentUuid,
           },
@@ -91,7 +90,7 @@ function RouteComponent() {
     onSuccess: (result: PostDraftHtmlVideoRes) => {
       if (result.contentUuid) {
         return router.navigate({
-          to: getDetailPathByContentType(LEARNING_TYPE.HTML5_VIDEO),
+          to: '/learning/learning-resource/view',
           state: {
             contentUuid: result.contentUuid,
           },
@@ -111,7 +110,7 @@ function RouteComponent() {
   const { create: postDraftETC } = usePostDraftETC({
     onSuccess: (result: PostDraftETCRes) => {
       return router.navigate({
-        to: getDetailPathByContentType(LEARNING_TYPE.ETC),
+        to: '/learning/learning-resource/view',
         state: {
           contentUuid: result.contentUuid,
         },

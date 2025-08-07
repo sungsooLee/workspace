@@ -33,7 +33,7 @@ import { TenantShuttleModal, UserShuttleModal } from '@shared/ui/modal';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
 import { getChannelUrl } from '../../../../channel-application/service/channel-application.service';
-import { EnChannelDetailButtonLayout } from '../../../types/type';
+import { EnChannelDetailButtonLayout, EnChannelDetailListType } from '../../../types/type';
 
 export enum EnChannelRegisterMethod {
   REQUEST = 'REQUEST',
@@ -44,7 +44,10 @@ interface ChannelDetailBaseProps {
   mode: EnFormMode;
   method?: EnChannelRegisterMethod;
   requestId?: string;
-  onButtonLayoutChange?: (layout: EnChannelDetailButtonLayout) => void;
+  onButtonChange?: (
+    layout: EnChannelDetailButtonLayout,
+    listType?: EnChannelDetailListType,
+  ) => void;
 }
 
 const ChannelDetailBaseComponent = (props: ChannelDetailBaseProps, ref: any) => {
@@ -106,9 +109,17 @@ const ChannelDetailBaseComponent = (props: ChannelDetailBaseProps, ref: any) => 
   }, [channelUuid]);
 
   useEffect(() => {
+    // 유니버설 채널 전환 후 추가된 테넌트가 있는데, 일반 채널로 변경한 경우 메인 테넌트 제외하고 삭제
+    const values = getValues();
+    if (watchedChannelTenatMappingType === 'MAPPING_TENANT' && values.tenantList.length > 1) {
+      const mainTenants = values.tenantList.filter((tenant: any) => tenant.isMainTenant);
+      setValue('tenantList', mainTenants);
+    }
+  }, [watchedChannelTenatMappingType]);
+
+  useEffect(() => {
     console.log('### props.method', props.method);
-    props.onButtonLayoutChange &&
-      props.onButtonLayoutChange(EnChannelDetailButtonLayout.RESET_AND_SAVE);
+    props.onButtonChange && props.onButtonChange(EnChannelDetailButtonLayout.RESET_AND_SAVE);
 
     if (!loginUser) return;
     console.log('### loginUser', loginUser);
