@@ -25,6 +25,7 @@ export * from './lib/utils/html-util';
 export * from './lib/utils/mock-data-util';
 export * from './lib/utils/query';
 export * from './lib/utils/random-generator';
+export * from './lib/utils/storage-util';
 export * from './lib/utils/string-util';
 export * from './lib/utils/time-util';
 export * from './lib/utils/tree';
