@@ -338,6 +338,7 @@ export const guideData = [
     completionDate: '2025-03-28',
     lastUpdateDate: '',
     remarks: '- setting-sns.tsx',
+    cancle: true,
   },
   {
     screenId: 'NLP_FO_MYP_1011',
@@ -389,6 +390,7 @@ export const guideData = [
     completionDate: '2025-03-27',
     lastUpdateDate: '',
     remarks: '- EN',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_MYP_1014',
@@ -399,6 +401,7 @@ export const guideData = [
     completionDate: '2025-03-27',
     lastUpdateDate: '',
     remarks: '- EN',
+    cancel: true,
   },
 
   {
@@ -512,6 +515,7 @@ export const guideData = [
     completionDate: '2025-03-27',
     lastUpdateDate: '',
     remarks: '- EN',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_MYP_MR_1014',
@@ -522,6 +526,7 @@ export const guideData = [
     completionDate: '2025-03-27',
     lastUpdateDate: '',
     remarks: '- EN',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_LOG_1030',
@@ -796,6 +801,7 @@ export const guideData = [
     completionDate: '2025-04-29',
     lastUpdateDate: '2025-06-25',
     remarks: '- introduction.tsx',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_LEC_1022',
@@ -1854,7 +1860,27 @@ export const guideData = [
     remarks: '- NLP_FO_LOG_1001에 포함\n- 케이스별 (주석처리)',
   },
   {
-    screenId: 'NLP_FO_LOG_1003',
+    screenId: 'NLP_FO_FND_2000',
+    screenName: '아이디 찾기_그룹선택',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_FND_2001',
+    screenName: '아이디 찾기_소속확인',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_FND_2010',
     screenName: '아이디찾기_아이디찾기결과',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'search-id-success',
@@ -1863,18 +1889,9 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '- 케이스별 (주석처리)',
   },
+
   {
-    screenId: 'NLP_FO_LOG_1004',
-    screenName: '아이디/비밀번호찾기_비밀번호찾기_휴대폰인증',
-    layoutType: '', // 자동 분리됨 작성x
-    pageId: 'search-account',
-    pageType: 'Page',
-    completionDate: '2025-02-26',
-    lastUpdateDate: '',
-    remarks: '- NLP_FO_LOG_1001에 포함\n- 케이스별 (주석처리)',
-  },
-  {
-    screenId: 'NLP_FO_LOG_1005',
+    screenId: 'NLP_FO_FND_2050',
     screenName: '아이디/비밀번호찾기_비밀번호찾기_이메일인증',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'search-account',
@@ -1884,7 +1901,27 @@ export const guideData = [
     remarks: '- NLP_FO_LOG_1001에 포함\n- 케이스별 (주석처리)',
   },
   {
-    screenId: 'NLP_FO_LOG_1006',
+    screenId: 'NLP_FO_FND_2051',
+    screenName: '아이디/비밀번호찾기_비밀번호찾기_휴대폰인증',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'search-account',
+    pageType: 'Page',
+    completionDate: '2025-02-26',
+    lastUpdateDate: '',
+    remarks: '- NLP_FO_LOG_1001에 포함\n- 케이스별 (주석처리)',
+  },
+  {
+    screenId: 'NLP_FO_FND_2052',
+    screenName: '아이디/비밀번호찾기_비밀번호찾기_휴대폰인증_EN',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'search-account',
+    pageType: 'Page',
+    completionDate: '2025-02-26',
+    lastUpdateDate: '',
+    remarks: '- NLP_FO_LOG_1001에 포함\n- 케이스별 (주석처리)',
+  },
+  {
+    screenId: 'NLP_FO_FND_2060',
     screenName: '비밀번호찾기_비밀번호입력',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'password-input',
@@ -1894,7 +1931,7 @@ export const guideData = [
     remarks: '',
   },
   {
-    screenId: 'NLP_FO_LOG_1007',
+    screenId: 'NLP_FO_LOG_2020',
     screenName: '비밀번호변경_180일',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'password-modify',
@@ -1904,7 +1941,7 @@ export const guideData = [
     remarks: '',
   },
   {
-    screenId: 'NLP_FO_LOG_1008',
+    screenId: 'NLP_FO_LOG_2030',
     screenName: 'MPASS 2차인증_OTP',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'mpass-cert',
@@ -1914,7 +1951,7 @@ export const guideData = [
     remarks: '',
   },
   {
-    screenId: 'NLP_FO_LOG_1009',
+    screenId: 'NLP_FO_LOG_2031',
     screenName: 'MPASS 2차인증_FIDO',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'mpass-cert',
@@ -1924,7 +1961,7 @@ export const guideData = [
     remarks: '-NLP_FO_LOG_1008에 포함\n- 케이스별 (주석처리)',
   },
   {
-    screenId: 'NLP_FO_LOG_1010',
+    screenId: 'NLP_FO_LOG_2032',
     screenName: 'MAPSS 2차인증_FIDO 인증안내 팝업',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'mpass-cert',
@@ -1934,7 +1971,7 @@ export const guideData = [
     remarks: '- 버튼 클릭\n- mpass-popup.tsx',
   },
   {
-    screenId: 'NLP_FO_LOG_1011',
+    screenId: 'NLP_FO_LOG_2040',
     screenName: '구글 OTP인증 ',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'google-cert',
@@ -1944,7 +1981,7 @@ export const guideData = [
     remarks: '',
   },
   {
-    screenId: 'NLP_FO_LOG_1012',
+    screenId: 'NLP_FO_LOG_2041',
     screenName: '구글 OTP인증키 생성_QR 인증키생성팝업',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'google-cert',
@@ -1954,7 +1991,7 @@ export const guideData = [
     remarks: '- 버튼 클릭\n- google-qrcode-popup.tsx',
   },
   {
-    screenId: 'NLP_FO_LOG_1013',
+    screenId: 'NLP_FO_LOG_2042',
     screenName: '구글 OTP인증키 생성_ 인증키생성팝업',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'google-cert',
@@ -1964,7 +2001,7 @@ export const guideData = [
     remarks: '- 페이지내 버튼 클릭\n- google-key-popup.tsx',
   },
   {
-    screenId: 'NLP_FO_LOG_1014',
+    screenId: 'NLP_FO_LOG_2043',
     screenName: '구글 OTP인증_OTP번호입력팝업',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'google-cert',
@@ -1974,7 +2011,7 @@ export const guideData = [
     remarks: '- 페이지내 버튼 클릭\n- google-input-popup.tsx',
   },
   {
-    screenId: 'NLP_FO_LOG_1015',
+    screenId: 'NLP_FO_LOG_2044',
     screenName: '구글 OTP인증 가이드 팝업',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'google-cert',
@@ -1983,6 +2020,88 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '- 페이지내 버튼 클릭\n- google-cert-guide-popup.tsx',
   },
+
+  {
+    screenId: 'NLP_FO_LOG_MR_2030',
+    screenName: 'M_MPASS 2차인증_OTP',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'mpass-cert',
+    pageType: 'Page',
+    completionDate: '2025-03-05',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_LOG__MR_2031',
+    screenName: 'M_MPASS 2차인증_FIDO',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'mpass-cert',
+    pageType: 'Page',
+    completionDate: '2025-03-05',
+    lastUpdateDate: '',
+    remarks: '-NLP_FO_LOG_1008에 포함\n- 케이스별 (주석처리)',
+  },
+  {
+    screenId: 'NLP_FO_LOG__MR_2032',
+    screenName: 'M_MAPSS 2차인증_FIDO 인증안내 팝업',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'mpass-cert',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-05',
+    lastUpdateDate: '',
+    remarks: '- 버튼 클릭\n- mpass-popup.tsx',
+  },
+  {
+    screenId: 'M_NLP_FO_LOG__MR_2040',
+    screenName: '구글 OTP인증 ',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'google-cert',
+    pageType: 'Page',
+    completionDate: '2025-03-05',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_LOG__MR_2041',
+    screenName: 'M_구글 OTP인증키 생성_QR 인증키생성팝업',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'google-cert',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-05',
+    lastUpdateDate: '',
+    remarks: '- 버튼 클릭\n- google-qrcode-popup.tsx',
+  },
+  {
+    screenId: 'NLP_FO_LOG__MR_2042',
+    screenName: 'M_구글 OTP인증키 생성_ 인증키생성팝업',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'google-cert',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-07',
+    lastUpdateDate: '',
+    remarks: '- 페이지내 버튼 클릭\n- google-key-popup.tsx',
+  },
+  {
+    screenId: 'NLP_FO_LOG__MR_2043',
+    screenName: 'M_구글 OTP인증_OTP번호입력팝업',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'google-cert',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-07',
+    lastUpdateDate: '',
+    remarks: '- 페이지내 버튼 클릭\n- google-input-popup.tsx',
+  },
+  {
+    screenId: 'NLP_FO_LOG__MR_2044',
+    screenName: 'M_구글 OTP인증 가이드 팝업',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'google-cert',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-07',
+    lastUpdateDate: '',
+    remarks: '- 페이지내 버튼 클릭\n- google-cert-guide-popup.tsx',
+  },
+
   {
     screenId: 'NLP_FO_LOG_1018',
     screenName: '휴면계정해제_휴대폰인증',
@@ -2202,16 +2321,7 @@ export const guideData = [
     completionDate: '2025-02-28',
     lastUpdateDate: '',
     remarks: '- 영문(국문과 동일)',
-  },
-  {
-    screenId: 'NLP_FO_LOG_1105',
-    screenName: '비밀번호변경_180일',
-    layoutType: '', // 자동 분리됨 작성x
-    pageId: 'password-modify',
-    pageType: 'Page',
-    completionDate: '2025-02-28',
-    lastUpdateDate: '',
-    remarks: '- 영문(국문과 동일)',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_LOG_1106',
@@ -2277,6 +2387,7 @@ export const guideData = [
     completionDate: '2025-03-17',
     lastUpdateDate: '',
     remarks: '- (영문) 국문과 동일 / 기획 보류',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_LOG_1112',
@@ -2287,6 +2398,7 @@ export const guideData = [
     completionDate: '2025-03-17',
     lastUpdateDate: '',
     remarks: '- (영문) 국문과 동일 / 기획 보류',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_LOG_1113',
@@ -2297,6 +2409,7 @@ export const guideData = [
     completionDate: '2025-03-17',
     lastUpdateDate: '',
     remarks: '- (영문) 국문과 동일 / 기획 보류\n- contact-popup.tsx',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_LOG_1114',
@@ -2307,6 +2420,7 @@ export const guideData = [
     completionDate: '2025-03-12',
     lastUpdateDate: '',
     remarks: '- (영문) 국문과 동일',
+    cancle: true,
   },
   {
     screenId: 'NLP_FO_LOG_1115',
@@ -2317,6 +2431,7 @@ export const guideData = [
     completionDate: '2025-03-12',
     lastUpdateDate: '',
     remarks: '- (영문) 국문과 동일',
+    cancle: true,
   },
   {
     screenId: 'NLP_FO_LOG_1116',
@@ -2327,6 +2442,7 @@ export const guideData = [
     completionDate: '2025-03-12',
     lastUpdateDate: '',
     remarks: '- (영문) 국문과 동일',
+    cancle: true,
   },
   {
     screenId: 'NLP_FO_LOG_1117',
@@ -2337,6 +2453,7 @@ export const guideData = [
     completionDate: '2025-03-20',
     lastUpdateDate: '',
     remarks: '- 영문(다국어처리)',
+    cancle: true,
   },
   {
     screenId: 'NLP_FO_LOG_1118',
@@ -2347,6 +2464,7 @@ export const guideData = [
     completionDate: '2025-03-20',
     lastUpdateDate: '',
     remarks: '- 영문(다국어처리)',
+    cancle: true,
   },
   {
     screenId: 'NLP_FO_LOG_1119',
@@ -2357,6 +2475,7 @@ export const guideData = [
     completionDate: '2025-03-20',
     lastUpdateDate: '',
     remarks: '- (영문) 약관 > 버튼 클릭시 확인가능\nagreement-detail-popup.tsx',
+    cancle: true,
   },
   {
     screenId: 'NLP_FO_CPS_1100',

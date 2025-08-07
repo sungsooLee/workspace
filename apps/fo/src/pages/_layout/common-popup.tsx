@@ -10,6 +10,8 @@ import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { FileDownloads, FormRow } from '@shared/ui';
+import { useModal } from '@learnway/ui/modal';
+import { OpensourceLicenseModal } from '@features/main/support/ui/opensource-license-modal';
 
 export const Route = createFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -22,6 +24,7 @@ function RouteComponent() {
   const router = useRouter();
   const { t, i18n } = useTranslation();
   const queryClient = useQueryClient();
+  const { openModal } = useModal();
 
   const { provider, getValues, control } = useDynamicForm(formConfig);
   const handleLearningWindow = (values: any, courseData: any) => {
@@ -102,6 +105,22 @@ function RouteComponent() {
             }}
           />
         </FormRow>
+      </ContentsRow>
+      <ContentsRow>
+        <Button
+          className="mt-12"
+          label="오픈소스 라이선스"
+          variant="primary"
+          type="button"
+          size="lg"
+          preventDefault
+          onClick={() => {
+            openModal({
+              width: 'm_full',
+              content: <OpensourceLicenseModal />,
+            });
+          }}
+        />
       </ContentsRow>
       <FileDownloads fileUuid={'1aff46aa-86b9-4281-8c70-99595eabe637'} />
       <FileDownloads

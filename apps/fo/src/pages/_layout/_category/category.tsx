@@ -4,10 +4,6 @@ import { CategoryDetail } from '@features/category/ui/category-detail';
 import { CategoryDetailM as MobileCategoryDetail } from '@features/category/m.ui/category-detail';
 import { pageRouteConfig } from '@features/auth';
 
-export interface CategoryDetailComponentProps {
-  categoryId: number
-}
-
 export const Route = createFileRoute('/_layout/_category/category')({
   component: RouteComponent,
   ...pageRouteConfig({

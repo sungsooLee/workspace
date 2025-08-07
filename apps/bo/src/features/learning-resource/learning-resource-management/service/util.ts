@@ -6,21 +6,6 @@ import { isEmptyData } from '@learnway/shared';
 import { ProcessingStatus } from '@shared/types/enums';
 import { useCallback } from 'react';
 
-export const getDetailPathByContentType = (contentType: string): string => {
-  switch (contentType) {
-    case LEARNING_TYPE.VIDEO:
-    case LEARNING_TYPE.BLOG:
-    case LEARNING_TYPE.SCORM:
-    case LEARNING_TYPE.HTML5_VIDEO:
-    case LEARNING_TYPE.EXAM:
-    case LEARNING_TYPE.EXAM_POOL:
-    case LEARNING_TYPE.ASSIGNMENT:
-    case LEARNING_TYPE.ETC:
-      return '/learning/learning-resource/view';
-  }
-  return '';
-};
-
 export const isContentCompleted = async (contentUuid: string, type: string) => {
   switch (type) {
     case LEARNING_TYPE.VIDEO: {
@@ -45,18 +30,6 @@ export const isContentCompleted = async (contentUuid: string, type: string) => {
     default:
       return true;
   }
-};
-
-export const getDetailRouterState = (contentUuid: string, contentType: string) => {
-  const state = { contentUuid };
-  switch (contentType) {
-    case LEARNING_TYPE.EXAM:
-    case LEARNING_TYPE.BLOG:
-      Object.assign(state, { mode: 'UPDATE' });
-      break;
-    // 컨텐츠 유형에 따라 state 추가 설정
-  }
-  return state;
 };
 
 export const getTooltipContent = (createType?: any) => {

@@ -19,6 +19,7 @@ import {
 import styles from '@learnway/styles/fo/pages/_layout/terms/terms.module.css';
 import { Dropdown } from '@learnway/ui/dropdown';
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import { SelectOption } from '@learnway/ui/type';
 
 export const Route = createFileRoute('/_layout/clause/$termsType')({
   component: RouteComponent,
@@ -45,14 +46,14 @@ function RouteComponent() {
   const { params } = useCurrentRoute(Route);
 
   const { data: authUser } = useFetchAuthUser();
+  const [termsId, setTermsId] = useState<number>();
+  const [options, setOptions] = useState<SelectOption[]>([]);
 
-  const termsType = findTermsType(params.termsType);
+  const termsTypeCode = findTermsType(params.termsType);
 
-  const [termsId, setTermsId] = useState<string | undefined>();
-
-  const { data } = useFetchTerms(termsType, Number(termsId));
+  const { data } = useFetchTerms(termsTypeCode, termsId, authUser?.locale);
   const { data: versions } = useFetchTermsVersions(
-    termsType,
+    termsTypeCode,
     authUser?.activeTenant?.tenantId,
     authUser?.locale,
   );
@@ -61,40 +62,44 @@ function RouteComponent() {
   useEffect(() => {
     //console.log(params?.termsType);
     setTermsId(undefined);
-  }, [termsType]);
+  }, [termsTypeCode]);
 
-  const options = useCreation(() => {
-    if (!versions) {
-      return [];
-    }
-    return versions.map((version) => ({
-      value: String(version.termsId),
+  useEffect(() => {
+    if (!versions) return;
+    const options = versions.map((version) => ({
+      value: version.termsId,
       label: version.termsVersion,
     }));
+    setOptions(options);
   }, [versions]);
 
   return (
-    <div className={styles.start} key={termsType}>
+    <div className={styles.start} key={termsTypeCode}>
       <div className={styles.title_box}>
         <h2>
-          {termsType === TermsTypeCode.PRIVACY_POLICY ? t('개인정보처리방침') : t('이용약관')}
+          {termsTypeCode === TermsTypeCode.PRIVACY_POLICY ? t('개인정보처리방침') : t('이용약관')}
         </h2>
 
         <Dropdown
           value={termsId}
           size="lg"
           options={options}
-          onChange={(value: string) => {
+          onChange={(value) => {
             setTermsId(value);
           }}
           placeholder={t('이전 {{type}}', {
             type:
-              termsType === TermsTypeCode.PRIVACY_POLICY ? t('개인정보처리방침') : t('이용약관'),
+              termsTypeCode === TermsTypeCode.PRIVACY_POLICY
+                ? t('개인정보처리방침')
+                : t('이용약관'),
           })}
           className={styles.select}
         />
       </div>
-      <HtmlContent className={styles.details}>{data?.translation?.termsContents}</HtmlContent>
+      <HtmlContent className={styles.details}>
+        {!data && t('약관 정보가 없습니다.')}
+        {data && data?.translation?.termsContents}
+      </HtmlContent>
     </div>
   );
 }

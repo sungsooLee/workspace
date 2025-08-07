@@ -74,6 +74,7 @@ function RouteComponent() {
         { label: '배너', path: '/guide/banner' },
         { label: 'data display notice', path: '/guide/data-display' },
         { label: '다운로드', path: '/guide/download' },
+        { label: '업로드', path: '/guide/file-upload' },
       ],
     },
   ];
