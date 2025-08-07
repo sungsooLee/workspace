@@ -83,6 +83,10 @@ export default defineConfig(({ mode }) => {
         { find: '@shared', replacement: path.resolve(__dirname, 'src/shared') },
         { find: '@types', replacement: path.resolve(__dirname, 'src/types') },
         { find: '@widgets', replacement: path.resolve(__dirname, 'src/widgets') },
+        {
+          find: '@learnway/styles',
+          replacement: path.resolve(__dirname, '../../libs/styles/src/lib'),
+        },
       ],
     },
     esbuild: {

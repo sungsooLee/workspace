@@ -1,23 +1,27 @@
+import mediaImg from '@learnway/styles/bo/assets/images/temp/img_temp_media.jpg';
 import styles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
-import mediaImg from '../../assets/images/temp/img_temp_media.jpg';
-import { forwardRef } from 'react';
 import { Button } from '@learnway/ui/button';
+import { forwardRef } from 'react';
 
 const MovieInfoComponent = forwardRef<HTMLUListElement, any>(({ name, value, onChange }, ref) => {
   // media btn list
   const buttons = [
     {
       label: '원본 다운로드',
-      onClick: () => console.log('btn 1') },
+      onClick: () => console.log('btn 1'),
+    },
     {
       label: '동영상 변경',
-      onClick: () => console.log('btn 2') },
+      onClick: () => console.log('btn 2'),
+    },
     {
       label: '콘텐츠 URL보기',
-      onClick: () => console.log('btn 3') },
+      onClick: () => console.log('btn 3'),
+    },
     {
       label: '미리보기',
-      onClick: () => console.log('btn 4') },
+      onClick: () => console.log('btn 4'),
+    },
   ];
 
   // media info_list

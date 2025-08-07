@@ -190,15 +190,18 @@
       .loc {
         &.react {
           padding-left: 30px;
-          background: url('../images/guide/ic_react.svg') no-repeat 5px 3px/20px 20px;
+          background: url('@learnway/styles/bo/assets/images/guide/ic_react.svg') no-repeat 5px
+            3px/20px 20px;
         }
         &.sass {
           padding-left: 30px;
-          background: url('../images/guide/ic_scss.svg') no-repeat 5px 3px/20px 20px;
+          background: url('@learnway/styles/bo/assets/images/guide/ic_scss.svg') no-repeat 5px
+            3px/20px 20px;
         }
         &.css {
           padding-left: 30px;
-          background: url('../images/guide/ic_css.svg') no-repeat 5px 3px/20px 20px;
+          background: url('@learnway/styles/bo/assets/images/guide/ic_css.svg') no-repeat 5px
+            3px/20px 20px;
         }
         + .info {
           margin-top: 20px;
@@ -216,7 +219,8 @@
       .info {
         padding: 20px 10px 20px 50px;
         border: 1px solid #ddd;
-        background: url('../images/guide/ic_info.svg') no-repeat 20px 23px/20px 20px;
+        background: url('@learnway/styles/bo/assets/images/guide/ic_info.svg') no-repeat 20px
+          23px/20px 20px;
         border-radius: 10px;
         a {
           @apply text-[#000] underline;
@@ -354,7 +358,8 @@
       color: #222;
       font-size: 1.2rem;
       cursor: pointer;
-      background: url('../images/guide/ic_copy.svg') no-repeat 5px 15px/12px 12px;
+      background: url('@learnway/styles/bo/assets/images/guide/ic_copy.svg') no-repeat 5px 15px/12px
+        12px;
       opacity: 0.6;
     }
   }

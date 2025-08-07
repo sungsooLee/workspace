@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 
-import previewImg from '@assets/images/temp/img_exam_basic.jpg';
+import previewImg from '@learnway/styles/bo/assets/images/temp/img_exam_basic.jpg';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 
 import { UseDynamicFormResult } from '@learnway/hooks';

@@ -1,5 +1,4 @@
 /* IA110 / NLP_BO_CMS_1013 - 교육자원 > 블로그 삳세 */
-import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
 import { ContentInformation } from '@entities/learning-resource';
 import {
   ContentTopButtons,
@@ -8,6 +7,7 @@ import {
 } from '@features/learning-resource';
 import { useBlogContentForm } from '@features/learning-resource/learning-resource-management/service';
 import { useDynamicForm2 } from '@learnway/hooks';
+import defaultImage from '@learnway/styles/bo/assets/images/thumb/img_thumb_default.jpg';
 import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType } from '@shared/types/enums';
 

@@ -8,7 +8,7 @@ import { Input } from '@learnway/ui/input';
 import { t } from 'i18next';
 import { forwardRef, useEffect, useImperativeHandle, useMemo } from 'react';
 
-import previewImg from '@assets/images/temp/img_exam_basic.jpg';
+import previewImg from '@learnway/styles/bo/assets/images/temp/img_exam_basic.jpg';
 
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import { CheckBoxFormField, FormDisplay, FormRow2, SwitchFormField } from '@shared/ui/form';

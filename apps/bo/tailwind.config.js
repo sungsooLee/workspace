@@ -15,7 +15,7 @@ module.exports = {
   ],
   blocklist: ['outline'],
   plugins: [
-    require('./src/assets/tailwind-plugins/typo.plugin'),
+    require('../../libs/styles/src/lib/bo/assets/tailwind-plugins/typo.plugin'),
     function ({ addComponents }) {
       const baseTitle = {
         letterSpacing: '-0.3px',
