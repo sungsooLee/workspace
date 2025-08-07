@@ -38,247 +38,295 @@ function RouteComponent() {
   }, [openModal]);
 
   return (
-    <div className={cn(styles.start, styles.wrap, 'attach_wrap')}>
-      {/* info_wrap : 상단 타이틀 버튼 영역 */}
-      <div className={styles.info_wrap}>
-        <div className={styles.title_area}>
-          <strong className={styles.title}>{'파일 올리기'}</strong>
-          <span className={styles.file_info}>
-            <IcoPaperClip
-              width={'16'}
-              height={'17'}
-              stroke={'#131C30'}
-              className={styles.icon_clip}
-            />
-            <span className={styles.file_length}>
-              <strong className={styles.num}>0</strong>
-              <span className={styles.slash}>/</span>
-              <span className={styles.length}>10</span>
-              {'개'}
-            </span>
-            <span className={styles.file_volume}>
-              <em className={styles.volume}>0</em>
-              {'KB'}
-            </span>
-          </span>
-        </div>
-        <div className={styles.btn_area}>
-          <p className={styles.file_text}>
-            <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
-            <span className={styles.info_text}>{`최대 ${'00'}개, 최대 파일 사이즈 ${'50'}MB`}</span>
-          </p>
-          <Button variant={'line'} size={'sm'} className={styles.btn_add}>
-            {'추가'}
-          </Button>
-          <Button variant={'line'} size={'sm'} className={styles.btn_add}>
-            {'저장'}
-          </Button>
-          <Button variant={'line'} size={'sm'} disabled className={styles.btn_delete}>
-            {'삭제'}
-          </Button>
+    <>
+      <h2 className="guide_tit2">file-upload Page Component</h2>
+      <p className="loc css">@learnway/styles/bo/assets/styles/modules/file-upload.module.css</p>
+      <div className="info">
+        BO와 동일(이미 개발 완료) 컬러나 아이콘, DRM 케이스만 다름 : 모바일 반응형 작업 완료
+      </div>
+      <div className="group">
+        <h3 className="guide_tit3">파일 업로드 미리보기</h3>
+        <div className="flex_box">
+          <div className="desc w-full">
+            <div className={cn(styles.start, styles.wrap, 'attach_wrap')}>
+              {/* info_wrap : 상단 타이틀 버튼 영역 */}
+              <div className={styles.info_wrap}>
+                <div className={styles.title_area}>
+                  <strong className={styles.title}>{'파일 올리기'}</strong>
+                  <span className={styles.file_info}>
+                    <IcoPaperClip
+                      width={'16'}
+                      height={'17'}
+                      stroke={'#131C30'}
+                      className={styles.icon_clip}
+                    />
+                    <span className={styles.file_length}>
+                      <strong className={styles.num}>0</strong>
+                      <span className={styles.slash}>/</span>
+                      <span className={styles.length}>10</span>
+                      {'개'}
+                    </span>
+                    <span className={styles.file_volume}>
+                      <em className={styles.volume}>0</em>
+                      {'KB'}
+                    </span>
+                  </span>
+                </div>
+                <div className={styles.btn_area}>
+                  <p className={styles.file_text}>
+                    <IcoAlertCircle width={16} height={17} fill="#A9AFB8" />
+                    <span
+                      className={styles.info_text}
+                    >{`최대 ${'00'}개, 최대 파일 사이즈 ${'50'}MB`}</span>
+                  </p>
+                  <Button variant={'line'} size={'sm'} className={styles.btn_add}>
+                    {'추가'}
+                  </Button>
+                  <Button variant={'line'} size={'sm'} className={styles.btn_add}>
+                    {'저장'}
+                  </Button>
+                  <Button variant={'line'} size={'sm'} disabled className={styles.btn_delete}>
+                    {'삭제'}
+                  </Button>
+                </div>
+              </div>
+              {/* file_wrap : 라운드 박스 영역 */}
+              <div className={cn(styles.file_wrap)}>
+                {/* 파일 첨부 하기 전 */}
+                <div className={styles.attach_area}>
+                  <Button className={styles.btn_file}>
+                    <IcoFileUpload className={styles.icon_upload} />
+                    <strong className={styles.file_title}>
+                      {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
+                    </strong>
+                    <span className={styles.file_guide}>
+                      {'PNG, JPG, GIF, PDF / Max file size : 50MB'}
+                    </span>
+                    <input type="file" className={styles.input_file} />
+                  </Button>
+                </div>
+                {/* 파일 업로드 */}
+                <div className={styles.upload_status}>
+                  {/* file_item */}
+                  <div className={styles.file_item}>
+                    <Checkbox className={styles.check} />
+                    <div className={styles.file_name}>
+                      <IcoPdf className={styles.ico_pdf} />
+                      <em className={styles.name}>
+                        {
+                          'dsdbnshbdhsdbshbdhsbdhsbdhsbdhsbdshjdbsjhdbshdbshjdbajhbdhjasbjhdbsajhbshjbshdbhdbhsdbhjdbshdbhsbdhsbdhsbdhsdbshdbshdbshdbshdbshdbsdhbhdbdbshdbhsdbhsbdhbshdbshdbshhbdshbdshdbshdbshb.pdf'
+                        }
+                      </em>
+                      <IcoLock className={styles.ico_lock} />
+                    </div>
+                    <p className={styles.status_view}>
+                      <em className={styles.file_size}>100MB</em>
+                    </p>
+                    <div className={styles.progress_area}>
+                      <ProgressBar className={styles.progress} progress={100} label={'완료'} />
+                    </div>
+                    <div className={styles.control_wrap}>
+                      <IcoComplete02
+                        width={20}
+                        height={20}
+                        fill="#3EB838"
+                        className={styles.complete}
+                      />
+                    </div>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
+                  </div>
+                  {/* file_item */}
+                  <div className={styles.file_item}>
+                    <Checkbox className={styles.check} />
+                    <div className={styles.file_name}>
+                      <IcoPdf className={styles.ico_pdf} />
+                      <em className={styles.name}>{'file.pdf'}</em>
+                      <IcoLock className={styles.ico_lock} />
+                    </div>
+                    <p className={styles.status_view}>
+                      <em className={styles.file_size}>100MB</em>
+                    </p>
+                    <div className={styles.progress_area}>
+                      <p className={styles.file_status_text}>{'유효성 검토 중'}</p>
+                    </div>
+                    <div className={styles.control_wrap}>
+                      <Badge
+                        className={styles.file_status}
+                        option={{ label: '', value: '' }}
+                        variant="dot"
+                        status="ing"
+                      />
+                    </div>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
+                  </div>
+                  {/* file_item */}
+                  <div className={styles.file_item}>
+                    <Checkbox className={styles.check} />
+                    <div className={styles.file_name}>
+                      <IcoPdf className={styles.ico_pdf} />
+                      <em className={styles.name}>{'file.pdf'}</em>
+                      <IcoLock className={styles.ico_lock} />
+                    </div>
+                    <p className={styles.status_view}>
+                      <em className={styles.file_size}>100MB</em>
+                    </p>
+                    <div className={styles.progress_area}>
+                      <p className={styles.file_status_text}>{'업로드 불가'}</p>
+                    </div>
+                    <div className={styles.control_wrap}>
+                      <Badge
+                        className={styles.file_status}
+                        option={{ label: '', value: '' }}
+                        variant="dot"
+                        status="error"
+                      />
+                    </div>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
+                  </div>
+                  {/* file_item */}
+                  <div className={styles.file_item}>
+                    <Checkbox className={styles.check} />
+                    <div className={styles.file_name}>
+                      <IcoPdf className={styles.ico_pdf} />
+                      <em className={styles.name}>{'file.pdf'}</em>
+                      <IcoLock className={styles.ico_lock} />
+                    </div>
+                    <p className={styles.status_view}>
+                      <em className={styles.file_size}>100MB</em>
+                    </p>
+                    <div className={styles.progress_area}>
+                      <p className={styles.file_status_text}>{'업로드 취소'}</p>
+                    </div>
+                    <div className={styles.control_wrap}>
+                      <Button className={styles.btn_status} onlyIcon>
+                        <IcoRefresh
+                          width={20}
+                          height={20}
+                          fill="#00AFD5"
+                          className={styles.icon_refresh}
+                        />
+                      </Button>
+                    </div>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
+                  </div>
+                  {/* file_item */}
+                  <div className={styles.file_item}>
+                    <Checkbox className={styles.check} />
+                    <div className={styles.file_name}>
+                      <IcoPdf className={styles.ico_pdf} />
+                      <em className={styles.name}>{'file.pdf'}</em>
+                      <IcoLock className={styles.ico_lock} />
+                    </div>
+                    <p className={styles.status_view}>
+                      <em className={styles.file_size}>100MB</em>
+                    </p>
+                    <div className={styles.progress_area}>
+                      <ProgressBar
+                        className={styles.progress}
+                        progress={40}
+                        label={'실패'}
+                        isFailed
+                      />
+                    </div>
+                    <div className={styles.control_wrap}>
+                      <Button className={styles.btn_status} onlyIcon>
+                        <IcoRefresh
+                          width={20}
+                          height={20}
+                          fill="#00AFD5"
+                          className={styles.icon_refresh}
+                        />
+                      </Button>
+                    </div>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
+                  </div>
+                  {/* file_item */}
+                  <div className={styles.file_item}>
+                    <Checkbox className={styles.check} />
+                    <div className={styles.file_name}>
+                      <IcoPdf className={styles.ico_pdf} />
+                      <em className={styles.name}>{'file.pdf'}</em>
+                      <IcoLock className={styles.ico_lock} />
+                    </div>
+                    <p className={styles.status_view}>
+                      <em className={styles.file_size}>100MB</em>
+                    </p>
+                    <div className={styles.progress_area}>
+                      <ProgressBar className={styles.progress} progress={40} label={'진행중'} />
+                    </div>
+                    <div className={styles.control_wrap}>
+                      <Button className={styles.btn_status} onlyIcon>
+                        <IcoPause
+                          width={20}
+                          height={20}
+                          fill="#A9AFB8"
+                          className={styles.icon_pause}
+                        />
+                      </Button>
+                    </div>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
+                  </div>
+                  {/* file_item */}
+                  <div className={styles.file_item}>
+                    <Checkbox className={styles.check} />
+                    <div className={styles.file_name}>
+                      <IcoPdf className={styles.ico_pdf} />
+                      <em className={styles.name}>{'file.pdf'}</em>
+                      <IcoLock className={styles.ico_lock} />
+                    </div>
+                    <p className={styles.status_view}>
+                      <em className={styles.file_size}>100MB</em>
+                    </p>
+                    <div className={styles.progress_area}>
+                      <ProgressBar className={styles.progress} progress={0} label={'대기중'} />
+                    </div>
+                    <div className={styles.control_wrap}>
+                      <Button className={styles.btn_status} onlyIcon>
+                        <IcoPause
+                          width={20}
+                          height={20}
+                          fill="#A9AFB8"
+                          className={styles.icon_pause}
+                        />
+                      </Button>
+                    </div>
+                    <div className={styles.delele_btn_wrap}>
+                      <Button className={styles.btn_delete} onlyIcon>
+                        <IcoTrash03 width={20} height={20} stroke="#131C30" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      {/* file_wrap : 라운드 박스 영역 */}
-      <div className={cn(styles.file_wrap)}>
-        {/* 파일 첨부 하기 전 */}
-        <div className={styles.attach_area}>
-          <Button className={styles.btn_file}>
-            <IcoFileUpload className={styles.icon_upload} />
-            <strong className={styles.file_title}>
-              {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
-            </strong>
-            <span className={styles.file_guide}>{'PNG, JPG, GIF, PDF / Max file size : 50MB'}</span>
-            <input type="file" className={styles.input_file} />
-          </Button>
-        </div>
-        {/* 파일 업로드 */}
-        <div className={styles.upload_status}>
-          {/* file_item */}
-          <div className={styles.file_item}>
-            <Checkbox className={styles.check} />
-            <div className={styles.file_name}>
-              <IcoPdf className={styles.ico_pdf} />
-              <em className={styles.name}>
-                {
-                  'dsdbnshbdhsdbshbdhsbdhsbdhsbdhsbdshjdbsjhdbshdbshjdbajhbdhjasbjhdbsajhbshjbshdbhdbhsdbhjdbshdbhsbdhsbdhsbdhsdbshdbshdbshdbshdbshdbsdhbhdbdbshdbhsdbhsbdhbshdbshdbshhbdshbdshdbshdbshb.pdf'
-                }
-              </em>
-              <IcoLock className={styles.ico_lock} />
-            </div>
-            <p className={styles.status_view}>
-              <em className={styles.file_size}>100MB</em>
-            </p>
-            <div className={styles.progress_area}>
-              <ProgressBar className={styles.progress} progress={100} label={'완료'} />
-            </div>
-            <div className={styles.control_wrap}>
-              <IcoComplete02 width={20} height={20} fill="#3EB838" className={styles.complete} />
-            </div>
-            <div className={styles.delele_btn_wrap}>
-              <Button className={styles.btn_delete} onlyIcon>
-                <IcoTrash03 width={20} height={20} stroke="#131C30" />
-              </Button>
-            </div>
-          </div>
-          {/* file_item */}
-          <div className={styles.file_item}>
-            <Checkbox className={styles.check} />
-            <div className={styles.file_name}>
-              <IcoPdf className={styles.ico_pdf} />
-              <em className={styles.name}>{'file.pdf'}</em>
-              <IcoLock className={styles.ico_lock} />
-            </div>
-            <p className={styles.status_view}>
-              <em className={styles.file_size}>100MB</em>
-            </p>
-            <div className={styles.progress_area}>
-              <p className={styles.file_status_text}>{'유효성 검토 중'}</p>
-            </div>
-            <div className={styles.control_wrap}>
-              <Badge
-                className={styles.file_status}
-                option={{ label: '', value: '' }}
-                variant="dot"
-                status="ing"
-              />
-            </div>
-            <div className={styles.delele_btn_wrap}>
-              <Button className={styles.btn_delete} onlyIcon>
-                <IcoTrash03 width={20} height={20} stroke="#131C30" />
-              </Button>
-            </div>
-          </div>
-          {/* file_item */}
-          <div className={styles.file_item}>
-            <Checkbox className={styles.check} />
-            <div className={styles.file_name}>
-              <IcoPdf className={styles.ico_pdf} />
-              <em className={styles.name}>{'file.pdf'}</em>
-              <IcoLock className={styles.ico_lock} />
-            </div>
-            <p className={styles.status_view}>
-              <em className={styles.file_size}>100MB</em>
-            </p>
-            <div className={styles.progress_area}>
-              <p className={styles.file_status_text}>{'업로드 불가'}</p>
-            </div>
-            <div className={styles.control_wrap}>
-              <Badge
-                className={styles.file_status}
-                option={{ label: '', value: '' }}
-                variant="dot"
-                status="error"
-              />
-            </div>
-            <div className={styles.delele_btn_wrap}>
-              <Button className={styles.btn_delete} onlyIcon>
-                <IcoTrash03 width={20} height={20} stroke="#131C30" />
-              </Button>
-            </div>
-          </div>
-          {/* file_item */}
-          <div className={styles.file_item}>
-            <Checkbox className={styles.check} />
-            <div className={styles.file_name}>
-              <IcoPdf className={styles.ico_pdf} />
-              <em className={styles.name}>{'file.pdf'}</em>
-              <IcoLock className={styles.ico_lock} />
-            </div>
-            <p className={styles.status_view}>
-              <em className={styles.file_size}>100MB</em>
-            </p>
-            <div className={styles.progress_area}>
-              <p className={styles.file_status_text}>{'업로드 취소'}</p>
-            </div>
-            <div className={styles.control_wrap}>
-              <Button className={styles.btn_status} onlyIcon>
-                <IcoRefresh width={20} height={20} fill="#00AFD5" className={styles.icon_refresh} />
-              </Button>
-            </div>
-            <div className={styles.delele_btn_wrap}>
-              <Button className={styles.btn_delete} onlyIcon>
-                <IcoTrash03 width={20} height={20} stroke="#131C30" />
-              </Button>
-            </div>
-          </div>
-          {/* file_item */}
-          <div className={styles.file_item}>
-            <Checkbox className={styles.check} />
-            <div className={styles.file_name}>
-              <IcoPdf className={styles.ico_pdf} />
-              <em className={styles.name}>{'file.pdf'}</em>
-              <IcoLock className={styles.ico_lock} />
-            </div>
-            <p className={styles.status_view}>
-              <em className={styles.file_size}>100MB</em>
-            </p>
-            <div className={styles.progress_area}>
-              <ProgressBar className={styles.progress} progress={40} label={'실패'} isFailed />
-            </div>
-            <div className={styles.control_wrap}>
-              <Button className={styles.btn_status} onlyIcon>
-                <IcoRefresh width={20} height={20} fill="#00AFD5" className={styles.icon_refresh} />
-              </Button>
-            </div>
-            <div className={styles.delele_btn_wrap}>
-              <Button className={styles.btn_delete} onlyIcon>
-                <IcoTrash03 width={20} height={20} stroke="#131C30" />
-              </Button>
-            </div>
-          </div>
-          {/* file_item */}
-          <div className={styles.file_item}>
-            <Checkbox className={styles.check} />
-            <div className={styles.file_name}>
-              <IcoPdf className={styles.ico_pdf} />
-              <em className={styles.name}>{'file.pdf'}</em>
-              <IcoLock className={styles.ico_lock} />
-            </div>
-            <p className={styles.status_view}>
-              <em className={styles.file_size}>100MB</em>
-            </p>
-            <div className={styles.progress_area}>
-              <ProgressBar className={styles.progress} progress={40} label={'진행중'} />
-            </div>
-            <div className={styles.control_wrap}>
-              <Button className={styles.btn_status} onlyIcon>
-                <IcoPause width={20} height={20} fill="#A9AFB8" className={styles.icon_pause} />
-              </Button>
-            </div>
-            <div className={styles.delele_btn_wrap}>
-              <Button className={styles.btn_delete} onlyIcon>
-                <IcoTrash03 width={20} height={20} stroke="#131C30" />
-              </Button>
-            </div>
-          </div>
-          {/* file_item */}
-          <div className={styles.file_item}>
-            <Checkbox className={styles.check} />
-            <div className={styles.file_name}>
-              <IcoPdf className={styles.ico_pdf} />
-              <em className={styles.name}>{'file.pdf'}</em>
-              <IcoLock className={styles.ico_lock} />
-            </div>
-            <p className={styles.status_view}>
-              <em className={styles.file_size}>100MB</em>
-            </p>
-            <div className={styles.progress_area}>
-              <ProgressBar className={styles.progress} progress={0} label={'대기중'} />
-            </div>
-            <div className={styles.control_wrap}>
-              <Button className={styles.btn_status} onlyIcon>
-                <IcoPause width={20} height={20} fill="#A9AFB8" className={styles.icon_pause} />
-              </Button>
-            </div>
-            <div className={styles.delele_btn_wrap}>
-              <Button className={styles.btn_delete} onlyIcon>
-                <IcoTrash03 width={20} height={20} stroke="#131C30" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
 

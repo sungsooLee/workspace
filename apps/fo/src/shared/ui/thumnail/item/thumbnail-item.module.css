@@ -134,6 +134,12 @@
           .toggle_btn {
             @apply bottom-[8px] left-[calc(41%-8px)] top-auto;
           }
+          .thumbnail_view {
+            @apply mt-0;
+          }
+          div + .thumbnail_view {
+            @apply mt-[8px];
+          }
         }
       }
     }
