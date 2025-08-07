@@ -4,7 +4,7 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { UseDynamicFormResult } from '@learnway/hooks';
 import { cn, isEmptyData } from '@learnway/shared';
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useRoleInfo } from '../service/util';
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 
@@ -12,6 +12,13 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 import { ContentsRow } from '@learnway/ui/contents-row';
 
 import { ContentsHistoryInfoFormField, MediaContentRequiredCheckFormField } from '@shared/ui/form';
+import { SplitPanel } from '@learnway/ui/elements';
+import { t } from 'i18next';
+import styles from '@widgets/learning/learning-resource/ui/blog-detail.module.css';
+import defaultImage from '@learnway/styles/bo/assets/images/temp/img_exam_basic.jpg';
+import { PreviewLearningWindow } from '@shared/ui/modal';
+import { useModal } from '@learnway/ui/modal';
+
 type BlogDetailProps = {
   form: UseDynamicFormResult;
   contentUuid?: string;
@@ -25,6 +32,8 @@ const BlogDetailComponent = ({
   blogInfo = {},
   hasMapping = false,
 }: BlogDetailProps) => {
+  const { openModal } = useModal();
+
   const { provider, getValues, updateFormData, onFormChange, watch } = form;
 
   const createType = watch('createType');
@@ -44,6 +53,13 @@ const BlogDetailComponent = ({
       });
     },
   });
+
+  const openBlogPreviewPopup = useCallback(async () => {
+    await openModal({
+      width: 'full',
+      content: <PreviewLearningWindow contentUuid={contentUuid} />,
+    });
+  }, [contentUuid]);
 
   useEffect(() => {
     (async () => {
@@ -69,26 +85,43 @@ const BlogDetailComponent = ({
   }, [blogInfo]);
 
   return (
-    <>
-      <LearningResourceBaseForm
-        provider={provider}
-        showAiInfo
-        showLessonTime
-        showBlogEditor
-        hasMapping={hasMapping}
-        createType={createType}
-      />
+    <SplitPanel size={['auto', 416]} divider>
+      <div key="main">
+        <LearningResourceBaseForm
+          provider={provider}
+          showAiInfo
+          showLessonTime
+          showBlogEditor
+          hasMapping={hasMapping}
+          createType={createType}
+        />
 
-      {/* 필수 확인 영역 */}
-      <MediaContentRequiredCheckFormField provider={provider} />
+        {/* 필수 확인 영역 */}
+        <MediaContentRequiredCheckFormField provider={provider} />
 
-      {/* 이력정보 */}
-      {contentUuid && (
-        <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-          <ContentsHistoryInfoFormField provider={provider} />
-        </ContentsRow>
-      )}
-    </>
+        {/* 이력정보 */}
+        {contentUuid && (
+          <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+            <ContentsHistoryInfoFormField provider={provider} />
+          </ContentsRow>
+        )}
+      </div>
+
+      {/* 이미지 및 미리보기 영역 */}
+      <div key="sub">
+        <div className={styles.sub_container}>
+          <strong className={styles.title}>{t('cms.content.ContentType.BLOG')}</strong>
+          {contentUuid && (
+            <p className={styles.preview} onClick={openBlogPreviewPopup}>
+              {t('LABEL.button.preview')}
+            </p>
+          )}
+        </div>
+        <div className={styles.thumbnail_container}>
+          <img width="100%" src={defaultImage} alt="" />
+        </div>
+      </div>
+    </SplitPanel>
   );
 };
 

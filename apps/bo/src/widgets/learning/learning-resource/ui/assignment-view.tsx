@@ -16,6 +16,7 @@ import { ContentInformation } from '@entities/learning-resource';
 import { ContentTopButtons, getTooltipContent } from '@features/learning-resource';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { ContentCreateType } from '@shared/types/enums';
+import { useModal } from '@learnway/ui/modal';
 
 interface Props {
   content?: ContentInformation;
@@ -27,6 +28,7 @@ function AssignmentViewComponent({ content, hasMapping }: Props) {
     state: { isTranslated },
   } = useCurrentRoute();
   const { t } = useTranslation();
+  const { alert, confirm: openConfirm } = useModal();
 
   const contentUuid = content?.contentUuid ?? '';
 
@@ -35,10 +37,6 @@ function AssignmentViewComponent({ content, hasMapping }: Props) {
 
   const basicInfoRef = useRef<AssignmentTabRef>(null);
   const assignmentInfoRef = useRef<AssignmentTabRef>(null);
-
-  const [selectedTabKey, setSelectedTabKey] = useState<string>(AssignmentTab.BASIC_INFO);
-
-  const handleTabChange = useCallback((tabKey: string) => setSelectedTabKey(tabKey), []);
 
   const [saved, setSaved] = useState<boolean>(false);
 
@@ -58,10 +56,34 @@ function AssignmentViewComponent({ content, hasMapping }: Props) {
       {
         title: t('과제물 관리'),
         key: AssignmentTab.SUBMISSION,
-        content: <LearningResourceAssignmentSubmission ref={assignmentInfoRef} />,
+        content: <LearningResourceAssignmentSubmission ref={assignmentInfoRef} content={content} />,
       },
     ],
     [basicInfoForm, content],
+  );
+
+  const [selectedTabKey, setSelectedTabKey] = useState<string>(AssignmentTab.BASIC_INFO);
+
+  const handleTabChange = useCallback((tabKey: string) => setSelectedTabKey(tabKey), []);
+
+  const handleBeforeTabChange = useCallback(
+    async (currentTabKey: string, nextTabKey: string) => {
+      if (nextTabKey === AssignmentTab.SUBMISSION && !saved) {
+        await alert({
+          title: t('입력한 정보를 저장하세요.'),
+          content: t('저장된 적 없는 경우 다음 단계로 이동할 수 없습니다.'),
+        });
+        return false;
+      } else if (saved) {
+        const result = await openConfirm({
+          title: t('이동 하시겠습니까?'),
+          content: t('입력 중인 항목이 초기화됩니다.'),
+        });
+        return result;
+      }
+      return true;
+    },
+    [saved],
   );
 
   const handleOnSubmit = (data: Record<string, any>) => {
@@ -101,6 +123,7 @@ function AssignmentViewComponent({ content, hasMapping }: Props) {
                 selectedTabKey={selectedTabKey}
                 items={tabItems}
                 onTabChange={handleTabChange}
+                onBeforeTabChange={handleBeforeTabChange}
               />
             </div>
           </div>
