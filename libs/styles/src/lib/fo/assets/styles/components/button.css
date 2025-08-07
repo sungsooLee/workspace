@@ -19,7 +19,7 @@
     @apply h-[5.2rem] text-[1.6rem];
   }
   &.primary {
-    @apply !rounded-[8px] bg-[var(--blue50)] text-white;
+    @apply !rounded-[8px] !bg-[var(--blue50)] text-white;
     &:hover {
       @apply bg-[var(--blue65)];
     }
