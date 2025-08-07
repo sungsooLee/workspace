@@ -6,7 +6,7 @@ import { EmptyText } from '@learnway/ui/empty-text';
 import { Pagination } from '@learnway/ui/pagination';
 import { useModal } from '@learnway/ui/modal';
 import { cn } from '@learnway/shared';
-import { IcoArray, IcoArrowDown, IcoDotpoints, IcoFilter, IcoPlay } from '@learnway/icons';
+import { IcoArray, IcoArrowDown, IcoDotpoints, IcoFilter } from '@learnway/icons';
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/category/category_m.module.css';
 
@@ -18,7 +18,10 @@ import { CategoryFilterPopup } from '@shared/ui/category/category-filter-popup';
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
 import { CategoryDepthPopupM } from '@features/layout';
 import { useRouterState } from '@tanstack/react-router';
-import { CategoryDetailComponentProps, findNodeById } from '@features/category';
+import { CategoryDetailComponentProps, collectDepths, findNodeById } from '@features/category';
+import { Dropdown } from '@learnway/ui/dropdown';
+
+type DivisionOptionsType = { label: string; value: number; }
 
 const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponentProps) => {
   const showLanguageCode = ['KO', 'EN', 'ZH', 'JA']
@@ -28,6 +31,11 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   const { data: categoryInfo } = useFetchCategoryDetail(categoryId);
 
   const [depth, setDepth] = useState(0);
+  const [division, setDivision] = useState<boolean>(false);
+  const [divisionOptions, setDivisionOptions] = useState<DivisionOptionsType[]>([]);
+  const [divisionValues, setDivisionValues] = useState<string|null>();
+  const [buttonLabel, setButtonLabel] = useState<string>(t('분류선택'));
+
   const [targetNode, setTargetNode] = useState(null);
   const [tenantId, setTenantId] = useState(routerState.location.state.tenantId);
   const [page, setPage] = useState(0);
@@ -123,12 +131,65 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
     setData(courses)
   }
 
+  const handleShowDepthSelector = async (option: number) => {
+    if( option === 0 ) {
+      const payload = {
+        ...coursePayload,
+        categoryId,
+      }
+      setCoursePayload(payload)
+      await fetchCoursesCategory(payload)
+    } else {
+      const { depth4 } = collectDepths(targetNode);
+      const value = depth4.flat().filter((row: DivisionOptionsType) => row.value === option);
+      setDivisionValues(value[0].label)
+      const payload = {
+        ...coursePayload,
+        categoryId: value[0].value,
+      }
+      setCoursePayload(payload)
+      await fetchCoursesCategory(payload)
+    }
+  }
+
+  const handleCategoryDepthPopup = async (data: any) => {
+    console.log('#### filter popup data => ', data)
+    let targetId: number = categoryId
+    let label: string = buttonLabel;
+    if( data ) {
+      const hasParentId = Object.values(data).some((obj: any) => {
+        return 'parentId' in obj;
+      });
+      const foundBottom: any = Object.values(data).find((obj: any) => 'parentId' in obj);
+      const foundTop: any = Object.values(data).find((obj: any) => !('parentId' in obj));
+      if (hasParentId) {
+        targetId = foundBottom.value;
+        label = `${foundTop.label} > ${foundBottom.label}`
+      } else {
+        targetId = foundTop.value;
+        label = `${foundTop.label}`
+      }
+    }
+    const payload = {
+      ...coursePayload,
+      categoryId: targetId,
+    }
+    setCoursePayload(payload)
+    setButtonLabel(label)
+    await fetchCoursesCategory(payload)
+  }
+
   useEffect(() => {
     if( depth === 3) {
       (async() => {
-        const categoryTree = await CategoryService.getFetchCategoryTree(tenantId)
-        const targetCategory = findNodeById(categoryTree.children, categoryId)
-        setTargetNode(targetCategory)
+        const categoryTree = await CategoryService.getFetchCategoryTree(tenantId);
+        const targetCategory = findNodeById(categoryTree.children, categoryId);
+        const { depth4, depth5 } = collectDepths(targetCategory);
+        setTargetNode(targetCategory);
+        setDivisionOptions(depth4);
+        if( depth5 && depth5.length > 0 ) {
+          setDivision(true);
+        }
       })();
     }
   }, [depth]);
@@ -198,17 +259,36 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
     <div className={cn(styles.start, styles.detail_m)}>
       <div className={styles.gray_box}>
         <div className={styles.box}>
-          <Button
-            className={styles.btn_drop}
-            onClick={() =>
-              openModal({
-                width: 'm_bottom_sheet',
-                content: <CategoryDepthPopupM nodes={targetNode}/>,
-              })
-            }
-            icon={<IcoArrowDown width={16} height={16} stroke="#131c30" />}
-            label={'분류선택'}
-          />
+          {
+            depth === 3 && (
+              division ? (
+                (
+                  <Button
+                    className={styles.btn_drop}
+                    label={buttonLabel}
+                    onClick={() =>
+                      openModal({
+                        width: 'm_bottom_sheet',
+                        content: <CategoryDepthPopupM nodes={targetNode}/>,
+                        onClose(data: any) {
+                          handleCategoryDepthPopup(data);
+                        },
+                      })
+                    }
+                    icon={<IcoArrowDown width={16} height={16} stroke="#131c30" />}
+                  />
+                )
+              ) : (
+                <Dropdown
+                  className={styles.select}
+                  options={divisionOptions}
+                  value={divisionValues}
+                  placeholder={t('분류선택')}
+                  onChange={handleShowDepthSelector}
+                />
+              )
+            )
+          }
         </div>
         <div className={styles.box}>
           <div className={styles.search_input}>
