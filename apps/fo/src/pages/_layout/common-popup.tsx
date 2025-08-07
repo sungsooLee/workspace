@@ -11,7 +11,7 @@ import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { FileDownloads, FormRow } from '@shared/ui';
 import { useModal } from '@learnway/ui/modal';
-import { OpensourceLicenseModal } from '@features/main/support/ui/terms-button/opensource-license-modal';
+import { OpensourceLicenseModal } from '@features/main/support/ui/opensource-license-modal';
 
 export const Route = createFileRoute('/_layout/common-popup')({
   component: RouteComponent,

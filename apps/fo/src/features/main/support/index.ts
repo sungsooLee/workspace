@@ -1,1 +1,1 @@
-export * from './ui/terms-button/terms-button';
+export * from './ui/terms-button';

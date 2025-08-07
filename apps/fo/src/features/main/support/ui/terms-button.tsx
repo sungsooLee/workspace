@@ -18,7 +18,7 @@ function TermsButtonComponent({ termsType }: TermsButtonComponentProps) {
   const { t } = useTranslation();
   const { openModal } = useModal();
 
-  const { data } = useFetchAuthUser();
+  const { data: authUser } = useFetchAuthUser();
 
   // 세션 정보가 있는 경우 routing
   if (isMobile) {
@@ -33,6 +33,12 @@ function TermsButtonComponent({ termsType }: TermsButtonComponentProps) {
       >
         {termsType === 'privacy-policy' ? t('개인정보처리방침') : t('이용약관')}
       </Button>
+    );
+  } else if (authUser) {
+    return (
+      <Link to={'/clause/$termsType'} params={{ termsType }}>
+        {termsType === 'privacy-policy' ? t('개인정보처리방침') : t('이용약관')}
+      </Link>
     );
   } else {
     return (
