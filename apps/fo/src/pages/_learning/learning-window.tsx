@@ -11,8 +11,8 @@ import {
 
 import { useGetCurriculumnDetail } from '@entities/curriculum';
 
-import { learningResourceApi } from '@entities/learning-resource/api/learning-resource';
 import {
+  learningResourceApi,
   useEtcContentManager,
   useGetBlogResource,
   useGetEtcResource,
@@ -21,7 +21,7 @@ import {
   useGetScormScoInfo,
   useGetVideoWatchInitialize,
   useVideoWatchLog,
-} from '@entities/learning-resource/service/learning-resource.hook';
+} from '@entities/learning-resource';
 import {
   CmsEnContentType,
   CmsVideoWatchLogReq,

@@ -5,8 +5,7 @@ import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
 
 import bnrImage1 from '@assets/images/banner/banner_cate1.png';
 import bnrImage2 from '@assets/images/banner/banner_cate2.png';
-import { Category } from '@entities/category';
-import { useCategoryNavigation } from '@entities/category/service/category.hook';
+import { Category, useCategoryNavigation } from '@entities/category';
 import { useCategories } from '../services/category.service';
 import { CategoryBadgeList } from './category-badge-list';
 
