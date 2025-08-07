@@ -26,6 +26,7 @@ import { useCreation } from 'ahooks';
 
 import {
   DropdownFormField,
+  FormItem,
   FormRow2,
   InputFormField,
   TenantByRoleDropdownFormField,
@@ -36,7 +37,7 @@ import {
  * @param param0
  * @returns
  */
-const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
+const TenantManagementListComponent: FC<any> = ({ rootPath, roleInfo }) => {
   const router = useRouter();
   const routerState = useRouterState();
 
@@ -287,6 +288,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
               />
             }
           />
+          <FormItem />
         </ContentsRow>
       </SearchBoxForm>
       <Divider />
@@ -296,4 +298,4 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
   );
 };
 
-export const TenantManagmentList = TenantManagmentListComponent;
+export const TenantManagementList = TenantManagementListComponent;
