@@ -12,7 +12,7 @@ import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { Switch } from '@learnway/ui/switch';
 
-import { useSetLanguage } from '@features/platform';
+import { useSetLanguage } from '@features/layout';
 
 import userMyStyles from '@learnway/styles/fo/features/layout/ui/user-avatar/user-my.module.css';
 
@@ -78,14 +78,11 @@ const UserAvatarContentsComponent = ({ contentType, setContentType }: any) => {
       <div className={userMyStyles.avatar_area}>
         <div className={userMyStyles.profile_info}>
           <div className={userMyStyles.avatar_img}>
-            {/* 이미지일경우 */}
             <Avatar
               imageUrl={getFullImagePath(authUser?.avataImage)}
               size="2xl"
               fallback={<AvataFallback name={authUser?.name} />}
             />
-            {/* 텍스트일경우 */}
-            {/* <Avatar fallback="AB" size="2xl" /> */}
             <span className={userMyStyles.ico}>
               <Button variant="ghost" size="ts" onlyIcon={true} icon={<IcoLearning03 />} />
             </span>

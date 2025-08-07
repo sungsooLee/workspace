@@ -1,6 +1,6 @@
 import { UseQueryOptions } from '@tanstack/react-query';
-import { ChannelByRoleId, ChannelParam } from '../model/channel.types';
 import ChannelService from '../api/channel';
+import { ChannelByRoleId, ChannelParam } from '../model/channel.types';
 
 const CHANNEL_KEY = 'channel';
 export const queryKeys = {
@@ -12,12 +12,11 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  list: (roleId: string, params: ChannelParam) => ({
+  list: (roleId: number, params: ChannelParam) => ({
     queryKey: queryKeys.list,
     queryFn: () => ChannelService.getChannelList(roleId, params),
     cacheTime: 0,
     staleTime: 0,
-    enabled: roleId ? true : false,
   }),
   popup: () => ({
     queryKey: queryKeys.popup,

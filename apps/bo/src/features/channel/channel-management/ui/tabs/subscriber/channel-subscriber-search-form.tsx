@@ -106,12 +106,14 @@ export const ChannelSubscriberSearchForm: React.FC<ChannelSubscriberSearchFormPr
           name="subscriptionDate"
           label={t('구독 신청 기간')}
           element={<DateRangePickerFormField />}
+          cols={2}
         />
         <FormRow2
           provider={provider}
           name="unSubscriptionDate"
           label={t('구독 해지 기간')}
           element={<DateRangePickerFormField />}
+          cols={2}
         />
       </ContentsRow>
     </SearchBoxForm>

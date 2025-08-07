@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
@@ -7,14 +5,35 @@ import { UserAvatarContents } from '@features/layout/ui/user-avatar/user-avatar-
 import { useLogoutUser } from '@learnway/auth/entities';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/gnb-popup-m.module.css';
-import { isMobile } from 'react-device-detect';
+import { useRouter } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 const UserMyModalComponent = () => {
-  const [contentType, setContentType] = useState('profile');
-  const { closeModal } = useModal();
+  const { t } = useTranslation();
+  const { closeModal, confirm: openConfirm, alert: openAlert, closeAllModal } = useModal();
   const { logout } = useLogoutUser();
+  const router = useRouter();
+  const handleLogout = async () => {
+    const result = await openConfirm({
+      content: <>{t('로그아웃 하시겠습니까?')}</>,
+      cancelButtonLabel: t('취소'),
+      okButtonLabel: t('로그아웃'),
+    });
 
-  console.log('@@@ modal', isMobile);
+    if (result) {
+      logout(
+        {},
+        {
+          onSuccess: async () => {
+            closeAllModal();
+            router.navigate({ to: '/login' });
+            await openAlert({ content: <>{t('로그아웃 되었습니다.')}</> });
+          },
+        },
+      );
+    }
+  };
+
   return (
     <ModalContainer>
       <ModalTitle> </ModalTitle>
@@ -29,7 +48,7 @@ const UserMyModalComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button variant={'primary'} size={'lx'} onClick={() => closeModal()} label={'로그아웃'} />
+        <Button variant={'primary'} size={'lx'} onClick={() => handleLogout()} label={'로그아웃'} />
       </ModalFooter>
     </ModalContainer>
   );

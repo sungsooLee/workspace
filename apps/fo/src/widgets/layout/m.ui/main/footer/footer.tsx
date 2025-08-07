@@ -48,7 +48,7 @@ function FooterComponent() {
 
   const handleCategoryPopup = () => {
     openModal({
-      width: 'm_bottom_sheet',
+      width: 'm_full',
       content: <CategoryPopup activeTenantId={authUser!.activeTenant!.tenantId} />,
     });
   };

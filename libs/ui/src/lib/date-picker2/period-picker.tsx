@@ -34,18 +34,18 @@ const Component = forwardRef<HTMLDivElement, PeriodPickerProps>((props, ref) => 
     <div className="nlp--datepicker-from-to" ref={ref}>
       <DatePicker2
         {...props}
-        onChange={handleChangeStart}
         value={value.from}
         startDate={value.from}
         endDate={value.to}
+        onChange={handleChangeStart}
       />
       <span className="hyphen"></span>
       <DatePicker2
         {...props}
-        onChange={handleChangeEnd}
         value={value.to}
         startDate={value.from}
         endDate={value.to}
+        onChange={handleChangeEnd}
       />
     </div>
   );

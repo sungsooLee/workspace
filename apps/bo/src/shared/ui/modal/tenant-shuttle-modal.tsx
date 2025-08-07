@@ -1,15 +1,15 @@
 import { tenantQueryOptions } from '@entities/tenant';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ShuttleGridToGrid, ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { forwardRef, useRef, useState } from 'react';
-import { Button } from '@learnway/ui/button';
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const TenantShuttleModalComponent = forwardRef((_) => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
@@ -134,7 +134,7 @@ const TenantShuttleModalComponent = forwardRef((_) => {
   };
 
   return (
-    <ModalContainer>
+    <ModalContainer width="xl">
       <ModalTitle>테넌트 조회</ModalTitle>
       <ModalBody>
         <div className={popupStyles.wrap}>

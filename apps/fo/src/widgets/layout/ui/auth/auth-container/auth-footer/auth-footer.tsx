@@ -16,10 +16,10 @@ function AuthFooterComponent() {
       <div className={styles.footer_area}>
         <ul className={styles.menu_list}>
           <li>
-            <TermsButton termsType="TERMS_OF_SERVICE" />
+            <TermsButton termsType="terms-of-service" />
           </li>
           <li>
-            <TermsButton termsType="PRIVACY_POLICY" />
+            <TermsButton termsType="privacy-policy" />
           </li>
           <li>
             <Button

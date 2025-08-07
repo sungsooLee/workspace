@@ -48,17 +48,17 @@ export const calculateNodeStyle = (params: NodeStyleParams): string => {
 
   // 선택된 노드 스타일
   if (isSelectedNode) {
-    styles.push('bg-[var(--secondary6)]');
+    styles.push('bg-[var(--secondary5)]');
   }
 
   // 셔틀 리스트 선택 스타일
   if (treeType === 'SHUTTLE_LIST' && isNodeSelected) {
-    styles.push('bg-[var(--secondary6)]');
+    styles.push('bg-[var(--secondary5)]');
   }
 
   // 표시할 선택 스타일
   if (shouldShowSelection) {
-    styles.push('bg-[var(--secondary6)]');
+    styles.push('bg-[var(--secondary5)]');
   }
 
   // 드롭 인사이드 스타일
@@ -125,9 +125,9 @@ export const focusTreeItem = (selector: string): void => {
 export const focusNextTreeItem = (currentNodeKey: string): void => {
   const allTreeItems = document.querySelectorAll('[role="treeitem"]');
   const currentIndex = Array.from(allTreeItems).findIndex(
-    (item) => item.getAttribute('data-node-key') === currentNodeKey
+    (item) => item.getAttribute('data-node-key') === currentNodeKey,
   );
-  
+
   if (currentIndex < allTreeItems.length - 1) {
     (allTreeItems[currentIndex + 1] as HTMLElement).focus();
   }
@@ -136,9 +136,9 @@ export const focusNextTreeItem = (currentNodeKey: string): void => {
 export const focusPreviousTreeItem = (currentNodeKey: string): void => {
   const allTreeItems = document.querySelectorAll('[role="treeitem"]');
   const currentIndex = Array.from(allTreeItems).findIndex(
-    (item) => item.getAttribute('data-node-key') === currentNodeKey
+    (item) => item.getAttribute('data-node-key') === currentNodeKey,
   );
-  
+
   if (currentIndex > 0) {
     (allTreeItems[currentIndex - 1] as HTMLElement).focus();
   }
@@ -169,14 +169,14 @@ export const getAriaDescription = (
   hasChildren: boolean,
   isExpanded: boolean,
   isDraggable: boolean,
-  node: TreeNode
+  node: TreeNode,
 ): string => {
   const levelInfo = `레벨 ${level + 1}`;
-  const expandInfo = hasChildren 
-    ? `확장 가능, ${isExpanded ? '확장됨' : '축소됨'}, ${node.children!.length}개의 자식 항목` 
+  const expandInfo = hasChildren
+    ? `확장 가능, ${isExpanded ? '확장됨' : '축소됨'}, ${node.children!.length}개의 자식 항목`
     : '리프 노드';
   const dragInfo = isDraggable ? ', 드래그 가능' : '';
-  const constraintInfo = 
+  const constraintInfo =
     (node.constraints?.drag === false ? ', 드래그 제한됨' : '') +
     (node.constraints?.drop === false ? ', 드롭 제한됨' : '');
 

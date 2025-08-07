@@ -328,7 +328,7 @@ function RouteComponent() {
                 element={
                   <ChipListModalSelectorFormField
                     modalConfig={{
-                      content: <ChannelListChoiceModal />,
+                      content: <ChannelListChoiceModal roleId={0} />,
                       title: '',
                       width: 'xl',
                     }}

@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { useFetchTenantByUser } from '@entities/tenant';
-import { Logo, MobileNavigateButton } from '@features/layout';
-import { TenantButton } from '@features/platform';
+import { Logo, MobileNavigateButton, TenantButton } from '@features/layout';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/header/header.module.css';
 

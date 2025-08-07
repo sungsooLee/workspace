@@ -1,7 +1,6 @@
 import { memo } from 'react';
 
-import { Logo } from '../../../../../features/layout';
-import { Language } from '../../../../../features/platform';
+import { AuthLanguage, Logo } from '@features/layout';
 
 import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-header/auth-header.module.css';
 
@@ -17,7 +16,7 @@ function AuthHeaderComponent() {
           </div>
 
           <div className={styles.util}>
-            <Language className={styles.auth} />
+            <AuthLanguage className={styles.auth} />
           </div>
         </div>
       </header>
