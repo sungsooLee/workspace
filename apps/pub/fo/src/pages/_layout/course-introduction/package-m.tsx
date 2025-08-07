@@ -23,7 +23,7 @@ import {
   CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
-import ThumbnailList from '../../../shared/ui/thumnail/list/thumb-nail-list';
+import ThumbnailList from '../../../shared/ui/thumnail/list/thumbnail-list';
 
 import definitionListStyles from './definition-list.module.css';
 import operatorStyles from './operator.module.css';

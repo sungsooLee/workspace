@@ -16,7 +16,7 @@ import styles from './course-contents.module.css';
 
 /* ThumbnailList */
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
-import ThumbnailList from '../../../../shared/ui/thumnail/list/thumb-nail-list';
+import ThumbnailList from '../../../../shared/ui/thumnail/list/thumbnail-list';
 
 /* filter */
 import { FilterModal } from './filter-modal';

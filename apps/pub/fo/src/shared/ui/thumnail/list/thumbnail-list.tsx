@@ -1,7 +1,7 @@
 import { cn } from '@learnway/shared';
 import React from 'react';
-import ThumbnailItem, { ThumbnailData } from '../item/thumb-nail-item';
-import styles from './thumb-nail-list.module.css';
+import ThumbnailItem, { ThumbnailData } from '../item/thumbnail-item';
+import styles from './thumbnail-list.module.css';
 
 interface ThumbnailListProps {
   items: ThumbnailData[];

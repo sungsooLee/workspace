@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import ThumbnailList from '../../../shared/ui/thumnail/list/thumb-nail-list';
+import ThumbnailList from '../../../shared/ui/thumnail/list/thumbnail-list';
 
 // 이미지
 import { IcoEye, IcoHeart, IcoPlay, IcoStar } from '@learnway/icons';

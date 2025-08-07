@@ -22,7 +22,7 @@ import { getRandomId } from '@learnway/shared';
 import {
   CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
-import ThumbnailList from '../../../shared/ui/thumnail/list/thumb-nail-list';
+import ThumbnailList from '../../../shared/ui/thumnail/list/thumbnail-list';
 
 import pageContentsStyles from '../../_page-contents.module.css';
 import definitionListStyles from './definition-list.module.css';

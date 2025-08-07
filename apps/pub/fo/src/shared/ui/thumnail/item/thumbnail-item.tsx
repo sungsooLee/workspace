@@ -1,10 +1,10 @@
 import { cn } from '@learnway/shared';
 import { Badge } from '@learnway/ui/badge';
 import { ImageFallBack } from '@learnway/ui/image-fallback/image-fallback';
+import { ToggleButton } from '@learnway/ui/toggle-button';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
-import ToggleButton from '../../toggle-button/toggle-button';
-import styles from './thumb-nail-item.module.css';
+import styles from './thumbnail-item.module.css';
 
 export interface ThumbnailData {
   linkUrl?: string;
