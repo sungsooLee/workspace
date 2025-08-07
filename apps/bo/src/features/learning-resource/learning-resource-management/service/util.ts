@@ -32,18 +32,6 @@ export const isContentCompleted = async (contentUuid: string, type: string) => {
   }
 };
 
-export const getDetailRouterState = (contentUuid: string, contentType: string) => {
-  const state = { contentUuid };
-  switch (contentType) {
-    case LEARNING_TYPE.EXAM:
-    case LEARNING_TYPE.BLOG:
-      Object.assign(state, { mode: 'UPDATE' });
-      break;
-    // 컨텐츠 유형에 따라 state 추가 설정
-  }
-  return state;
-};
-
 export const getTooltipContent = (createType?: any) => {
   switch (createType) {
     case 'TRANSLATE':

@@ -5,7 +5,7 @@ import {
   learningResourceQueryOptions,
   usePostContentCopy,
 } from '@entities/learning-resource';
-import { getDetailRouterState, isContentCompleted } from '@features/learning-resource';
+import { isContentCompleted } from '@features/learning-resource';
 import { LearningResourceShareShuttleModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-share-shuttle-modal';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { CMSApiPrefix, LEARNING_TYPE } from '@learnway/config';
@@ -214,7 +214,7 @@ function LearningResourceTableComponent() {
                 router.navigate({
                   to: '/learning/learning-resource/view',
                   state: {
-                    ...getDetailRouterState(_.row.original.contentUuid, _.row.original.contentType),
+                    contentUuid: _.row.original.contentUuid,
                     listParam: params,
                   },
                 });
