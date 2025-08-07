@@ -5,11 +5,7 @@ import {
   learningResourceQueryOptions,
   usePostContentCopy,
 } from '@entities/learning-resource';
-import {
-  getDetailPathByContentType,
-  getDetailRouterState,
-  isContentCompleted,
-} from '@features/learning-resource';
+import { getDetailRouterState, isContentCompleted } from '@features/learning-resource';
 import { LearningResourceShareShuttleModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-share-shuttle-modal';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { CMSApiPrefix, LEARNING_TYPE } from '@learnway/config';
@@ -61,7 +57,7 @@ function LearningResourceTableComponent() {
   const { create: postContentCopy } = usePostContentCopy({
     onSuccess: (result: ContentInformation) => {
       router.navigate({
-        to: getDetailPathByContentType(result.contentType),
+        to: '/learning/learning-resource/view',
         state: {
           contentUuid: result.contentUuid,
         },
@@ -216,7 +212,7 @@ function LearningResourceTableComponent() {
               onClick={(e) => {
                 e.stopPropagation();
                 router.navigate({
-                  to: getDetailPathByContentType(_.row.original.contentType),
+                  to: '/learning/learning-resource/view',
                   state: {
                     ...getDetailRouterState(_.row.original.contentUuid, _.row.original.contentType),
                     listParam: params,

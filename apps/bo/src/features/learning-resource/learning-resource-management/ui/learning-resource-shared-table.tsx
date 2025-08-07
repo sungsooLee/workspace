@@ -5,11 +5,7 @@ import {
   SharedBoxContent,
   usePostContentExport,
 } from '@entities/learning-resource';
-import {
-  getDetailPathByContentType,
-  getDetailRouterState,
-  LearingResourceSharedInfoModal,
-} from '@features/learning-resource';
+import { getDetailRouterState, LearingResourceSharedInfoModal } from '@features/learning-resource';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import {
   ALL_OPTION,
@@ -210,7 +206,7 @@ function LearningResourceSharedTableComponent() {
               onClick={(e) => {
                 e.stopPropagation();
                 router.navigate({
-                  to: getDetailPathByContentType(_.row.original.sourceContentType),
+                  to: '/learning/learning-resource/view',
                   state: {
                     ...getDetailRouterState(
                       _.row.original.sourceContentUuid,
