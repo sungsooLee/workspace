@@ -207,6 +207,7 @@ const ShuttleGridToGridV2Component = (
   const handleRightGridRemoveAll = () => {
     // 좌측 그리드 전체 행 선택 해제, 로직 실행하면 handleLeftGridRowsSelect 실행됨
     leftTableInstance?.setRowSelection({});
+    setRightGridData([]);
   };
 
   /**
