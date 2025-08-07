@@ -1,21 +1,22 @@
 import { EnQuestionLevel, EnQuestionType, QuestionItem } from '@entities/learning-resource';
 import { TFunction } from 'i18next';
+import { QuestionStatisticRow } from './test-paper/type';
 
-export type QuestionStatisticRow = {
-  title: string;
-  hard: number;
-  medium: number;
-  easy: number;
-};
+// type QuestionStatisticRow = {
+//   title: string;
+//   hard: number;
+//   medium: number;
+//   easy: number;
+// };
 
 export const initStatisticRow: (
   t: TFunction<'translation', undefined>,
 ) => QuestionStatisticRow[] = (t) => [
-  { title: t('객관식'), hard: 0, medium: 0, easy: 0 },
-  { title: t('OX'), hard: 0, medium: 0, easy: 0 },
-  { title: t('다답식'), hard: 0, medium: 0, easy: 0 },
-  { title: t('단답식'), hard: 0, medium: 0, easy: 0 },
-  { title: t('주관식'), hard: 0, medium: 0, easy: 0 },
+  { title: t('객관식'), hard: 0, medium: 0, easy: 0, type: EnQuestionType.MULTIPLE },
+  { title: t('OX'), hard: 0, medium: 0, easy: 0, type: EnQuestionType.OX },
+  { title: t('다답식'), hard: 0, medium: 0, easy: 0, type: EnQuestionType.SHORT_ANSWER },
+  { title: t('단답식'), hard: 0, medium: 0, easy: 0, type: EnQuestionType.SINGLE },
+  { title: t('주관식'), hard: 0, medium: 0, easy: 0, type: EnQuestionType.ESSAY },
 ];
 
 export function updateNewStatistics(item: QuestionItem, newStatistic: QuestionStatisticRow[]) {

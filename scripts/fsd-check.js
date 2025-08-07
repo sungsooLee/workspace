@@ -117,19 +117,51 @@ class FSDChecker {
   }
 
   /**
-   * 파일 경로에서 모듈명 추출
+   * 파일 경로에서 모듈명 추출 (중첩 슬라이스 고려)
    */
   getModuleFromPath(filePath) {
-    const match = filePath.match(/src\/[^/]+\/([^/]+)/);
-    return match ? match[1] : null;
+    const match = filePath.match(/src\/([^/]+)\/(.+)/);
+    if (!match) return null;
+
+    const [, layer, remainingPath] = match;
+    
+    // segment 디렉토리를 찾을 때까지 경로를 탐색
+    const pathParts = remainingPath.split('/');
+    const segmentNames = ['ui', 'api', 'model', 'service', 'lib', 'config'];
+    
+    // segment를 찾기 전까지의 경로를 모듈로 간주
+    for (let i = 0; i < pathParts.length; i++) {
+      if (segmentNames.includes(pathParts[i])) {
+        return pathParts.slice(0, i).join('/');
+      }
+    }
+    
+    // segment를 찾지 못한 경우 전체 경로를 모듈로 간주
+    return remainingPath.split('/')[0];
   }
 
   /**
-   * import 경로에서 모듈명 추출
+   * import 경로에서 모듈명 추출 (중첩 슬라이스 고려)
    */
   getModuleFromImport(importPath) {
-    const match = importPath.match(/^@[^/]+\/([^/]+)/);
-    return match ? match[1] : null;
+    const match = importPath.match(/^@([^/]+)\/(.+)/);
+    if (!match) return null;
+
+    const [, layer, remainingPath] = match;
+    
+    // segment 디렉토리를 찾을 때까지 경로를 탐색
+    const pathParts = remainingPath.split('/');
+    const segmentNames = ['ui', 'api', 'model', 'service', 'lib', 'config'];
+    
+    // segment를 찾기 전까지의 경로를 모듈로 간주
+    for (let i = 0; i < pathParts.length; i++) {
+      if (segmentNames.includes(pathParts[i])) {
+        return pathParts.slice(0, i).join('/');
+      }
+    }
+    
+    // segment를 찾지 못한 경우 전체 경로를 모듈로 간주
+    return remainingPath.split('/')[0];
   }
 
   /**
@@ -151,39 +183,72 @@ class FSDChecker {
    * 슬라이스별 index.ts 파일 존재 여부 검사
    */
   checkMissingIndexFiles() {
-    const layers = ['entities', 'features', 'widgets', 'pages'];
-    
-    layers.forEach(layer => {
+    const layers = ['entities', 'features', 'widgets'];
+
+    layers.forEach((layer) => {
       const layerPath = `apps/*/src/${layer}`;
       const sliceDirs = glob.sync(layerPath, { onlyDirectories: true });
-      
-      sliceDirs.forEach(sliceDir => {
-        // 각 슬라이스 내부의 모듈 디렉토리 찾기
-        const modules = glob.sync(`${sliceDir}/*`, { onlyDirectories: true });
-        
-        modules.forEach(moduleDir => {
-          const indexPath = path.join(moduleDir, 'index.ts');
-          const indexJsPath = path.join(moduleDir, 'index.js');
-          
-          // index.ts 또는 index.js가 존재하는지 확인
-          if (!fs.existsSync(indexPath) && !fs.existsSync(indexJsPath)) {
-            // 내부에 실제 파일이 있는지 확인 (빈 폴더는 제외)
-            const hasFiles = glob.sync(`${moduleDir}/**/*.{ts,tsx,js,jsx}`, {
-              ignore: ['**/node_modules/**', '**/dist/**']
-            }).length > 0;
-            
-            if (hasFiles) {
-              this.addViolation({
-                type: 'missing_index_violation',
-                file: moduleDir,
-                message: `${moduleDir}에 index.ts 파일이 없습니다. Public API를 위해 index.ts를 추가하세요`,
-              });
-              this.stats.missingIndexViolations++;
-            }
-          }
-        });
+
+      sliceDirs.forEach((sliceDir) => {
+        // 재귀적으로 모든 중첩된 슬라이스와 모듈을 검사
+        this.checkSliceRecursively(sliceDir);
       });
     });
+  }
+
+  /**
+   * 재귀적으로 슬라이스 디렉토리를 검사하여 index.ts가 필요한 모듈을 찾음
+   */
+  checkSliceRecursively(dirPath) {
+    const subdirs = glob.sync(`${dirPath}/*`, { onlyDirectories: true });
+
+    // 현재 디렉토리의 하위에 segment들이 있는지 확인
+    const hasSegments = subdirs.some((subdir) => this.isSegmentDirectory(subdir));
+
+    if (hasSegments) {
+      // segment들이 있다면 현재 디렉토리가 slice의 최종 레벨 -> index.ts 필요
+      const indexPath = path.join(dirPath, 'index.ts');
+      const indexJsPath = path.join(dirPath, 'index.js');
+
+      if (!fs.existsSync(indexPath) && !fs.existsSync(indexJsPath)) {
+        // segment들 중에 실제 파일이 있는지 확인
+        const hasFiles = subdirs.some((subdir) => {
+          if (this.isSegmentDirectory(subdir)) {
+            return glob.sync(`${subdir}/**/*.{ts,tsx,js,jsx}`, {
+              ignore: ['**/node_modules/**', '**/dist/**'],
+            }).length > 0;
+          }
+          return false;
+        });
+
+        if (hasFiles) {
+          this.addViolation({
+            type: 'missing_index_violation',
+            file: dirPath,
+            message: `${dirPath}에 index.ts 파일이 없습니다. segment들을 통합하는 Public API를 위해 index.ts를 추가하세요`,
+          });
+          this.stats.missingIndexViolations++;
+        }
+      }
+    } else {
+      // segment가 없다면 더 깊은 slice 구조 -> 재귀 탐색
+      subdirs.forEach((subdir) => {
+        this.checkSliceRecursively(subdir);
+      });
+    }
+  }
+
+  /**
+   * 디렉토리가 segment인지 판단 (ui, api, model, service, lib 등)
+   */
+  isSegmentDirectory(dirPath) {
+    const dirName = path.basename(dirPath);
+    const segmentNames = [
+      'ui', 'api', 'model', 'service', 'lib', 'config',
+      'hooks', 'store', 'utils', 'types', 'constants',
+      'm.ui', 'styles', 'assets', 'components'
+    ];
+    return segmentNames.includes(dirName);
   }
 
   /**
@@ -197,24 +262,23 @@ class FSDChecker {
     try {
       const content = fs.readFileSync(filePath, 'utf8');
       const moduleDir = path.dirname(filePath);
-      
+
       // 내부 구조 폴더들 확인
       const internalDirs = ['ui', 'api', 'model', 'service', 'lib'];
-      const existingDirs = internalDirs.filter(dir => 
-        fs.existsSync(path.join(moduleDir, dir))
-      );
-      
+      const existingDirs = internalDirs.filter((dir) => fs.existsSync(path.join(moduleDir, dir)));
+
       // 각 내부 디렉토리에 대한 export가 있는지 확인
-      existingDirs.forEach(dir => {
+      existingDirs.forEach((dir) => {
         const exportPattern = new RegExp(`from\\s+['"]\\.\\/${dir}`, 'g');
         const hasExport = exportPattern.test(content);
-        
+
         if (!hasExport) {
           // 해당 디렉토리에 실제 파일이 있는지 확인
-          const hasFiles = glob.sync(`${moduleDir}/${dir}/**/*.{ts,tsx,js,jsx}`, {
-            ignore: ['**/node_modules/**', '**/dist/**']
-          }).length > 0;
-          
+          const hasFiles =
+            glob.sync(`${moduleDir}/${dir}/**/*.{ts,tsx,js,jsx}`, {
+              ignore: ['**/node_modules/**', '**/dist/**'],
+            }).length > 0;
+
           if (hasFiles) {
             this.addViolation({
               type: 'incomplete_index_violation',

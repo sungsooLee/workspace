@@ -3,7 +3,7 @@ import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
-import { MovieInfo } from '@widgets/contents/movie-info';
+import { MovieInfo } from '@widgets/contents/ui/movie-info';
 import { useRef } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { FormRow } from '../../../shared/ui/form';

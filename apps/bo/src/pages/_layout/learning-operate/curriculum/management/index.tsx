@@ -1,4 +1,4 @@
-import { CurriculumDetail } from '@features/learning-operate/curriculum';
+import { CurriculumDetail } from '@features/learning-operate/curriculum/curriculum-management';
 import { Button } from '@learnway/ui/button';
 import { FORM_MODE } from '@shared/const';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';

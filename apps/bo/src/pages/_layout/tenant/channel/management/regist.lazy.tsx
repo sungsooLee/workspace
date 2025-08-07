@@ -1,4 +1,4 @@
-import { ChannelDetailBase, EnChannelRegisterMethod } from '@features/channel';
+import { ChannelDetailBase, EnChannelRegisterMethod } from '@features/channel/channel-management';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Button } from '@learnway/ui/button';
 import { EnFormMode } from '@shared/types/enums';

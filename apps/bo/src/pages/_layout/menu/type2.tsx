@@ -11,7 +11,7 @@ import { CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui/form-f
 import { DropdownFormField, FormRow } from '@shared/ui/form';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
-import { MovieInfo } from '@widgets/contents/movie-info';
+import { MovieInfo } from '@widgets/contents/ui/movie-info';
 import { useEffect, useState } from 'react';
 
 export const Route = createFileRoute('/_layout/menu/type2')({

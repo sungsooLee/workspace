@@ -20,9 +20,9 @@ import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/butto
 import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
 import {
   initStatisticRow,
-  QuestionStatisticRow,
   updateNewStatistics,
 } from '../service/learning-resource-question-service';
+
 import { QuestionBankTabFormRef } from '../service/question-bank/type';
 import { useQuestionBankInfoInput } from '../service/question-bank/use-question-bank-info-input';
 import { LearningResourceQuestionShuttleModal } from './learning-resource-question-shuttle-modal';
@@ -35,6 +35,7 @@ import { QuestionDragHandle } from '@features/learning-resource/learning-resourc
 
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
+import { QuestionStatisticRow } from '../service/test-paper/type';
 
 interface QuestionBankQuestionProps {
   content?: QuestionBasicInfoDetail;

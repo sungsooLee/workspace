@@ -1,5 +1,5 @@
 import { useGetRequestChannelDetail, useUpdateRequestChannel } from '@entities/channel';
-import { getChannelUrl, useChannelApplication } from '@features/channel';
+import { getChannelUrl, useChannelApplication } from '@features/channel/channel-application';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';

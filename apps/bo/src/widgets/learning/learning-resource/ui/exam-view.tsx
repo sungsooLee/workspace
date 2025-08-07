@@ -16,7 +16,7 @@ import {
   getQuestionGenTypeText,
   useExamBasicInfoForm,
   useExamPaperForm,
-} from '@features/learning-resource/learning-resource-management/service';
+} from '@features/learning-resource/learning-resource-management';
 import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType } from '@shared/types/enums';
 

@@ -5,7 +5,7 @@ import {
   getTooltipContent,
   LearningResourceBlogDetail,
 } from '@features/learning-resource';
-import { useBlogContentForm } from '@features/learning-resource/learning-resource-management/service';
+import { useBlogContentForm } from '@features/learning-resource/learning-resource-management';
 import { useDynamicForm2 } from '@learnway/hooks';
 import defaultImage from '@learnway/styles/bo/assets/images/thumb/img_thumb_default.jpg';
 import { useModal } from '@learnway/ui/modal';

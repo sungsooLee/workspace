@@ -9,12 +9,12 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { TFunction } from 'i18next';
 import { useCallback, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getDropdownOptions } from '../service';
 import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
 import { useQuestionSearchAndCopy } from '../service/learning-resource-question-import.hook';
 import { LearningResourceQuestionItemInfoModal } from './learning-resource-question-item-info-modal';
 
 import { SearchBox } from '@shared/ui/search-box';
+import { getDropdownOptions } from '../service/test-paper/common';
 type QuestionShuttleModalProps = {
   examPoolUuid: string;
 };

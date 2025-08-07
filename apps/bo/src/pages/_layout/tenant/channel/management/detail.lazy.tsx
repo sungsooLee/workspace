@@ -1,4 +1,4 @@
-import { ChannelDetail } from '@features/channel';
+import { ChannelDetail } from '@features/channel/channel-management';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { useEffect } from 'react';
 
