@@ -96,7 +96,7 @@ export const useCoursePage = (): CourseManagementHookResult => {
     const data = await openModal({
       content: <CourseTypeOptionCardModal />,
     });
-    const courseType = data?.[0]?.value;
+    const courseType = data?.value;
     // 팝업에서 선택한 과정 없으면 종료
     if (!courseType) return;
     // 과정 개설 페이지 이동
