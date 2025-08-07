@@ -11,6 +11,7 @@ import { Divider } from '@learnway/ui/elements';
 import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType } from '@shared/types/enums';
 import { ContentCourseMappingModal } from '@shared/ui/modal';
+import { useQueryClient } from '@tanstack/react-query';
 import { useBlocker, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useCallback, useMemo } from 'react';
@@ -23,6 +24,7 @@ interface Props {
 
 const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => {
   const { data: authUser } = useFetchAuthUser();
+  const queryClient = useQueryClient();
 
   const { openModal, alert: openAlert, confirm: openConfirm } = useModal();
   const router = useRouter();
@@ -108,6 +110,8 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
   }, [data]);
 
   const handleDelete = useCallback(async () => {
+    // 번역 항목이 있고 공유 항목이 있으면 삭제 불가 alert
+
     if (isCourseUsed) {
       await openAlert({
         title: t('과정에서 사용 중입니다.'),
@@ -183,6 +187,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
         </Button>
       )}
       <Button type="submit" variant="primary" size="sm">
+        {/* 저장 완료 후 toast */}
         {t('저장')}
       </Button>
     </>
