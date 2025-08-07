@@ -19,8 +19,8 @@ import { useModal } from '@learnway/ui/modal';
 import { FormRow2 } from '@shared/ui/form';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
-import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
-import { LearningResourceBaseForm } from './learning-resource-base-form';
+import { useLearningResourceQuestionDetailForm } from '../../service/learning-resource-question-detail-from.hook';
+import { LearningResourceBaseForm } from '../learning-resource-base-form';
 
 type QuestionBankDetailProps = {
   form: UseDynamicFormResult;

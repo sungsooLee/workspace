@@ -13,9 +13,9 @@ import previewImg from '@learnway/styles/bo/assets/images/temp/img_exam_basic.jp
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import { CheckBoxFormField, FormDisplay, FormRow2, SwitchFormField } from '@shared/ui/form';
 
-import { convertDetailInfoToFormData } from '../service/test-paper/common';
-import { ExamBasicInfoProps, TabFormRef } from '../service/test-paper/type';
-import { LearningResourceBaseForm } from './learning-resource-base-form';
+import { convertDetailInfoToFormData } from '../../service/test-paper/common';
+import { ExamBasicInfoProps, TabFormRef } from '../../service/test-paper/type';
+import { LearningResourceBaseForm } from '../learning-resource-base-form';
 
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 
