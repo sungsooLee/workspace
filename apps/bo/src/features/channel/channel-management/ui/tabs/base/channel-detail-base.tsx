@@ -109,6 +109,15 @@ const ChannelDetailBaseComponent = (props: ChannelDetailBaseProps, ref: any) => 
   }, [channelUuid]);
 
   useEffect(() => {
+    // 유니버설 채널 전환 후 추가된 테넌트가 있는데, 일반 채널로 변경한 경우 메인 테넌트 제외하고 삭제
+    const values = getValues();
+    if (watchedChannelTenatMappingType === 'MAPPING_TENANT' && values.tenantList.length > 1) {
+      const mainTenants = values.tenantList.filter((tenant: any) => tenant.isMainTenant);
+      setValue('tenantList', mainTenants);
+    }
+  }, [watchedChannelTenatMappingType]);
+
+  useEffect(() => {
     console.log('### props.method', props.method);
     props.onButtonChange && props.onButtonChange(EnChannelDetailButtonLayout.RESET_AND_SAVE);
 
