@@ -5,6 +5,7 @@ import { Tabs } from '@learnway/ui/tabs';
 import { ToggleButtonGroup } from '@learnway/ui/toggle-button-group';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useCourseDetailPage } from '../../hooks/use-course-detail-page';
 import { TriggerKey, useCourseActions } from '../../store/use-course-store';
 import { CourseDetailTab } from '../../types/type';
@@ -14,38 +15,44 @@ import { CurriculumByDetail } from './tabs/curriculum';
 import { Sequence } from './tabs/sequence';
 
 const Component = () => {
+  const { t } = useTranslation();
   const { trigger } = useCourseActions();
   const { alert } = useModal();
 
   // 커스텀 훅 사용
-  const { activeTab, courseName, changeTab, visibleButtons, moveEnrollmentManagementPage } =
+  const { activeTab, courseType, changeTab, visibleButtons, moveEnrollmentManagementPage } =
     useCourseDetailPage();
 
-  const tabItems = useMemo(
-    () => [
+  const tabItems = useMemo(() => {
+    const tabs = [
       {
-        title: '과정상세',
+        title: t('과정상세'),
         key: CourseDetailTab.COURSE_DETAIL,
         content: <CourseDetailInfo />,
       },
       {
-        title: '커리큘럼',
+        title: t('커리큘럼'),
         key: CourseDetailTab.CURRICULUM,
         content: <CurriculumByDetail />,
       },
       {
-        title: '차수',
+        title: t('차수'),
         key: CourseDetailTab.SEQUENCE,
         content: <Sequence />,
       },
       {
-        title: '커뮤니티',
+        title: t('커뮤니티'),
         key: CourseDetailTab.COMMUNITY,
         content: <Community />,
       },
-    ],
-    [],
-  );
+    ];
+    // sequence만 제외한 탭
+    const excludeSequenceTab = tabs.filter((tab) => tab.key !== CourseDetailTab.SEQUENCE);
+    // 수강신청이 없는 과정  [이러닝, 라이브, 평가]
+    const isNoEnrollment = ['ELEARNING1', 'LIVE', 'EXAM'].includes(courseType ?? '');
+    // 수강신청이 없는 과정이면 차수 탭 제외
+    return isNoEnrollment ? excludeSequenceTab : tabs;
+  }, [courseType]);
 
   const handleTabChange = (tabKey: string) => {
     changeTab(tabKey as CourseDetailTab);
@@ -57,8 +64,8 @@ const Component = () => {
         <ToggleButtonGroup
           defaultValue={'과정관리'}
           options={[
-            { label: '과정관리', value: '과정관리' },
-            { label: '수강관리', value: '수강관리' },
+            { label: t('과정관리'), value: '과정관리' },
+            { label: t('수강관리'), value: '수강관리' },
           ]}
           onClick={(value) => value === '수강관리' && moveEnrollmentManagementPage()}
         />

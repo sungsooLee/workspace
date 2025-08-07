@@ -36,30 +36,30 @@ const Component = () => {
   const tabItems = useMemo(
     () => [
       {
-        title: '기본정보 설정',
+        title: t('기본정보 설정'),
         key: CourseTab.STEP1,
         content: <BasicInfo />,
       },
       {
-        title: '수강신청 설정',
+        title: t('수강신청 설정'),
         key: CourseTab.STEP2,
         content: <CourseRegistration />,
         disabled: isCreateMode,
       },
       {
-        title: '커리큘럼 설정',
+        title: t('커리큘럼 설정'),
         key: CourseTab.STEP3,
         content: <CurriculumByCreate />,
         disabled: isCreateMode,
       },
       {
-        title: '상세 설정',
+        title: t('상세 설정'),
         key: CourseTab.STEP4,
         content: <DetailInfo />,
         disabled: isCreateMode,
       },
       {
-        title: '게시 설정',
+        title: t('게시 설정'),
         key: CourseTab.STEP5,
         content: <PublishCourse />,
         disabled: isCreateMode,

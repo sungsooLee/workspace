@@ -20,7 +20,6 @@ const CourseListComponent = () => {
     buttonState,
     handleOnSearch,
     handleGridRowsSelect,
-    handleBatchUploadClick,
     handleCourseOpenClick,
     handleCopyClick,
     handleShareClick,
@@ -31,13 +30,6 @@ const CourseListComponent = () => {
       <ContentsButtons>
         {/* 테스트 링크 박스 */}
         {isLocalhost() && <TestLinkBox />}
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={t('LABEL.button.courseBatchUpload')}
-          onClick={handleBatchUploadClick}
-        />
         <Button
           type="button"
           variant="primary"

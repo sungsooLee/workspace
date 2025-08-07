@@ -23,11 +23,7 @@ export const useCoursePage = (): CourseManagementHookResult => {
   const router = useRouter();
   const { openModal, alert, confirm } = useModal();
   const { t } = useTranslation();
-  const { provider, getValues, onSubmit, onReset } = useDynamicForm2({
-    builders: [],
-    mode: 'onSubmit', // 서브밋할 때만 validation 실행
-    reValidateMode: 'onChange', // 에러 발생 후에는 값 변경시 즉시 재검증
-  });
+  const { provider, getValues, onSubmit, onReset } = useDynamicForm2();
   const gridConfig = useCourseListGridConfig();
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedRows, setSelectedRows] = useState<CourseListItem[]>([]);
@@ -57,11 +53,13 @@ export const useCoursePage = (): CourseManagementHookResult => {
       await alert(t('찜 수정이 완료되었습니다.'));
     },
   });
+
   // 버튼 활성화/비활성화 상태 관리
   const buttonState: CourseButtonState = useMemo(() => {
+    const list = selectedRows?.filter((d) => d.isUsed) ?? []; // 사용 중인 과정만 필터링
     return {
-      copy: selectedRows?.length === 1,
-      share: selectedRows?.length === 1,
+      copy: list.length === 1,
+      share: list.length === 1,
     };
   }, [selectedRows]);
 
@@ -85,15 +83,7 @@ export const useCoursePage = (): CourseManagementHookResult => {
   }, []);
 
   /**
-   * 과정 일괄업로드 핸들러
-   */
-  const handleBatchUploadClick = useCallback(() => {
-    console.log('handleBatchUploadClick');
-    // TODO: 일괄업로드 로직 구현
-  }, []);
-
-  /**
-   * 그리드 키리보기 컬럼 > 클릭 핸들러
+   * 그리드 미리보기 컬럼 > 클릭 핸들러
    */
   const handlePreviewClick = useCallback((courseId: number) => {
     console.log('handlePreviewClick.courseId => ', courseId);
@@ -103,14 +93,13 @@ export const useCoursePage = (): CourseManagementHookResult => {
    * 과정 개설 핸들러
    */
   const handleCourseOpenClick = useCallback(async () => {
-    const { value: courseType } =
-      (await openModal({
-        content: <CourseTypeOptionCardModal />,
-      })) || {};
-
-    // 취소 버튼 클릭시 종료
+    const data = await openModal({
+      content: <CourseTypeOptionCardModal />,
+    });
+    const courseType = data?.value;
+    // 팝업에서 선택한 과정 없으면 종료
     if (!courseType) return;
-
+    // 과정 개설 페이지 이동
     router.navigate({
       to: '/learning/course/create',
       state: {
@@ -123,32 +112,35 @@ export const useCoursePage = (): CourseManagementHookResult => {
    * 과정 복사 핸들러
    */
   const handleCopyClick = useCallback(async () => {
-    if (await confirm(t('복사하시겠습니까?'))) {
-      const { lastVisitedBoTenantId } = getCurrentAuthUser() || {}; // 현재 로그인한 사용자의 테넌트 ID
-      copyCourse({ courseId: selectedRows[0].courseId, tenantId: lastVisitedBoTenantId || -1 });
-    }
-  }, [selectedRows]);
+    const isConfirmed = await confirm(t('복사하시겠습니까?'));
+    // 취소 버튼 클릭시 종료
+    if (!isConfirmed) return;
+    // 과정 복사 실행
+    const payload = {
+      courseId: selectedRows?.[0]?.courseId ?? -1,
+      tenantId: getCurrentAuthUser()?.lastVisitedBoTenantId ?? -1, // null 또는 undefined일 때 -1로 처리
+    };
+    copyCourse(payload);
+  }, [selectedRows, copyCourse, confirm, t]);
 
   /**
    * 과정 공유 핸들러
    */
   const handleShareClick = useCallback(async () => {
-    openModal({
-      width: 'xl',
+    const data = await openModal({
       content: <CourseShareModal />,
-      onClose(data: any) {
-        if (data) {
-          const targetChannelList = data.map((x: any) => x.channelUuid);
-          const payload = {
-            courseId: selectedRows[0].courseId,
-            originChannelUuid: selectedRows[0].channelUuid,
-            targetChannelList,
-          };
-          courseShare(payload);
-        }
-      },
     });
-  }, [openModal, selectedRows]);
+    // 팝업에서 선택한 과정 없으면 종료
+    if (!data) return;
+    // 과정 공유 실행
+    const targetChannelList = data.map((x: any) => x.channelUuid);
+    const payload = {
+      courseId: selectedRows?.[0]?.courseId ?? -1,
+      originChannelUuid: selectedRows?.[0]?.channelUuid ?? '',
+      targetChannelList,
+    };
+    courseShare(payload);
+  }, [openModal, selectedRows, courseShare]);
 
   return {
     provider,
@@ -162,7 +154,6 @@ export const useCoursePage = (): CourseManagementHookResult => {
     handleShareClick,
     handleOnSearch,
     handleGridRowsSelect,
-    handleBatchUploadClick,
     handleCourseOpenClick,
   };
 };

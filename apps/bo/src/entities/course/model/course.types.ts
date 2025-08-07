@@ -625,7 +625,12 @@ export interface CourseConfigQueryParams {
 /**
  * 과정 항목 설정 정보 응답
  */
-export type CourseConfigOptionType = 'IMPOSSIBLE' | 'OPTIONAL' | 'MANDATORY';
+export type CourseConfigOptionType =
+  | 'IMPOSSIBLE'
+  | 'OPTIONAL'
+  | 'MANDATORY'
+  | 'OPTION_USE'
+  | 'OPTION_NOT_USE';
 
 /**
  * 과정 항목 설정 정보

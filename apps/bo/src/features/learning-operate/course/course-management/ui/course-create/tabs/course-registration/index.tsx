@@ -23,7 +23,11 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
           name={'isEnrollRequired'}
           label={t('수강신청')}
           format={'boolean'}
-          element={<SwitchFormField disabled={courseConfig?.enrollOption !== 'OPTIONAL'} />}
+          element={
+            <SwitchFormField
+              disabled={['MANDATORY', 'IMPOSSIBLE'].includes(courseConfig?.enrollOption ?? '')}
+            />
+          }
         />
       </ContentsRow>
       {/*승인 결재 라인, 정원*/}

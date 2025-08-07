@@ -74,7 +74,6 @@ export interface CourseManagementHookResult {
   buttonState: CourseButtonState;
   handleOnSearch: (data: CourseSearchFormData) => void;
   handleGridRowsSelect: (rows: CourseListItem[]) => void;
-  handleBatchUploadClick: () => void;
   handleCourseOpenClick: () => Promise<void>;
   handleCopyClick: () => void;
   handleShareClick: () => void;
