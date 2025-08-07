@@ -222,22 +222,6 @@ const CompanyOrganizationListComponent = ({
             label={t('수정기간')}
             format={'object'}
             element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day' }} />}
-            validation={{
-              conditions: [
-                {
-                  fn: (values: any) => !values.modifyDate?.from && values.modifyDate?.to,
-                  message: t('시작 날짜를 선택하세요'),
-                },
-                {
-                  fn: (values: any) => values.modifyDate?.from && !values.modifyDate?.to,
-                  message: t('종료 날짜를 선택하세요.'),
-                },
-                {
-                  fn: (values: any) => values.modifyDate.from > values.modifyDate.to,
-                  message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
-                },
-              ],
-            }}
           />
         </ContentsRow>
       </SearchBoxForm>
