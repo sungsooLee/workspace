@@ -3,7 +3,7 @@ import { Badge } from '@learnway/ui/badge';
 import { ImageFallBack } from '@learnway/ui/image-fallback/image-fallback';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
-import ToggleButton from '../toggle-button/toggle-button';
+import ToggleButton from '../../toggle-button/toggle-button';
 import styles from './thumb-nail-item.module.css';
 
 export interface ThumbnailData {

@@ -17,7 +17,7 @@ import { isMobile } from 'react-device-detect';
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
 import visualImg from '@learnway/styles/fo/assets/images/banner/img_visual_banner.png';
 import shortsImg from '@learnway/styles/fo/assets/images/temp/img_shorts.jpg';
-import ThumbnailList from '../../../-components/thumb/thumb-nail-list';
+import ThumbnailList from '../../../../shared/ui/thumnail/list/thumb-nail-list';
 
 /* style */
 import { Badge } from '@learnway/ui/badge';

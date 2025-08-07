@@ -19,11 +19,11 @@ import {
 } from '@learnway/icons';
 import { getRandomId } from '@learnway/shared';
 import { MobileView } from 'react-device-detect';
-import ThumbnailList from '../../-components/thumb/thumb-nail-list';
 import {
   CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
+import ThumbnailList from '../../../shared/ui/thumnail/list/thumb-nail-list';
 
 import definitionListStyles from './definition-list.module.css';
 import operatorStyles from './operator.module.css';
@@ -79,6 +79,7 @@ function RouteComponent() {
           <em>{'153'}</em>
         </span>,
       ],
+      duration: '23:12',
     },
     {
       imageUrl: bannerImg,
@@ -99,6 +100,7 @@ function RouteComponent() {
           <em>{'153'}</em>
         </span>,
       ],
+      duration: '23:12',
     },
     {
       imageUrl: bannerImg,
@@ -119,6 +121,7 @@ function RouteComponent() {
           <em>{'153'}</em>
         </span>,
       ],
+      duration: '23:12',
     },
     {
       imageUrl: bannerImg,
@@ -139,6 +142,7 @@ function RouteComponent() {
           <em>{'153'}</em>
         </span>,
       ],
+      duration: '23:12',
     },
     {
       imageUrl: bannerImg,
@@ -159,6 +163,7 @@ function RouteComponent() {
           <em>{'153'}</em>
         </span>,
       ],
+      duration: '23:12',
     },
     {
       imageUrl: bannerImg,
@@ -179,6 +184,7 @@ function RouteComponent() {
           <em>{'153'}</em>
         </span>,
       ],
+      duration: '23:12',
     },
   ];
 
