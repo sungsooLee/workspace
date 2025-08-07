@@ -18,6 +18,7 @@ import { useUpdateEffect } from 'ahooks';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formDataToRequestData, responseDataToFormData } from '../service/course-data-convert';
+import { useCourseActions } from '../store/use-course-store';
 import { CourseDetailPageLocationState } from './use-course-detail-page';
 
 export function useCourseDetailSubCourse() {
@@ -29,10 +30,12 @@ export function useCourseDetailSubCourse() {
   // 라우터 state에서 courseId 가져오기
   const { courseId = -1, courseName } = usePageState<CourseDetailPageLocationState>();
 
-  const { provider, getValues, updateFormData, formValues, onSubmit, onFormChange } =
+  const { provider, getValues, updateFormData, formValues, onSubmit, onFormChange, formState } =
     useDynamicForm2();
 
   const { course: formData, courseConfig } = useFetchCourseAndConfig(courseId);
+
+  const { setCheckDirtyForm } = useCourseActions();
 
   const { mutate: updateCourse } = useUpdateCourse({
     onSuccess: async (response: any) => {
@@ -125,6 +128,12 @@ export function useCourseDetailSubCourse() {
       updateFormData(responseDataToFormData(formData, courseConfig));
     }
   }, [formData, courseConfig]);
+
+  // form state 변경 시 폼 더티 체크 함수 설정
+  useEffect(() => {
+    // console.log('use-course-create-sub-page : useEffect.formState', formState.isDirty);
+    setCheckDirtyForm(() => formState.isDirty);
+  }, [formState.isDirty]);
 
   return {
     provider,
