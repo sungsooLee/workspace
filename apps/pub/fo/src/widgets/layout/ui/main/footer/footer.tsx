@@ -8,6 +8,7 @@ import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.mod
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { AgreementPopup, PrivacyPopup } from '../../../../../features/auth';
+import { OpenLicensePopup } from '../../../../../features/layout/popup/open-license-popup-m';
 function FooterComponent() {
   const { openModal } = useModal();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
@@ -73,8 +74,25 @@ function FooterComponent() {
                     </Link>
                   )}
                 </li>
-                {/* <li>{isMobile ? '' : '오픈소스 라이선스'}</li>
-                <li>{isMobile ? '' : '사이트맵'}</li> */}
+                <li>
+                  {isMobile ? (
+                    <Button
+                      onClick={() =>
+                        openModal({
+                          width: 'm_full',
+                          content: <OpenLicensePopup />,
+                        })
+                      }
+                    >
+                      <strong>오픈소스 라이선스</strong>
+                    </Button>
+                  ) : (
+                    <Link to="/footer-menu/open-license">
+                      <strong>오픈소스 라이선스</strong>
+                    </Link>
+                  )}
+                </li>
+                {/* <li>{isMobile ? '' : '사이트맵'}</li> */}
               </ul>
             </div>
 

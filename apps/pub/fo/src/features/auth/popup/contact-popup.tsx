@@ -3,16 +3,16 @@ import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css'; // 폼모듈
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css'; // 유의사항
 
-import { memo } from 'react';
-import { BrowserView, MobileView } from 'react-device-detect';
-import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
-import styles from './contact-popup.module.css';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Dropdown } from '@learnway/ui/dropdown';
 import { Input } from '@learnway/ui/input';
-import { useModal, ModalContainer, ModalTitle, ModalBody, ModalFooter } from '@learnway/ui/modal';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { Textarea } from '@learnway/ui/textarea';
+import { memo } from 'react';
+import { BrowserView, MobileView } from 'react-device-detect';
+import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
+import styles from './contact-popup.module.css';
 
 const ContactPopupCompoment = () => {
   const { closeModal } = useModal();
@@ -41,7 +41,6 @@ const ContactPopupCompoment = () => {
                   </div>
                 </div>
               </ContentsRow>
-
               <ContentsRow>
                 <div className={formStyles.form_item}>
                   <label htmlFor="name" className={formStyles.form_label}>
@@ -56,7 +55,6 @@ const ContactPopupCompoment = () => {
                   </div>
                 </div>
               </ContentsRow>
-
               {/* 이메일 인증일때 */}
               <ContentsRow>
                 <div className={formStyles.form_item}>
@@ -72,7 +70,6 @@ const ContactPopupCompoment = () => {
                   </div>
                 </div>
               </ContentsRow>
-
               <ContentsRow>
                 <div className={formStyles.form_item}>
                   <label htmlFor="name" className={formStyles.form_label}>
@@ -92,7 +89,6 @@ const ContactPopupCompoment = () => {
                   </div>
                 </div>
               </ContentsRow>
-
               <ContentsRow>
                 <div className={formStyles.form_item}>
                   <label htmlFor="name" className={formStyles.form_label}>
@@ -115,8 +111,6 @@ const ContactPopupCompoment = () => {
                   </div>
                 </div>
               </ContentsRow>
-
-              <UppyUpload />
             </div>
 
             {/* 유의사항 모듈 */}
