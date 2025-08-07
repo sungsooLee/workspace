@@ -50,7 +50,11 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           name={'isLearnEnvEnabled'}
           label={t('학습환경')}
           format={'boolean'}
-          element={<SwitchFormField disabled={courseConfig?.learningEnvOption !== 'OPTIONAL'} />}
+          element={
+            <SwitchFormField
+              disabled={['MANDATORY', 'IMPOSSIBLE'].includes(courseConfig?.learningEnvOption ?? '')}
+            />
+          }
         />
       </ContentsRow>
       {/* 기기 제한, 네트워크 제한, 학습시간 제한 */}
@@ -172,7 +176,11 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           format={'boolean'}
           label={t('학습제어')}
           element={
-            <SwitchFormField disabled={courseConfig?.learningControlOption !== 'OPTIONAL'} />
+            <SwitchFormField
+              disabled={['MANDATORY', 'IMPOSSIBLE'].includes(
+                courseConfig?.learningControlOption ?? '',
+              )}
+            />
           }
         />
       </ContentsRow>
@@ -286,7 +294,11 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           name={'isUsePassOption'}
           label={t('이수기준')}
           format={'boolean'}
-          element={<SwitchFormField disabled={courseConfig?.passOption !== 'OPTIONAL'} />}
+          element={
+            <SwitchFormField
+              disabled={['MANDATORY', 'IMPOSSIBLE'].includes(courseConfig?.passOption ?? '')}
+            />
+          }
         />
       </ContentsRow>
       <FormDisplay provider={provider} dependencies={[{ name: 'isUsePassOption', value: true }]}>
@@ -418,7 +430,13 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           name={'isCommunicationToolEnabled'}
           label={t('커뮤니티 및 공유설정')}
           format={'boolean'}
-          element={<SwitchFormField disabled={courseConfig?.communicationOption !== 'OPTIONAL'} />}
+          element={
+            <SwitchFormField
+              disabled={['MANDATORY', 'IMPOSSIBLE'].includes(
+                courseConfig?.communicationOption ?? '',
+              )}
+            />
+          }
         />
       </ContentsRow>
       {/* 커뮤니티 및 공유 설정 */}
@@ -495,7 +513,11 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           name={'isInstructorAssigned'}
           label={t('강사')}
           format={'boolean'}
-          element={<SwitchFormField disabled={courseConfig?.instructorOption !== 'OPTIONAL'} />}
+          element={
+            <SwitchFormField
+              disabled={['MANDATORY', 'IMPOSSIBLE'].includes(courseConfig?.instructorOption ?? '')}
+            />
+          }
         />
       </ContentsRow>
       {/* 강사 */}
@@ -562,7 +584,11 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           name={'isTextbookProvided'}
           label={t('교재')}
           format={'boolean'}
-          element={<SwitchFormField disabled={courseConfig?.textBookOption !== 'OPTIONAL'} />}
+          element={
+            <SwitchFormField
+              disabled={['MANDATORY', 'IMPOSSIBLE'].includes(courseConfig?.textBookOption ?? '')}
+            />
+          }
         />
       </ContentsRow>
       <FormDisplay provider={provider} dependencies={[{ name: 'isTextbookProvided', value: true }]}>
@@ -593,7 +619,13 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           name={'isRelatedPrerequisiteCourseExisted'}
           label={t('사전/연관학습')}
           format={'boolean'}
-          element={<SwitchFormField disabled={courseConfig?.relatedCourseOption !== 'OPTIONAL'} />}
+          element={
+            <SwitchFormField
+              disabled={['MANDATORY', 'IMPOSSIBLE'].includes(
+                courseConfig?.relatedCourseOption ?? '',
+              )}
+            />
+          }
         />
       </ContentsRow>
       <FormDisplay
