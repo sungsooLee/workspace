@@ -37,7 +37,7 @@
     &[data-align='start'] {
       @apply mt-[6px] rounded-tl-none;
       .arrow {
-        @apply left-0 top-[5.5px] -ml-[9px];
+        @apply left-0 top-0 -ml-[9px];
       }
     }
     &[data-align='center'] {

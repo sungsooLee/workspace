@@ -161,11 +161,11 @@ export const guideData = [
     screenId: 'NLP_FO_GNB_MA_1008',
     screenName: 'M_오픈소스 라이선스',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'setting/setting-license_m',
-    pageType: 'Page',
-    completionDate: '2025-03-21',
+    pageId: 'open-license-popup-m',
+    pageType: 'Pop-up',
+    completionDate: '2025-08-07',
     lastUpdateDate: '',
-    remarks: 'setting-license_m.tsx',
+    remarks: 'open-license-popup-m.tsx',
   },
   {
     screenId: 'NLP_FO_GNB_MA_1009',
@@ -2583,7 +2583,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'footer-menu/open-license',
     pageType: 'Page',
-    completionDate: '2025-03-31',
+    completionDate: '2025-08-07',
     lastUpdateDate: '',
     remarks: '- open-license.tsx',
   },

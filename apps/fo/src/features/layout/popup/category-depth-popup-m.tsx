@@ -4,12 +4,30 @@ import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/layout/popup/category-depth-popup-m.module.css';
 import { Button } from '@learnway/ui/button';
 import { Dropdown } from '@learnway/ui/dropdown';
-import { ModalBody, ModalContainer, ModalFooter } from '@learnway/ui/modal';
+import { ModalBody, ModalContainer, ModalFooter, useModal } from '@learnway/ui/modal';
 
-const CategoryDepthPopupMComponent = () => {
+interface CategoryDepthPopupMProps {
+  nodes: any;
+}
+
+const CategoryDepthPopupMComponent = ({nodes}: CategoryDepthPopupMProps) => {
   const [depth01, setDepth01] = useState<string[]>(['대분류']);
   const [depth02, setDepth02] = useState<string[]>(['중분류']);
   const [depth03, setDepth03] = useState<string[]>(['소분류']);
+
+  const { closeModal } = useModal();
+
+  const [option, setOption] = useState<any>();
+
+  const handleOnClose = () => {
+    closeModal();
+  };
+
+  const handleOnConfirm = () => {
+    if (!option) return;
+    closeModal(option);
+  };
+
   return (
     <ModalContainer>
       <ModalBody>
@@ -54,10 +72,10 @@ const CategoryDepthPopupMComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button variant={'gray'} size={'lg'}>
+        <Button variant={'gray'} size={'lg'} onClick={handleOnClose}>
           취소
         </Button>
-        <Button variant={'primary'} size={'lg'}>
+        <Button variant={'primary'} size={'lg'} onClick={handleOnConfirm}>
           확인
         </Button>
       </ModalFooter>
