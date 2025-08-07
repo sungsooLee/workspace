@@ -19,7 +19,7 @@ const SequenceComponent = forwardRef<HTMLElement, CourseDetailTabBaseProps>((_, 
   const [sequenceId, setSequenceId] = useState<number>(initSequenceId ?? 0);
 
   const { courseCreateInfo } = useCourseStore();
-  const { setCourseCreateInfo } = useCourseActions();
+  const { setCourseCreateInfo, setCheckDirtyForm } = useCourseActions();
 
   useEffect(() => {
     setCourseCreateInfo({
@@ -31,6 +31,11 @@ const SequenceComponent = forwardRef<HTMLElement, CourseDetailTabBaseProps>((_, 
     const courseSequenceId = sequenceId;
     setCourseCreateInfo({ sequenceId: courseSequenceId });
   }, [sequenceId]);
+
+  // useEffect(() => {
+  //   // console.log('use-course-create-sub-page : useEffect.formState', formState.isDirty);
+  //   setCheckDirtyForm(() => formState.isDirty);
+  // }, [formState.isDirty]);
 
   return courseCreateInfo.contentViewType === ContentViewType.LIST ? (
     <SequenceList
