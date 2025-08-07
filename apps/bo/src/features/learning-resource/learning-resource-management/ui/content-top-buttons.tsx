@@ -29,7 +29,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
   const { openModal, alert: openAlert, confirm: openConfirm } = useModal();
   const router = useRouter();
   const {
-    state: { listParam },
+    state: { listParam, isTranslated },
   } = useCurrentRoute();
   const { watch, getValues, formState } = provider;
 
@@ -141,7 +141,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
 
   return (
     <>
-      {contentUuid && !isDrafted && (
+      {contentUuid && !isDrafted && !isTranslated && (
         <>
           <Button variant="gray" size="sm">
             {t('과정 개설')}
@@ -172,10 +172,12 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
         {t('목록')}
       </Button>
       <Divider orientation={'vertical'} />
-      <Button variant="point" size="sm" onClick={handleDelete} disabled={hasMapping}>
-        {t('삭제')}
-      </Button>
-      {contentUuid && !isDrafted && (
+      {!isTranslated && (
+        <Button variant="point" size="sm" onClick={handleDelete} disabled={hasMapping}>
+          {t('삭제')}
+        </Button>
+      )}
+      {contentUuid && !isDrafted && !isTranslated && (
         <Button
           variant="point"
           size="sm"
