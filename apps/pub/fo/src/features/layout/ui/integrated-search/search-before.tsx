@@ -155,8 +155,8 @@ export const SearchBefore: React.FC = () => {
       {items3.length > 0 && (
         <ul className={styles.card_list}>
           {items3.map((item, index) => (
-            <li>
-              <Link to={item.link} key={index} className={styles.link}>
+            <li key={index}>
+              <Link to={item.link} className={styles.link}>
                 <div className={styles.img_wrap}>
                   <ImageFallBack imageUrl={item.imgUrl} />
                 </div>
@@ -178,8 +178,8 @@ export const SearchBefore: React.FC = () => {
       {items4.length > 0 && (
         <ul className={styles.keyword_list}>
           {items4.map((item, index) => (
-            <li>
-              <Link to={item.link} key={index} className={styles.link}>
+            <li key={index}>
+              <Link to={item.link} className={styles.link}>
                 <strong className={styles.index}>{index + 1}</strong>
                 {item.iconNode && <span className={styles.icon_area}>{item.iconNode}</span>}
                 <span className={styles.label}>{item.label}</span>
