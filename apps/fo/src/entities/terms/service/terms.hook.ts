@@ -23,20 +23,23 @@ export const queryOptions = {
             termsApi.fetchTermsVersions(termsTypeCode, tenantId, locale),
         }
       : getQuerySkipToken<TermsVersion[]>(),
-  terms: (termsTypeCode: TermsTypeCode, termsId?: number, locale = getDefaultLang()) => ({
-    queryKey: queryKeys.terms(termsTypeCode, locale, termsId),
-    queryFn: (): Promise<Terms> => {
-      if (!termsId) {
-        return termsApi.fetchTermsLatest(termsTypeCode, locale);
-      } else {
-        return termsApi.fetchTerms(termsId, termsTypeCode, locale);
-      }
-    },
-  }),
+  terms: (termsTypeCode: TermsTypeCode, termsId?: number, locale?: string) =>
+    termsId && locale
+      ? {
+          queryKey: queryKeys.terms(termsTypeCode, locale, termsId),
+          queryFn: (): Promise<Terms> => {
+            if (!termsId) {
+              return termsApi.fetchTermsLatest(termsTypeCode, locale);
+            } else {
+              return termsApi.fetchTerms(termsId, termsTypeCode, locale);
+            }
+          },
+        }
+      : getQuerySkipToken<Terms>(),
 };
 
-export function useFetchTerms(termsType: TermsTypeCode, termsId?: number) {
-  return useQuery(queryOptions.terms(termsType, termsId));
+export function useFetchTerms(termsType: TermsTypeCode, termsId?: number, locale?: string) {
+  return useQuery(queryOptions.terms(termsType, termsId, locale));
 }
 
 export function useFetchTermsVersions(
