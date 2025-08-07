@@ -1,7 +1,13 @@
+import { useModal } from '@learnway/ui/modal';
 import { usePageState } from '@shared/lib';
 import { useNavigate } from '@tanstack/react-router';
 import { useCallback, useMemo, useState } from 'react';
-import { ContentViewType, useCourseActions, useCourseCreateInfo } from '../store/use-course-store';
+import {
+  ContentViewType,
+  useCheckDirtyForm,
+  useCourseActions,
+  useCourseCreateInfo,
+} from '../store/use-course-store';
 import { CourseDetailTab } from '../types/type';
 // 라우터 state에서 전달받는 값의 타입 정의
 export interface CourseDetailPageLocationState {
@@ -24,9 +30,11 @@ export const useCourseDetailPage = () => {
 
   // 현재 활성화된 탭 컨텐츠의 뷰 타입
   const { contentViewType, sequenceId } = useCourseCreateInfo();
+  const { confirmNavigation } = useModal();
 
   //
   const { setCourseCreateInfo } = useCourseActions();
+  const checkDirtyForm = useCheckDirtyForm();
 
   // 현재 활성화된 탭 상태 (기본값: 과정상세)
   const [activeTab, setActiveTab] = useState(initialTab ?? CourseDetailTab.COURSE_DETAIL);
@@ -39,6 +47,17 @@ export const useCourseDetailPage = () => {
     setActiveTab(tabKey);
     setCourseCreateInfo({ activeTab: tabKey, contentViewType: ContentViewType.LIST });
   }, []);
+
+  const handleBeforeChange = useCallback(
+    async (currentTabKey: string, nextTabKey: string) => {
+      // console.log('use-course-create-page : callback.checkDirtyForm', checkDirtyForm);
+      if (checkDirtyForm?.()) {
+        return await confirmNavigation();
+      }
+      return true;
+    },
+    [checkDirtyForm, confirmNavigation],
+  );
 
   /**
    * 수강관리 화면으로 이동
@@ -114,5 +133,7 @@ export const useCourseDetailPage = () => {
     visibleButtons,
     // 수강관리 화면으로 이동
     moveEnrollmentManagementPage,
+    // 탭 변경 전
+    handleBeforeChange,
   };
 };

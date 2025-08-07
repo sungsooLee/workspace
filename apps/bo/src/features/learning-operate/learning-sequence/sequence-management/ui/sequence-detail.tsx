@@ -6,7 +6,7 @@ import {
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management';
 import { TriggerKey } from '@features/learning-operate/course/course-management';
-import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormProvider } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
@@ -40,7 +40,15 @@ import {
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useUpdateEffect } from 'ahooks';
-import { forwardRef, useCallback, useEffect, useRef } from 'react';
+import { FormEventHandler, forwardRef, useCallback, useEffect } from 'react';
+import {
+  Control,
+  FieldValues,
+  FormState,
+  UseFormGetValues,
+  UseFormSetValue,
+  UseFormTrigger,
+} from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 type SequenceDetailComponentProps = {
@@ -49,6 +57,19 @@ type SequenceDetailComponentProps = {
   courseId?: number;
   sequenceId: number;
   lastTriggered?: any;
+  provider: DynamicFormProvider;
+  updateFormData: (data?: Record<string, any>) => void;
+  onSubmit: (onValid: (data: Record<string, any>) => void) => FormEventHandler<HTMLFormElement>;
+  onFormChange?: (values?: Record<string, any>) => void;
+  onFormValid?: UseFormTrigger<FieldValues>;
+  getValues: UseFormGetValues<FieldValues>;
+  setValue?: UseFormSetValue<FieldValues>;
+  formState?: FormState<FieldValues>;
+  control?: Control<FieldValues, any, FieldValues> & {
+    isFieldRequired: (fieldName: string) => boolean;
+  };
+  formValues?: any;
+  resetDirtyState: () => void;
 };
 
 /**
@@ -56,29 +77,32 @@ type SequenceDetailComponentProps = {
  * @returns
  */
 const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentProps>(
-  ({ mode, setMode, courseId: courseIdProps, sequenceId: sequenceIdProps, lastTriggered }, ref) => {
+  (
+    {
+      mode,
+      setMode,
+      courseId: courseIdProps,
+      sequenceId: sequenceIdProps,
+      lastTriggered,
+      provider,
+      updateFormData,
+      onSubmit,
+      getValues,
+      formValues,
+      resetDirtyState,
+    },
+    ref,
+  ) => {
     console.log('##courseIdProps=>', courseIdProps);
     console.log('##sequenceIdProps=>', sequenceIdProps);
     const { t } = useTranslation();
     const { confirm: openConfirm, openModal, showSaveComplete } = useModal();
-    const formRef = useRef<HTMLFormElement>(null);
-    const {
-      provider,
-      updateFormData,
-      onSubmit,
-      onFormChange,
-      onFormValid,
-      getValues,
-      setValue,
-      formState,
-      control,
-      formValues,
-    } = useDynamicForm2();
 
     const { updateSequence } = useUpdateSequence({
       onSuccess: async (response: any) => {
         console.log('useUpdateSequence :: onSuccess', response);
         await showSaveComplete();
+        resetDirtyState();
       },
     });
     const { deleteSequence } = useDeleteSequence({
