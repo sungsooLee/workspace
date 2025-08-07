@@ -25,21 +25,23 @@ import { useModal } from '@learnway/ui/modal';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { forwardRef, useCallback, useImperativeHandle, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
-import { getExamTemplateTextByType } from '../service/test-paper/common';
+import { QUESTION_LEVELS, QUESTION_TYPES } from '../../service/exam-util';
+import { getExamTemplateTextByType } from '../../service/test-paper/common';
 import {
   ExamQuestionInfoProps,
   QuestionStatisticRow,
   TabFormRef,
-} from '../service/test-paper/type';
-import { useExamQuestionInfoInput } from '../service/test-paper/use-exam-question-info-input';
-import { LearningResourceQuestionShuttleModal } from './learning-resource-question-shuttle-modal';
-import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
+} from '../../service/test-paper/type';
+import { useExamQuestionInfoInput } from '../../service/test-paper/use-exam-question-info-input';
+import { LearningResourceQuestionShuttleModal } from './modal/learning-resource-question-shuttle-modal';
+import { LearningResourceTestItemModal } from './modal/learning-resource-test-item-modal';
 
-/* styles */
+// Drag and Drop 관련
 import { closestCenter, DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
-import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
+import { QuestionDragHandle } from './components/learning-resource-question-drag-handle';
+
+/* styles */
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 

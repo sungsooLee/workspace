@@ -8,3 +8,4 @@ export * from './test-paper/use-exam-question-info-input';
 
 export * from './learning-resource-blog-form-submit';
 export * from './learning-resource-html-form-submit';
+export * from './learning-resource-question-import.hook';

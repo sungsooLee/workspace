@@ -45,7 +45,9 @@ import { Input } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ContentType, EnFormMode } from '@shared/types/enums';
 import { useChangeQuestionOptionsOrder } from '@features/learning-resource/learning-resource-management/service/learning-resource-question-sort.hook';
-import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
+
+// Drag and Drop 관련
+import { QuestionDragHandle } from '../components/learning-resource-question-drag-handle';
 import { closestCenter, DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
