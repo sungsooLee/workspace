@@ -594,11 +594,10 @@ const LearningResourceTestItemModalComponent = ({
                           },
                           enableDragAndDrop: true,
                           rowId: 'sortSeq',
-                          showGuideTextBesideTotalCount: true,
-                          guideText: questionOptionGuideText,
                         }}
                       />
                     }
+                    guideText={questionOptionGuideText}
                   />
                 </DndContext>
               </ContentsRow>

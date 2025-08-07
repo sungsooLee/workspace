@@ -184,11 +184,6 @@ export interface GridBoxProps<T extends object = object>
   guideText?: string;
 
   /**
-   * 에러성 문구 그리드 상단 총 개수 옆 노출 여부
-   */
-  showGuideTextBesideTotalCount?: boolean;
-
-  /**
    * 가이드 텍스트 옆 에러성 문구 노출 여부
    */
   showErrorMessageBesideGuideText?: boolean;

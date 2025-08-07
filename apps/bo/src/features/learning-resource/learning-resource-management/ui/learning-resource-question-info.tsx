@@ -484,7 +484,6 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                 </div>
               }
               className={styles.info_table}
-              showGuideTextBesideTotalCount
               showGuideTextNextLine
               guideText={questionStatusGuideText}
               showErrorMessageBesideGuideText={data?.questionCount !== selectedQuestionCount}

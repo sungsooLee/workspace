@@ -13,20 +13,23 @@ import styles from '@learnway/styles/fo/pages/_layout/category/category_m.module
 import CategoryService from '@entities/category/api/category';
 import { t } from 'i18next'
 import { useFetchCategoryDetail } from '@entities/category';
-import { CategoryDetailComponentProps } from '@pages/_layout/_category/category';
 import { ThumbnailList } from '@shared/ui/thumnail/list/thumbnail-list';
 import { CategoryFilterPopup } from '@shared/ui/category/category-filter-popup';
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
-
+import { CategoryDepthPopupM } from '@features/layout';
+import { useRouterState } from '@tanstack/react-router';
+import { CategoryDetailComponentProps, findNodeById } from '@features/category';
 
 const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponentProps) => {
   const showLanguageCode = ['KO', 'EN', 'ZH', 'JA']
+  const routerState = useRouterState();
   const { getCode } = useCodeStore();
   const { openModal } = useModal();
-
   const { data: categoryInfo } = useFetchCategoryDetail(categoryId);
 
-  const [depth, setDepth] = useState(3);
+  const [depth, setDepth] = useState(0);
+  const [targetNode, setTargetNode] = useState(null);
+  const [tenantId, setTenantId] = useState(routerState.location.state.tenantId);
   const [page, setPage] = useState(0);
   const [size , setSize] = useState(20);
   const [sorting, setSorting] = useState(['createdDate,DESC']);
@@ -121,6 +124,16 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   }
 
   useEffect(() => {
+    if( depth === 3) {
+      (async() => {
+        const categoryTree = await CategoryService.getFetchCategoryTree(tenantId)
+        const targetCategory = findNodeById(categoryTree.children, categoryId)
+        setTargetNode(targetCategory)
+      })();
+    }
+  }, [depth]);
+
+  useEffect(() => {
     (async () => {
       if( selectedCardOptions ) {
         const enrollment = selectedCardOptions.enrollment ? selectedCardOptions.enrollment.map((row: any) => row.value) : [];
@@ -140,6 +153,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   useEffect(() => {
     if( categoryInfo ) {
       (async () => {
+        setDepth(routerState.location.state.depth);
         const payload = {
           ...coursePayload,
           page, size,
@@ -183,6 +197,19 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   return (
     <div className={cn(styles.start, styles.detail_m)}>
       <div className={styles.gray_box}>
+        <div className={styles.box}>
+          <Button
+            className={styles.btn_drop}
+            onClick={() =>
+              openModal({
+                width: 'm_bottom_sheet',
+                content: <CategoryDepthPopupM nodes={targetNode}/>,
+              })
+            }
+            icon={<IcoArrowDown width={16} height={16} stroke="#131c30" />}
+            label={'분류선택'}
+          />
+        </div>
         <div className={styles.box}>
           <div className={styles.search_input}>
             <Input
