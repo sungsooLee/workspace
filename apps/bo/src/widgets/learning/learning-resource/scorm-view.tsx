@@ -58,6 +58,7 @@ function ScormViewComponent({ content, hasMapping }: Props) {
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer
+        title={t('스콤 상세')}
         tooltipProps={{
           show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
           content: t(getTooltipContent(content?.createType)),
