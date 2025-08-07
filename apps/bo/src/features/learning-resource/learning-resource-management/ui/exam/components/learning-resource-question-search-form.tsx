@@ -1,20 +1,20 @@
-import { FormEventHandler } from 'react';
-import { useTranslation } from 'react-i18next';
-import { SearchBoxForm } from '@shared/ui/search-box';
+import { getDropdownOptions } from '@features/learning-resource/learning-resource-management';
+import {
+  QUESTION_LEVELS,
+  QUESTION_TYPES,
+} from '@features/learning-resource/learning-resource-management/service/exam-util';
 import { CODE_GROUP, DynamicFormProvider } from '@learnway/hooks';
-import { Input } from '@learnway/ui/input';
 import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 import {
   DropdownFormField,
   FormRow2,
   TenantByRoleDropdownFormField,
   TenantChannelDropdownFormField,
 } from '@shared/ui/form';
-import { getDropdownOptions } from '@features/learning-resource/learning-resource-management/service';
-import {
-  QUESTION_LEVELS,
-  QUESTION_TYPES,
-} from '@features/learning-resource/learning-resource-management/service/exam-util';
+import { SearchBoxForm } from '@shared/ui/search-box';
+import { FormEventHandler } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface CopyQuestionSearchFormProps {
   provider: DynamicFormProvider;
