@@ -97,6 +97,8 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   const [topOptionValue, setTopOptionValue] = useState<string|null>();
   const [middleOptions, setMiddleOptions] = useState<MiddleOptionsType[]>([]);
   const [middleOptionValue, setMiddleOptionValue] = useState<string|null>();
+  const [division, setDivision] = useState<boolean>(false);
+  const [targetId, setTargetId] = useState(categoryId);
 
   const [tenantId, setTenantId] = useState(routerState.location.state.tenantId);
   const [page, setPage] = useState(0);
@@ -171,11 +173,17 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
     await fetchCoursesCategory(payload)
   }
 
-  const handleShowDepthSelector = (option: number) => {
+  const handleShowDepthSelector = async (option: number) => {
     if( option === 0 ) {
       setTopOptionValue(null);
       setMiddleOptions([])
       setMiddleOptionValue(null)
+      const payload = {
+        ...coursePayload,
+        categoryId,
+      }
+      setCoursePayload(payload)
+      await fetchCoursesCategory(payload)
     } else {
       const { depth4, depth5 } = collectDepths(targetNode);
       const value = depth4.flat().filter((row: TopOptionsType) => row.value === option);
@@ -188,16 +196,36 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
         setMiddleOptions([])
         setMiddleOptionValue(null)
       }
+
+      const payload = {
+        ...coursePayload,
+        categoryId: value[0].value,
+      }
+      setCoursePayload(payload)
+      setTargetId(value[0].value)
+      await fetchCoursesCategory(payload)
     }
   }
 
-  const handleChangeSelector = (option: number) => {
+  const handleChangeSelector = async (option: number) => {
     if( option === 0 ) {
       setMiddleOptionValue(null)
+      const payload = {
+        ...coursePayload,
+        categoryId: targetId,
+      }
+      setCoursePayload(payload)
+      await fetchCoursesCategory(payload)
     } else {
       const { depth5 } = collectDepths(targetNode);
       const value = depth5.flat().filter((row: TopOptionsType) => row.value === option);
       setMiddleOptionValue(value[0].label)
+      const payload = {
+        ...coursePayload,
+        categoryId: value[0].value,
+      }
+      setCoursePayload(payload)
+      await fetchCoursesCategory(payload)
     }
   }
 
@@ -206,9 +234,12 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
       (async() => {
         const categoryTree = await CategoryService.getFetchCategoryTree(tenantId)
         const targetCategory = findNodeById(categoryTree.children, categoryId)
-        const { depth4 } = collectDepths(targetCategory)
+        const { depth4, depth5 } = collectDepths(targetCategory)
         setTargetNode(targetCategory)
         setTopOptions(depth4)
+        if( depth5 && depth5.length > 0 ) {
+          setDivision(true)
+        }
       })();
     }
   }, [depth]);
@@ -260,17 +291,21 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
                       size="lg"
                       options={topOptions}
                       value={topOptionValue}
-                      placeholder={t('대분류')}
+                      placeholder={division ? t('대분류') : t('분류')}
                       onChange={handleShowDepthSelector}
                     />
-                    <Dropdown
-                      className={styles.search_select}
-                      size="lg"
-                      options={middleOptions}
-                      value={middleOptionValue}
-                      placeholder={t('소분류')}
-                      onChange={handleChangeSelector}
-                    />
+                    {
+                      division && (
+                        <Dropdown
+                          className={styles.search_select}
+                          size="lg"
+                          options={middleOptions}
+                          value={middleOptionValue}
+                          placeholder={t('소분류')}
+                          onChange={handleChangeSelector}
+                        />
+                      )
+                    }
                   </div>
                 )
               }
