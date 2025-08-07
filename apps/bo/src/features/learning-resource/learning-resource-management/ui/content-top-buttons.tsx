@@ -158,7 +158,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
           <Button
             variant="point"
             size="sm"
-            disabled={createType !== ContentCreateType.MANUAL}
+            disabled={createType === ContentCreateType.TRANSLATE}
             onClick={handleTranslationList}
           >
             {t('번역현황')}
@@ -180,7 +180,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
         <Button
           variant="point"
           size="sm"
-          disabled={createType !== ContentCreateType.MANUAL}
+          disabled={createType === ContentCreateType.TRANSLATE}
           onClick={handleTranslateAction}
         >
           {t('번역')}

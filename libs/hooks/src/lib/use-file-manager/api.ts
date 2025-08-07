@@ -1,5 +1,5 @@
-import { fileDownload, httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
+import { fileDownload, httpService } from '@learnway/shared';
 import {
   BaseGroupInfo,
   CreateFileGroupFilesInfoReq,
@@ -10,54 +10,52 @@ import {
   ImageInfo,
 } from './type';
 
-const prefixUrl = `${PMSApiPrefix()}/file`;
-
 export default class FileManagerService {
   // 썸네일 이미지 업로드 요청
   static uploadImageFile(formData?: FormData): Promise<ImageInfo> {
-    return httpService.post<ImageInfo>(`${prefixUrl}/image`, formData);
+    return httpService.post<ImageInfo>(`${PMSApiPrefix()}/file/image`, formData);
   }
   // 썸네일 이미지 삭제 요청
   static deleteImageFile(imageUrl: string): Promise<ImageInfo> {
-    return httpService.delete<ImageInfo>(`${prefixUrl}/image?imageUrl=${imageUrl}`);
+    return httpService.delete<ImageInfo>(`${PMSApiPrefix()}/file/image?imageUrl=${imageUrl}`);
   }
   // 파일 정보 생성
   static createFileInfo(fileInfo: CreateFileInfoReq): Promise<FileInfo> {
-    return httpService.post<FileInfo>(`${prefixUrl}`, fileInfo);
+    return httpService.post<FileInfo>(`${PMSApiPrefix()}/file`, fileInfo);
   }
   // 파일 그룹 정보 생성
   static createFileGroupInfo(groupInfo: BaseGroupInfo): Promise<FileGroupInfo> {
-    return httpService.post<FileGroupInfo>(`${prefixUrl}/group`, groupInfo);
+    return httpService.post<FileGroupInfo>(`${PMSApiPrefix()}/file/group`, groupInfo);
   }
   // 파일 그룹 및 1개 이상의 파일 정보 생성
   static createFileGroupFiles(groupFiles: CreateFileGroupFilesInfoReq): Promise<GroupFileInfo> {
-    return httpService.post<GroupFileInfo>(`${prefixUrl}/group/files`, groupFiles);
+    return httpService.post<GroupFileInfo>(`${PMSApiPrefix()}/file/group/files`, groupFiles);
   }
   // 파일 정보 삭제
   static deleteFileInfo(fileUuid: string) {
-    return httpService.delete(`${prefixUrl}/${fileUuid}`);
+    return httpService.delete(`${PMSApiPrefix()}/file/${fileUuid}`);
   }
   // 파일 정보 조회
   static getFileInfo(fileUuid: string): Promise<FileInfo> {
-    return httpService.get(`${prefixUrl}/${fileUuid}`);
+    return httpService.get(`${PMSApiPrefix()}/file/${fileUuid}`);
   }
   // s3 파일 다운로드
   static s3FileDownload(key: string, fileName: string): Promise<void> {
-    return fileDownload({ url: `${prefixUrl}/s3/download`, params: { key, fileName } });
+    return fileDownload({ url: `${PMSApiPrefix()}/file/s3/download`, params: { key, fileName } });
   }
   // 파일 다운로드
   static fileDownload(fileUuid: string) {
-    return fileDownload({ url: `${prefixUrl}/${fileUuid}/download` });
+    return fileDownload({ url: `${PMSApiPrefix()}/file/${fileUuid}/download` });
   }
   // 파일 복수 다운로드
   static filesDownload(fileUuids: string[]) {
-    return fileDownload({ url: `${prefixUrl}/files/${fileUuids.join(',')}/download` });
+    return fileDownload({ url: `${PMSApiPrefix()}/file/files/${fileUuids.join(',')}/download` });
   }
 
   // TODO. 아래 3가지는 요건이 없어서 추가하지 않았음
   // 파일 그룹 목록 조회
   static getGroupInfo(groupUuid: string): Promise<FileGroupInfo> {
-    return httpService.get(`${prefixUrl}/group/${groupUuid}`);
+    return httpService.get(`${PMSApiPrefix()}/file/group/${groupUuid}`);
   }
 
   // 파일 그룹 정보 조회

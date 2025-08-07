@@ -20,7 +20,7 @@ export * from './ui/integrated-search/integrated-search-knowledge';
 export * from './ui/integrated-search/integrated-search-procedure';
 export * from './ui/integrated-search/integrated-search-running';
 export * from './ui/integrated-search/integrated-search-shorts';
-export * from './ui/language/language';
+export * from './ui/language/auth-language';
 export * from './ui/logo/logo';
 export * from './ui/package-card';
 export * from './ui/search/search';
@@ -38,7 +38,7 @@ export * from './ui/search/search-popover';
 export * from './ui/user-avatar/user-avatar';
 
 export * from './service/sessionTimer';
-export * from './ui/language/language';
+export * from './ui/language/auth-language';
 export * from './ui/license/license';
 export * from './ui/notification/notification-button';
 export * from './ui/tenant-button/tenant-button';

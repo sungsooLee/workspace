@@ -1,13 +1,12 @@
 import { CellContext } from '@tanstack/react-table';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/popup-question-detail.module.css';
 
-import { cn } from '@learnway/shared';
+import { cn, isLocalhost } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { GridFormField, RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
 import {
@@ -26,6 +25,7 @@ import {
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionItemGridRow,
+  QuestionItemOption,
   useCreateQuestionItem,
   useDeleteQuestionItemList,
   useGetQuestionItem,
@@ -39,26 +39,31 @@ import {
 } from '@shared/ui/form';
 
 import { S3_PATH, useDynamicForm2 } from '@learnway/hooks';
-import { IcoMenu01 } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ContentType, EnFormMode } from '@shared/types/enums';
+import { useChangeQuestionOptionsOrder } from '@features/learning-resource/learning-resource-management/service/learning-resource-question-sort.hook';
+import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
+import { closestCenter, DndContext, MeasuringStrategy } from '@dnd-kit/core';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 const LearningResourceTestItemModalComponent = ({
   contentInfo,
   questionItemGridRow,
   onSuccessCallback,
   onDeleteCallback,
+  hasMapping = false,
 }: {
   contentInfo: ContentInformation & { examPoolUuid?: string; examTemplateType?: ExamTemplateType };
   questionItemGridRow?: QuestionItemGridRow;
   onSuccessCallback?: () => void | Promise<void>;
   onDeleteCallback?: () => void | Promise<void>;
+  hasMapping?: boolean;
 }) => {
   const { t } = useTranslation();
-  const { alert, closeModal, confirm: openConfirm } = useModal();
+  const { closeModal, confirm: openConfirm } = useModal();
 
   const formMode = useMemo<EnFormMode>(
     () => (questionItemGridRow ? EnFormMode.VIEW : EnFormMode.ADD),
@@ -70,9 +75,11 @@ const LearningResourceTestItemModalComponent = ({
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const { provider, getValues, updateFormData, onFormChange, onSubmit } = useDynamicForm2();
+  const { provider, getValues, updateFormData, onFormChange, onSubmit, formState, watch } =
+    useDynamicForm2();
 
   const { data: rowData } = useGetQuestionItem(questionItemGridRow?.examQuestionUuid);
+
   const { create: createQuestionItem } = useCreateQuestionItem();
   const { delete: deleteQuestion } = useDeleteQuestionItemList({
     onSuccess: ({ result }: MutationResponse) => {
@@ -83,13 +90,13 @@ const LearningResourceTestItemModalComponent = ({
     },
   });
 
+  const { dragSensors, handleOnDragEnd } = useChangeQuestionOptionsOrder(provider);
+
   // console.log('questionItemGridRow', questionItemGridRow);
-  // const imageTypeWatch = useWatch({ control: provider.control, name: 'fileType' });
-  // const attachImageWatch = useWatch({ control: provider.control, name: 'fileUuid' });
-  const questionTypeWatch = useWatch({ control: provider.control, name: 'questionType' });
+  const questionTypeWatch = watch('questionType');
 
   const handleDeleteButtonClick = useCallback(async () => {
-    if (!questionItemGridRow?.examQuestionUuid) {
+    if (!questionItemGridRow?.examQuestionUuid || hasMapping) {
       return;
     }
     console.log('delete button click');
@@ -121,23 +128,6 @@ const LearningResourceTestItemModalComponent = ({
     const { fileAttached, ...restData } = data;
 
     if (
-      [EnQuestionType.SINGLE, EnQuestionType.MULTIPLE].includes(questionTypeWatch) &&
-      restData.options.length < 2
-    ) {
-      await alert({
-        title: t('보기를 추가하세요.'),
-        content: t('객관식이나 다답식의 경우 보기가 2개 이상이어야 합니다.'),
-      });
-      return;
-    } else if (!restData.options.length) {
-      await alert({
-        title: t('보기를 추가하세요.'),
-        content: t('보기가 1개 이상이어야 합니다.'),
-      });
-      return;
-    }
-
-    if (
       questionTypeWatch === EnQuestionType.ESSAY &&
       Object.keys(restData).includes('examOptionText')
     ) {
@@ -151,16 +141,6 @@ const LearningResourceTestItemModalComponent = ({
       } else if (!option.isCorrectAnswer) {
         option.isCorrectAnswer = false;
       }
-    }
-
-    if (
-      restData.options.map((option: any) => option.isCorrectAnswer).every((item: boolean) => !item)
-    ) {
-      await alert({
-        title: t('정답을 설정하세요.'),
-        content: t('정답이 1개 이상이어야 합니다.'),
-      });
-      return;
     }
 
     const result = await openConfirm({
@@ -294,9 +274,7 @@ const LearningResourceTestItemModalComponent = ({
             header: t('순서변경'),
             accessorKey: 'sqlOrder',
             size: 50,
-            cell: (info: CellContext<any, string>) => (
-              <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />
-            ),
+            cell: (info: CellContext<any, string>) => <QuestionDragHandle />,
             meta: {
               headerAlign: 'center',
               cellAlign: 'center',
@@ -321,6 +299,36 @@ const LearningResourceTestItemModalComponent = ({
     }
     return retval;
   }, [updateIsCorrectAnswerRadio, questionTypeWatch]);
+
+  const questionOptionGuideText = useMemo(() => {
+    if (questionTypeWatch === EnQuestionType.SHORT_ANSWER) {
+      return t(
+        '단답식의 정답은 최대 10개까지 추가할 수 있습니다. 정답들을 토대로 채점이 진행됩니다.',
+      );
+    }
+    return t(
+      '보기는 최대 10개까지 추가 가능하며, 최소 2개 이상 추가해야합니다. 보기의 첨부파일은 이미지 파일 1개만 가능합니다.',
+    );
+  }, [questionTypeWatch]);
+
+  const questionOptionValidationErrorMessage = useMemo(() => {
+    if (questionTypeWatch === EnQuestionType.SHORT_ANSWER) {
+      return t('정답을 최소 1개 이상 추가하세요.');
+    }
+    return t('보기를 최소 2개 이상 추가하세요.');
+  }, [questionTypeWatch]);
+
+  const questionOptionTextErrorMessage = useMemo(() => {
+    if (questionTypeWatch === EnQuestionType.SHORT_ANSWER) {
+      return t('정답 내용을 입력하세요.');
+    }
+    return t('보기 내용을 입력하세요.');
+  }, [questionTypeWatch]);
+
+  const prevConditionOptionCount = useMemo(
+    () => (questionTypeWatch === EnQuestionType.SHORT_ANSWER ? 1 : 2),
+    [questionTypeWatch],
+  );
 
   useEffect(() => {
     if (formMode !== EnFormMode.ADD) return;
@@ -368,6 +376,15 @@ const LearningResourceTestItemModalComponent = ({
     <ModalContainer>
       <ModalTitle>{t('문항 상세')}</ModalTitle>
       <ModalBody>
+        {isLocalhost() && (
+          <Button
+            label="debug"
+            onClick={() => {
+              console.log('getValues', getValues());
+              console.log('formState', formState);
+            }}
+          />
+        )}
         <form ref={formRef} onSubmit={onSubmit(handleSubmit)}>
           <div className={cn(popupStyles.wrap, styles.start)}>
             <FormSubTitle
@@ -428,9 +445,6 @@ const LearningResourceTestItemModalComponent = ({
                     disabled={contentInfo?.examTemplateType === ExamTemplateType.QUIZ}
                   />
                 }
-                // optionsConfig={{
-                //   codeGroup: CODE_GROUP['pms.channel.ChannelCreationType'],
-                // }}
               />
             </ContentsRow>
             <ContentsRow>
@@ -438,6 +452,7 @@ const LearningResourceTestItemModalComponent = ({
                 provider={provider}
                 name="languageCountryCodeName"
                 label={t('문항언어')}
+                value={t(`pms.multilingual.LangCountryCode.${contentInfo.languageCountryCode}`)}
                 element={<Input id="name-type2-2" type="text" disabled />}
               />
               <FormRow2
@@ -504,31 +519,88 @@ const LearningResourceTestItemModalComponent = ({
                 { name: 'questionType', value: EnQuestionType.OX },
               ]}
             >
-              {/* 객관식 문제 노출 시작 */}
+              {/* 객관식/다답식/단답식/OX 문제 노출 시작 */}
               <ContentsRow>
-                <FormRow2
-                  provider={provider}
-                  name="options"
-                  value={[]}
-                  element={
-                    <GridFormField
-                      maxRow={10}
-                      gridProps={{
-                        title: t('보기목록'),
-                        guideText: t('보기의 첨부파일은 최대1개, 이미지파일만 가능합니다.'),
-                        multiple: true,
-                        showAdd: questionTypeWatch !== EnQuestionType.OX,
-                        showRemove: questionTypeWatch !== EnQuestionType.OX,
-                        showTotalCount: true,
-                        columns: gridColumn,
-                        isRowSelected: (row: object) => {
-                          if (questionTypeWatch === EnQuestionType.OX) return false;
-                          return true;
+                <DndContext
+                  sensors={dragSensors}
+                  collisionDetection={closestCenter}
+                  modifiers={[restrictToVerticalAxis]}
+                  measuring={{
+                    droppable: {
+                      strategy: MeasuringStrategy.Always,
+                    },
+                  }}
+                  onDragEnd={handleOnDragEnd}
+                >
+                  <FormRow2
+                    provider={provider}
+                    name="options"
+                    value={[]}
+                    validation={{
+                      required: true,
+                      conditions: [
+                        {
+                          fn: (values: Record<string, any>) => {
+                            if (values.questionType === EnQuestionType.SHORT_ANSWER) {
+                              return !values.options.length;
+                            }
+                            return values.options.length < 2;
+                          },
+                          message: questionOptionValidationErrorMessage,
                         },
-                      }}
-                    />
-                  }
-                />
+                        {
+                          fn: (values: Record<string, any>) => {
+                            const optionTexts = values.options.map(
+                              (option: QuestionItemOption) => option.examOptionText,
+                            );
+
+                            const prevConditionOptionCount =
+                              values.questionType === EnQuestionType.SHORT_ANSWER ? 1 : 2;
+
+                            return (
+                              values.options.length >= prevConditionOptionCount &&
+                              optionTexts.some((t: string) => !t)
+                            );
+                          },
+                          message: questionOptionTextErrorMessage,
+                        },
+                        {
+                          fn: (values: Record<string, any>) => {
+                            const mappedOptionsByIsCorrectAnswer = values.options.map(
+                              (option: QuestionItemOption) => option.isCorrectAnswer,
+                            );
+                            return (
+                              values.options.length >= prevConditionOptionCount &&
+                              mappedOptionsByIsCorrectAnswer.every((o: boolean) => !o)
+                            );
+                          },
+                          message: t('정답을 최소 1개 이상 선택하세요.'),
+                        },
+                      ],
+                    }}
+                    element={
+                      <GridFormField
+                        maxRow={10}
+                        gridProps={{
+                          title: t('보기목록'),
+                          multiple: true,
+                          showAdd: questionTypeWatch !== EnQuestionType.OX,
+                          showRemove: questionTypeWatch !== EnQuestionType.OX,
+                          showTotalCount: true,
+                          columns: gridColumn,
+                          isRowSelected: (row: object) => {
+                            if (questionTypeWatch === EnQuestionType.OX) return false;
+                            return true;
+                          },
+                          enableDragAndDrop: true,
+                          rowId: 'sortSeq',
+                          showGuideTextBesideTotalCount: true,
+                          guideText: questionOptionGuideText,
+                        }}
+                      />
+                    }
+                  />
+                </DndContext>
               </ContentsRow>
               {/* 객관식 문제 노출 끝 */}
             </FormDisplay>
@@ -559,7 +631,13 @@ const LearningResourceTestItemModalComponent = ({
       <ModalFooter>
         <Button label={t('취소')} variant="gray" size="lg" onClick={closeModal} />
         {formMode === EnFormMode.VIEW && (
-          <Button label={t('삭제')} variant="gray" size="lg" onClick={handleDeleteButtonClick} />
+          <Button
+            label={t('삭제')}
+            variant="gray"
+            size="lg"
+            onClick={handleDeleteButtonClick}
+            disabled={hasMapping}
+          />
         )}
         <Button label={t('저장')} variant="primary" size="lg" onClick={handleSaveButtonClick} />
       </ModalFooter>

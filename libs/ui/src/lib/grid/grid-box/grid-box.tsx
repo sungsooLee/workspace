@@ -48,6 +48,7 @@ const GridBoxComponent = <T extends object>(
     titleCustomNode,
     customButtonNode,
     guideText,
+    showGuideTextBesideTotalCount,
     showErrorMessageBesideGuideText,
     errorMessageBesideGuideText,
     showGuideTextNextLine,
@@ -322,14 +323,14 @@ const GridBoxComponent = <T extends object>(
           {titleCustomNode && <div className={styles.custom_node}>{titleCustomNode}</div>}
 
           {/* 가이드 텍스트 */}
-          {/* {guideText && (
+          {guideText && showGuideTextBesideTotalCount && (
             <p className={cn(styles.guide_text, showGuideTextNextLine && styles.next_line)}>
               {guideText}
               {showErrorMessageBesideGuideText && (
                 <span className={styles.error_text}>{errorMessageBesideGuideText}</span>
               )}
             </p>
-          )} */}
+          )}
         </div>
 
         <div className={styles.button_info}>
@@ -435,7 +436,7 @@ const GridBoxComponent = <T extends object>(
         />
       )}
       {/* 가이드 텍스트 */}
-      {guideText && (
+      {guideText && !showGuideTextBesideTotalCount && (
         <p className={cn(styles.guide_text, showGuideTextNextLine && styles.next_line)}>
           {guideText}
           {showErrorMessageBesideGuideText && (

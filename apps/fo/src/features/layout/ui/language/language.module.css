@@ -1,6 +1,6 @@
 /* language.module.css */
 .btn_language {
-  @apply box-border flex min-h-[40px] items-center justify-between text-[1.4rem] text-[var(--gray9)];
+  @apply label-md-b box-border flex min-h-[40px] items-center justify-between text-[var(--gray10)];
   &[data-state='open'] {
     svg {
       @apply rotate-180;
@@ -18,19 +18,49 @@
     @apply label-md-b ml-[6px] mr-[4px] inline-block text-[var(--gray10)];
   }
 }
-.language_content {
-  @apply rounded-[8px] border border-solid border-[var(--gray6)] bg-[var(--white)] p-[8px] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
-  .lang_wrap {
+
+/* 언어 */
+.lang_area {
+  @apply popover-scroll px-[32px] py-[24px];
+  .lang_list {
+    @apply flex flex-col justify-start;
+    > li {
+      button {
+        @apply ellipsis label-xl w-full !rounded-none px-[12px] py-[11px] text-left;
+        &:hover,
+        &.active {
+          @apply label-xl-b !bg-none text-[var(--blue65)];
+        }
+      }
+    }
+  }
+}
+
+/* mobile */
+:global(body.mobile) {
+  .btn_language {
+    @apply min-h-[auto];
+    .select {
+      @apply label-md-b mx-[4px] inline-block text-[var(--gray10)];
+    }
+    svg {
+      @apply !mx-0;
+    }
+  }
+
+  .lang_area {
+    @apply -mt-[16px] max-h-none !p-0;
     .lang_list {
-      @apply flex max-w-[400px] flex-wrap;
       li {
-        @apply body_3_r w-[calc(100%/2)] min-w-[188px];
-        .btn {
-          @apply box-border block h-full w-full rounded-[4px] px-[12px] py-[12px] text-left text-[var(--gray9)];
-          &.active,
-          a:hover {
-            @apply bg-[var(--secondary5)];
+        button {
+          @apply title2 flex min-h-[56px] items-center justify-between !px-0 text-[var(--gray35)];
+          &:hover,
+          &.active {
+            @apply !bg-none text-[var(--gray35)];
           }
+        }
+        & + li {
+          @apply border-t-[1px] border-solid border-[var(--gray92)];
         }
       }
     }

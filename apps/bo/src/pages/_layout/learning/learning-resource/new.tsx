@@ -2,10 +2,12 @@ import { NotFound } from '@features/layout';
 import { LEARNING_TYPE } from '@learnway/config';
 import { useCurrentRoute } from '@learnway/hooks';
 import { createFileRoute } from '@tanstack/react-router';
-import { BlogView } from '@widgets/learning/learning-resource';
-import { ExamView } from '@widgets/learning/learning-resource/exam-view';
-import { ExamPoolView } from '@widgets/learning/learning-resource/exam-pool-view';
-import { AssignmentView } from '@widgets/learning/learning-resource/assignment-view';
+import {
+  AssignmentView,
+  BlogView,
+  ExamPoolView,
+  ExamView,
+} from '@widgets/learning/learning-resource';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/new')({
   component: RouteComponent,
