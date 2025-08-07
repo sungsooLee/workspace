@@ -1,6 +1,6 @@
 import { useRouter } from '@tanstack/react-router';
 import { useMemo, useState } from 'react';
-import { BrowserView } from 'react-device-detect';
+import { BrowserView, MobileView } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 
 import { useFetchAuthUser, useUpdateTenantRoleLastSelect } from '@learnway/auth/entities';
@@ -12,6 +12,7 @@ import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 // import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 import authTitleStyles from '@learnway/styles/fo/pages/_auth/auth-title.module.css';
 
+import { MobileContainerFooter } from '@shared/m.ui';
 import styles from './tenant-select.module.css';
 
 const TenantSelectComponent = () => {
@@ -34,16 +35,29 @@ const TenantSelectComponent = () => {
     }));
   }, [authUser?.tenants]);
 
+  const handleButton = async () => {
+    await updateTenantRole(
+      { lastVisitedFoTenantId: tenantvalues?.value },
+      {
+        onSuccess: (data: any) => {
+          router.navigate({ to: '/' });
+        },
+      },
+    );
+  };
+
   return (
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.tenant_select}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
-          <div className={authTitleStyles.start}>
-            <h2>
-              <span className={authTitleStyles.title}>{t('테넌트 선택')}</span>
-              <span className={authTitleStyles.info}>{t('입장하실 테넌트를 선택하세요')}</span>
-            </h2>
-          </div>
+          <BrowserView>
+            <div className={authTitleStyles.start}>
+              <h2>
+                <span className={authTitleStyles.title}>{t('테넌트 선택')}</span>
+                <span className={authTitleStyles.info}>{t('입장하실 테넌트를 선택하세요')}</span>
+              </h2>
+            </div>
+          </BrowserView>
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
             <ContentsRow>
               <div className={formStyles.form_item}>
@@ -61,37 +75,26 @@ const TenantSelectComponent = () => {
 
           <BrowserView>
             <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-              <Button
-                variant="primary"
-                size="xl"
-                disabled={!tenantvalues}
-                onClick={async () => {
-                  await updateTenantRole(
-                    { lastVisitedFoTenantId: tenantvalues?.value },
-                    {
-                      onSuccess: (data: any) => {
-                        router.navigate({ to: '/' });
-                      },
-                    },
-                  );
-                }}
-              >
+              <Button variant="primary" size="xl" disabled={!tenantvalues} onClick={handleButton}>
                 {t('확인')}
               </Button>
             </div>
           </BrowserView>
 
-          {/* <MobileView>
+          <MobileView>
             <MobileContainerFooter>
-              <Button variant="primary" size="xl">
+              <Button variant="primary" size="xl" onClick={handleButton}>
                 {t('확인')}
               </Button>
             </MobileContainerFooter>
-          </MobileView> */}
+          </MobileView>
         </div>
       </div>
     </form>
   );
 };
 
+/**
+ * @description 로그인 테넌트 선택 : NLP_FO_LOG_MR2001, NLP_FO_LOG_2001
+ */
 export const TenantSelect = TenantSelectComponent;

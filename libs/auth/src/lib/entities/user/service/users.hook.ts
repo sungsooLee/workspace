@@ -145,16 +145,24 @@ export function useUpdateTenantRoleLastSelect(mutationOptions = {}) {
     ...mutateOptions.updateTenantRoleLastSelect(),
     onSuccess: async (data: any, variables, context) => {
       if (variables) {
-        const tenantId =
-          getConfig().APP_INFO === 'BO'
-            ? variables.lastVisitedBoTenantId
-            : variables.lastVisitedFoTenantId;
+        if (variables.lastVisitedBoTenantId || variables.lastVisitedFoTenantId) {
+          const tenantId =
+            getConfig().APP_INFO === 'BO'
+              ? variables.lastVisitedBoTenantId
+              : variables.lastVisitedFoTenantId;
 
-        console.log('@@@ tenantId', tenantId);
-        const tenant = authUser?.tenants?.find((tenant) => tenant.tenantId === tenantId);
-        const role = authUser?.roles?.find((role) => role.roleId === variables.lastVisitedBoRoleId);
-        tenant && updateActiveTenant(tenant);
-        role && updateActiveRole(role);
+          const tenant = authUser?.tenants?.find(
+            (tenant) => String(tenant.tenantId) === String(tenantId),
+          );
+          tenant && updateActiveTenant(tenant);
+        }
+
+        if (variables.lastVisitedBoRoleId) {
+          const role = authUser?.roles?.find(
+            (role) => String(role.roleId) === String(variables.lastVisitedBoRoleId),
+          );
+          role && updateActiveRole(role);
+        }
       }
     },
     ...mutationOptions,
