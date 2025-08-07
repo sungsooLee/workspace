@@ -20,11 +20,11 @@ const Component = () => {
   const { alert } = useModal();
 
   // 커스텀 훅 사용
-  const { activeTab, courseName, changeTab, visibleButtons, moveEnrollmentManagementPage } =
+  const { activeTab, courseType, changeTab, visibleButtons, moveEnrollmentManagementPage } =
     useCourseDetailPage();
 
-  const tabItems = useMemo(
-    () => [
+  const tabItems = useMemo(() => {
+    const tabs = [
       {
         title: t('과정상세'),
         key: CourseDetailTab.COURSE_DETAIL,
@@ -45,9 +45,14 @@ const Component = () => {
         key: CourseDetailTab.COMMUNITY,
         content: <Community />,
       },
-    ],
-    [],
-  );
+    ];
+    // sequence만 제외한 탭만 남기는 변수
+    const excludeSequenceTab = tabs.filter((tab) => tab.key !== CourseDetailTab.SEQUENCE);
+    // 수강신청이 없는 과정  [이러닝, 라이브, 평가]
+    const isNoEnrollment = ['ELEARNING1', 'LIVE', 'EXAM'].includes(courseType ?? '');
+    // 수강신청이 없는 과정이면 차수 탭 제외
+    return isNoEnrollment ? excludeSequenceTab : tabs;
+  }, [courseType]);
 
   const handleTabChange = (tabKey: string) => {
     changeTab(tabKey as CourseDetailTab);
