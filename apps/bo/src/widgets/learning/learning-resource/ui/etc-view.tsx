@@ -8,7 +8,7 @@ import {
   getTooltipContent,
   LearningResourceETCDetail,
 } from '@features/learning-resource';
-import { useDynamicForm2 } from '@learnway/hooks';
+import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType } from '@shared/types/enums';
@@ -24,6 +24,9 @@ interface Props {
 
 function EtcViewComponent({ content, hasMapping }: Props) {
   const { confirm: openConfirm } = useModal();
+  const {
+    state: { isTranslated },
+  } = useCurrentRoute();
 
   const { provider, onSubmit, updateFormData, formState, getValues } = useDynamicForm2();
 
@@ -57,9 +60,9 @@ function EtcViewComponent({ content, hasMapping }: Props) {
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer
-        title={t('기타 상세')}
+        title={`${t('기타')} ${!isTranslated ? t('상세') : t('번역')}`}
         tooltipProps={{
-          show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
+          show: !isTranslated && (!!hasMapping || content?.createType !== ContentCreateType.MANUAL),
           content: t(getTooltipContent(content?.createType)),
           type: content?.createType,
         }}

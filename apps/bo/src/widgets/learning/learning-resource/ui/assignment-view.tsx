@@ -5,7 +5,7 @@ import {
 } from '@features/learning-resource/learning-resource-management/service/assignment/type';
 import { LearningResourceAssignmentBasicInfo } from '@features/learning-resource/learning-resource-management/ui/learning-resource-assignment-basic-info';
 import { LearningResourceAssignmentSubmission } from '@features/learning-resource/learning-resource-management/ui/learning-resource-assignment-submission';
-import { useDynamicForm2 } from '@learnway/hooks';
+import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
 import { TabItemProps, Tabs } from '@learnway/ui/tabs';
 
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
@@ -23,6 +23,9 @@ interface Props {
 }
 
 function AssignmentViewComponent({ content, hasMapping }: Props) {
+  const {
+    state: { isTranslated },
+  } = useCurrentRoute();
   const { t } = useTranslation();
 
   const contentUuid = content?.contentUuid ?? '';
@@ -78,9 +81,9 @@ function AssignmentViewComponent({ content, hasMapping }: Props) {
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer
-        title={t('과제 상세')}
+        title={`${t('과제')} ${!isTranslated ? t('상세') : t('번역')}`}
         tooltipProps={{
-          show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
+          show: !isTranslated && (!!hasMapping || content?.createType !== ContentCreateType.MANUAL),
           content: t(getTooltipContent(content?.createType)),
           type: content?.createType,
         }}

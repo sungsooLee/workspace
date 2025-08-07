@@ -67,15 +67,14 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
     },
   });
 
-  const detailUrl = useMemo(() => '/learning/learning-resource/view', [contentType]);
-
   const { exportContent } = usePostContentExport({
     onSuccess: (result: ContentExportRes) => {
       if (result.destContentUuid) {
         router.navigate({
-          to: detailUrl,
+          to: '/learning/learning-resource/view',
           state: {
             contentUuid: result.destContentUuid,
+            isTranslated: true,
             listParam: {
               ...listParam,
               tenantId: result.destTenantId,

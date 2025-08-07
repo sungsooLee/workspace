@@ -6,7 +6,7 @@ import {
   LearningResourceBlogDetail,
 } from '@features/learning-resource';
 import { useBlogContentForm } from '@features/learning-resource/learning-resource-management';
-import { useDynamicForm2 } from '@learnway/hooks';
+import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
 import defaultImage from '@learnway/styles/bo/assets/images/thumb/img_thumb_default.jpg';
 import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType } from '@shared/types/enums';
@@ -23,6 +23,9 @@ interface Props {
 }
 
 function BlogViewComponent({ content, hasMapping }: Props) {
+  const {
+    state: { isTranslated },
+  } = useCurrentRoute();
   const { t } = useTranslation();
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -44,9 +47,9 @@ function BlogViewComponent({ content, hasMapping }: Props) {
   return (
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer
-        title={t('블로그 상세')}
+        title={`${t('블로그')} ${!isTranslated ? t('상세') : t('번역')}`}
         tooltipProps={{
-          show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
+          show: !isTranslated && (!!hasMapping || content?.createType !== ContentCreateType.MANUAL),
           content: t(getTooltipContent(content?.createType)),
           type: content?.createType,
         }}
