@@ -31,4 +31,7 @@ function LoginContainerComponent({ children }: LoginContainerComponentProps) {
   );
 }
 
+/**
+ * @description FO 로그인 화면 전용 컨테이너
+ */
 export const LoginContainer = LoginContainerComponent;

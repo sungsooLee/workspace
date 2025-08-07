@@ -117,4 +117,7 @@ function AuthFooterComponent() {
   );
 }
 
+/**
+ * @description FO 로그인 화면 전용 푸터
+ */
 export const AuthFooter = memo(AuthFooterComponent);

@@ -1,37 +1,38 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { memo, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
+import { useTranslation } from 'react-i18next';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { PMSApiPrefix } from '@learnway/config';
-import { IcoBell02 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
-import { Popover } from '@learnway/ui/popover';
-
-import { queryKeys } from '../../../../entities/notification/service/notification.queries';
-
-import { Notification } from './notification';
-import { NotificationModal } from './notification-modal';
-
+import { IcoBell02, IcoClose02 } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
+import { Popover } from '@learnway/ui/popover';
+
+import { queryKeys } from '@entities/notification/service/notification.queries';
+import { NotificationContents } from './notification-contents';
+import { NotificationModal } from './notification-modal';
+
+import popoverInnerStyles from '@learnway/styles/fo/features/layout/ui/popover-inner.module.css';
 import styles from './notification-button.module.css';
 
 const PopoverContent = () => {
+  const { t } = useTranslation();
   return (
-    <div className={cn(styles.start, styles.alarm_wrap)}>
-      <div className={styles.alarm_content}>
-        {/* alarm_header */}
-        <div className={styles.alarm_header}>
-          <strong className={styles.tit}>{'알림'}</strong>
-          <div className={styles.btn_wrap}>
-            <Button className={styles.btn}>전체읽음</Button>
-            <Button className={styles.btn}>전체삭제</Button>
-          </div>
-        </div>
+    <div className={`${styles.start} ${popoverInnerStyles.start}`}>
+      <div className={popoverInnerStyles.title_area}>
+        <h2>알림</h2>
+        <Popover.Close>
+          <Button variant="expand" size="sm" onlyIcon>
+            <IcoClose02 className={popoverInnerStyles.btn_close} />
+          </Button>
+        </Popover.Close>
+      </div>
 
+      <div className={styles.alarm_content}>
         {/* contents */}
-        <Notification />
+        <NotificationContents />;
       </div>
     </div>
   );
@@ -91,7 +92,7 @@ const NotificationComponent = ({ userUUID }: any) => {
     return () => {
       if (eventSource) {
         eventSource.close();
-        fetch(`${PMSApiPrefix}/alarm/close/${userUUID}`);
+        fetch(`${PMSApiPrefix()}/alarm/close/${userUUID}`);
       }
     };
   }, [userUUID, queryClient]);
