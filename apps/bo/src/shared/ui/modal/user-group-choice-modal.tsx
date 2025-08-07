@@ -57,6 +57,16 @@ const UserGroupModalComponent = ({ groups }: Pick<BlackwhiteUsersParam, 'groups'
           label: t('이름'),
           value: '',
         },
+        {
+          name: '',
+          type: 'hidden',
+          value: '',
+        },
+        {
+          name: '',
+          type: 'hidden',
+          value: '',
+        },
       ],
     ],
   };

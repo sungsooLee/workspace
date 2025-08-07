@@ -12,7 +12,7 @@ import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { EnGlobalConst } from '@shared/types/enums';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
 import {
-  DropdownFormField,
+  DropdownFormField, FormItem,
   FormRow2,
   InputFormField,
   PeriodPickerFormField,
@@ -330,8 +330,6 @@ const TenantHolidayListComponent: FC<any> = () => {
             format="string"
             element={<InputFormField />}
           />
-        </ContentsRow>
-        <ContentsRow>
           <FormRow2
             provider={searchProvider}
             name="holidayType"
@@ -346,6 +344,8 @@ const TenantHolidayListComponent: FC<any> = () => {
               />
             }
           />
+        </ContentsRow>
+        <ContentsRow>
           <FormRow2
             provider={searchProvider}
             name="isUsed"
@@ -363,10 +363,12 @@ const TenantHolidayListComponent: FC<any> = () => {
           <FormRow2
             provider={searchProvider}
             name={'dateRange'}
-            label={'휴일 기간'}
+            label={t('휴일 기간')}
             format={'object'}
             element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day' }} />}
           />
+          <FormItem />
+          <FormItem />
         </ContentsRow>
       </SearchBoxForm>
       <Divider />
