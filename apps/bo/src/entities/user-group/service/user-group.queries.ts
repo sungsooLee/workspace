@@ -66,4 +66,7 @@ export const userGroupManualOptions = {
   update: () => ({
     mutationFn: (payload: any) => UserGroupsService.updateUserGroupManual(payload),
   }),
+  delete: () => ({
+    mutationFn: (userGroupId: number) => UserGroupsService.deleteUserGroupManual(userGroupId),
+  })
 };

@@ -78,4 +78,8 @@ export default class UserGroupService {
     delete payload.userGroupId;
     return httpService.put<any>(`${PMSApiPrefix()}/userGroup/${userGroupId}`, payload);
   }
+
+  static deleteUserGroupManual(userGroupId: number) {
+    return httpService.delete(`${PMSApiPrefix()}/userGroup/${userGroupId}`);
+  }
 }
