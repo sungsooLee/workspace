@@ -1,14 +1,14 @@
 import { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { IcoArrowBackward, IcoArrowDown } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { IcoArrowDown, IcoArrowBackward } from '@learnway/icons';
 
 import { useActiveMenuDepthState } from '@learnway/auth/entities';
 import { AccordionMenu } from './accordion-menu/accordion-menu';
 
-import styles from './lnb.module.css';
 import { Button } from '@learnway/ui/button';
+import styles from './lnb.module.css';
 
 function LNBComponent() {
   const { t } = useTranslation();
@@ -47,6 +47,18 @@ function LNBComponent() {
       document.body.classList.remove('lnb-open');
     };
   }, [toggleLnb]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1280) {
+        setToggleLnb(false);
+      }
+    };
+
+    handleResize(); // 초기 체크
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   if (!activeMenuDepthMenu?.[0]) {
     return <></>;

@@ -47,9 +47,9 @@
 
   /* content_wrap */
   .content_wrap {
-    @apply w-full px-[40px];
+    @apply w-full min-w-[920px] overflow-hidden overflow-x-auto px-[40px];
     .content {
-      @apply box-border flex w-full items-stretch overflow-hidden rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] px-[32px] pb-[40px] pt-[24px];
+      @apply box-border flex w-full items-stretch rounded-[8px] border-[1px] border-solid border-[var(--gray4)] bg-[var(--white)] px-[32px] pb-[40px] pt-[24px];
     }
     &.hide_outline {
       @apply rounded-none !border-0 bg-transparent;
