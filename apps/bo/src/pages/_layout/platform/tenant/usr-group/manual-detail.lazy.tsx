@@ -29,7 +29,7 @@ import {
 import { queryOptions } from '@entities/user-group/service/user-group.queries';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Tenant } from '@learnway/auth/types';
-import { FormDisplay, FormRow } from '@shared/ui/form';
+import { ContentsHistoryInfoFormField, FormDisplay, FormRow } from '@shared/ui/form';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
 import {
   ChannelListChoiceModal,
@@ -40,6 +40,8 @@ import { SearchBox } from '@shared/ui/search-box';
 import { useWatch } from 'react-hook-form';
 import { useToast } from '@learnway/ui/toast';
 import { EnFormMode } from '@shared/types';
+import { cn } from '@learnway/shared';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
   component: RouteComponent,
@@ -419,6 +421,9 @@ function RouteComponent() {
           config={gManualConfig}
           columns={manualColumns()}
         />
+        <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+          <ContentsHistoryInfoFormField provider={provider}/>
+        </ContentsRow>
       </MainContents>
     </PageContainer>
   );
