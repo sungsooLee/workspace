@@ -4,13 +4,13 @@ import { NumericFormat, PatternFormat } from 'react-number-format';
 import { NumericFormatProps } from 'react-number-format/types/types';
 import { Button } from '../button/button';
 
-import { cn } from '@learnway/shared';
 import { IcoDelete03, IcoSearch, IcoSearchWrite } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 
-import styles from './input.module.css';
-import { useTranslation } from 'react-i18next';
-import { useInputValidation, VALIDATION_RULES } from './use-input-validation';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import styles from './input.module.css';
+import { useInputValidation, VALIDATION_RULES } from './use-input-validation';
 
 export interface InputValidationConfig {
   customErrorMessage?: string; // 커스텀 에러 메시지
@@ -388,11 +388,20 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               onClick={() => onEnterKeyDown?.()}
               className={cn(styles.clear)}
               onlyIcon
+              disabled={readOnly || disabled}
             >
               {searchIconType === 'search' ? (
-                <IcoSearchWrite width={20} height={20} stroke={'#4C515E'} />
+                <IcoSearchWrite
+                  width={20}
+                  height={20}
+                  stroke={readOnly || disabled ? '#C8D2E5' : '#4C515E'}
+                />
               ) : (
-                <IcoSearch width={20} height={20} stroke={'#131C30'} />
+                <IcoSearch
+                  width={20}
+                  height={20}
+                  stroke={readOnly || disabled ? '#C8D2E5' : '#131C30'}
+                />
               )}
             </Button>
           )}
