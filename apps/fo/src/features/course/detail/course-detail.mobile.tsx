@@ -370,7 +370,6 @@ export function CourseDetailMobile({ courseId, courseData }: { courseId: any; co
           {sequencesData && (
             <CourseEducation
               ref={educationRef}
-              educationsTemp={courseData?.educations}
               educations={sequencesData}
               courseEnrollCompletePopup={CourseEnrollComplete}
               CourseCancelCompletePopup={CourseCancelCompleteAlert}
@@ -643,32 +642,12 @@ export function CourseDetailMobile({ courseId, courseData }: { courseId: any; co
                   )}
                 </li>
               )}
-              {/* <li>
-                <IcoLocation width={20} height={20} stroke="#4d525c" />
-                <p>온라인 비대면</p>
-              </li>
-              <li>
-                <IcoTime width={20} height={20} fill="#4d525c" />
-                <p>1시간 24분</p>
-              </li>
-              <li>
-                <IcoBuilding width={20} height={20} fill="#4d525c" />
-                <p>야나두</p>
-              </li>
-              <li>
-                <IcoDivice width={20} height={20} fill="#4d525c" />
-                <p>앱, 웹, 모바일전용, 사외IP전용</p>
-              </li> */}
               {courseData?.course?.data.level && (
                 <li>
                   <IcoLevel width={20} height={20} fill="#4d525c" />
                   <p>{courseData?.course?.data.level}</p>
                 </li>
               )}
-              {/* <li>
-                <IcoPrize width={20} height={20} fill="#4d525c" />
-                <p>발급</p>
-              </li> */}
               {courseData?.course?.data.captionLanguage && (
                 <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
                   <IcoSubtitles02 width={20} height={20} fill="#4d525c" />

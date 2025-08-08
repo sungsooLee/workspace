@@ -11,19 +11,17 @@ import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { CourseCancelReasonPopup, EducationPlacePopup } from '../../../features/layout';
+import { CourseCancelReasonPopup, EducationPlacePopup } from '../../../../features/layout';
 
 import {
   InstructorType,
   InstructorTypeLabel,
-  SequenceEnrollButtonType,
-  useCourseEnrollWaiting,
-  useCourseEnrollWaitingCancle,
+  SequenceEnrollButtonType
 } from '@entities/course';
 import {
   useDeleteCourseApplication,
   useDeleteCourseWaiting,
-  useFetchCourseRegistrationStatus,
+  useFetchEnrollStatusCheck,
   usePostCourseWaiting,
 } from '@entities/enroll';
 import { DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
@@ -45,8 +43,6 @@ interface EducationProps {
 const EducationComponent = ({
   className,
   edu,
-  courseEnrollCompletePopup,
-  CourseCancelCompletePopup,
   dashboardRef,
   goToScrollRef,
   handleTab,
@@ -66,23 +62,8 @@ const EducationComponent = ({
     mutate: deleteEnrollMutate,
     isPending: isDeleteEnrollPending,
   } = useDeleteCourseApplication();
-  const { data: statusData } = useFetchCourseRegistrationStatus(edu.courseSequenceId);
+  // const { data: statusCheckData } = useFetchEnrollStatusCheck(edu.courseSequenceId);
   // console.log('sadasdasasdfadsgfasdfg', statusData);
-
-  // 수강대기 하기
-  const { enrollWaitingRequest } = useCourseEnrollWaiting({
-    onSuccess: (data: any) => {
-      console.log('data121212', data);
-      if (data.code === 200) courseEnrollCompletePopup && courseEnrollCompletePopup();
-    },
-  });
-  // 수강대기 취소하기
-  const { enrollWaitingCancleRequest } = useCourseEnrollWaitingCancle({
-    onSuccess: (data: any) => {
-      console.log('data121212', data);
-      if (data.code === 200) courseEnrollCompletePopup && courseEnrollCompletePopup();
-    },
-  });
 
   const { mutateAsync: postCourseWaiting } = usePostCourseWaiting({
     courseSequenceId: edu.courseSequenceId,
@@ -90,6 +71,7 @@ const EducationComponent = ({
   const { mutateAsync: deleteCourseWaiting } = useDeleteCourseWaiting({
     courseSequenceId: edu.courseSequenceId,
   });
+  const { refetch: fetchEnrollStatusCheck, data } = useFetchEnrollStatusCheck(edu.courseSequenceId);
 
   // Alert 퍼블수정 20250708 (전체적으로 수정)
   // 수강대기 신청 완료
@@ -180,10 +162,11 @@ const EducationComponent = ({
     // if (courseEnrollCompletePopup) courseEnrollCompletePopup();
   };
 
-  const handleEnrollBeforeCheckEnrollStatus = () => {
-    console.log('수장신청버튼 클릭');
-    const { data } = useFetchCourseRegistrationStatus(edu.courseSequenceId);
-    console.log('수장신청버튼 클릭', data);
+  const handleEnrollBeforeCheckEnrollStatus = async () => {
+    console.log('수강신청버튼 클릭');
+
+    const { data } = await fetchEnrollStatusCheck();
+    console.log(data);
 
     // const sendData = { courseSequenceId: edu.courseSequenceId };
     // navigate({ to: '/course/registration', state: sendData });
@@ -208,24 +191,6 @@ const EducationComponent = ({
       .catch((error) => {
         console.error('수강대기취소', error);
       });
-  };
-
-  // 수강대기 하기
-  const handleEnrollWaitingRequest = () => {
-    console.log('1');
-
-    enrollWaitingRequest({ courseId: '111111' });
-
-    // if (courseEnrollCompletePopup) courseEnrollCompletePopup();
-  };
-
-  // 수강대기 취소하기
-  const handleEnrollWaitingCancleRequest = () => {
-    console.log('1');
-
-    enrollWaitingCancleRequest({ courseId: '111111' });
-
-    // if (courseEnrollCompletePopup) courseEnrollCompletePopup();
   };
 
   const buttonGenerator = () => {

@@ -11,20 +11,12 @@ import { useModal } from '@learnway/ui/modal';
 import { ProgressBar } from '@learnway/ui/progress';
 
 import { Panel } from '@learnway/ui/panel';
-import { Popover } from '@learnway/ui/popover';
+import { PopoverList } from '@learnway/ui/popover-list';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { forwardRef, memo, useState } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { CurriculumStudy } from '../../../../widgets/layout';
 
-const DropdownPopoverCompoment = () => {
-  return (
-    <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
-      <Button>1차 | 25-03-01 ~ 26-03-31</Button>
-      <Button>2차 | 25-03-01 ~ 26-03-31</Button>
-    </div>
-  );
-};
 const CourseDashboardCompoment = forwardRef<HTMLDivElement, any>(({}, ref) => {
   const [selectedValues, setSelectedValues] = useState<null>(null);
 
@@ -53,6 +45,13 @@ const CourseDashboardCompoment = forwardRef<HTMLDivElement, any>(({}, ref) => {
       name4: '-',
       name5: '-',
     },
+  ];
+
+  //차수별 보기 dropdown
+  const [sequenceDateValues, setSequenceDateValues] = useState<string>('1차');
+  const sequenceDateValuesOptions = [
+    { value: '1차', label: '1차 | 25-03-01 ~ 26-03-31' },
+    { value: '2차', label: '2차 | 25-03-01 ~ 26-03-31' },
   ];
 
   // Thead 정의
@@ -98,16 +97,22 @@ const CourseDashboardCompoment = forwardRef<HTMLDivElement, any>(({}, ref) => {
     <div ref={ref} className={styles.start}>
       <div className={styles.tit_box}>
         <h3>대시보드</h3>
-        <Popover
-          popoverContent={<DropdownPopoverCompoment />}
+        <PopoverList
           className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text}`}
           side="bottom"
           align="end"
           sideOffset={10}
+          options={sequenceDateValuesOptions}
+          onOptionSelect={(option: any) => {
+            console.log('onOptionSelect', option);
+            setSequenceDateValues(option.value);
+            // setOpeningYear(option.value);
+          }}
         >
-          <span>{'차수보기'}</span>
-          <IcoArrowDown width={16} height={16} stroke="#131C30" />
-        </Popover>
+          {/* <span>{'차수보기'}</span>
+          <IcoArrowDown width={16} height={16} stroke="#131C30" /> */}
+          <Button type="button" variant="point" size="sm" label={sequenceDateValues} />
+        </PopoverList>
       </div>
 
       <div className={statusStyles.start}>

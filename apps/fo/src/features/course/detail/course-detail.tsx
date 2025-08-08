@@ -292,7 +292,6 @@ export function CourseDetail({ courseId, courseData }: { courseId: any; courseDa
           {sequencesData && (
             <CourseEducation
               ref={educationRef}
-              educationsTemp={courseData?.educations}
               educations={sequencesData}
               courseEnrollCompletePopup={CourseEnrollComplete}
               CourseCancelCompletePopup={CourseCancelCompleteAlert}
@@ -396,37 +395,6 @@ export function CourseDetail({ courseId, courseData }: { courseId: any; courseDa
 
   // 패키지 아코디언
   const [accordionValue, setAccordionValue] = useState<string>('p01');
-  // 퍼블수정 20250703 수정
-  // const accordionValueItems = [
-  //   {
-  //     value: 'a',
-  //     title: (
-  //       <div className={packageSideStyles.sub_package_title}>
-  //         <p>반드시 알아야하는 파이썬 기본지식 반드시 알아야하는 파이썬</p>
-  //       </div>
-  //     ),
-  //     children: (
-  //       <PackageCardList
-  //         cardListData={packageCardValue}
-  //         className={packageSideStyles.sub_package_content}
-  //       />
-  //     ),
-  //   },
-  //   {
-  //     value: 'b',
-  //     title: (
-  //       <div className={packageSideStyles.sub_package_title}>
-  //         <p>관리자 대상 법정 필수 패키지</p>
-  //       </div>
-  //     ),
-  //     children: (
-  //       <PackageCardList
-  //         cardListData={packageCardValue}
-  //         className={packageSideStyles.sub_package_content}
-  //       />
-  //     ),
-  //   },
-  // ];
   const accordionValueItems = courseData?.package?.map((item: any) => ({
     value: item.id,
     title: (
@@ -444,45 +412,6 @@ export function CourseDetail({ courseId, courseData }: { courseId: any; courseDa
 
   // 수강신청 있는 과정
   const [courseValues, setCourseValues] = useState<string | undefined>(undefined);
-  // const courseOptions = [
-  //   {
-  //     label: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축',
-  //     value: 'a',
-  //     original: {
-  //       number: '1차',
-  //       date: '2026-01-15 ~ 2026-01-04',
-  //       info: [
-  //         {
-  //           icon: IcoChair,
-  //           txt: '999',
-  //         },
-  //         {
-  //           icon: IcoLocation,
-  //           txt: '온라인',
-  //         },
-  //       ],
-  //     },
-  //   },
-  //   {
-  //     label: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축',
-  //     value: 'b',
-  //     original: {
-  //       number: '2차',
-  //       date: '2026-01-15 ~ 2026-01-04',
-  //       info: [
-  //         {
-  //           icon: IcoChair,
-  //           txt: '999',
-  //         },
-  //         {
-  //           icon: IcoLocation,
-  //           txt: '온라인 비대면',
-  //         },
-  //       ],
-  //     },
-  //   },
-  // ];
-
   const courseOptions = enableEnrollSequences?.map((course: any) => ({
     label: course.courseSequenceName,
     value: course.courseSequenceId,
@@ -862,32 +791,12 @@ export function CourseDetail({ courseId, courseData }: { courseId: any; courseDa
                       )}
                     </li>
                   )}
-                  {/* <li>
-                    <IcoLocation width={20} height={20} stroke="#4d525c" />
-                    <p>{courseData?.course?.data.place}</p>
-                  </li> */}
-                  {/* <li>
-                    <IcoTime width={20} height={20} fill="#4d525c" />
-                    <p>{courseData?.course?.data.duration}</p>
-                  </li> */}
-                  {/* <li>
-                    <IcoBuilding width={20} height={20} fill="#4d525c" />
-                    <p>{courseData?.course?.data.outchannel}</p>
-                  </li>
-                  <li>
-                    <IcoDivice width={20} height={20} fill="#4d525c" />
-                    <p>{courseData?.course?.data.lernType}</p>
-                  </li> */}
                   {courseData?.course?.data.level && (
                     <li>
                       <IcoLevel width={20} height={20} fill="#4d525c" />
                       <p>{courseData?.course?.data.level}</p>
                     </li>
                   )}
-                  {/* <li>
-                    <IcoPrize width={20} height={20} fill="#4d525c" />
-                    <p>{courseData?.course?.data.certificate}</p>
-                  </li> */}
                   {courseData?.course?.data.captionLanguage && (
                     <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
                       <IcoSubtitles02 width={20} height={20} fill="#4d525c" />
