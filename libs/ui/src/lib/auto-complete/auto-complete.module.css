@@ -12,7 +12,7 @@
         [class*='nlp-select__clear-indicator'] button svg {
           @apply !fill-none;
           circle {
-            @apply !fill-[#A9AFB8];
+            @apply !fill-[#6F798B];
           }
           path {
             @apply !stroke-white;
@@ -25,7 +25,7 @@
     }
     &.xs {
       [class*='nlp-select__control'] {
-        @apply min-h-[28px] h-[28px];
+        @apply h-[28px] min-h-[28px];
         .nlp-select__indicators {
           @apply h-[28px];
         }
