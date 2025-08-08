@@ -3,28 +3,8 @@ import { cn, getHourValueFromTime } from '@learnway/shared';
 import { memo } from 'react';
 import { isMobile } from 'react-device-detect';
 
+import { CurriculumData, LessonContentType, LessonContentTypeLabel } from '@entities/curriculum';
 import styles from '@learnway/styles/fo/features/layout/ui/curriculum.module.css';
-
-type DateTime = string;
-interface CurriculumData {
-  // txt: string;
-  // type?: string;
-  // time: string;
-
-  mappingCurriculumType?: string;
-  lessonId?: number;
-  lessonName?: string;
-  lessonType?: string;
-  sortOrder?: number;
-  contentUuid?: string;
-  contentType?: string;
-  learningTime?: number;
-  createdBy?: string;
-  createdDate?: DateTime;
-  lastModifiedBy?: string;
-  modifiedDate?: DateTime;
-  lessonDescription?: string;
-}
 
 interface CurriculumProps {
   curriculumData: CurriculumData[];
@@ -45,12 +25,18 @@ const CurriculumComponent = ({ className, curriculumData }: CurriculumProps) => 
   return (
     <div className={cn(styles.start, styles.curriculum, className)}>
       <ol className={styles.list}>
-        {curriculumData.map((curriculumItems, index) => (
+        {curriculumData.map((curriculumItems) => (
           <li key={curriculumItems.lessonId}>
             <div className={styles.box}>
               <p>{curriculumItems.lessonName}</p>
               <div>
-                {isMobile ? '' : <span>{curriculumItems.contentType}</span>}
+                {isMobile ? (
+                  ''
+                ) : (
+                  <span>
+                    {LessonContentTypeLabel[curriculumItems.contentType as LessonContentType] || ''}
+                  </span>
+                )}
                 <span className={styles.type}>
                   <IcoClock01 width={20} height={20} stroke="#131416" />
                   <span>{calcTime(curriculumItems.learningTime)}</span>
