@@ -12,13 +12,13 @@ import {
   ListModalSelectorFormField,
   RadioGroupFormField,
 } from '@learnway/ui/form-field';
-import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import {
   ChipListFormField,
   DateRangePickerFormField,
   DropdownFormField,
   FormRow2,
+  InputFormField,
   TenantByRoleChannelCheckboxFormField,
   TenantChannelDropdownFormField2,
   ThumbnailListFormField,
@@ -193,7 +193,7 @@ const BasicInfoComponent = () => {
           name={'packageName'}
           label={t('패키지명')}
           validation={{ required: true, format: 'string' }}
-          element={<Input maxLength={40} />}
+          element={<InputFormField maxLength={40} />}
         />
       </ContentsRow>
       {/*패키지 소개*/}
@@ -238,7 +238,7 @@ const BasicInfoComponent = () => {
           name={'coordinatorTelNo'}
           label={t('연락처')}
           validation={{ required: true, format: 'string' }}
-          element={<Input />}
+          element={<InputFormField />}
         />
         {/*이메일*/}
         <FormRow2
@@ -246,7 +246,7 @@ const BasicInfoComponent = () => {
           name={'coordinatorEmail'}
           label={t('이메일')}
           validation={{ required: true, format: 'string' }}
-          element={<Input />}
+          element={<InputFormField />}
         />
         {/*담당자 ID - hidden */}
         <FormRow2 provider={provider} name={'coordinatorId'} type={'hidden'} value={''} />
@@ -280,7 +280,7 @@ const BasicInfoComponent = () => {
           name={'operatorTelNo'}
           label={t('연락처')}
           validation={{ required: true, format: 'string' }}
-          element={<Input />}
+          element={<InputFormField />}
         />
         {/*이메일*/}
         <FormRow2
@@ -288,7 +288,7 @@ const BasicInfoComponent = () => {
           name={'operatorEmail'}
           label={t('이메일')}
           validation={{ required: true, format: 'string' }}
-          element={<Input />}
+          element={<InputFormField />}
         />
         {/*운영자 ID - hidden */}
         <FormRow2 provider={provider} name={'operatorId'} type={'hidden'} value={''} />
