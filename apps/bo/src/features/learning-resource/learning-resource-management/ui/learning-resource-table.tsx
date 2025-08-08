@@ -470,15 +470,20 @@ function LearningResourceTableComponent() {
         }}
         customButtonNode={
           <>
-            <Button
-              variant="text"
-              label={t('LABEL.grid.header.share', '공유')}
-              disabled={
-                selectedRows.length !== 1 ||
-                get(first(selectedRows), 'createType') !== ContentCreateType.MANUAL // 원본만 공유 가능
-              }
-              onClick={handleShare}
-            />
+            {!['CHANNEL_GUEST_OPERATION', 'CHANNEL_GUEST_COURSE'].includes(
+              // 채널 게스트는 공유 할 수 없음
+              authUser?.activeRole?.roleType ?? '',
+            ) && (
+              <Button
+                variant="text"
+                label={t('LABEL.grid.header.share', '공유')}
+                disabled={
+                  selectedRows.length !== 1 ||
+                  get(first(selectedRows), 'createType') !== ContentCreateType.MANUAL // 원본만 공유 가능
+                }
+                onClick={handleShare}
+              />
+            )}
             <Button
               variant="text"
               label={t('LABEL.grid.header.guideDownload', '프로그램/가이드 다운로드')}
@@ -507,16 +512,16 @@ function LearningResourceTableComponent() {
                 <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
               </Tooltip>
             </span>
-            <GridExcelDownloadButton
-              method="post"
-              url={`${CMSApiPrefix()}/contents/excel`}
-              params={{ ...params, lastVisitedBoRoleId: authUser?.activeRole?.roleId }}
-              paramLabels={valuesWithLabel}
-              dataCount={data?.totalElements}
-              disabled={
-                !data?.totalElements || authUser?.activeRole?.roleType === 'CHANNEL_GUEST_COURSE'
-              }
-            />
+            {authUser?.activeRole?.roleType !== 'CHANNEL_GUEST_COURSE' && ( // 채널(과정)게스트는 엑셀 다운로드 할 수 없음
+              <GridExcelDownloadButton
+                method="post"
+                url={`${CMSApiPrefix()}/contents/excel`}
+                params={{ ...params, lastVisitedBoRoleId: authUser?.activeRole?.roleId }}
+                paramLabels={valuesWithLabel}
+                dataCount={data?.totalElements}
+                disabled={!data?.totalElements}
+              />
+            )}
             <Button
               variant="text"
               label={t('LABEL.grid.header.copy', '복사')}
