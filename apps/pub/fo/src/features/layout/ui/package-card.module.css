@@ -14,7 +14,7 @@
       }
     }
     p {
-      @apply body-md ml-[16px] flex-1 text-left leading-[24px] text-[var(--gray35)];
+      @apply body-md ml-[16px] flex-1 whitespace-normal text-left leading-[24px] text-[var(--gray35)];
     }
   }
 }
