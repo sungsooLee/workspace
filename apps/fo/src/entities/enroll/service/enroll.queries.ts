@@ -3,6 +3,7 @@ import {
   CourseEnrollResponse,
   EnrollDeleteRequest,
   EnrollRequest,
+  EnrollStatusCheckResponse,
 } from '@entities/enroll';
 import { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
 import EnrollService from '../api/enroll';
@@ -10,6 +11,7 @@ import EnrollService from '../api/enroll';
 export const queryKeys = {
   courseRegistrationDetails: (sequenceUuid: string) =>
     ['courseRegistrationDetails', sequenceUuid] as const,
+  enrollStatusCheck: (sequenceId: number) => ['enrollStatusCheck', sequenceId] as const,
   courseRegistrationStatus: (enrollQueueId: number) =>
     ['courseRegistrationStatus', enrollQueueId] as const,
   singleCourseApplicationQueue: ['singleCourseApplicationQueue'] as const,
@@ -22,6 +24,11 @@ export const queryOptions = {
   courseRegistrationDetails: (sequenceUuid: string): UseQueryOptions<CourseEnrollResponse> => ({
     queryKey: queryKeys.courseRegistrationDetails(sequenceUuid),
     queryFn: () => EnrollService.fetchEnroll(sequenceUuid),
+  }),
+
+  enrollStatusCheck: (sequenceId: number): UseQueryOptions<EnrollStatusCheckResponse> => ({
+    queryKey: queryKeys.enrollStatusCheck(sequenceId),
+    queryFn: () => EnrollService.fetchEnrollStatusCheck(sequenceId),
   }),
 
   courseRegistrationStatus: (

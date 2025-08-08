@@ -21,7 +21,7 @@ import {
 import {
   useDeleteCourseApplication,
   useDeleteCourseWaiting,
-  useFetchCourseRegistrationStatus,
+  useFetchEnrollStatusCheck,
   usePostCourseWaiting,
 } from '@entities/enroll';
 import { DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
@@ -62,7 +62,7 @@ const EducationComponent = ({
     mutate: deleteEnrollMutate,
     isPending: isDeleteEnrollPending,
   } = useDeleteCourseApplication();
-  // const { data: statusData } = useFetchCourseRegistrationStatus(edu.courseSequenceId);
+  // const { data: statusCheckData } = useFetchEnrollStatusCheck(edu.courseSequenceId);
   // console.log('sadasdasasdfadsgfasdfg', statusData);
 
   const { mutateAsync: postCourseWaiting } = usePostCourseWaiting({
@@ -71,6 +71,7 @@ const EducationComponent = ({
   const { mutateAsync: deleteCourseWaiting } = useDeleteCourseWaiting({
     courseSequenceId: edu.courseSequenceId,
   });
+  const { refetch: fetchEnrollStatusCheck, data } = useFetchEnrollStatusCheck(edu.courseSequenceId);
 
   // Alert 퍼블수정 20250708 (전체적으로 수정)
   // 수강대기 신청 완료
@@ -161,10 +162,11 @@ const EducationComponent = ({
     // if (courseEnrollCompletePopup) courseEnrollCompletePopup();
   };
 
-  const handleEnrollBeforeCheckEnrollStatus = () => {
-    console.log('수장신청버튼 클릭');
-    const { data } = useFetchCourseRegistrationStatus(edu.courseSequenceId);
-    console.log('수장신청버튼 클릭', data);
+  const handleEnrollBeforeCheckEnrollStatus = async () => {
+    console.log('수강신청버튼 클릭');
+
+    const { data } = await fetchEnrollStatusCheck();
+    console.log(data);
 
     // const sendData = { courseSequenceId: edu.courseSequenceId };
     // navigate({ to: '/course/registration', state: sendData });

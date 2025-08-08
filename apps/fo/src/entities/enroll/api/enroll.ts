@@ -6,6 +6,7 @@ import {
   CourseEnrollsssResponse,
   EnrollDeleteRequest,
   EnrollRequest,
+  EnrollStatusCheckResponse,
 } from '@entities/enroll';
 import { LMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
@@ -100,5 +101,17 @@ export default class EnrollService {
    */
   static async deleteEnrollWaiting(courseSequenceId: number): Promise<number> {
     return httpService.delete(`${LMSApiPrefix()}/enroll/waitlist`, courseSequenceId);
+  }
+
+  /**
+   * 수강 신청 가능 여부 체크
+   * 수강 신청 가능 여부를 체크 한다
+   * @param courseSequenceId
+   * @returns
+   */
+  static async fetchEnrollStatusCheck(
+    courseSequenceId: number,
+  ): Promise<EnrollStatusCheckResponse> {
+    return httpService.delete(`${LMSApiPrefix()}/enroll/check`, courseSequenceId);
   }
 }
