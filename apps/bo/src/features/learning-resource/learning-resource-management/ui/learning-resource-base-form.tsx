@@ -266,6 +266,7 @@ const LearningResourceBaseFormComponent = ({
             label={t('학습 시간')}
             format="number"
             value={0}
+            validation={{ required: true }}
             element={<SecondDurationTimeFormField readOnly={readOnlyLessonTime || editDisabled} />}
           />
         </ContentsRow>

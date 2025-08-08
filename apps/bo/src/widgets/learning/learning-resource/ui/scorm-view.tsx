@@ -12,7 +12,7 @@ import {
   LearningResourceScormDetail,
   ScormInfo,
 } from '@features/learning-resource';
-import { useDynamicForm2 } from '@learnway/hooks';
+import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType } from '@shared/types/enums';
@@ -28,6 +28,9 @@ interface Props {
 
 function ScormViewComponent({ content, hasMapping }: Props) {
   const { confirm: openConfirm } = useModal();
+  const {
+    state: { isTranslated },
+  } = useCurrentRoute();
 
   const { provider, onSubmit, updateFormData, formState, getValues } = useDynamicForm2();
 
@@ -58,9 +61,9 @@ function ScormViewComponent({ content, hasMapping }: Props) {
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer
-        title={t('스콤 상세')}
+        title={`${t('스콤')} ${!isTranslated ? t('상세') : t('번역')}`}
         tooltipProps={{
-          show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
+          show: !isTranslated && (!!hasMapping || content?.createType !== ContentCreateType.MANUAL),
           content: t(getTooltipContent(content?.createType)),
           type: content?.createType,
         }}

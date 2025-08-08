@@ -35,6 +35,7 @@ import {
   EditSingleAttachmentCell,
   FormDisplay,
   FormRow2,
+  InputFormField,
   SingleAttachmentFormField,
 } from '@shared/ui/form';
 
@@ -80,6 +81,8 @@ const LearningResourceTestItemModalComponent = ({
   const { provider, getValues, updateFormData, onFormChange, onSubmit, formState, watch } =
     useDynamicForm2();
 
+  const questionItemOptions = watch('options') ?? [];
+
   const { data: rowData } = useGetQuestionItem(questionItemGridRow?.examQuestionUuid);
 
   const { create: createQuestionItem } = useCreateQuestionItem();
@@ -101,7 +104,6 @@ const LearningResourceTestItemModalComponent = ({
     if (!questionItemGridRow?.examQuestionUuid || hasMapping) {
       return;
     }
-    console.log('delete button click');
 
     const payload: QuestionItemDeleteParam = {
       contentUuid: contentInfo.contentUuid,
@@ -168,6 +170,8 @@ const LearningResourceTestItemModalComponent = ({
       });
     }
   };
+
+  const handleIsOptionSelectable = useCallback(() => !hasMapping, [hasMapping]);
 
   const updateIsCorrectAnswerRadio = useCallback(
     (index: number) => {
@@ -355,8 +359,12 @@ const LearningResourceTestItemModalComponent = ({
 
   useEffect(() => {
     if (!questionItem) return;
+
     updateFormData({
       ...questionItem,
+      languageCountryCodeName: t(
+        `pms.multilingual.LangCountryCode.${contentInfo.languageCountryCode}`,
+      ),
       fileAttached: questionItem.fileUuid && questionItem.fileUuid.length > 0,
     });
     setOtherOptions(questionItem.options);
@@ -444,7 +452,7 @@ const LearningResourceTestItemModalComponent = ({
                       { label: t('주관식'), value: EnQuestionType.ESSAY },
                       { label: t('OX'), value: EnQuestionType.OX },
                     ]}
-                    disabled={contentInfo?.examTemplateType === ExamTemplateType.QUIZ}
+                    disabled={contentInfo?.examTemplateType === ExamTemplateType.QUIZ || hasMapping}
                   />
                 }
               />
@@ -454,8 +462,10 @@ const LearningResourceTestItemModalComponent = ({
                 provider={provider}
                 name="languageCountryCodeName"
                 label={t('문항언어')}
-                value={t(`pms.multilingual.LangCountryCode.${contentInfo.languageCountryCode}`)}
-                element={<Input id="name-type2-2" type="text" disabled />}
+                type="text"
+                format="string"
+                value=""
+                element={<Input disabled />}
               />
               <FormRow2
                 provider={provider}
@@ -469,6 +479,7 @@ const LearningResourceTestItemModalComponent = ({
                       { label: '중', value: EnQuestionLevel.MEDIUM },
                       { label: '하', value: EnQuestionLevel.EASY },
                     ]}
+                    disabled={hasMapping}
                   />
                 }
               />
@@ -582,20 +593,22 @@ const LearningResourceTestItemModalComponent = ({
                     }}
                     element={
                       <GridFormField
-                        maxRow={10}
+                        maxRow={hasMapping ? questionItemOptions.length : 10}
                         gridProps={{
                           title: t('보기목록'),
                           multiple: true,
+                          showTotalCount: true,
+                          // customButtonNode로 교체 고려...
                           showAdd: questionTypeWatch !== EnQuestionType.OX,
                           showRemove: questionTypeWatch !== EnQuestionType.OX,
-                          showTotalCount: true,
                           columns: gridColumn,
                           isRowSelected: (row: object) => {
                             if (questionTypeWatch === EnQuestionType.OX) return false;
                             return true;
                           },
-                          enableDragAndDrop: true,
+                          enableDragAndDrop: !hasMapping,
                           rowId: 'sortSeq',
+                          isRowSelectable: handleIsOptionSelectable,
                         }}
                       />
                     }

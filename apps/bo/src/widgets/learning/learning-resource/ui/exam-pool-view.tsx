@@ -10,7 +10,7 @@ import {
   QuestionBankTabFormRef,
   QuestionTab,
 } from '@features/learning-resource/learning-resource-management/service/question-bank/type';
-import { useDynamicForm2 } from '@learnway/hooks';
+import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
 import { Tabs } from '@learnway/ui/tabs';
 import { ContentCreateType } from '@shared/types/enums';
@@ -25,6 +25,9 @@ interface Props {
 }
 
 function ExamPoolViewComponent({ content }: Props) {
+  const {
+    state: { isTranslated },
+  } = useCurrentRoute();
   const { t } = useTranslation();
 
   const { alert, confirm: openConfirm } = useModal();
@@ -113,9 +116,10 @@ function ExamPoolViewComponent({ content }: Props) {
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer
-        title={t('문제은행 상세')}
+        title={`${t('문제은행')} ${!isTranslated ? t('상세') : t('번역')}`}
         tooltipProps={{
-          show: isExamMapping,
+          show:
+            !isTranslated && (isExamMapping || content?.createType !== ContentCreateType.MANUAL),
           content: t(
             getTooltipContent(
               content?.createType !== ContentCreateType.MANUAL

@@ -678,6 +678,37 @@ export interface QuestionSortReq {
   mappingList: QuestionSortItem[];
 }
 
+export interface AssignmentSubmissionCreateReq {
+  contentUuid: string;
+  assignmentSubmissionText: string;
+  explainText: string;
+  attachFileUuid: string;
+  answerFileUuid: string;
+}
+
+export interface AssignmentSubmissionUpdateReq extends AssignmentSubmissionCreateReq {
+  assignmentSubmissionUuid: string;
+}
+
+export interface AssignmentSubmissionItem {
+  assignmentSubmissionUuid: string;
+  assignmentSubmissionText: string;
+  explainText: string;
+  attachFileUuid: string;
+  answerFileUuid: string;
+  attachFileName: string;
+  attachFileSize: number;
+  attachFilePath: string;
+  answerFileName: string;
+  answerFileSize: number;
+  answerFilePath: string;
+}
+
+export interface AssignmentSubmissionMutationReq {
+  contentUuid: string;
+  assignmentSubmissionUuidList: string[];
+}
+
 export interface MutationResponse {
   result: boolean;
 }

@@ -2,6 +2,7 @@ import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
 import { omit, pick } from 'lodash-es';
 import {
+  AssignmentSubmissionItem,
   BlogCreateReq,
   BlogUpdateReq,
   ChannelCodeType,
@@ -340,6 +341,14 @@ export default class LearningResourceService {
    */
   static updateAssignment(body: ContentBaseInfo): Promise<string> {
     return httpService.put(`${CMSApiPrefix()}/assignment`, body);
+  }
+
+  /**
+   * 과제 화면 내 과제물 목록 조회
+   * @param contentUuid
+   */
+  static fetchAssignmentSubmissionList(contentUuid: string): Promise<AssignmentSubmissionItem[]> {
+    return httpService.get(`${CMSApiPrefix()}/assignment/submissions/${contentUuid}`);
   }
 
   /**
