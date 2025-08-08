@@ -1,12 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 
-import { VideoSettingPopup } from '../../features/learning';
-
 import styles from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
 
 import video from '@learnway/styles/fo/assets/images/temp/video.mp4';
-import { Button } from '@learnway/ui/button';
 import { useLearningWindow } from '@learnway/ui/learning-window';
 import { useModal } from '@learnway/ui/modal';
 import { useVideoPlayer, VideoPlayer, VideoPlayerContainer } from '@learnway/ui/video-player';
@@ -115,8 +112,11 @@ function RouteComponent() {
   }, []);
 
   return (
-    // 퍼블수정 20250717 마크업 수정
     <div className={`${styles.start} ${styles.video}`}>
+      {/* 퍼블수정 20250808 레슨명 추가 */}
+      <div className={styles.lesson_box}>
+        <strong>레슨명</strong>
+      </div>
       <div className={styles.video_wrap}>
         <div className={styles.video_area}>
           <div className={styles.video_contents}>
@@ -136,19 +136,7 @@ function RouteComponent() {
               />
             </VideoPlayerContainer>
           </div>
-          <div className={styles.detail_lesson}>
-            <strong>레슨명</strong>
-          </div>
-          <Button
-            onClick={() =>
-              openModal({
-                width: 'm_bottom_sheet',
-                content: <VideoSettingPopup />,
-              })
-            }
-          >
-            aaaa
-          </Button>
+          {/* 퍼블수정 20250808 레슨명 삭제 */}
         </div>
       </div>
     </div>

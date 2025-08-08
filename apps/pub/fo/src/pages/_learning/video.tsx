@@ -1,15 +1,10 @@
-import { useState, useEffect } from 'react';
-import { isMobile } from 'react-device-detect';
-import { cn } from '@learnway/shared';
-import { createFileRoute, Link } from '@tanstack/react-router';
-
-import { VideoSettingPopup } from '../../features/learning';
+import { createFileRoute } from '@tanstack/react-router';
+import { useEffect, useState } from 'react';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning.module.css';
 
-import video from '@learnway/styles/fo/assets/images/temp/video.mp4';
-import { useModal } from '@learnway/ui/modal';
 import { useLearningWindow } from '@learnway/ui/learning-window';
+import { useModal } from '@learnway/ui/modal';
 import { useVideoPlayer, VideoPlayer, VideoPlayerContainer } from '@learnway/ui/video-player';
 
 export const Route = createFileRoute('/_learning/video')({

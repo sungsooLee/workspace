@@ -1,7 +1,5 @@
-import { isMobile } from 'react-device-detect';
-import { cn } from '@learnway/shared';
-import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui/button';
+import { createFileRoute } from '@tanstack/react-router';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
 
@@ -14,6 +12,10 @@ export const Route = createFileRoute('/_learning/file-m')({
 function RouteComponent() {
   return (
     <div className={`${styles.start} ${styles.file}`}>
+      {/* 퍼블수정 20250808 레슨명 추가 */}
+      <div className={styles.lesson_box}>
+        <strong>레슨명</strong>
+      </div>
       <div className={styles.file_box}>
         {/* 퍼블수정 20250717 마크업 수정 */}
         <p>
