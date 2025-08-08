@@ -89,6 +89,15 @@ function RouteComponent() {
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getGridFetchParams);
   const gridStateRef = useRef<any>(null); // 그리드 상태 저장용
 
+  // 커스텀 reset 핸들러 - 초기값으로 설정
+  const handleReset = useCallback(() => {
+    setValue('keyTypeCode', '');
+    setValue('targetLocale', '');
+    setValue('isTranslated', '');
+    setValue('multilingualKey', '');
+    setValue('translation', '');
+  }, [setValue]);
+
   /**
    * @param data
    */
@@ -344,6 +353,7 @@ function RouteComponent() {
             keyTypeCodeOptions={keyTypeCodeOptions}
             targetLocaleOptions={targetLocaleOptions}
             keyTypeCode={keyTypeCode}
+            onReset={handleReset}
           />
           <Divider />
           <TableBox

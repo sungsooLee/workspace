@@ -13,6 +13,7 @@ interface MultilingualSearchFormProps {
   keyTypeCodeOptions: SelectOption[];
   targetLocaleOptions: SelectOption[];
   keyTypeCode?: string;
+  onReset?: (values?: Record<string, any>) => void;
 }
 
 export const MultilingualSearchForm = ({
@@ -22,9 +23,10 @@ export const MultilingualSearchForm = ({
   keyTypeCodeOptions,
   targetLocaleOptions,
   keyTypeCode,
+  onReset,
 }: MultilingualSearchFormProps) => {
   return (
-    <SearchBoxForm onSearch={onSubmit(onSearch)}>
+    <SearchBoxForm onSearch={onSubmit(onSearch)} onReset={onReset}>
       <ContentsRow>
         <FormRow2
           provider={provider}
@@ -98,6 +100,8 @@ export const MultilingualSearchForm = ({
             />
           }
         />
+        <FormItem />
+        <FormItem />
         <FormItem />
       </ContentsRow>
     </SearchBoxForm>
