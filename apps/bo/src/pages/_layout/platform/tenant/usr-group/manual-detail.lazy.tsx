@@ -39,6 +39,7 @@ import {
 import { SearchBox } from '@shared/ui/search-box';
 import { useWatch } from 'react-hook-form';
 import { useToast } from '@learnway/ui/toast';
+import { EnFormMode } from '@shared/types';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
   component: RouteComponent,
@@ -64,6 +65,7 @@ function RouteComponent() {
   const { openModal, confirm: openConfirm, } = useModal();
   const { open: openToast } = useToast();
   const [tenantInfo, setTenantInfo] = useState<Tenant>();
+  const [roleId, setRoleId] = useState<number>(0);
   const [modalUserGroups, setModalUserGroups] = useState<any>(null);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const [userGroupSettings, setUserGroupSettings] = useState<any>();
@@ -293,6 +295,7 @@ function RouteComponent() {
     console.log('### loginUser', loginUser);
     if (loginUser) {
       setTenantInfo(loginUser.activeTenant);
+      setRoleId(loginUser.activeRole!.roleId)
       setValue('tenantName', loginUser.activeTenant?.tenantName);
     }
   }, [loginUser]);
@@ -311,9 +314,12 @@ function RouteComponent() {
             {t('목록')}
           </Button>
         </LinkBox>
-        <Button onClick={handleRemoveButtonClick} variant="point" size="sm">
-          {t('삭제')}
-        </Button>
+        {
+          routerState.location.state.mode === EnFormMode.VIEW &&
+          <Button onClick={handleRemoveButtonClick} variant="point" size="sm">
+            {t('삭제')}
+          </Button>
+        }
         <Button onClick={handleResetButtonClick} variant="point" size="sm">
           {t('초기화')}
         </Button>
@@ -348,7 +354,7 @@ function RouteComponent() {
                 element={
                   <ChipListModalSelectorFormField
                     modalConfig={{
-                      content: <ChannelListChoiceModal roleId={0} />,
+                      content: <ChannelListChoiceModal roleId={roleId} />,
                       title: '',
                       width: 'xl',
                     }}
