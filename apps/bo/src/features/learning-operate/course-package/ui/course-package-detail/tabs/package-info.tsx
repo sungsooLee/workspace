@@ -10,7 +10,72 @@ const PackageInfoComponent = () => {
   const { t } = useTranslation();
   const { alert, openModal } = useModal();
 
-  const { provider, getValues, onFormChange, treeData } = useCoursePackageDetailPackageInfo();
+  const {
+    provider,
+    getValues,
+    onFormChange,
+    treeData,
+    isLoading,
+    expandedKeys,
+    selectedNode,
+    handleExpandChange,
+    handleSelectedNodeChange,
+    handleAddCourseNode,
+  } = useCoursePackageDetailPackageInfo();
+  console.log('#################treeData=>', treeData);
+  console.log('expandedKeys=>', expandedKeys);
+
+  const renderNodeButtons = (node: TreeNode, level: number) => {
+    console.log('node=>', node);
+    console.log('level=>', level);
+    if (level === 0) {
+      return (
+        <div className={'gap-10px flex'}>
+          <div className={'flex items-center'}>
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                // handleAddSubMenu(node);
+              }}
+              variant="gray2"
+              size={'xs'}
+              type={'button'}
+              disabled={level !== 0}
+              label={t('서브 패키지 추가')}
+            />
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAddCourseNode(node, level);
+              }}
+              variant="gray2"
+              size={'xs'}
+              type={'button'}
+              disabled={level !== 0}
+              label={t('과정 추가')}
+            />
+          </div>
+        </div>
+      );
+    } else if (node.itemType === 'SUB_PKG') {
+      return (
+        <div className={'gap-10px flex'}>
+          <div className={'flex items-center'}>
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAddCourseNode(node, level);
+              }}
+              variant="gray2"
+              size={'xs'}
+              type={'button'}
+              label={t('과정 추가')}
+            />
+          </div>
+        </div>
+      );
+    }
+  };
 
   return (
     <form>
@@ -38,20 +103,20 @@ const PackageInfoComponent = () => {
               title={t('목차')}
               data={treeData}
               treeId={'course-package-tree'}
-              //   expandedKeys={expandedKeys}
-              //   onExpandedKeysChange={handleExpandChange}
-              //   renderNodeButtons={renderNodeButtons}
-              //   onAction={handleTreeAction}
+              expandedKeys={expandedKeys}
+              onExpandedKeysChange={handleExpandChange}
+              renderNodeButtons={renderNodeButtons}
+              // onAction={handleTreeAction}
               type={'DRAG_DROP'}
-              //   selectedNode={selectedNode}
-              initLevel={2}
-              //   handleSelectedNodeChange={handleSelectedNodeChange}
+              selectedNode={selectedNode}
+              initLevel={1}
+              handleSelectedNodeChange={handleSelectedNodeChange}
               //   customDropValidator={customDropValidator}
               maxDepth={5}
               isSelectableNode={(node: TreeNode) => {
                 return node && node.level !== 0;
               }}
-              isLoading={true}
+              isLoading={isLoading}
               clientTree={true}
               disableOptimisticUpdate={false} // 클라이언트 트리에서는 낙관적 업데이트 사용
             />
@@ -60,6 +125,8 @@ const PackageInfoComponent = () => {
         <div>
           {/*상세정보*/}
           <FormSubTitle label={t('상세정보')} />
+          {/* <form onSubmit={onSubmit(handleOnSubmit)}> */}
+          <form></form>
         </div>
       </SplitPanel>
     </form>
