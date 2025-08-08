@@ -1,31 +1,30 @@
 import {
   MultilingualUpdateReqParams,
-  translationQueryOptions,
   useDeployTranslation,
   useTranslation,
 } from '@entities/translation';
-import { TranslationStatusPopup } from '@features/platform-management/platform/multilingual-managemnet';
+import {
+  createGridConfig,
+  MultilingualSearchForm,
+  TranslationStatusPopup,
+} from '@features/platform-management/platform/multilingual-managemnet';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { PMSApiPrefix } from '@learnway/config';
 import {
   CODE_GROUP,
-  SearchBoxConfig,
+  getCodeLabel,
   SelectOption,
   useCodeStore,
   useCurrentRoute,
-  useLanguageMap,
-  useSearchBox,
+  useDynamicForm2,
 } from '@learnway/hooks';
-import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { CountText, Divider } from '@learnway/ui/elements';
-import { EditInputCell, EditTextareaCell, TableBox, useGridBox } from '@learnway/ui/grid';
+import { TableBox, useGridBox } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
-import { SearchBox } from '@shared/ui/search-box';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { CellContext } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useWatch } from 'react-hook-form';
@@ -33,127 +32,20 @@ import { useWatch } from 'react-hook-form';
 export const Route = createLazyFileRoute('/_layout/platform/system/multilingual/')({
   component: RouteComponent,
 });
-// type TranslationType = {
-//   keyTypeCode: string;
-//   targetLocale: string;
-//   translations: { multilingualKey: string; translation: string }[];
-// };
 
 function RouteComponent() {
   const { confirm, alert, openModal } = useModal();
   const { state } = useCurrentRoute();
   const { data: authUser } = useFetchAuthUser();
+  const { provider, onSubmit, getValues, setValue, control } = useDynamicForm2();
 
-  // searchConfig를 컴포넌트 내부에 정의하여 authUser 접근 가능
-  const searchConfig: SearchBoxConfig = useMemo(
-    () => ({
-      builders: [
-        [
-          {
-            name: 'keyTypeCode',
-            type: 'dropdown',
-            label: 'LABEL.platform.system.multilingual.keyType',
-            value: '',
-            optionsConfig: {
-              options: [{ value: '', label: 'LABEL.form.label.select' }],
-              codeGroup: CODE_GROUP['pms.multilingual.KeyTypeCode'],
-              transformOptions: (options: SelectOption[]) => {
-                // 플랫폼 매니저가 아닌 경우 필터링
-                const isPlatformManager = authUser?.activeRole?.roleType === 'PLATFORM_MANAGER';
-                if (!isPlatformManager) {
-                  return options.filter(
-                    (option) =>
-                      option.value === '' ||
-                      ['LEARNER_MENU', 'HRD_CENTER_MENU'].includes(String(option.value)),
-                  );
-                }
-                return options;
-              },
-            },
-          },
-          {
-            name: 'targetLocale',
-            type: 'dropdown',
-            label: 'LABEL.platform.system.multilingual.translationLanguage',
-            value: '',
-            optionsConfig: {
-              options: [{ value: '', label: 'LABEL.form.label.select' }],
-              codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
-            },
-          },
-          {
-            name: 'isTranslated',
-            type: 'dropdown',
-            label: 'LABEL.platform.system.multilingual.translationStatus',
-            value: '',
-            options: [
-              { value: '', label: t('LABEL.all') },
-              { value: 'true', label: t('pms.multilingual.Is_Translation.true') },
-              { value: 'false', label: t('pms.multilingual.Is_Translation.false') },
-            ],
-          },
-        ],
-        [
-          {
-            name: 'multilingualKey',
-            type: 'text',
-            label: 'LABEL.platform.system.multilingual.multilingualKey',
-            value: '',
-            customConfig: {
-              placeholder: {
-                target: 'keyTypeCode',
-                placeholder: (item: Record<string, any>) => {
-                  if (!item.keyTypeCode) {
-                    return 'LABEL.platform.system.multilingual.placeholder.multilingualKey.default';
-                  }
-                  return `LABEL.platform.system.multilingual.placeholder.multilingualKey.${item.keyTypeCode}`;
-                },
-              },
-            },
-          },
-          {
-            name: 'translation',
-            type: 'text',
-            label: 'LABEL.platform.system.multilingual.translation',
-            value: '',
-            customConfig: {
-              placeholder: {
-                target: 'keyTypeCode',
-                placeholder: (item: Record<string, any>) => {
-                  if (!item.keyTypeCode) {
-                    return 'LABEL.platform.system.multilingual.placeholder.translation.default';
-                  }
-                  return `LABEL.platform.system.multilingual.placeholder.translation.${item.keyTypeCode}`;
-                },
-              },
-            },
-          },
-        ],
-      ],
-      validator: {
-        keyTypeCode: true,
-        targetLocale: true,
-      },
-    }),
-    [authUser?.activeRole?.roleType],
-  );
-
-  const {
-    provider: sProvider,
-    getValues,
-    onFormChange,
-    onFormValid,
-    setOptions,
-    control,
-    setValue,
-    getValuesWithLabel,
-  } = useSearchBox(searchConfig);
   const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
   const { getCode } = useCodeStore();
-  const { getLanguageName } = useLanguageMap();
   const keyTypeCode = useWatch({ control, name: 'keyTypeCode' });
   const targetLocale = useWatch({ control, name: 'targetLocale' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [keyTypeCodeOptions, setKeyTypeCodeOptions] = useState<SelectOption[]>([]);
+  const [targetLocaleOptions, setTargetLocaleOptions] = useState<SelectOption[]>([]);
 
   const getGridFetchParams = () => ({
     ...getValues(),
@@ -201,20 +93,41 @@ function RouteComponent() {
    * @param data
    */
   const handleOnSearch = async (form: any) => {
-    // if (!(await confirmChanges())) return;
-    setCurrentTargetLocale(getValues('targetLocale'));
-    // originalDataRef.current = null; // 검색 시 즉시 초기화
-    // setShouldUpdateOriginalData(true); // 검색 시 originalData 업데이트 허용
-    gridFetch(getGridFetchParams(), { ...gridStateRef.current, page: 0 });
-    setValuesWithLabel(getValuesWithLabel());
+    setCurrentTargetLocale(form.targetLocale);
+    gridFetch(
+      { ...form, roleId: authUser?.activeRole?.roleId, tenantId: authUser?.activeTenant?.tenantId },
+      { ...gridStateRef.current, page: 0 },
+    );
+
+    // valuesWithLabel 설정
+    const newValuesWithLabel: Record<string, SelectOption> = {};
+    if (form.keyTypeCode) {
+      const keyTypeOptions = await getCode(CODE_GROUP['pms.multilingual.KeyTypeCode']);
+      const keyTypeOption = keyTypeOptions.find((opt) => opt.value === form.keyTypeCode);
+      if (keyTypeOption) newValuesWithLabel.keyTypeCode = keyTypeOption;
+    }
+    if (form.targetLocale) {
+      const targetLocaleOptions = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
+      const targetLocaleOption = targetLocaleOptions.find((opt) => opt.value === form.targetLocale);
+      if (targetLocaleOption) newValuesWithLabel.targetLocale = targetLocaleOption;
+    }
+    if (form.isTranslated) {
+      newValuesWithLabel.isTranslated = {
+        value: form.isTranslated,
+        label: form.isTranslated === 'true' ? t('번역완료') : t('번역필요'),
+      };
+    }
+    setValuesWithLabel(newValuesWithLabel);
   };
 
   /**
    *  번역본 S3 배포
    */
   const handleDeployMultilingual = async () => {
-    const locale = getValues('targetLocale').toLowerCase();
-    deploy({ locale });
+    const targetLocale = getValues('targetLocale');
+    if (targetLocale) {
+      deploy({ locale: targetLocale.toLowerCase() });
+    }
   };
 
   /**
@@ -233,9 +146,15 @@ function RouteComponent() {
       setIsSubmitting(false);
       return;
     }
+    const keyTypeCode = getValues('keyTypeCode');
+    const targetLocale = getValues('targetLocale');
+    if (!keyTypeCode || !targetLocale) {
+      setIsSubmitting(false);
+      return;
+    }
     const uploadData: MultilingualUpdateReqParams = {
-      keyTypeCode: getValues('keyTypeCode'),
-      targetLocale: getValues('targetLocale').toLowerCase(),
+      keyTypeCode,
+      targetLocale: targetLocale.toLowerCase(),
       translations: [],
     };
     const dataArr = data.content;
@@ -250,10 +169,12 @@ function RouteComponent() {
 
   const handleExcelUpload = async (data: Record<string, any>[]) => {
     const targetLocale = getValues('targetLocale');
-    await createByExcel({
-      data,
-      params: { targetLocale: targetLocale.toLowerCase() },
-    });
+    if (targetLocale) {
+      await createByExcel({
+        data,
+        params: { targetLocale: targetLocale.toLowerCase() },
+      });
+    }
   };
 
   const customExcelButtons = (
@@ -265,7 +186,7 @@ function RouteComponent() {
       />
       <GridExcelDownloadButton
         url={`${PMSApiPrefix()}/multilingual/exportExcel`}
-        params={{ ...getValues(), targetLocale: getValues('targetLocale').toLowerCase() }}
+        params={{ ...getValues(), targetLocale: getValues('targetLocale')?.toLowerCase() || '' }}
         paramLabels={valuesWithLabel}
         dataCount={data?.totalElements}
         disabled={!data?.totalElements}
@@ -286,48 +207,72 @@ function RouteComponent() {
 
   const init = async () => {
     if (state.keyType || state.multilingualKey) {
-      onFormChange({
-        keyTypeCode: state?.keyType,
+      const formData = {
+        keyTypeCode: state?.keyType || '',
         multilingualKey: state?.multilingualKey || '',
         translation: state.translation || '',
-        isMenuEntry: state?.isMenuEntry || false,
         targetLocale: 'EN',
+        isTranslated: '',
+      };
+
+      // Form values 설정
+      Object.entries(formData).forEach(([key, value]) => {
+        setValue(key, value);
       });
-      if (await onFormValid()) {
-        handleOnSearch(getValues()).finally(() => {
-          onFormChange({ ...getValues(), isMenuEntry: false });
-        });
-      }
+
+      // 검색 실행
+      await handleOnSearch(formData);
     }
   };
 
+  // 옵션 초기화
+  useEffect(() => {
+    const loadOptions = async () => {
+      // keyTypeCode 옵션 로드
+      const keyTypeOptions = await getCode(CODE_GROUP['pms.multilingual.KeyTypeCode']);
+      const isPlatformManager = authUser?.activeRole?.roleType === 'PLATFORM_MANAGER';
+
+      if (!isPlatformManager) {
+        const filteredOptions = keyTypeOptions.filter((option) =>
+          ['', 'LEARNER_MENU', 'HRD_CENTER_MENU'].includes(String(option.value)),
+        );
+        setKeyTypeCodeOptions([{ value: '', label: t('선택') }, ...filteredOptions]);
+      } else {
+        setKeyTypeCodeOptions([{ value: '', label: t('선택') }, ...keyTypeOptions]);
+      }
+
+      // targetLocale 옵션 로드
+      const localeOptions = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
+      setTargetLocaleOptions([{ value: '', label: t('선택') }, ...localeOptions]);
+    };
+
+    loadOptions();
+    init();
+  }, [authUser?.activeRole?.roleType]);
+
+  // keyTypeCode 변경 시 targetLocale 옵션 업데이트
   useEffect(() => {
     const updateTargetLocaleOptions = async () => {
-      const allOptions = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
-      // const allOptions = langCode.filter((option) => option.value !== 'KO');
-      const baseOptions = [{ value: '', label: t('LABEL.form.label.select') }];
-      const currentTargetLocale = getValues('targetLocale');
-
       if (keyTypeCode === 'HRD_CENTER_MENU') {
+        const allOptions = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
         const filteredOptions = allOptions.filter((option) => option.value === 'EN');
-        const newOptions = [...baseOptions, ...filteredOptions];
-        setOptions('targetLocale', newOptions);
+        setTargetLocaleOptions([{ value: '', label: t('선택') }, ...filteredOptions]);
 
-        const availableValues = newOptions.map((option) => option.value);
-        if (currentTargetLocale && !availableValues.includes(currentTargetLocale)) {
+        // 현재 선택된 targetLocale이 EN이 아니면 초기화
+        const currentTargetLocale = getValues('targetLocale');
+        if (currentTargetLocale && currentTargetLocale !== 'EN') {
           setValue('targetLocale', '');
         }
-      } else {
-        setOptions('targetLocale', [...baseOptions, ...allOptions]);
+      } else if (keyTypeCode) {
+        const allOptions = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
+        setTargetLocaleOptions([{ value: '', label: t('선택') }, ...allOptions]);
       }
     };
 
-    updateTargetLocaleOptions();
+    if (keyTypeCode !== undefined) {
+      updateTargetLocaleOptions();
+    }
   }, [keyTypeCode]);
-
-  useEffect(() => {
-    init();
-  }, []);
 
   useEffect(() => {
     if (data?.content?.length > 0) {
@@ -350,7 +295,7 @@ function RouteComponent() {
                 router.navigate({ to: '/platform/menu' });
               }}
             >
-              {t('LABEL.platform.system.multilingual.platform-menu')}
+              {t('메뉴관리')}
             </Button>
 
             <Button
@@ -361,7 +306,7 @@ function RouteComponent() {
                 router.navigate({ to: '/platform/label-message' });
               }}
             >
-              {t('LABEL.platform.system.multilingual.platform-message')}
+              {t('라벨/메세지 관리')}
             </Button>
           </LinkBox>
           <Button
@@ -372,7 +317,7 @@ function RouteComponent() {
             size="sm"
             onClick={handleDeployMultilingual}
           >
-            {t('LABEL.button.deploy')}
+            {t('배포')}
           </Button>
 
           <Button
@@ -388,126 +333,42 @@ function RouteComponent() {
             size="sm"
             onClick={handleSaveMultilingual}
           >
-            {t('LABEL.button.save')}
+            {t('저장')}
           </Button>
         </ContentsButtons>
         <MainContents>
-          <SearchBox
-            provider={sProvider}
+          <MultilingualSearchForm
+            provider={provider}
+            onSubmit={onSubmit}
             onSearch={handleOnSearch}
-            // onBeforeSubmit={confirmChanges}
+            keyTypeCodeOptions={keyTypeCodeOptions}
+            targetLocaleOptions={targetLocaleOptions}
+            keyTypeCode={keyTypeCode}
           />
           <Divider />
           <TableBox
             config={gConfig}
             titleCustomNode={
               <>
-                {/*번역완료 개수*/}
                 <CountText
                   label={t('pms.multilingual.Is_Translation.true', '')}
                   count={successTranslationCount}
                 />
-                {/*번역중인언어*/}
                 <span className={'normal_text'}>
                   {t('LABEL.platform.system.multilingual.currentTranslationLanguage')} :{' '}
-                  {currentTargetLocale ? getLanguageName(currentTargetLocale) : ''}
+                  {currentTargetLocale
+                    ? getCodeLabel(
+                        CODE_GROUP['pms.multilingual.LangCountryCode'],
+                        currentTargetLocale,
+                      )
+                    : ''}
                 </span>
               </>
             }
             excelButtons={customExcelButtons}
-            // showExcelDownload={true}
-            // showUpload={true}
           />
         </MainContents>
       </PageContainer>
     </div>
   );
 }
-
-const createGridConfig = (onCellClick: (data: any) => void, currentTargetLocale: string) => ({
-  query: translationQueryOptions.all,
-  gridState: { size: 10 },
-  columns: [
-    {
-      name: 'no1',
-      label: 'NO.',
-      type: 'numbering',
-      size: 50,
-    },
-    {
-      name: 'keyType',
-      label: t('LABEL.platform.system.multilingual.keyType'),
-      render: (info: CellContext<any, string>) => {
-        return info.row.getValue('keyTypeName');
-      },
-      // enableHiding: true,
-      // meta: {
-      //   hidden: true,
-      // }
-    },
-    {
-      name: 'keyTypeName',
-      label: t('LABEL.platform.system.multilingual.keyType'),
-      meta: {
-        hidden: true,
-      },
-    },
-    {
-      name: 'multilingualKey',
-      label: t('LABEL.platform.system.multilingual.code'),
-    },
-    {
-      name: 'baseLanguage',
-      label: t('LABEL.platform.system.multilingual.baseLanguage'),
-    },
-    {
-      name: 'targetLanguage',
-      label: t('LABEL.platform.system.multilingual.targetLanguage'),
-      accessorKey: 'text',
-      render: (info: CellContext<any, string>) => {
-        const isReadOnly = currentTargetLocale === 'KO';
-        if (isReadOnly) {
-          return <span>{info.getValue()}</span>;
-        }
-        return info.row.getValue('keyType') === 'MESSAGE' ||
-          info.row.getValue('keyType') === 'LABEL' ? (
-          <EditTextareaCell info={info} textarea={{ maxLength: 150 }} />
-        ) : (
-          <EditInputCell info={info} input={{ type: 'text', maxLength: 150 }} />
-        );
-      },
-    },
-    {
-      name: 'totalTranslatedCount',
-      label: t('LABEL.platform.system.multilingual.totalTranslatedCount'),
-      render: (info: CellContext<any, string>) => {
-        return (
-          <div
-            onClick={() => {
-              const data = info.row.original;
-              onCellClick(data);
-            }}
-            className="cursor-pointer underline"
-          >
-            {info.row.original.totalTranslatedCount} / {info.row.original.totalLocaleCount}
-          </div>
-        );
-      },
-      size: 80,
-      enableSorting: false,
-    },
-    {
-      name: 'modifiedDate',
-      label: t('LABEL.grid.column.updatedDate'),
-      render: (info: any) => (
-        <span className={'whitespace-nowrap'}>
-          {getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_MIN)}
-        </span>
-      ),
-      meta: {
-        cellAlign: 'center',
-      },
-    },
-  ],
-  data: [],
-});
