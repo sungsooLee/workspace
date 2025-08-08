@@ -16,6 +16,7 @@ import {
   ExamPaperQuestionCountUpdateReq,
   FetchTranslationListRes,
   GetContentDetailRes,
+  GetContentRemovableRes,
   GetContentsParams,
   GetContentsRes,
   GetScormFileChangeRes,
@@ -92,6 +93,12 @@ export default class LearningResourceService {
 
   static fetchContent(contentUuid: string): Promise<GetContentDetailRes> {
     return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}`);
+  }
+
+  static getContentRemovable(contentUuid: string) {
+    return httpService.get<GetContentRemovableRes>(
+      `${CMSApiPrefix()}/content/${contentUuid}/removable`,
+    );
   }
 
   static fetchContentCourseMapping(
