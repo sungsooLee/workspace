@@ -1,15 +1,10 @@
 import { memo, ReactNode } from 'react';
-import { isMobile } from 'react-device-detect';
-import { useTranslation } from 'react-i18next';
-import { useLocation } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
 
-import { LearningHeader } from './learning-header/learning-header';
+import { MobileView } from 'react-device-detect';
 import { LearningContainer } from './learning-container/learning-container';
+import { LearningHeader } from './learning-header/learning-header';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning-layout.module.css';
-
-import { MobileView, BrowserView } from 'react-device-detect';
 
 interface LearningLayoutComponentProps {
   children: ReactNode;
@@ -19,6 +14,15 @@ function LearningLayoutComponent({ children }: LearningLayoutComponentProps) {
   return (
     <>
       <LearningHeader />
+
+      {/* 퍼블수정 20250808 모바일 레슨명 추가 */}
+      <MobileView>
+        <div className={styles.lesson_box}>
+          <strong>
+            레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명
+          </strong>
+        </div>
+      </MobileView>
 
       <div className={`${styles.start} ${styles.container}`}>
         <div className={styles.inner}>

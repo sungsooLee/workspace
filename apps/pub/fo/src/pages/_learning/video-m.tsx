@@ -113,10 +113,6 @@ function RouteComponent() {
 
   return (
     <div className={`${styles.start} ${styles.video}`}>
-      {/* 퍼블수정 20250808 레슨명 추가 */}
-      <div className={styles.lesson_box}>
-        <strong>레슨명</strong>
-      </div>
       <div className={styles.video_wrap}>
         <div className={styles.video_area}>
           <div className={styles.video_contents}>

@@ -118,10 +118,6 @@ function RouteComponent() {
 
   return (
     <div className={`${styles.start} ${styles.gallery_wrap}`}>
-      {/* 퍼블수정 20250808 레슨명 추가 */}
-      <div className={styles.lesson_box}>
-        <strong>레슨명</strong>
-      </div>
       <div className={styles.photo_wrap}>
         <div className={styles.photo}>
           <Button className={styles.img}>

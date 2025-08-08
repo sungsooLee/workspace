@@ -9,7 +9,13 @@
   @screen mobile {
     .start {
       &.container {
-        @apply mt-[56px];
+        @apply mt-[0];
+      }
+    }
+    .lesson_box {
+      @apply mt-[56px] flex h-[52px] items-center bg-white px-[16px];
+      strong {
+        @apply title3 ellipsis text-[#232326];
       }
     }
   }

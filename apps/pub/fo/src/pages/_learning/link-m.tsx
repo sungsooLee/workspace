@@ -11,10 +11,6 @@ export const Route = createFileRoute('/_learning/link-m')({
 function RouteComponent() {
   return (
     <div className={`${styles.start} ${styles.file}`}>
-      {/* 퍼블수정 20250808 레슨명 추가 */}
-      <div className={styles.lesson_box}>
-        <strong>레슨명</strong>
-      </div>
       <div className={styles.file_box}>
         <p>
           비즈니스 영어 단어&숙어집 Part 2.pdf
