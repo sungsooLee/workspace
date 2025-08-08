@@ -1,7 +1,6 @@
 import { PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
 import { MenuTreeResponse } from '@shared/types/menu';
-import { createPmsUrl, registerApi } from '../../../shared/lib/use-authorized-query';
 import menuMock from '../../mock/menu.json';
 
 /**
@@ -124,29 +123,3 @@ export default class MenuMangerService {
     });
   }
 }
-
-export const MenuManageApi = {
-  list: registerApi('menuManage.list', 'GET', createPmsUrl('/menus/'), '메뉴 관리 목록 조회'),
-  menuTree: registerApi(
-    'menuManage.menuTree',
-    'GET',
-    createPmsUrl('/menus/tree'),
-    '메뉴 트리 조회',
-  ),
-  detail: registerApi(
-    'menuManage.detail',
-    'GET',
-    createPmsUrl('/menus/:menuId/detail'),
-    '메뉴 상세 조회',
-  ),
-  create: registerApi('menuManage.create', 'POST', createPmsUrl('/menus'), '메뉴 생성'),
-  checkDuplicate: registerApi(
-    'menuManage.checkDuplicate',
-    'GET',
-    createPmsUrl('/menus/exists'),
-    '메뉴 중복 확인',
-  ),
-  update: registerApi('menuManage.update', 'PUT', createPmsUrl('/menus/:menuId'), '메뉴 수정'),
-  delete: registerApi('menuManage.delete', 'DELETE', createPmsUrl('/menus/:menuId'), '메뉴 삭제'),
-  move: registerApi('menuManage.move', 'POST', createPmsUrl('/menus/:menuId/dnd'), '메뉴 DND'),
-};

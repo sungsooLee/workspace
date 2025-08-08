@@ -90,16 +90,21 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   const { update: updateMenu } = useUpdateMenu({});
   const { delete: deleteMenu } = useDeleteMenu({});
   const { move: moveMenu } = useMoveMenu({});
-  const { checkExistsMenu } = useCheckExistsMenu({});
+  const { checkExists } = useCheckExistsMenu();
 
   const queryClient = useQueryClient();
 
   const duplicateCheck = async (code: string) => {
-    const result = await new Promise((resolve) => {
-      checkExistsMenu({ menuScopeCode: menuScope, menuCode: code }, { onSuccess: resolve });
-    });
-    if (result) return DuplicateState.duplicated;
-    return DuplicateState.ok;
+    try {
+      if (!menuScope || !code) {
+        return DuplicateState.needInput;
+      }
+      const result = await checkExists(menuScope, code);
+      if (result) return DuplicateState.duplicated;
+      return DuplicateState.ok;
+    } catch (error) {
+      return DuplicateState.needInput;
+    }
   };
 
   const {
@@ -210,7 +215,6 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
 
       const transformedData = transformApiDataToTreeData(data, menuScope);
       setTreeData(transformedData);
-
       if (lastCreatedMenuId) {
         // 새로 생성된 메뉴 노드 찾기
         const newNode = findNodeByMenuId(transformedData, lastCreatedMenuId);
