@@ -45,13 +45,27 @@
   }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1280px) {
   .start {
-    @apply !w-0 !overflow-hidden;
-    .btn_toggle {
-      @apply left-0;
-      svg {
-        @apply rotate-180;
+    &.open {
+      @apply w-[280px];
+      .lnb_wrap {
+        @apply h-full;
+      }
+      .btn_toggle {
+        @apply left-[280px];
+        svg {
+          @apply rotate-0;
+        }
+      }
+    }
+    &.close {
+      @apply !w-0 !overflow-hidden;
+      .btn_toggle {
+        @apply left-0;
+        svg {
+          @apply rotate-180;
+        }
       }
     }
   }

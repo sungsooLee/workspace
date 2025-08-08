@@ -10,11 +10,11 @@ export interface ThumbnailData {
   linkUrl?: string;
   imageUrl: string;
   title: string;
-  labelCustomNode?: React.ReactNode[];
+  labelCustomNode?: React.ReactNode;
   tagLabels?: string[];
-  infoCustomNode?: React.ReactNode[];
+  infoCustomNode?: React.ReactNode;
   toggleButton?: boolean;
-  countInfoNode?: React.ReactNode[];
+  countInfoNode?: React.ReactNode;
   indexNumber?: string;
   duration?: string;
 }

@@ -114,6 +114,9 @@
   .guide_text {
     @apply button_5_r mt-[8px] text-[var(--gray6)];
   }
+  &:has([class*='table']) {
+    @apply scrollbar overflow-x-auto;
+  }
   & + [class*='nlp--contents-row'] {
     @apply mt-[24px];
   }
