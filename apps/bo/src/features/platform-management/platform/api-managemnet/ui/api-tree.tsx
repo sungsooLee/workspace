@@ -73,7 +73,7 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
   const apiNodeType = useWatch({ control, name: 'apiNodeType' });
 
   // 프로그램 트리 목록 조회
-  const { data, isLoading } = useFetchPrograms(menuScope);
+  const { data, isLoading, isFetching } = useFetchPrograms(menuScope);
   // 프로그램 단건 조회
   const { data: detailData } = useFetchProgram(selectedNode?.apiUuid || '');
   // 프로그램 뮤테이션 훅들
@@ -372,7 +372,7 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
           isSelectableNode={(node: TreeNode) => {
             return node && node.level !== 0;
           }}
-          isLoading={isLoading}
+          isLoading={isLoading || isFetching}
           clientTree={true}
           disableOptimisticUpdate={false} // 클라이언트 트리에서는 낙관적 업데이트 사용
         />

@@ -83,7 +83,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   const { showSaveComplete, showDeleteComplete, showUpdateComplete } = useModal();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { data } = useMenuTree(menuScope, 'ko');
+  const { data, isLoading, isFetching } = useMenuTree(menuScope, 'ko');
   const { data: detailData } = useMenuManageDetail(selectedNode?.menuId || '');
 
   const { create: createMenu } = useCreateMenu({});
@@ -598,6 +598,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
           isSelectableNode={(node: TreeNode) => {
             return node && node.level !== 0;
           }}
+          isLoading={isLoading || isFetching}
         />
       </TreeContainer>
       <div className={layoutStyles.inner}>

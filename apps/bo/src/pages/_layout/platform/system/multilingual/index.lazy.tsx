@@ -240,15 +240,18 @@ function RouteComponent() {
     const loadOptions = async () => {
       // keyTypeCode 옵션 로드
       const keyTypeOptions = await getCode(CODE_GROUP['pms.multilingual.KeyTypeCode']);
+      const defaultOPtions = keyTypeOptions.map((item) => {
+        return { label: item.cdContent, value: item.value };
+      });
       const isPlatformManager = authUser?.activeRole?.roleType === 'PLATFORM_MANAGER';
 
       if (!isPlatformManager) {
-        const filteredOptions = keyTypeOptions.filter((option) =>
+        const filteredOptions = defaultOPtions.filter((option) =>
           ['', 'LEARNER_MENU', 'HRD_CENTER_MENU'].includes(String(option.value)),
         );
         setKeyTypeCodeOptions([{ value: '', label: t('선택') }, ...filteredOptions]);
       } else {
-        setKeyTypeCodeOptions([{ value: '', label: t('선택') }, ...keyTypeOptions]);
+        setKeyTypeCodeOptions([{ value: '', label: t('선택') }, ...defaultOPtions]);
       }
 
       // targetLocale 옵션 로드

@@ -1,6 +1,6 @@
-import { useSystemCodeList } from '@entities/common-code/service/system-code.hook';
+import { useSystemCodeList } from '@entities/common-code';
 import { pageRouteConfig } from '@features/auth';
-import { SystemCodeGrid } from '@features/platform-management/platform/code-managemnet/ui/system-code-grid';
+import { SystemCodeGrid } from '@features/platform-management/platform/code-managemnet';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { MainContents, PageContainer } from '@shared/ui/layout';
 import { SearchBox } from '@shared/ui/search-box';
