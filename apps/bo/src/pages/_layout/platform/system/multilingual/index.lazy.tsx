@@ -222,6 +222,7 @@ function RouteComponent() {
         translation: state.translation || '',
         targetLocale: 'EN',
         isTranslated: '',
+        isMenuEntry: state?.isMenuEntry || false,
       };
 
       // Form values 설정
