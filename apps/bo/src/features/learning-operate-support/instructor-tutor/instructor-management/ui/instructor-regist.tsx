@@ -7,6 +7,7 @@ import {
 } from '@entities/instructor/service/instructor.hook';
 import { queryOptions } from '@entities/instructor/service/instructor.queries';
 import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useRouterState } from '@tanstack/react-router';
@@ -31,7 +32,6 @@ import {
   DuplicateState,
   FormDisplay,
   FormRow,
-  InputFormField,
   PhoneNumberFormField,
 } from '@shared/ui/form';
 import { UserChoiceModal } from '@shared/ui/modal';
@@ -660,11 +660,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
               />
             }
           />
-          <FormRow
-            provider={provider}
-            name="companyName"
-            element={<InputFormField disabled={true} />}
-          />
+          <FormRow provider={provider} name="companyName" element={<Input disabled={true} />} />
           <FormRow
             provider={provider}
             name="profileFileUuid"
@@ -675,7 +671,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
           <FormRow
             provider={provider}
             name="employeeIdOrEmail"
-            element={<InputFormField disabled={true} />}
+            element={<Input disabled={true} />}
           />
           <FormRow
             provider={provider}
@@ -688,11 +684,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
               />
             }
           />
-          <FormRow
-            provider={provider}
-            name="nationCd"
-            element={<InputFormField disabled={true} />}
-          />
+          <FormRow provider={provider} name="nationCd" element={<Input disabled={true} />} />
         </ContentsRow>
         <ContentsRow>
           <FormRow
@@ -714,8 +706,8 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         ]}
       >
         <ContentsRow>
-          <FormRow provider={provider} name="instructorName" element={<InputFormField />} />
-          <FormRow provider={provider} name="companyName" element={<InputFormField />} />
+          <FormRow provider={provider} name="instructorName" element={<Input />} />
+          <FormRow provider={provider} name="companyName" element={<Input />} />
           <FormRow
             provider={provider}
             name="profileFileUuid"
@@ -728,16 +720,8 @@ const InstructorRegistComponent = (props: any, ref: any) => {
             name="employeeIdOrEmail"
             element={<DuplicateCheckInputFormField onDuplicationCheck={duplicateCheckEmail} />}
           />
-          <FormRow
-            provider={provider}
-            name="password"
-            element={<InputFormField type="password" />}
-          />
-          <FormRow
-            provider={provider}
-            name="passwordConfirm"
-            element={<InputFormField type="password" />}
-          />
+          <FormRow provider={provider} name="password" element={<Input type="password" />} />
+          <FormRow provider={provider} name="passwordConfirm" element={<Input type="password" />} />
         </ContentsRow>
         <ContentsRow>
           <FormRow
@@ -751,7 +735,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
               />
             }
           />
-          <FormRow provider={provider} name="nationCd" element={<InputFormField />} />
+          <FormRow provider={provider} name="nationCd" element={<Input />} />
           <FormRow provider={provider} name="birthday" element={<DatePicker displayType="day" />} />
         </ContentsRow>
         <ContentsRow>
@@ -783,14 +767,14 @@ const InstructorRegistComponent = (props: any, ref: any) => {
           name="carreerYearMonth"
           element={
             <>
-              <InputFormField
+              <Input
                 name="carreerYear"
                 type="number"
                 value={carreerYearVal}
                 onChange={(e: any) => setCarreerYearVal(e.target.value)}
                 disabled={props.readOnly}
               />
-              <InputFormField
+              <Input
                 name="carreerMonth"
                 type="number"
                 value={carreerMonthVal}
