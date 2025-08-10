@@ -1,10 +1,19 @@
-import { useCoursePackageDetailPackageInfo } from '@features/learning-operate/course-package/hooks/use-course-package-detail-package-info';
+import {
+  PACKAGE_FORM_MODE,
+  PACKAGE_ITEM_TYPE,
+  useCoursePackageDetailPackageInfo,
+} from '@features/learning-operate/course-package/hooks/use-course-package-detail-package-info';
+import { IcoMinus } from '@learnway/icons';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { SplitPanel } from '@learnway/ui/elements';
 import { useModal } from '@learnway/ui/modal';
 import { TreeBox, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
 import { useTranslation } from 'react-i18next';
+import { PackageCourseForm } from './package-course-form';
+import { PackageSubPkgForm } from './package-subpkg-form';
 
 const PackageInfoComponent = () => {
   const { t } = useTranslation();
@@ -18,64 +27,20 @@ const PackageInfoComponent = () => {
     isLoading,
     expandedKeys,
     selectedNode,
+    clickedNode,
+    renderNodeButtons,
     handleExpandChange,
     handleSelectedNodeChange,
+    handleTreeAction,
     handleAddCourseNode,
+    handleAddSubPkgNode,
+    formMode,
+    itemType,
+    onSubmit,
+    handleOnSubmit,
   } = useCoursePackageDetailPackageInfo();
   console.log('#################treeData=>', treeData);
   console.log('expandedKeys=>', expandedKeys);
-
-  const renderNodeButtons = (node: TreeNode, level: number) => {
-    console.log('node=>', node);
-    console.log('level=>', level);
-    if (level === 0) {
-      return (
-        <div className={'gap-10px flex'}>
-          <div className={'flex items-center'}>
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                // handleAddSubMenu(node);
-              }}
-              variant="gray2"
-              size={'xs'}
-              type={'button'}
-              disabled={level !== 0}
-              label={t('서브 패키지 추가')}
-            />
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleAddCourseNode(node, level);
-              }}
-              variant="gray2"
-              size={'xs'}
-              type={'button'}
-              disabled={level !== 0}
-              label={t('과정 추가')}
-            />
-          </div>
-        </div>
-      );
-    } else if (node.itemType === 'SUB_PKG') {
-      return (
-        <div className={'gap-10px flex'}>
-          <div className={'flex items-center'}>
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleAddCourseNode(node, level);
-              }}
-              variant="gray2"
-              size={'xs'}
-              type={'button'}
-              label={t('과정 추가')}
-            />
-          </div>
-        </div>
-      );
-    }
-  };
 
   return (
     <form>
@@ -106,13 +71,12 @@ const PackageInfoComponent = () => {
               expandedKeys={expandedKeys}
               onExpandedKeysChange={handleExpandChange}
               renderNodeButtons={renderNodeButtons}
-              // onAction={handleTreeAction}
+              onAction={handleTreeAction}
               type={'DRAG_DROP'}
               selectedNode={selectedNode}
               initLevel={1}
               handleSelectedNodeChange={handleSelectedNodeChange}
-              //   customDropValidator={customDropValidator}
-              maxDepth={5}
+              maxDepth={3}
               isSelectableNode={(node: TreeNode) => {
                 return node && node.level !== 0;
               }}
@@ -122,11 +86,34 @@ const PackageInfoComponent = () => {
             />
           </TreeContainer>
         </div>
-        <div>
-          {/*상세정보*/}
-          <FormSubTitle label={t('상세정보')} />
-          {/* <form onSubmit={onSubmit(handleOnSubmit)}> */}
-          <form></form>
+        <div className={layoutStyles.inner}>
+          <form onSubmit={onSubmit(handleOnSubmit)}>
+            <div className={titleStyles.title_wrap}>
+              <h3 className={titleStyles.title}>{'상세정보'}</h3>
+              <div className={layoutStyles.btn_wrap}>
+                <Button
+                  variant="text"
+                  size="sm"
+                  // disabled={formMode === FORM_MODE.NONE || formMode === FORM_MODE.ADD}
+                  // onClick={handleDelete}
+                  className={layoutStyles.btn_text}
+                  icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
+                >
+                  {t('LABEL.button.delete')}
+                </Button>
+                <Button
+                  type="submit"
+                  variant="save"
+                  size="sm"
+                  disabled={formMode === PACKAGE_FORM_MODE.NONE}
+                >
+                  {t('LABEL.button.save')}
+                </Button>
+              </div>
+            </div>
+            {/* 폼 필드 - location (비활성화 상태) */}
+            {itemType === PACKAGE_ITEM_TYPE.COURSE ? <PackageCourseForm /> : <PackageSubPkgForm />}
+          </form>
         </div>
       </SplitPanel>
     </form>

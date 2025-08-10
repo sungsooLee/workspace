@@ -1,13 +1,25 @@
 import { useFetchCoursePackageTree } from '@entities/course-package';
 import { findNodeByMenuId } from '@features/platform-management/platform/category-managemnet';
 import { useDynamicForm2 } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
-import { findNodePath, TreeNode } from '@learnway/ui/tree-view';
+import { findNodePath, TreeEventPayload, TreeNode } from '@learnway/ui/tree-view';
 import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TriggerKey, useCoursePackageLastTriggered } from '../store/use-course-package-store';
+
+export enum PACKAGE_ITEM_TYPE {
+  COURSE = 'COURSE',
+  SUB_PKG = 'SUB_PKG',
+}
+
+export enum PACKAGE_FORM_MODE {
+  NONE = 'NONE',
+  VIEW = 'VIEW',
+  ADD = 'ADD',
+}
 
 export function useCoursePackageDetailPackageInfo() {
   const { provider, getValues, updateFormData, formValues, onSubmit, onFormChange } =
@@ -20,7 +32,10 @@ export function useCoursePackageDetailPackageInfo() {
   const { data, isLoading } = useFetchCoursePackageTree(1);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
+  const [clickedNode, setClickedNode] = useState<TreeNode | null>(null);
   const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
+  const [formMode, setFormMode] = useState<PACKAGE_FORM_MODE>(PACKAGE_FORM_MODE.NONE);
+  const [itemType, setItemType] = useState<PACKAGE_ITEM_TYPE>();
 
   const transformApiDataToTreeData = (apiData: any) => {
     console.log('## apiData', apiData);
@@ -62,6 +77,64 @@ export function useCoursePackageDetailPackageInfo() {
     };
 
     return transform(dataArray);
+  };
+
+  const renderNodeButtons = (node: TreeNode, level: number) => {
+    if (level === 0) {
+      return (
+        <div className={'gap-10px flex'}>
+          <div className={'flex items-center'}>
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAddSubPkgNode(node);
+              }}
+              variant={
+                clickedNode?.id === node.id && itemType === PACKAGE_ITEM_TYPE.SUB_PKG
+                  ? 'primary'
+                  : 'gray2'
+              }
+              size={'xs'}
+              type={'button'}
+              disabled={level !== 0}
+              label={t('서브 패키지 추가')}
+            />
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAddCourseNode(node, level);
+              }}
+              variant={
+                clickedNode?.id === node.id && itemType === PACKAGE_ITEM_TYPE.COURSE
+                  ? 'primary'
+                  : 'gray2'
+              }
+              size={'xs'}
+              type={'button'}
+              disabled={level !== 0}
+              label={t('과정 추가')}
+            />
+          </div>
+        </div>
+      );
+    } else if (node.itemType === PACKAGE_ITEM_TYPE.SUB_PKG) {
+      return (
+        <div className={'gap-10px flex'}>
+          <div className={'flex items-center'}>
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAddCourseNode(node, level);
+              }}
+              variant={clickedNode?.id === node.id ? 'primary' : 'gray2'}
+              size={'xs'}
+              type={'button'}
+              label={t('과정 추가')}
+            />
+          </div>
+        </div>
+      );
+    }
   };
 
   useEffect(() => {
@@ -108,23 +181,109 @@ export function useCoursePackageDetailPackageInfo() {
     setExpandedKeys(keys);
   };
 
+  // 노드 선택
   const handleSelectedNodeChange = (node: TreeNode | null) => {
+    console.log('## node=>', node);
     setSelectedNode(node);
-    // if (node) {
-    //   setFormMode(FORM_MODE.VIEW);
-    // } else {
-    //   setFormMode(FORM_MODE.NONE);
-    // }
+    setClickedNode(null);
+    if (node) {
+      setFormMode(PACKAGE_FORM_MODE.VIEW);
+      if (node.itemType === PACKAGE_ITEM_TYPE.COURSE) setItemType(PACKAGE_ITEM_TYPE.COURSE);
+      else if (node.itemType === PACKAGE_ITEM_TYPE.SUB_PKG) setItemType(PACKAGE_ITEM_TYPE.SUB_PKG);
+    } else {
+      setFormMode(PACKAGE_FORM_MODE.NONE);
+    }
   };
 
-  //하위 메뉴 추가 버튼(과정ROOT, 서브패키지 > 과정)
+  const calculateSortSeq = (nodeInfo: any) => {
+    if (nodeInfo.position === 'INSIDE') {
+      // 타겟 노드의 자식으로 이동 - 항상 첫 번째 자식이 되도록
+      return 1;
+    }
+
+    const sourceNode = nodeInfo.sourceNode;
+    const targetNode = nodeInfo.targetNode;
+
+    if (!targetNode || !targetNode.sortSeq) {
+      // targetNode의 sortSeq가 없으면 targetIndex 기반으로 계산
+      return nodeInfo.position === 'BEFORE' ? nodeInfo.targetIndex + 1 : nodeInfo.targetIndex + 2;
+    }
+
+    // 같은 부모 내에서 이동하는 경우, 소스와 타겟의 sortSeq 관계를 고려
+    const sourceSortSeq = sourceNode.sortSeq || 0;
+    const targetSortSeq = targetNode.sortSeq;
+    const sameParent = sourceNode.parentKey === targetNode.parentKey;
+
+    if (nodeInfo.position === 'BEFORE') {
+      // 타겟 노드 앞에 삽입
+      if (sameParent && sourceSortSeq < targetSortSeq) {
+        // 낮은 순서 -> 높은 순서로 이동: 소스가 제거되므로 -1 보정
+        return targetSortSeq - 1;
+      }
+      return targetSortSeq;
+    } else {
+      // 타겟 노드 뒤에 삽입 (AFTER)
+      if (sameParent && sourceSortSeq < targetSortSeq) {
+        // 낮은 순서 -> 높은 순서로 이동: 소스가 제거되므로 보정 없이 타겟 순서 사용
+        return targetSortSeq;
+      }
+      return targetSortSeq + 1;
+    }
+  };
+
+  const handleTreeAction = (event: TreeEventPayload) => {
+    console.log('##handleTreeAction : ', event);
+    setClickedNode(null);
+    switch (event.type) {
+      case 'NODE_MOVE': {
+        const nodeInfo = event;
+        if (nodeInfo.sourceNode.id) {
+          if (
+            nodeInfo.sourceNode.itemType === nodeInfo.targetNode?.itemType ||
+            (nodeInfo.sourceNode.itemType === PACKAGE_ITEM_TYPE.SUB_PKG &&
+              nodeInfo.targetNode?.itemType === PACKAGE_ITEM_TYPE.COURSE)
+          ) {
+            console.log('못옮겨');
+            // 원본 데이터로 되돌리기
+            setTreeData((prev: any) => [...prev]); // 또는 initialTreeDataRef.current
+            return;
+          }
+          const sortSeq = calculateSortSeq(nodeInfo);
+          console.log('sortSeq=>', sortSeq);
+          // const payload = {
+          //   id: nodeInfo.sourceNode.menuId,
+          //   destinationParentId:
+          //     nodeInfo.position === 'INSIDE'
+          //       ? nodeInfo.targetNode?.menuId
+          //       : nodeInfo.targetNode?.parentKey,
+          //   sortSeq,
+          // };
+
+          // moveCategory(payload, {
+          //   onSuccess: async () => {
+          //     if (selectedNode?.categoryId) {
+          //       await queryClient.invalidateQueries({
+          //         queryKey: [...queryKeys.detail(Number(selectedNode.categoryId))],
+          //       });
+          //     }
+          //   },
+          // });
+          break;
+        }
+      }
+    }
+  };
+
+  // 과정 추가 버튼(과정ROOT > , 서브패키지 >)
   const handleAddCourseNode = (node: TreeNode, level: number) => {
     // resetInputValidations();
+    setFormMode(PACKAGE_FORM_MODE.ADD);
+    setItemType(PACKAGE_ITEM_TYPE.COURSE);
+    setClickedNode(node);
     const initData: { [key: string]: any } = {};
     // formConfig.builders.forEach((item) => {
     //   initData[item.name] = item.value;
     // });
-    console.log('메뉴추가=>', node);
     // const location = (node?.menuId && findMenuPathById(treeData, node.menuId)) ?? '';
 
     // updateFormData({
@@ -141,14 +300,66 @@ export function useCoursePackageDetailPackageInfo() {
     // setExpandedKeys([...expandedKeys, node.key]);
   };
 
-  const handleSave = () => {
+  // 서브패키지  추가 버튼(과정ROOT >)
+  const handleAddSubPkgNode = (node: TreeNode) => {
+    console.log('서브 패키지 추가');
+    setFormMode(PACKAGE_FORM_MODE.ADD);
+    setItemType(PACKAGE_ITEM_TYPE.SUB_PKG);
+    setClickedNode(node);
+  };
+
+  const handleUpdate = (payload: any) => {
     const run = onSubmit(async (data) => {
       console.log('data=>', data);
+      console.log('payload=>', payload);
+      if (await saveConfirm()) {
+        console.log('수정하자');
+      }
     });
     // 가짜 이벤트 객체를 생성해서 수동으로 호출
     run({ preventDefault: () => null } as any);
   };
 
+  const handleSave = (payload: any) => {
+    const run = onSubmit(async (data) => {
+      console.log('data=>', data);
+      console.log('payload=>', payload);
+      if (await saveConfirm()) {
+        console.log('저장하자');
+      }
+    });
+    // 가짜 이벤트 객체를 생성해서 수동으로 호출
+    run({ preventDefault: () => null } as any);
+  };
+
+  const handleOnSubmit = (data: any) => {
+    if (formMode === PACKAGE_FORM_MODE.VIEW) {
+      console.log(data);
+      const body = {
+        categoryName: data.categoryName,
+        categoryCode: data.code.fieldValue,
+        categoryContent: data.categoryContent,
+        id: data.key,
+        isUsed: data.isUsed,
+      };
+      handleUpdate(body);
+      return;
+    } else if (formMode === PACKAGE_FORM_MODE.ADD) {
+      const body = {
+        categoryName: data.categoryName,
+        categoryCode: data.code.fieldValue,
+        categoryContent: data.categoryContent,
+        categoryType: 'COMMON',
+        sortSeq: data.sortSeq,
+        parentId: data.parentKey,
+        isUsed: data.isUsed,
+      };
+      handleSave?.(body);
+      return;
+    }
+  };
+
+  // 패키지 저장(이거 기본정보/패키지 구성 같이 묶어서 사용해야 할듯)
   useUpdateEffect(() => {
     switch (lastTriggered?.key) {
       case TriggerKey.LIST:
@@ -156,7 +367,7 @@ export function useCoursePackageDetailPackageInfo() {
         break;
       case TriggerKey.SAVE:
         console.log('## 저장');
-        handleSave();
+        // handleSave();
         break;
       case TriggerKey.DELETE:
         // handleDeleteAction(lastTriggered.payload);
@@ -175,8 +386,15 @@ export function useCoursePackageDetailPackageInfo() {
     isLoading,
     expandedKeys,
     selectedNode,
+    clickedNode,
+    renderNodeButtons,
     handleExpandChange,
     handleSelectedNodeChange,
     handleAddCourseNode,
+    handleAddSubPkgNode,
+    handleTreeAction,
+    formMode,
+    itemType,
+    handleOnSubmit,
   };
 }
