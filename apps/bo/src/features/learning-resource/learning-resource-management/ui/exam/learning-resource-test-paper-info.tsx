@@ -74,7 +74,7 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
             </ContentsRow>
 
             {/* 교육자원 공통 정보 입력 영역 */}
-            <LearningResourceBaseForm provider={provider} contentNameMaxLength={10} />
+            <LearningResourceBaseForm provider={provider} />
 
             <FormSubTitle label={t('시험지 상세 설정')} lineType="dark" />
             <ContentsRow>

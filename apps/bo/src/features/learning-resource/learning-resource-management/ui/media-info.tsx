@@ -6,6 +6,7 @@ import {
 } from '@entities/learning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
 import { IcoStatusFail } from '@learnway/icons';
+import previewImg from '@learnway/styles/bo/assets/images/temp/img_exam_basic.jpg';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import { Button } from '@learnway/ui/button';
 import { Spinner } from '@learnway/ui/spinner';
@@ -93,6 +94,11 @@ const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoC
           {type === LEARNING_TYPE.SCORM && (
             <div className={style.media}>
               <img src={'https://picsum.photos/320/180'} width="100%" />
+            </div>
+          )}
+          {type === LEARNING_TYPE.HTML5_VIDEO && (
+            <div className={style.media}>
+              <img src={previewImg} width="100%" alt="" />
             </div>
           )}
           {/* info_list */}

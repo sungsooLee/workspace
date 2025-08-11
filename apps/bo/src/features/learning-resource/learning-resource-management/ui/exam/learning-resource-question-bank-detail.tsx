@@ -85,7 +85,6 @@ const LearningResourceQuestionBankDetailComponent = forwardRef<
           provider={provider}
           formMode={formMode}
           hasMapping={!!isExamMapping}
-          contentNameMaxLength={10}
         />
         <FormRow2
           provider={provider}

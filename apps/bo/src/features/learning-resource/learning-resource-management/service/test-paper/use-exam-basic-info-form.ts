@@ -12,7 +12,7 @@ import { TestPaperBasicInfoFormData } from './type';
 export const useExamBasicInfoForm = (options: {
   contentUuid: string;
   onSaveSuccess?: (result?: TestPaperBasicInfoSaveRes) => void;
-  onUpdateSuccess?: (result?: unknown) => void | Promise<void>;
+  onUpdateSuccess?: (result?: string) => void | Promise<void>;
 }) => {
   const { confirm } = useModal();
 

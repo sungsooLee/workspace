@@ -24,7 +24,7 @@ interface Props {
   hasMapping?: boolean;
 }
 
-function ExamPoolViewComponent({ content }: Props) {
+function ExamPoolViewComponent({ content, hasMapping }: Props) {
   const {
     state: { isTranslated },
   } = useCurrentRoute();
@@ -131,7 +131,11 @@ function ExamPoolViewComponent({ content }: Props) {
         }}
       >
         <ContentsButtons>
-          <ContentTopButtons provider={provider} hasMapping={isExamMapping} />
+          <ContentTopButtons
+            provider={provider}
+            hasMapping={hasMapping}
+            isExamMapping={isExamMapping}
+          />
         </ContentsButtons>
         <MainContents>
           <Tabs

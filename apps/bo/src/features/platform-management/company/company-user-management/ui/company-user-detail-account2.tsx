@@ -95,14 +95,13 @@ const CompanyUserDetailAccountComponent = ({
           provider={provider}
           name={'accountStatus'}
           label={t('계정상태')}
-          value={'1'}
           element={
             <RadioGroupFormField
               options={[
-                { label: t('정상'), value: '1' },
-                { label: t('잠김'), value: '2' },
-                { label: t('휴면(정상)'), value: '3' },
-                { label: t('휴면(잠김)'), value: '4' },
+                { value: 'NORMAL', label: t('정상') },
+                { value: 'LOCK', label: t('잠김') },
+                { value: 'INACTIVE', label: t('휴면(정상)') },
+                { value: 'INACTIVE_LOCK', label: t('휴면(잠김)') },
               ]}
             />
           }
@@ -145,6 +144,7 @@ const CompanyUserDetailAccountComponent = ({
             provider={provider}
             name={'tenantList'}
             label={t('테넌트')}
+            format={'array'}
             element={
               <ChipListModalSelectorFormField
                 chipList={{
