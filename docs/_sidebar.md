@@ -14,3 +14,6 @@
 - **고급 가이드**
   - [⚛️ 컴포넌트](05-component-guide.md)
   - [🧪 테스트](06-testing-guide.md)
+
+- **기타**
+  - [📎빌드 압축](compression-optimization.md)
