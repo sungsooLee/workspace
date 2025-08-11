@@ -75,7 +75,7 @@
   input {
     @apply truncate pl-[12px] pr-[30px];
     &:focus {
-      @apply border-[#747D91];
+      @apply border-[var(--gray7)];
     }
   }
   &:has(.react-datepicker__close-icon) input {
