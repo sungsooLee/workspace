@@ -305,7 +305,7 @@ function RouteComponent() {
                 size={'xs'}
                 className="btn_table flex-1"
                 variant={'gray2'}
-                onClick={(e) => openModal({ content: <ChannelListChoiceModal roleId={0} /> })}
+                onClick={(e) => openModal({ content: <ChannelListChoiceModal roleId={1} /> })}
               >
                 {'채널 조회'}
               </Button>
@@ -316,7 +316,7 @@ function RouteComponent() {
                 size={'xs'}
                 className="btn_table flex-1"
                 variant={'gray2'}
-                onClick={(e) => openModal({ content: <ChannelShuttleModal roleId={0} /> })}
+                onClick={(e) => openModal({ content: <ChannelShuttleModal roleId={1} /> })}
               >
                 {'채널 조회(셔틀)'}
               </Button>
