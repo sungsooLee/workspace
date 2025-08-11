@@ -5,14 +5,14 @@ import { useTranslation } from 'react-i18next';
 import { pageRouteConfig } from '@features/auth';
 
 import { queryOptions } from '@entities/course';
+import { OpensourceLicenseModal } from '@features/main/support/ui/opensource-license-modal';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
-import { FileDownloads, FormRow } from '@shared/ui';
-import { useModal } from '@learnway/ui/modal';
-import { OpensourceLicenseModal } from '@features/main/support/ui/opensource-license-modal';
 import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { FileDownloads } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -56,14 +56,14 @@ function RouteComponent() {
       <h3>Welcome component test</h3>
       <FormSubTitle className="b-0 m-0 p-0" label="학습창 " />
       <ContentsRow className="m-0">
-        <FormRow className="p-0" provider={provider} name="courseId" element={<Input />} />
-        <FormRow className="p-0" provider={provider} name="sequenceId" element={<Input />} />
-        <FormRow className="p-0" provider={provider} name="curriculumId" element={<Input />} />
+        <FormRow2 className="p-0" provider={provider} name="courseId" element={<Input />} />
+        <FormRow2 className="p-0" provider={provider} name="sequenceId" element={<Input />} />
+        <FormRow2 className="p-0" provider={provider} name="curriculumId" element={<Input />} />
       </ContentsRow>
       <ContentsRow className="m-0">
-        <FormRow className="p-0" provider={provider} name="moduleId" element={<Input />} />
-        <FormRow className="p-0" provider={provider} name="lessonId" element={<Input />} />
-        <FormRow className="p-0" provider={provider} name="----">
+        <FormRow2 className="p-0" provider={provider} name="moduleId" element={<Input />} />
+        <FormRow2 className="p-0" provider={provider} name="lessonId" element={<Input />} />
+        <FormRow2 className="p-0" provider={provider} name="----">
           <Button
             label="학습창"
             variant="primary"
@@ -84,13 +84,13 @@ function RouteComponent() {
                 });
             }}
           />
-        </FormRow>
+        </FormRow2>
       </ContentsRow>
       <FormSubTitle className="b-0 m-0 p-0" label="과정 상세  보기" />
       <ContentsRow className="m-0">
-        <FormRow className="p-0" provider={provider} name="detailCourseId" element={<Input />} />
-        <FormRow className="p-0" provider={provider} name="---"></FormRow>
-        <FormRow className="p-0" provider={provider} name="---">
+        <FormRow2 className="p-0" provider={provider} name="detailCourseId" element={<Input />} />
+        <FormRow2 className="p-0" provider={provider} name="---" />
+        <FormRow2 className="p-0" provider={provider} name="---">
           <Button
             label="과정상세"
             variant="primary"
@@ -103,7 +103,7 @@ function RouteComponent() {
               handleCourse(values);
             }}
           />
-        </FormRow>
+        </FormRow2>
       </ContentsRow>
       <ContentsRow>
         <Button

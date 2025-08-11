@@ -21,7 +21,6 @@ export * from './ui/form-field-config';
 export * from './ui/form-group';
 export * from './ui/form-guide-text';
 export * from './ui/form-row';
-export * from './ui/form-row2';
 export * from './ui/form-translation-box';
 export * from './ui/input-form-field';
 export * from './ui/media-content-required-check-form-field';

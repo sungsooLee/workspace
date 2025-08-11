@@ -14,7 +14,6 @@ import { AUTH_CONTAINERS } from '@widgets/layout';
 
 import { AUTH_ERROR_CODE } from '@learnway/auth/features';
 import { CheckBoxFormField } from '@learnway/auth/shared';
-import { FormRow } from '@shared/ui';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import authTitleStyle from '@learnway/styles/fo/pages/_auth/auth-title.module.css';
@@ -24,6 +23,7 @@ import { TFunction } from 'i18next';
 import snsGoogleImage from '@assets/images/common/logo_sns_google.png';
 import snskakaoImage from '@assets/images/common/logo_sns_kakao.png';
 import snsNaverImage from '@assets/images/common/logo_sns_naver.png';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
@@ -300,7 +300,7 @@ function RouteComponent() {
             </MobileView>
           </div>
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'username'}
               element={
@@ -316,7 +316,7 @@ function RouteComponent() {
             />
           </ContentsRow>
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'password'}
               element={
@@ -336,7 +336,7 @@ function RouteComponent() {
           </ContentsRow>
 
           <div className={cn(styles.login_info)}>
-            <FormRow
+            <FormRow2
               className="pb-0"
               provider={provider}
               name={'saveId'}

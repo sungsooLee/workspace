@@ -1,7 +1,7 @@
 import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { Badge } from '@learnway/ui/badge';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import {
@@ -15,7 +15,6 @@ import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import {
   DropdownFormField,
-  FormRow2,
   TenantByRoleChannelCheckboxFormField,
   TenantChannelDropdownFormField2,
 } from '@shared/ui/form';

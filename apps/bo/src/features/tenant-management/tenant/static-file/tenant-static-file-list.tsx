@@ -1,23 +1,29 @@
-import React, { FC } from 'react';
-import { useRouter } from '@tanstack/react-router';
-import { useQueryClient } from '@tanstack/react-query';
+import { staticFileQueryOptions } from '@entities/static-file';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
-import { useCreation } from 'ahooks';
-import { t } from 'i18next';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
-import { EnGlobalConst } from '@shared/types/enums';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Divider } from '@learnway/ui/elements';
-import { staticFileQueryOptions } from '@entities/static-file';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { EnGlobalConst } from '@shared/types/enums';
+import {
+  DropdownFormField,
+  FormItem,
+  InputFormField,
+  PeriodPickerFormField,
+} from '@shared/ui/form';
 import { SearchBoxForm } from '@shared/ui/search-box';
-import { DropdownFormField, FormItem, FormRow2, InputFormField, PeriodPickerFormField } from '@shared/ui/form';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from '@tanstack/react-router';
+import { useCreation } from 'ahooks';
+import { t } from 'i18next';
+import { FC } from 'react';
 
 const _global = {
   linkClick: (fileUuid: string) => {
     return;
-  }
+  },
 };
 
 const TenantStaticFileListComponent: FC<any> = () => {
@@ -29,8 +35,8 @@ const TenantStaticFileListComponent: FC<any> = () => {
       to: `/tenant/static-file/detail`,
       state: {
         fileUuid,
-        listParam: getValues()
-      }
+        listParam: getValues(),
+      },
     });
   };
 
@@ -54,7 +60,10 @@ const TenantStaticFileListComponent: FC<any> = () => {
           label: t('파일명'),
           render: (info: any) => {
             return (
-              <Button className="link" onClick={() => _global.linkClick(info.row.original.fileUuid)}>
+              <Button
+                className="link"
+                onClick={() => _global.linkClick(info.row.original.fileUuid)}
+              >
                 {info.getValue()}
               </Button>
             );
@@ -84,9 +93,15 @@ const TenantStaticFileListComponent: FC<any> = () => {
           name: 'expiryStartDate',
           label: t('파일 접속 유효기간'),
           render: (info: any) => {
-            const startDate = getDateToString(new Date(info.row.original.expiryStartDate), DATE_TIME_FORMAT.DATE);
-            const endDate = getDateToString(new Date(info.row.original.expiryEndDate), DATE_TIME_FORMAT.DATE);
-            if( startDate === endDate ){
+            const startDate = getDateToString(
+              new Date(info.row.original.expiryStartDate),
+              DATE_TIME_FORMAT.DATE,
+            );
+            const endDate = getDateToString(
+              new Date(info.row.original.expiryEndDate),
+              DATE_TIME_FORMAT.DATE,
+            );
+            if (startDate === endDate) {
               return `${startDate}`;
             } else {
               return `${startDate} ~ ${endDate}`;
@@ -155,23 +170,29 @@ const TenantStaticFileListComponent: FC<any> = () => {
   } = useDynamicForm2();
   const handleOnSearchParam = () => {
     const data = getValues();
-    console.log('### ', data)
+    console.log('### ', data);
     const payload = {
       ...data,
-      expiryStartDate: (data.dateRange && data.dateRange.from) && getDateToString(new Date(data.dateRange.from), DATE_TIME_FORMAT.DATE),
-      expiryEndDate: (data.dateRange && data.dateRange.to) && getDateToString(new Date(data.dateRange.to), DATE_TIME_FORMAT.DATE),
-    }
+      expiryStartDate:
+        data.dateRange &&
+        data.dateRange.from &&
+        getDateToString(new Date(data.dateRange.from), DATE_TIME_FORMAT.DATE),
+      expiryEndDate:
+        data.dateRange &&
+        data.dateRange.to &&
+        getDateToString(new Date(data.dateRange.to), DATE_TIME_FORMAT.DATE),
+    };
     const filteredPayload = Object.fromEntries(
       Object.entries(payload).filter(
         ([_, value]) => value !== null && value !== undefined && value !== '',
       ),
     );
-    return filteredPayload
+    return filteredPayload;
   };
   const handleOnSearch = () => {
     const payload = handleOnSearchParam();
     gridFetch(payload);
-  }
+  };
   const { config: gConfig, gridFetch, data } = useGridBox(gridInitConfig, handleOnSearchParam);
 
   return (
@@ -196,9 +217,7 @@ const TenantStaticFileListComponent: FC<any> = () => {
             format="string"
             element={
               <DropdownFormField
-                optionsConfig={
-                  {codeGroup: CODE_GROUP['pms.file.FileType']}
-                }
+                optionsConfig={{ codeGroup: CODE_GROUP['pms.file.FileType'] }}
                 presetOptionLabel={t('LABEL.form.label.all')}
               />
             }
@@ -213,8 +232,8 @@ const TenantStaticFileListComponent: FC<any> = () => {
               <DropdownFormField
                 presetOptionLabel={t('LABEL.form.label.all')}
                 options={[
-                  {label: '로그인', value: true},
-                  {label: '비로그인', value: false}
+                  { label: '로그인', value: true },
+                  { label: '비로그인', value: false },
                 ]}
               />
             }
@@ -231,8 +250,8 @@ const TenantStaticFileListComponent: FC<any> = () => {
               <DropdownFormField
                 presetOptionLabel={t('LABEL.form.label.all')}
                 options={[
-                  {label: '사용', value: true},
-                  {label: '미사용', value: false}
+                  { label: '사용', value: true },
+                  { label: '미사용', value: false },
                 ]}
               />
             }
@@ -250,7 +269,7 @@ const TenantStaticFileListComponent: FC<any> = () => {
       <Divider />
       <GridBox config={gConfig} />
     </>
-  )
-}
+  );
+};
 
 export const TenantStaticFileList = TenantStaticFileListComponent;

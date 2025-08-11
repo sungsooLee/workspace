@@ -53,6 +53,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
     clearFormError,
     setFormError,
     formState,
+    clearAllValidators,
   } = useDynamicForm2();
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -78,7 +79,8 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
     else return DuplicateState.ok;
   };
 
-  const handleOnSubmit = async (data: any) => {
+  const handleOnSubmit = async () => {
+    const data = getValues();
     console.log('data {} => ', data);
     const tagStringList = data.tenantTagList.split(',');
     const payload = {
@@ -113,6 +115,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
 
   useEffect(() => {
     if (tenantData && formState.isReady) {
+      clearAllValidators();
       console.log('#### tenantData {} => ', tenantData);
       const device = [];
       const useCategory = [];

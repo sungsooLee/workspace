@@ -4,12 +4,12 @@ import {
   QUESTION_TYPES,
 } from '@features/learning-resource/learning-resource-management/service/exam-util';
 import { CODE_GROUP, DynamicFormProvider } from '@learnway/hooks';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import {
   DropdownFormField,
   FormItem,
-  FormRow2,
   TenantByRoleDropdownFormField,
   TenantChannelDropdownFormField,
 } from '@shared/ui/form';

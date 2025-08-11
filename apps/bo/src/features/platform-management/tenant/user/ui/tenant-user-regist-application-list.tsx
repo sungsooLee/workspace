@@ -2,30 +2,31 @@ import { tenantQueryOptions } from '@entities/tenant';
 import { useApproveAccountUser, useRejectAccountUser } from '@entities/users/service/users.hook';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { CODE_GROUP, SearchBoxConfig, useDynamicForm2, useSearchBox } from '@learnway/hooks';
+import { useDynamicForm2 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { Checkbox } from '@learnway/ui/checkbox';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
 import { EnGlobalConst } from '@shared/types/enums';
 import {
-  DropdownFormField, FormItem,
-  FormRow2,
+  DropdownFormField,
+  FormItem,
   InputFormField,
   PeriodPickerFormField,
   TenantByRoleDropdownFormField,
 } from '@shared/ui/form';
-import { SearchBox, SearchBoxForm } from '@shared/ui/search-box';
+import { SearchBoxForm } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useRouterState } from '@tanstack/react-router';
-import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
+import { Table } from '@tanstack/react-table';
+import { useCreation } from 'ahooks';
 import { t } from 'i18next';
 import { FC, useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
-import { ContentsRow } from '@learnway/ui/contents-row';
-import { useCreation } from 'ahooks';
 
 const _global = {
   linkClick: (userUuid: string) => {
@@ -187,7 +188,10 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
           label: t('신청일'),
           render: (info: any) => {
             return info.row.original.createdDate
-              ? getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC)
+              ? getDateToString(
+                  new Date(info.row.original.createdDate),
+                  DATE_TIME_FORMAT.DATETIME_SEC,
+                )
               : '';
           },
           size: 114,
@@ -212,7 +216,10 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
           label: t('승인일'),
           render: (info: any) => {
             return info.row.original.enabledDate
-              ? getDateToString(new Date(info.row.original.enabledDate), DATE_TIME_FORMAT.DATETIME_SEC)
+              ? getDateToString(
+                  new Date(info.row.original.enabledDate),
+                  DATE_TIME_FORMAT.DATETIME_SEC,
+                )
               : '';
           },
           size: 114,
@@ -225,16 +232,20 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
         sort: [],
       },
     }),
-    []
+    [],
   );
 
   const handleOnSearchParam = () => {
     const data = getValues();
     const payload = {
       ...data,
-      createdDateFrom: data.dateRange && data.dateRange.from &&
+      createdDateFrom:
+        data.dateRange &&
+        data.dateRange.from &&
         getDateToString(new Date(data.dateRange.from), 'YYYY-MM-DDTHH:mm:ss'),
-      createdDateTo: data.dateRange && data.dateRange.to &&
+      createdDateTo:
+        data.dateRange &&
+        data.dateRange.to &&
         getDateToString(new Date(data.dateRange.to), 'YYYY-MM-DDTHH:mm:ss'),
       dateRange: null,
     };
@@ -268,7 +279,7 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
       confirmModal({
         title: isApproval ? '승인 확인' : '반려 확인',
         content: '선택한 대상 중 이미 승인된 대상이 있습니다. 확인 후 다시 시도해주세요.',
-        isConfirm: false
+        isConfirm: false,
       });
       return;
     }

@@ -1,6 +1,7 @@
-import { FormDisplay, FormRow2, SubTitlesFormField, SwitchFormField } from '@shared/ui/form';
+import { FormDisplay, SubTitlesFormField, SwitchFormField } from '@shared/ui/form';
 
 import { DynamicFormProvider } from '@learnway/hooks';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { t } from 'i18next';
 

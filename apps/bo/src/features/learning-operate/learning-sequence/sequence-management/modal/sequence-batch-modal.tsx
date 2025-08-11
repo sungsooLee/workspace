@@ -1,6 +1,6 @@
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { SplitPanel } from '@learnway/ui/elements';
 import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { GridBox } from '@learnway/ui/grid';
@@ -8,7 +8,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { DateRangePickerFormField, FormRow, FormRow2, SwitchFormField } from '@shared/ui/form';
+import { DateRangePickerFormField, FormRow, SwitchFormField } from '@shared/ui/form';
 
 import { useBulkUpdateSequence } from '@entities/learning-sequence/service/learning-sequence.hook';
 import { Button } from '@learnway/ui/button';

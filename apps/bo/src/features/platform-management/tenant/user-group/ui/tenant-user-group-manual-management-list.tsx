@@ -4,6 +4,7 @@ import { FC, useEffect } from 'react';
 
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 
@@ -11,21 +12,20 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { queryOptions as userGroupManualOptions } from '@entities/user-group/service/user-group.queries';
 import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import { useModal } from '@learnway/ui/modal';
 import { EnFormMode, EnGlobalConst } from '@shared/types/enums';
 import { CombineUserGroup } from '@shared/types/user-group';
-import { UserGroupChoiceModal } from '@shared/ui/modal';
-import { SearchBoxForm } from '@shared/ui/search-box';
-import { useCreation } from 'ahooks';
 import {
   DropdownFormField,
   FormItem,
-  FormRow2,
   InputFormField,
   PeriodPickerFormField,
   TenantByRoleDropdownFormField,
 } from '@shared/ui/form';
-import { ContentsRow } from '@learnway/ui/contents-row';
+import { UserGroupChoiceModal } from '@shared/ui/modal';
+import { SearchBoxForm } from '@shared/ui/search-box';
+import { useCreation } from 'ahooks';
 
 const _global = {
   linkClick: (userGroupId: number) => {
@@ -51,7 +51,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = () => {
       state: {
         userGroupId,
         listParam: getValues(),
-        mode: EnFormMode.VIEW
+        mode: EnFormMode.VIEW,
       },
     });
   };
@@ -227,9 +227,13 @@ const TenantUserGroupManualManagementListComponent: FC<any> = () => {
     const data = getValues();
     const payload = {
       ...data,
-      modifiedStartDate: data.dateRange && data.dateRange.from &&
+      modifiedStartDate:
+        data.dateRange &&
+        data.dateRange.from &&
         getDateToString(new Date(data.dateRange.from), 'YYYY-MM-DDTHH:mm:ss'),
-      modifiedEndDate: data.dateRange && data.dateRange.to &&
+      modifiedEndDate:
+        data.dateRange &&
+        data.dateRange.to &&
         getDateToString(new Date(data.dateRange.to), 'YYYY-MM-DDTHH:mm:ss'),
       dateRange: null,
     };

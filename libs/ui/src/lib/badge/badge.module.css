@@ -6,6 +6,9 @@
       &.bold {
         @apply !font-semibold;
       }
+      &.regular {
+        @apply !font-normal;
+      }
     }
     &.dot {
       @apply h-[8px] w-[8px] rounded-[4px];

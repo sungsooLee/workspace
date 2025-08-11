@@ -1,15 +1,10 @@
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { pageRouteConfig } from '@features/auth';
 
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormRow } from '@shared/ui';
-import { queryOptions } from '@entities/course';
-import { Button } from '@learnway/ui/button';
-import { ContentsRow } from '@learnway/ui/contents-row';
-import { FormSubTitle } from '@learnway/ui/base-form';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,
