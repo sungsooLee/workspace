@@ -63,6 +63,7 @@ export { ReactComponent as IcoComplete } from './lib/ic_complete.svg'; // comple
 export { ReactComponent as IcoComplete02 } from './lib/ic_complete02.svg'; // complete02
 export { ReactComponent as IcoProgressComplete } from './lib/ic_complete03.svg'; // complete03
 export { ReactComponent as IcoCopy } from './lib/ic_copy.svg'; // copy
+export { ReactComponent as IcoCopy02 } from './lib/ic_copy_02.svg';
 export { ReactComponent as IcoDelete03 } from './lib/ic_delete_03.svg'; // alert complete icon 48*48
 export { ReactComponent as IcoDivice } from './lib/ic_divice.svg';
 export { ReactComponent as IcoDocument } from './lib/ic_document.svg';
@@ -115,6 +116,7 @@ export { ReactComponent as IcoHtml } from './lib/ic_html.svg'; // html
 export { ReactComponent as IcoImage01 } from './lib/ic_image_01.svg'; // image
 export { ReactComponent as IcoImport } from './lib/ic_import.svg';
 export { ReactComponent as IcoInfoCircle } from './lib/ic_info_circle.svg'; // link
+export { ReactComponent as IcoKakaoLine } from './lib/ic_kakao_line.svg';
 export { ReactComponent as IcoLang } from './lib/ic_lang.svg';
 export { ReactComponent as IcoLearning01 } from './lib/ic_learning_01.svg'; // learning 1
 export { ReactComponent as IcoLearning02 } from './lib/ic_learning_02.svg'; // learning 2
