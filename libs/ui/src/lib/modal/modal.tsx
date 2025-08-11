@@ -1,11 +1,11 @@
-import * as Primitive from '@radix-ui/react-dialog';
 import { IcoClose02 } from '@learnway/icons';
+import * as Primitive from '@radix-ui/react-dialog';
 import React from 'react';
 
-import { ModalConfig } from './type';
 import { cn } from '@learnway/shared';
-import styles from './modal.module.css';
 import { Button } from '../button/button';
+import styles from './modal.module.css';
+import { ModalConfig } from './type';
 
 const ModalComponent: React.FC<ModalConfig> = ({
   content,
@@ -13,6 +13,7 @@ const ModalComponent: React.FC<ModalConfig> = ({
   onClose,
   width = 'auto',
   height,
+  zIndex,
   hideCloseButton = false,
   closeOnOutsideClick = false,
   id,
@@ -35,6 +36,7 @@ const ModalComponent: React.FC<ModalConfig> = ({
       <Primitive.Portal>
         <Primitive.Overlay className={styles.overlay} />
         <Primitive.Content
+          {...(zIndex && { style: { zIndex } })}
           className={cn(
             styles.content,
             'nlp--modal',
