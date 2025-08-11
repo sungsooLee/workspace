@@ -1692,7 +1692,7 @@ export const guideData = [
     pageId: 'video-m',
     pageType: 'Page',
     completionDate: '2025-05-13',
-    lastUpdateDate: '2025-07-17',
+    lastUpdateDate: '2025-08-08',
     remarks: '- video-m.tsx',
   },
 
@@ -1703,7 +1703,7 @@ export const guideData = [
     pageId: 'ebook-m',
     pageType: 'Page',
     completionDate: '2025-05-14',
-    lastUpdateDate: '2025-07-17',
+    lastUpdateDate: '2025-08-08',
     remarks: '- ebook-m.tsx',
   },
   {
@@ -1712,8 +1712,8 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'gallery-m',
     pageType: 'Page',
-    completionDate: '',
-    lastUpdateDate: '',
+    completionDate: '2025-05-15',
+    lastUpdateDate: '2025-08-08',
     remarks: '- gallery-m.tsx\n- 축소, 확대, drag 기능 공통 요청중',
   },
 
@@ -1724,7 +1724,7 @@ export const guideData = [
     pageId: 'blog-m',
     pageType: 'Page',
     completionDate: '2025-05-15',
-    lastUpdateDate: '2025-07-17',
+    lastUpdateDate: '2025-08-08',
     remarks: '- blog-m.tsx\n- 개발화면 확인 필요',
   },
 
@@ -1735,7 +1735,7 @@ export const guideData = [
     pageId: 'html-m',
     pageType: 'Page',
     completionDate: '2025-05-15',
-    lastUpdateDate: '2025-07-17',
+    lastUpdateDate: '2025-08-08',
     remarks: '- html-m.tsx',
   },
   {
@@ -1745,7 +1745,7 @@ export const guideData = [
     pageId: 'iframe-m',
     pageType: 'Page',
     completionDate: '2025-06-30',
-    lastUpdateDate: '2025-07-17',
+    lastUpdateDate: '2025-08-08',
     remarks: '- iframe-m.tsx',
   },
   {
@@ -1757,6 +1757,7 @@ export const guideData = [
     completionDate: '2025-07-17',
     lastUpdateDate: '',
     remarks: '- live-m.tsx',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_CLA_MA_1031',
@@ -1765,7 +1766,7 @@ export const guideData = [
     pageId: 'file-m',
     pageType: 'Page',
     completionDate: '2025-05-14',
-    lastUpdateDate: '2025-07-17',
+    lastUpdateDate: '2025-08-08',
     remarks: '- file-m.tsx',
   },
   {
@@ -1775,7 +1776,7 @@ export const guideData = [
     pageId: 'link-m',
     pageType: 'Page',
     completionDate: '2025-07-17',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-08-08',
     remarks: '- link-m.tsx',
   },
 
