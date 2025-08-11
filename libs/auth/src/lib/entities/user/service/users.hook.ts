@@ -196,9 +196,11 @@ export function useUpdateUser() {
       return update({ menus });
     },
     updateActiveTenant: (tenant: Tenant): AuthUser | undefined => {
+      localStorage.setItem('GNB_TENANT_ID', String(tenant.tenantId));
       return update({ activeTenant: tenant });
     },
     updateActiveRole: (role: Role): AuthUser | undefined => {
+      localStorage.setItem('GNB_ROLE_ID', String(role.roleId));
       return update({ activeRole: role });
     },
     updateMainTenant: (tenantId: number): AuthUser | undefined => {

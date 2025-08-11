@@ -17,7 +17,9 @@ export const useActiveMenuDepthState = create<ActiveMenuDepth>((set) => ({
   setActiveMenuDepthMenu: (value: Menu[]) => {
     if (value) {
       const lastMenuId = last(value)?.menuId;
-      localStorage.setItem('last', String(lastMenuId));
+      if (lastMenuId) {
+        localStorage.setItem('MENU_ID', String(lastMenuId));
+      }
     }
     set({
       activeMenuDepthMenu: value,

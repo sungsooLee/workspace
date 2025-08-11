@@ -18,6 +18,12 @@ export const queryOptions = {
     cacheTime: 0,
     staleTime: 0,
   }),
+  all: (roleId: number, params: ChannelParam) => ({
+    queryKey: queryKeys.all,
+    queryFn: () => ChannelService.getChannelList(roleId, params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
   popup: () => ({
     queryKey: queryKeys.popup,
     queryFn: () => ChannelService.getChannelPopup(),

@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
-import { Carousel } from '@learnway/ui/carousel';
 import { Button } from '@learnway/ui/button';
+import { Carousel } from '@learnway/ui/carousel';
+import { createFileRoute } from '@tanstack/react-router';
+import { useRef, useState } from 'react';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
 
@@ -10,7 +10,6 @@ import { IcoArrowBackward } from '@learnway/icons';
 // 예시 이미지
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import bnrImage2 from '@learnway/styles/fo/assets/images/temp/img_discrimination.png';
-import backImage from '@learnway/styles/fo/assets/images/temp/img_gallery_back.jpg';
 
 export const Route = createFileRoute('/_learning/gallery-m')({
   component: RouteComponent,

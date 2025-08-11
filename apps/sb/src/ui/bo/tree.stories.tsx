@@ -128,7 +128,7 @@ const sampleData3: TreeNode[] = [
         isUsed: true,
         children: [
           { key: '2-16', title: 'Child 3', isUsed: false },
-          { key: '2-2', title: 'Child 4', isUsed: false },
+          { key: '2-23', title: 'Child 4', isUsed: false },
         ],
       },
     ],
@@ -162,13 +162,13 @@ const TreeComponent: React.FC<any> = (args) => {
           {...args}
           clientTree
         />
-        <TreeBox
+        {/* <TreeBox
           data={sampleData3}
           treeId={'test2'}
           renderNodeButtons={renderNodeButtons}
           {...args}
           clientTree
-        />
+        /> */}
       </TreeContainer>
     </div>
   );

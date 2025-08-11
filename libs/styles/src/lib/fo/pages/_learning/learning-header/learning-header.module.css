@@ -35,7 +35,7 @@
   @screen mobile {
     .start {
       &.learning_header {
-        @apply h-[56px] px-[12px];
+        @apply h-[56px] border-none px-[12px];
         .header_area {
           button {
             @apply mr-[8px] !px-0;

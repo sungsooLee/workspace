@@ -48,11 +48,21 @@ export function convertToAuthUser(data: AxiosResponse): AuthUser {
   const tenant = tenants?.find((tenant: { tenantId: any }) => tenant.tenantId === tenantId);
   const role = roles.find((role: { roleId: any }) => role.roleId === roleId);
 
+  const activeTenant = tenant ? tenant : tenants?.length > 0 ? tenants?.[0] : undefined;
+  const activeRole = role ? role : roles?.length > 0 ? roles?.[0] : undefined;
+
+  if (activeTenant) {
+    localStorage.setItem('GNB_TENANT_ID', String(activeTenant.tenantId));
+  }
+  if (activeRole) {
+    localStorage.setItem('GNB_ROLE_ID', String(activeRole.roleId));
+  }
+
   return {
     ...user,
     roles,
-    activeTenant: tenant ? tenant : tenants?.length > 0 ? tenants?.[0] : undefined,
-    activeRole: role ? role : roles?.length > 0 ? roles?.[0] : undefined,
+    activeTenant,
+    activeRole,
     phoneNumberNationCode: user?.phoneNumberNationCode ?? 'KR',
     exp: data.headers['refresh-token-exp'],
     // accessToken: data.headers['access-token'],

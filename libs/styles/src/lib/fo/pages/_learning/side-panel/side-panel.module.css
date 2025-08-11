@@ -170,7 +170,7 @@
 :global(body.mobile) {
   @screen mobile {
     .start {
-      @apply fixed bottom-0 left-0 right-0 top-[inherit] w-[100dvw] translate-x-0 translate-y-0;
+      @apply fixed bottom-0 left-0 right-0 top-[inherit] h-[150px] w-[100dvw] translate-x-0 translate-y-0;
       .panel {
         @apply w-full rounded-none p-0 shadow-[-2px_0px_6px_rgba(0,0,0,0.1)];
         .menu {
@@ -185,7 +185,7 @@
             }
             &.new {
               &::before {
-                @apply right-[6px] w-[5px] h-[5px];
+                @apply right-[6px] h-[5px] w-[5px];
               }
             }
           }

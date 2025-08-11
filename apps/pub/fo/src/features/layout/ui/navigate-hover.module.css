@@ -13,13 +13,13 @@
       .menu_info {
         @apply w-[280px] shrink-0;
         .tit {
-          @apply headline1-b text-[gray9];
+          @apply title5-b text-[gray9];
           a {
             @apply flex items-center;
           }
         }
         .info {
-          @apply body-md mt-[20px] leading-[1.5] text-[var(--gray65)];
+          @apply body-sm mt-[20px] leading-[1.5] text-[var(--gray65)];
         }
       }
       .menu_list_div {
@@ -27,7 +27,7 @@
         .menu_div {
           @apply w-[calc((100%-16px)/3)] min-w-[160px] pr-[20px];
           .tit {
-            @apply headline1-b text-[gray9];
+            @apply title4-b text-[gray9];
             a {
               @apply flex items-center;
             }
@@ -38,7 +38,7 @@
               > li {
                 @apply mt-[15px];
                 a {
-                  @apply title4 text-[var(--gray25)];
+                  @apply title3 text-[var(--gray25)];
                   &:hover {
                     @apply text-[var(--blue65)];
                   }

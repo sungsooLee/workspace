@@ -10,7 +10,7 @@ import {
   convertToVideoSubmit,
   getTooltipContent,
   LearningResourceVideoDetail,
-  MovieInfo,
+  VideoInfo,
 } from '@features/learning-resource';
 import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
@@ -90,7 +90,7 @@ function VideoViewComponent({ content, hasMapping }: Props) {
           <LearningResourceVideoDetail provider={provider} />
         </MainContents>
         <SubContents>
-          <MovieInfo provider={provider} />
+          <VideoInfo provider={provider} />
         </SubContents>
       </PageContainer>
     </form>

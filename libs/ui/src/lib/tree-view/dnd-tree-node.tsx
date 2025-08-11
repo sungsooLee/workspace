@@ -770,7 +770,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
 
           {isDragAndDropMode && (
             <div className={styles.drag_wrap}>
-              {nodeButtons && (
+              {nodeButtons && !isGlobalDragging && (
                 <div
                   className={`flex space-x-1 transition-opacity duration-150 ${isHovered || level === 0 ? 'opacity-100' : 'invisible opacity-0'}`}
                   onClick={(e) => e.stopPropagation()}

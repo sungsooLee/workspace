@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'Asta Sans';
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+  font-optical-sizing: auto;
+  src: url('./variable/AstaSans-VariableFont_wght.woff2') format('woff2-variations');
+}
