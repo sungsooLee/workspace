@@ -1937,7 +1937,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
     pageType: 'Pop-up',
-    completionDate: '',
+    completionDate: '2025-08-11',
     lastUpdateDate: '',
     remarks: '- user-search-popup.tsx',
   },
