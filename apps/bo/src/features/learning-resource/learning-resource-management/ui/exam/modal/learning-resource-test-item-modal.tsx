@@ -29,6 +29,7 @@ import {
   useCreateQuestionItem,
   useDeleteQuestionItemList,
   useGetQuestionItem,
+  useUpdateQuestionItem,
 } from '@entities/learning-resource';
 
 import { EditSingleAttachmentCell, FormDisplay, SingleAttachmentFormField } from '@shared/ui/form';
@@ -80,6 +81,7 @@ const LearningResourceTestItemModalComponent = ({
   const { data: rowData } = useGetQuestionItem(questionItemGridRow?.examQuestionUuid);
 
   const { create: createQuestionItem } = useCreateQuestionItem();
+  const { update: updateQuestionItem } = useUpdateQuestionItem();
   const { delete: deleteQuestion } = useDeleteQuestionItemList({
     onSuccess: ({ result }: MutationResponse) => {
       if (result) {
@@ -143,7 +145,7 @@ const LearningResourceTestItemModalComponent = ({
 
     const result = await openConfirm({
       title: t('저장 하시겠습니까?'),
-      content: <p>{t('입력한 정보로 저장합니다.')}</p>,
+      content: t('입력한 정보로 저장합니다.'),
     });
 
     if (result) {
@@ -153,15 +155,35 @@ const LearningResourceTestItemModalComponent = ({
           ? contentInfo?.examPoolUuid
           : contentInfo.contentUuid;
       const payload = { ...restData, isUsed: true, contentUuid: paramUuid };
-      createQuestionItem(payload as QuestionItem, {
-        onSuccess: (result: any) => {
-          onSuccessCallback?.();
-          closeModal();
-        },
-        onError: (error: any) => {
-          console.log('error', error);
-        },
-      });
+
+      if (formMode === EnFormMode.VIEW) {
+        if (!questionItemGridRow) {
+          return;
+        }
+
+        Object.assign(payload, {
+          examQuestionUuid: questionItemGridRow.examQuestionUuid,
+          contentType: contentInfo.contentType,
+          sortSeq: questionItemGridRow.sortSeq,
+        });
+
+        updateQuestionItem(payload as QuestionItem, {
+          onSuccess: (result: unknown) => {
+            onSuccessCallback?.();
+            closeModal();
+          },
+        });
+      } else {
+        createQuestionItem(payload as QuestionItem, {
+          onSuccess: (result: unknown) => {
+            onSuccessCallback?.();
+            closeModal();
+          },
+          onError: (error: any) => {
+            console.log('error', error);
+          },
+        });
+      }
     }
   };
 
@@ -469,9 +491,9 @@ const LearningResourceTestItemModalComponent = ({
                 element={
                   <RadioGroupFormField
                     options={[
-                      { label: '상', value: EnQuestionLevel.HARD },
-                      { label: '중', value: EnQuestionLevel.MEDIUM },
-                      { label: '하', value: EnQuestionLevel.EASY },
+                      { label: t('상'), value: EnQuestionLevel.HARD },
+                      { label: t('중'), value: EnQuestionLevel.MEDIUM },
+                      { label: t('하'), value: EnQuestionLevel.EASY },
                     ]}
                     disabled={hasMapping}
                   />

@@ -1,6 +1,9 @@
 import { getQuerySkipToken } from '@learnway/shared';
 import LearningResourceService from '../api/learning-resource';
 import {
+  AssignmentSubmissionCreateReq,
+  AssignmentSubmissionMutationReq,
+  AssignmentSubmissionUpdateReq,
   BlogCreateReq,
   BlogUpdateReq,
   ContentBaseInfo,
@@ -68,6 +71,8 @@ export const queryKeys = {
   questionListForRetrieve: ['question-list-for-retrieve'] as const,
   assignmentSubmissionList: (contentUuid: string) =>
     ['assignment-submission-list', contentUuid] as const,
+  assignmentSubmissionDetail: (assignmentSubmissionUuid: string) =>
+    ['assignment-submission-detail', assignmentSubmissionUuid] as const,
   shareTenantsChannels: (contentUuid: string) => ['share-tenants-channels', contentUuid] as const,
   sharedContents: ['shared-contents'] as const,
   sharedBoxContents: ['shared-box-contents'] as const,
@@ -203,6 +208,14 @@ export const learningResourceQueryOptions = {
     enabled: !!contentUuid,
   }),
 
+  getAssignmentSubmissionDetail: (assignmentSubmissionUuid: string) => ({
+    queryKey: queryKeys.assignmentSubmissionDetail(assignmentSubmissionUuid),
+    queryFn: () => LearningResourceService.fetchAssignmentSubmissionItem(assignmentSubmissionUuid),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: !!assignmentSubmissionUuid,
+  }),
+
   getShareTenantsChannels: (params: GetShareTenantsChannelsParams) => ({
     queryKey: queryKeys.shareTenantsChannels(params.contentUuid),
     queryFn: () => LearningResourceService.getShareTenantsChannels(params),
@@ -322,6 +335,9 @@ export const mutateOptions = {
   createQuestionItem: () => ({
     mutationFn: (params: QuestionItem) => LearningResourceService.createQuestionItem(params),
   }),
+  updateQuestionItem: () => ({
+    mutationFn: (params: QuestionItem) => LearningResourceService.updateQuestionItem(params),
+  }),
   deleteQuestionItemList: () => ({
     mutationFn: (param: QuestionItemDeleteParam) =>
       LearningResourceService.deleteQuestionItemList(param),
@@ -346,5 +362,17 @@ export const mutateOptions = {
   }),
   updateAssignment: () => ({
     mutationFn: (params: ContentBaseInfo) => LearningResourceService.updateAssignment(params),
+  }),
+  createAssignmentSubmissionItem: () => ({
+    mutationFn: (params: AssignmentSubmissionCreateReq) =>
+      LearningResourceService.createAssignmentSubmissionItem(params),
+  }),
+  updateAssignmentSubmissionItem: () => ({
+    mutationFn: (params: AssignmentSubmissionUpdateReq) =>
+      LearningResourceService.updateAssignmentSubmissionItem(params),
+  }),
+  deleteAssignmentSubmissionItemList: () => ({
+    mutationFn: (params: AssignmentSubmissionMutationReq) =>
+      LearningResourceService.deleteAssignmentSubmissionItemList(params),
   }),
 };

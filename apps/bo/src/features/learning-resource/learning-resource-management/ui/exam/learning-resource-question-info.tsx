@@ -82,6 +82,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       questionState,
       scorePerQuestion,
       questionCreateSuccessCallback,
+      questionUpdateSuccessCallback,
       questionDeleteSuccessCallback,
       updateQuestionStatus,
       randomCountUpdateData,
@@ -164,6 +165,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
             <LearningResourceTestItemModal
               contentInfo={data as ContentInformation}
               questionItemGridRow={item}
+              onSuccessCallback={questionUpdateSuccessCallback}
               onDeleteCallback={questionDeleteSuccessCallback}
               hasMapping={hasMapping}
             />
