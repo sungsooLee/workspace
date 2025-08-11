@@ -485,7 +485,7 @@ module.exports = {
         // Display
         '.display1': {
           ...baseTitle,
-          fontSize: '3.8rem',
+          fontSize: '4rem',
           fontWeight: '400',
           '@screen mobile': {
             fontSize: '2.4rem',
@@ -494,8 +494,8 @@ module.exports = {
 
         '.display1-b': {
           ...baseTitle,
-          fontSize: '3.8rem',
-          fontWeight: '600',
+          fontSize: '4rem',
+          fontWeight: '700',
           '@screen mobile': {
             fontSize: '2.4rem',
           },
@@ -503,14 +503,14 @@ module.exports = {
 
         '.headline1': {
           ...baseTitle,
-          fontSize: '2rem',
+          fontSize: '2.2rem',
           fontWeight: '400',
         },
 
         '.headline1-b': {
           ...baseTitle,
-          fontSize: '2rem',
-          fontWeight: '600',
+          fontSize: '2.2rem',
+          fontWeight: '700',
         },
 
         '.headline2': {
@@ -534,7 +534,7 @@ module.exports = {
         '.headline3-b': {
           ...baseTitle,
           fontSize: '2.8rem',
-          fontWeight: '600',
+          fontWeight: '700',
         },
 
         '.headline4': {
@@ -546,67 +546,67 @@ module.exports = {
         '.headline4-b': {
           ...baseTitle,
           fontSize: '3rem',
-          fontWeight: '600',
+          fontWeight: '700',
         },
 
         '.title1': {
           ...baseTitle,
-          fontSize: '1.2rem',
+          fontSize: '1.4rem',
           fontWeight: '400',
         },
 
         '.title1-b': {
           ...baseTitle,
-          fontSize: '1.2rem',
-          fontWeight: '600',
+          fontSize: '1.4rem',
+          fontWeight: '700',
         },
 
         '.title2': {
           ...baseTitle,
-          fontSize: '1.3rem',
+          fontSize: '1.5rem',
           fontWeight: '400',
         },
 
         '.title2-b': {
           ...baseTitle,
-          fontSize: '1.3rem',
-          fontWeight: '600',
+          fontSize: '1.5rem',
+          fontWeight: '700',
         },
 
         '.title3': {
           ...baseTitle,
-          fontSize: '1.4rem',
+          fontSize: '1.6rem',
           fontWeight: '400',
         },
 
         '.title3-b': {
           ...baseTitle,
-          fontSize: '1.4rem',
+          fontSize: '1.6rem',
           fontWeight: '600',
         },
 
         '.title4': {
           ...baseTitle,
-          fontSize: '1.6rem',
+          fontSize: '1.8rem',
           fontWeight: '400',
         },
 
         '.title4-b': {
           ...baseTitle,
-          fontSize: '1.6rem',
+          fontSize: '1.8rem',
           fontWeight: '600',
         },
 
         '.title5': {
           ...baseTitle,
-          fontSize: '1.8rem',
+          fontSize: '2rem',
           fontWeight: '400',
         },
 
         '.title5-b': {
           ...baseTitle,
-          fontSize: '1.8rem',
-          fontWeight: '600',
+          fontSize: '2rem',
+          fontWeight: '700',
         },
 
         '.body-xl': {
@@ -635,98 +635,98 @@ module.exports = {
 
         '.body-md': {
           ...bodyTitle,
-          fontSize: '1.4rem',
+          fontSize: '1.5rem',
           fontWeight: '400',
         },
 
         '.body-md-b': {
           ...bodyTitle,
-          fontSize: '1.4rem',
-          fontWeight: '600',
+          fontSize: '1.5rem',
+          fontWeight: '700',
         },
 
         '.body-sm': {
           ...bodyTitle,
-          fontSize: '1.3rem',
+          fontSize: '1.4rem',
           fontWeight: '400',
         },
 
         '.body-sm-b': {
           ...bodyTitle,
-          fontSize: '1.3rem',
-          fontWeight: '600',
+          fontSize: '1.4rem',
+          fontWeight: '700',
         },
 
         '.body-xsm': {
           ...bodyTitle,
-          fontSize: '1.1rem',
+          fontSize: '1.2rem',
           fontWeight: '400',
         },
 
         '.body-xsm-b': {
           ...bodyTitle,
-          fontSize: '1.1rem',
-          fontWeight: '600',
+          fontSize: '1.2rem',
+          fontWeight: '700',
         },
 
         '.label-xl': {
           ...baseTitle,
-          fontSize: '1.5rem',
+          fontSize: '1.6rem',
           fontWeight: '400',
         },
 
         '.label-xl-b': {
           ...baseTitle,
-          fontSize: '1.5rem',
-          fontWeight: '600',
+          fontSize: '1.6rem',
+          fontWeight: '700',
         },
 
         '.label-lg': {
           ...baseTitle,
-          fontSize: '1.4rem',
+          fontSize: '1.5rem',
           fontWeight: '400',
         },
 
         '.label-lg-b': {
           ...baseTitle,
-          fontSize: '1.4rem',
-          fontWeight: '600',
+          fontSize: '1.5rem',
+          fontWeight: '700',
         },
 
         '.label-md': {
           ...baseTitle,
-          fontSize: '1.3rem',
+          fontSize: '1.4rem',
           fontWeight: '400',
         },
 
         '.label-md-b': {
           ...baseTitle,
           fontSize: '1.3rem',
-          fontWeight: '600',
+          fontWeight: '700',
         },
 
         '.label-sm': {
           ...baseTitle,
-          fontSize: '1.2rem',
+          fontSize: '1.3rem',
           fontWeight: '400',
         },
 
         '.label-sm-b': {
           ...baseTitle,
-          fontSize: '1.2rem',
-          fontWeight: '600',
+          fontSize: '1.3rem',
+          fontWeight: '700',
         },
 
         '.label-xs': {
           ...baseTitle,
-          fontSize: '1.1rem',
+          fontSize: '1.2rem',
           fontWeight: '400',
         },
 
         '.label-xs-b': {
           ...baseTitle,
-          fontSize: '1.1rem',
-          fontWeight: '600',
+          fontSize: '1.2rem',
+          fontWeight: '700',
         },
       });
     },
