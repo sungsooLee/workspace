@@ -294,7 +294,7 @@ export type UseDynamicFormResult = {
   getInitByBuilders: () => any;
 
   /** 모든 validator를 초기화하는 함수 */
-  clearAllValidators?: any;
+  clearAllValidators: () => void;
 
   /** 모든 필드의 dirty를 false 로 바꾸는 함수*/
   resetDirtyState: () => void;
