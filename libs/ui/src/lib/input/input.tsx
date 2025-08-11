@@ -235,6 +235,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             {...props}
             getInputRef={ref}
             id={id}
+            readOnly={readOnly}
+            disabled={disabled}
             className={cn(styles.input, className, error ? styles.error : '')}
             value={value}
             thousandSeparator={thousandSeparator}
@@ -245,7 +247,6 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
               handleInputChange(values.value);
             }}
             onKeyDown={handleNumericInputKeyDown}
-            disabled={disabled}
             maxLength={maxLength}
           />
         ) : type === 'mask' ? (
@@ -253,6 +254,8 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             {...props}
             getInputRef={ref}
             id={id}
+            readOnly={readOnly}
+            disabled={disabled}
             className={cn(className)}
             value={value}
             format={format}
