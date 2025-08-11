@@ -15,3 +15,15 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.learning_container {
+        .learning_contents {
+          @apply mt-[56px] h-[calc(100dvh-56px-150px)] overflow-y-auto;
+        }
+      }
+    }
+  }
+}

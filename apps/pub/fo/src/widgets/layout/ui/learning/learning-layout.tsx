@@ -15,19 +15,20 @@ function LearningLayoutComponent({ children }: LearningLayoutComponentProps) {
     <>
       <LearningHeader />
 
-      {/* 퍼블수정 20250808 모바일 레슨명 추가 */}
-      <MobileView>
-        <div className={styles.lesson_box}>
-          <strong>
-            레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명
-          </strong>
-        </div>
-      </MobileView>
-
       <div className={`${styles.start} ${styles.container}`}>
         <div className={styles.inner}>
           <main>
-            <LearningContainer>{children}</LearningContainer>
+            <LearningContainer>
+              {/* 퍼블수정 20250811 모바일 레슨명 추가 */}
+              <MobileView>
+                <div className={styles.lesson_box}>
+                  <strong>
+                    레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명레슨명
+                  </strong>
+                </div>
+              </MobileView>
+              {children}
+            </LearningContainer>
           </main>
         </div>
       </div>
