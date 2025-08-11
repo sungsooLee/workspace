@@ -222,7 +222,7 @@ const gridConfig = {
     // 과정 유효기간
     {
       name: 'courseValidityPeriod',
-      label: () => t('LABEL.grid.column.courseValidityPeriod'),
+      label: () => t('과정 유효기간'),
       size: 90,
     },
   ],
