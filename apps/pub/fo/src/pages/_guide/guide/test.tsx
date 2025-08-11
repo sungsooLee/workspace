@@ -6,6 +6,7 @@ import { IcoEye, IcoHeart, IcoPlay, IcoStar } from '@learnway/icons';
 import { getRandomId } from '@learnway/shared';
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
 import { Badge } from '@learnway/ui/badge';
+import { ToggleActionButton } from '../../../shared/ui/toggle-button/toggle-action-button';
 
 export const Route = createFileRoute('/_guide/guide/test')({
   component: RouteComponent,
@@ -446,6 +447,8 @@ function RouteComponent() {
         </Popover>
       </div>
       <p>테스트</p> */}
+      <ToggleActionButton label="111" showCloseButton iconNode={<IcoHeart />} />
+      <ToggleActionButton label="111" showCloseButton disabled rounded />
     </div>
   );
 }

@@ -1,0 +1,89 @@
+/* toggle-action-button.module.css */
+.start {
+  &.wrap {
+    @apply inline-flex items-center justify-center rounded-[4px] border border-solid border-[var(--gray90)] bg-white px-[8px] py-[5px] align-top;
+    .btn {
+      @apply !px-0 font-normal text-[var(--gray10)];
+      svg {
+        @apply !ml-0 h-[12px] w-[12px] fill-[var(--gray10)] stroke-[var(--gray10)];
+      }
+    }
+    .close {
+      @apply ml-[4px] h-[12px] w-[12px] shrink-0;
+      .icon_close {
+        @apply h-full w-full stroke-[var(--gray10)];
+      }
+    }
+    &:hover {
+      @apply border-[var(--gray90)] bg-[var(--gray95)];
+    }
+    &.active {
+      @apply bg-[var(--gray10)];
+      .btn {
+        @apply font-bold text-white;
+        svg {
+          @apply fill-white stroke-white;
+        }
+      }
+      .icon_close {
+        @apply stroke-white;
+      }
+    }
+    &.disabled {
+      @apply border-[var(--gray95)] bg-[var(--gray90)];
+      .btn {
+        @apply text-[var(--gray75)];
+      }
+      .close {
+        .icon_close {
+          @apply stroke-[var(--gray75)];
+        }
+      }
+    }
+    &.sm {
+      @apply h-[2.8rem];
+      .btn {
+        @apply label-sm;
+      }
+    }
+    &.md {
+      @apply h-[3.6rem] px-[12px] py-[8px];
+      .btn {
+        @apply label-md;
+        svg {
+          @apply h-[16px] w-[16px];
+        }
+      }
+      .close {
+        @apply h-[16px] w-[16px];
+      }
+    }
+    &.lg {
+      @apply h-[4.5rem] p-[12px];
+      .btn {
+        @apply label-lg;
+        svg {
+          @apply h-[16px] w-[16px];
+        }
+      }
+      .close {
+        @apply h-[16px] w-[16px];
+      }
+    }
+    &.xl {
+      @apply h-[5.4rem] p-[16px];
+      .btn {
+        @apply label-xl;
+        svg {
+          @apply h-[20px] w-[20px];
+        }
+      }
+      .close {
+        @apply h-[20px] w-[20px];
+      }
+    }
+    &.rounded {
+      @apply rounded-full;
+    }
+  }
+}
