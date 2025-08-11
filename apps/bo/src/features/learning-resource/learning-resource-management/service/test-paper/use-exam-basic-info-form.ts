@@ -37,13 +37,7 @@ export const useExamBasicInfoForm = (options: {
     },
   });
 
-  const { update: updateExamBasicInfo } = useUpdateExamPaperContent({
-    onSuccess: (result: unknown) => {
-      console.log(result);
-
-      options.onUpdateSuccess?.(options.contentUuid);
-    },
-  });
+  const { update: updateExamBasicInfo } = useUpdateExamPaperContent();
 
   const saveBasicInfo = async (data: Record<string, any>) => {
     const requestData = getExamSaveRequestDataFromFormData({
