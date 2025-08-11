@@ -1932,6 +1932,16 @@ export const guideData = [
     remarks: '',
   },
   {
+    screenId: 'NLP_FO_LOG_2001',
+    screenName: '유저검색 팝업',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '- user-search-popup.tsx',
+  },
+  {
     screenId: 'NLP_FO_LOG_2020',
     screenName: '비밀번호변경_180일',
     layoutType: '', // 자동 분리됨 작성x

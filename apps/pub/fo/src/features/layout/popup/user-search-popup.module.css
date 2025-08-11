@@ -1,0 +1,48 @@
+.start {
+  &.user_search {
+    @apply -m-[8px];
+    & > div:nth-child(1) {
+      @apply mb-[24px];
+    }
+    .form_item {
+      @apply p-[32px];
+      .btn_category {
+        @apply w-[160px];
+      }
+      div,
+      button,
+      input {
+        @apply !label-lg;
+      }
+    }
+    table {
+      thead,
+      th {
+        @apply bg-white;
+      }
+    }
+    [className*='table_info'] {
+      [className*='title_info'] {
+        @apply mb-0;
+      }
+    }
+    .count {
+      @apply label-lg-b text-[var(--gray10)];
+      em {
+        @apply text-[var(--blue50)];
+      }
+    }
+    .btn_select {
+      @apply flex items-center;
+      button {
+        @apply h-auto !px-0;
+        & + button {
+          @apply ml-[8px] !pl-[8px];
+          &::before {
+            @apply mr-[8px];
+          }
+        }
+      }
+    }
+  }
+}
