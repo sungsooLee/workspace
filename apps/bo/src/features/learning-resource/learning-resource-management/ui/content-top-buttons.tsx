@@ -1,6 +1,7 @@
 import {
   ContentExportRes,
   ContentInformation,
+  learningResourceQueryOptions,
   useDeleteContent,
   usePostContentExport,
 } from '@entities/learning-resource';
@@ -110,6 +111,23 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
 
   const handleDelete = useCallback(async () => {
     // 번역 항목이 있고 공유 항목이 있으면 삭제 불가 alert
+    const removable = await queryClient.fetchQuery(
+      learningResourceQueryOptions.getContentRemovable(contentUuid),
+    );
+
+    if (removable === 'REASON_TRANSLATE') {
+      await openAlert({
+        title: t('번역본을 가진 교육자원입니다.'),
+        content: t('번역본을 가진 교육자원은 삭제할 수 없습니다.'),
+      });
+      return;
+    } else if (removable === 'REASON_SHARED') {
+      await openAlert({
+        title: t('타채널에 공유 중입니다.'),
+        content: t('공유 중인 교육자원은 삭제할 수 없습니다.'),
+      });
+      return;
+    }
 
     if (isCourseUsed) {
       await openAlert({

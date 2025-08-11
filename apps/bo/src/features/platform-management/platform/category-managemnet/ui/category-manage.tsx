@@ -104,7 +104,7 @@ export const CategoryManage = () => {
     if (!result) return DuplicateState.duplicated;
     return DuplicateState.ok;
   };
-
+  console.log('### treeData=>', treeData);
   useEffect(() => {
     // 이전 데이터와 현재 데이터가 다른 경우에만 처리 (데이터 로드 감지)
     if (data !== null && data !== undefined) {

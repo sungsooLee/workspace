@@ -43,6 +43,7 @@ export const queryKeys = {
   userByUuid: ['user-by-uuid'] as const,
   contents: ['contents'] as const,
   contentDetail: (contentUuid: string) => ['content-detail', contentUuid] as const,
+  contentRemovable: (contentUuid: string) => ['content-removable', contentUuid] as const,
   contentCourseMapping: (contentUuid: string) => ['content-course-mapping', contentUuid] as const,
   translationList: (contentUuid: string) => ['translation-list', contentUuid] as const,
   deleteContent: ['delete-content'] as const,
@@ -103,6 +104,11 @@ export const learningResourceQueryOptions = {
     cacheTime: 0,
     staleTime: 0,
     enabled: !!contentUuid,
+  }),
+  getContentRemovable: (contentUuid: string) => ({
+    queryKey: queryKeys.contentRemovable(contentUuid),
+    queryFn: () => LearningResourceService.getContentRemovable(contentUuid),
+    enable: true,
   }),
   getContentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) => ({
     queryKey: queryKeys.contentCourseMapping(contentUuid),

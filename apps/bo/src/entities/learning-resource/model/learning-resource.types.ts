@@ -211,6 +211,8 @@ export interface ContentInformation extends ContentBaseInfo {
 
 export type GetContentDetailRes = ContentInformation;
 
+export type GetContentRemovableRes = 'REMOVABLE' | 'REASON_TRANSLATE' | 'REASON_SHARED';
+
 export type PostContentCopyRes = ContentInformation;
 
 export interface GetContentsParams extends PaginationRequest {

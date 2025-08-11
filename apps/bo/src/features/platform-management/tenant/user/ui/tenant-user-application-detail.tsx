@@ -14,7 +14,7 @@ import {
 } from '@learnway/ui/form-field';
 
 import { getUserStatus } from '@features/platform-management/company/company-user-management/service/company-user.service';
-import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { EditInputCell, EditSwitchCell } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
@@ -290,7 +290,9 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
           }
         />
       </ContentsRow>
-      <ContentsHistoryInfoFormField />
+      <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+        <ContentsHistoryInfoFormField provider={provider}/>
+      </ContentsRow>
     </form>
   );
 };
@@ -368,6 +370,7 @@ const formConfig = (): DynamicFormConfig => ({
       type: 'text',
       label: t('이름'),
       value: '',
+      placeholder: ' ',
     },
     {
       name: 'engName',
@@ -381,12 +384,14 @@ const formConfig = (): DynamicFormConfig => ({
       type: 'text',
       label: t('사번'),
       value: '',
+      placeholder: ' ',
     },
     {
       name: 'email',
       type: 'text',
       label: t('아이디(이메일)'),
       value: '',
+      placeholder: ' ',
     },
     {
       name: 'birthday',
@@ -407,24 +412,14 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'phoneNumber',
       type: 'text',
       value: '',
+      placeholder: ' ',
     },
     {
       label: t('연락처(사무실)'),
       name: 'companyNumber',
-      type: 'phone-number',
-      format: 'string',
+      type: 'text',
       value: '',
-      fields: {
-        nationCode: 'companyNumberCountryCode',
-        number: 'companyNumber',
-      },
-    },
-    {
-      label: '',
-      name: 'companyNumberCountryCode',
-      type: 'hidden',
-      format: 'string',
-      value: 'KOR_82',
+      placeholder: ' ',
     },
     {
       label: t('회원가입일'),
@@ -432,6 +427,7 @@ const formConfig = (): DynamicFormConfig => ({
       type: 'text',
       format: 'string',
       value: '',
+      placeholder: ' ',
     },
     // 회사 조직 정보
     { name: 'companyId', type: 'hidden', label: '', value: '' },

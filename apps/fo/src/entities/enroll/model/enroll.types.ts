@@ -1,6 +1,21 @@
 import { SortRequest } from '@shared/types/api';
 import { ISODateString } from '@shared/types/common';
 
+export enum EnrollStatusCheckResponse {
+  EXPIRED = 'EXPIRED', // 기간만료
+  WAITLIST_ENROLL = 'WAITLIST_ENROLL', // 수강 대기 신청 가능
+  FULL = 'FULL', // 정원마감
+  ENROLL = 'ENROLL', // 수강신청가능
+  NOT_ELIGIBLE = 'NOT_ELIGIBLE',
+  CANCEL_ENROLLMENT = 'CANCEL_ENROLLMENT',
+  CANCEL_WAITLIST = 'CANCEL_WAITLIST',
+  READY_TO_LEARN = 'READY_TO_LEARN',
+  START_LEARNING = 'START_LEARNING',
+  COMPLETED = 'COMPLETED',
+  PASSED = 'PASSED',
+  FAILED = 'FAILED',
+}
+
 export interface CourseEnrollResponse {
   courseEnrollId: number;
   courseSequenceStartDate: ISODateString;
