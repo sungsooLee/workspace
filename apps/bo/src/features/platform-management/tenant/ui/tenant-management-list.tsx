@@ -261,6 +261,7 @@ const TenantManagementListComponent: FC<any> = ({ rootPath, roleInfo }) => {
             label={t('LABEL.grid.column.tenantManager', '테넌트 담당자')}
             value=""
             format="string"
+            placeholder={t('입력')}
             element={<InputFormField />}
           />
           <FormRow2
@@ -269,6 +270,7 @@ const TenantManagementListComponent: FC<any> = ({ rootPath, roleInfo }) => {
             type="text"
             label={t('LABEL.grid.column.companyManager')}
             value=""
+            placeholder={t('입력')}
             element={<InputFormField />}
           />
         </ContentsRow>

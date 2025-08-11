@@ -7,10 +7,8 @@
     }
     .thumbnail_view {
       @apply relative;
-      [class*='nlp--thumbnail'] {
-        span img {
-          @apply w-full rounded-[8px] object-cover;
-        }
+      [class*='img'] {
+        @apply w-full rounded-[8px] object-cover;
       }
       .custom_node {
         @apply absolute left-[12px] top-[12px] z-[3];

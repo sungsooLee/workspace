@@ -12,6 +12,7 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { FileDownloads, FormRow } from '@shared/ui';
 import { useModal } from '@learnway/ui/modal';
 import { OpensourceLicenseModal } from '@features/main/support/ui/opensource-license-modal';
+import { Input } from '@learnway/ui/input';
 
 export const Route = createFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -55,16 +56,15 @@ function RouteComponent() {
       <h3>Welcome component test</h3>
       <FormSubTitle className="b-0 m-0 p-0" label="학습창 " />
       <ContentsRow className="m-0">
-        <FormRow className="p-0" provider={provider} name="courseId" />
-        <FormRow className="p-0" provider={provider} name="sequenceId" />
-        <FormRow className="p-0" provider={provider} name="curriculumId" />
+        <FormRow className="p-0" provider={provider} name="courseId" element={<Input />} />
+        <FormRow className="p-0" provider={provider} name="sequenceId" element={<Input />} />
+        <FormRow className="p-0" provider={provider} name="curriculumId" element={<Input />} />
       </ContentsRow>
       <ContentsRow className="m-0">
-        <FormRow className="p-0" provider={provider} name="moduleId" />
-        <FormRow className="p-0" provider={provider} name="lessonId" />
+        <FormRow className="p-0" provider={provider} name="moduleId" element={<Input />} />
+        <FormRow className="p-0" provider={provider} name="lessonId" element={<Input />} />
         <FormRow className="p-0" provider={provider} name="----">
           <Button
-            className="mt-12"
             label="학습창"
             variant="primary"
             type="button"
@@ -88,11 +88,10 @@ function RouteComponent() {
       </ContentsRow>
       <FormSubTitle className="b-0 m-0 p-0" label="과정 상세  보기" />
       <ContentsRow className="m-0">
-        <FormRow className="p-0" provider={provider} name="detailCourseId" />
+        <FormRow className="p-0" provider={provider} name="detailCourseId" element={<Input />} />
         <FormRow className="p-0" provider={provider} name="---"></FormRow>
         <FormRow className="p-0" provider={provider} name="---">
           <Button
-            className="mt-12"
             label="과정상세"
             variant="primary"
             type="button"

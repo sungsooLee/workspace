@@ -43,6 +43,7 @@ export const queryKeys = {
   userByUuid: ['user-by-uuid'] as const,
   contents: ['contents'] as const,
   contentDetail: (contentUuid: string) => ['content-detail', contentUuid] as const,
+  contentRemovable: (contentUuid: string) => ['content-removable', contentUuid] as const,
   contentCourseMapping: (contentUuid: string) => ['content-course-mapping', contentUuid] as const,
   translationList: (contentUuid: string) => ['translation-list', contentUuid] as const,
   deleteContent: ['delete-content'] as const,
@@ -65,6 +66,8 @@ export const queryKeys = {
     ['question-bank-question-item', examQuestionUuid] as const,
   randomQuestionCount: (examUuid: string) => ['random-question-count', examUuid] as const,
   questionListForRetrieve: ['question-list-for-retrieve'] as const,
+  assignmentSubmissionList: (contentUuid: string) =>
+    ['assignment-submission-list', contentUuid] as const,
   shareTenantsChannels: (contentUuid: string) => ['share-tenants-channels', contentUuid] as const,
   sharedContents: ['shared-contents'] as const,
   sharedBoxContents: ['shared-box-contents'] as const,
@@ -101,6 +104,11 @@ export const learningResourceQueryOptions = {
     cacheTime: 0,
     staleTime: 0,
     enabled: !!contentUuid,
+  }),
+  getContentRemovable: (contentUuid: string) => ({
+    queryKey: queryKeys.contentRemovable(contentUuid),
+    queryFn: () => LearningResourceService.getContentRemovable(contentUuid),
+    enable: true,
   }),
   getContentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) => ({
     queryKey: queryKeys.contentCourseMapping(contentUuid),
@@ -185,6 +193,14 @@ export const learningResourceQueryOptions = {
     cacheTime: 0,
     staleTime: 0,
     enabled: true,
+  }),
+
+  getAssignmentSubmissionList: (contentUuid: string) => ({
+    queryKey: queryKeys.assignmentSubmissionList(contentUuid),
+    queryFn: () => LearningResourceService.fetchAssignmentSubmissionList(contentUuid),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: !!contentUuid,
   }),
 
   getShareTenantsChannels: (params: GetShareTenantsChannelsParams) => ({

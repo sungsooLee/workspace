@@ -5,8 +5,8 @@ import {
 } from '@entities/learning-sequence/service/learning-sequence.hook';
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management';
-import { TriggerKey } from '@features/learning-operate/course/course-management';
-import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
+import { TriggerKey, useCourseActions } from '@features/learning-operate/course/course-management';
+import { CODE_GROUP, DynamicFormProvider } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
@@ -16,7 +16,6 @@ import {
   InputModalSelectorFormField,
   RadioGroupFormField,
 } from '@learnway/ui/form-field';
-import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { PhoneNumberFormField } from '@learnway/ui/phone-number';
 
@@ -26,6 +25,7 @@ import {
   FormDisplay,
   FormRow,
   FormRow2,
+  InputFormField,
   PassOptionFormField,
   SwitchFormField,
   TenantByRoleChannelCheckboxFormField,
@@ -40,7 +40,15 @@ import {
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useUpdateEffect } from 'ahooks';
-import { forwardRef, useCallback, useEffect, useRef } from 'react';
+import { FormEventHandler, forwardRef, useCallback, useEffect } from 'react';
+import {
+  Control,
+  FieldValues,
+  FormState,
+  UseFormGetValues,
+  UseFormSetValue,
+  UseFormTrigger,
+} from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 type SequenceDetailComponentProps = {
@@ -49,6 +57,19 @@ type SequenceDetailComponentProps = {
   courseId?: number;
   sequenceId: number;
   lastTriggered?: any;
+  provider: DynamicFormProvider;
+  updateFormData: (data?: Record<string, any>) => void;
+  onSubmit: (onValid: (data: Record<string, any>) => void) => FormEventHandler<HTMLFormElement>;
+  onFormChange?: (values?: Record<string, any>) => void;
+  onFormValid?: UseFormTrigger<FieldValues>;
+  getValues: UseFormGetValues<FieldValues>;
+  setValue?: UseFormSetValue<FieldValues>;
+  formState?: FormState<FieldValues>;
+  control?: Control<FieldValues, any, FieldValues> & {
+    isFieldRequired: (fieldName: string) => boolean;
+  };
+  formValues?: any;
+  resetDirtyState: () => void;
 };
 
 /**
@@ -56,29 +77,33 @@ type SequenceDetailComponentProps = {
  * @returns
  */
 const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentProps>(
-  ({ mode, setMode, courseId: courseIdProps, sequenceId: sequenceIdProps, lastTriggered }, ref) => {
+  (
+    {
+      mode,
+      setMode,
+      courseId: courseIdProps,
+      sequenceId: sequenceIdProps,
+      lastTriggered,
+      provider,
+      updateFormData,
+      onSubmit,
+      getValues,
+      formValues,
+      resetDirtyState,
+    },
+    ref,
+  ) => {
     console.log('##courseIdProps=>', courseIdProps);
     console.log('##sequenceIdProps=>', sequenceIdProps);
     const { t } = useTranslation();
     const { confirm: openConfirm, openModal, showSaveComplete } = useModal();
-    const formRef = useRef<HTMLFormElement>(null);
-    const {
-      provider,
-      updateFormData,
-      onSubmit,
-      onFormChange,
-      onFormValid,
-      getValues,
-      setValue,
-      formState,
-      control,
-      formValues,
-    } = useDynamicForm2();
+    const { setCheckDirtyForm } = useCourseActions();
 
     const { updateSequence } = useUpdateSequence({
       onSuccess: async (response: any) => {
         console.log('useUpdateSequence :: onSuccess', response);
         await showSaveComplete();
+        setCheckDirtyForm(() => false);
       },
     });
     const { deleteSequence } = useDeleteSequence({
@@ -106,6 +131,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
     }, [lastTriggered]);
 
     const handleUpdateSequence = useCallback(async () => {
+      updateFormData({ ...formValues });
       const run = onSubmit(async (data) => {
         // if (!(await saveConfirm())) {
         //   return;
@@ -114,11 +140,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
       });
       // 가짜 이벤트 객체를 생성해서 수동으로 호출
       run({ preventDefault: () => null } as any);
-    }, [formValues]);
-
-    // const handleUpdateSequence = async () => {
-    //   updateSequence({ sequenceId: sequenceIdProps, ...formDataToRequestData(formValues) });
-    // };
+    }, [formValues, onSubmit]);
 
     const handleDeleteSequence = async () => {
       const confirm = await openConfirm(t('삭제 하시겠습니까?'));
@@ -233,7 +255,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 provider={provider}
                 name={'courseSequenceName'}
                 label={t('차수명')}
-                element={<Input type={'text'} maxLength={40} />}
+                element={<InputFormField type={'text'} maxLength={40} />}
                 validation={{ required: true }}
               />
             </ContentsRow>
@@ -306,7 +328,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                             name={'learningStartDays'}
                             // value={''}
                             element={
-                              <Input
+                              <InputFormField
                                 type="number"
                                 prefixText={t('학습 가능일로부터')}
                                 suffixText={t('일')}
@@ -426,7 +448,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                               provider={provider}
                               name={'learningSpaceNameKeyIn'}
                               value={''}
-                              element={<Input />}
+                              element={<InputFormField />}
                             />
                           ),
                         },
@@ -497,7 +519,11 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                               name={'maxEnrollQuota'}
                               value={''}
                               element={
-                                <Input type="number" prefixText={t('정원')} suffixText={t('명')} />
+                                <InputFormField
+                                  type="number"
+                                  prefixText={t('정원')}
+                                  suffixText={t('명')}
+                                />
                               }
                             />
                           ),
@@ -548,7 +574,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                   provider={provider}
                   name={'textbookName'}
                   label={t('교재명')}
-                  element={<Input />}
+                  element={<InputFormField />}
                 />
                 {/*교재비*/}
                 <FormRow2
@@ -556,7 +582,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                   name={'textbookFee'}
                   label={t('교재비')}
                   format={'number'}
-                  element={<Input prefixText={t('1인당')} suffixText={t('원')} />}
+                  element={<InputFormField prefixText={t('1인당')} suffixText={t('원')} />}
                 />
               </ContentsRow>
             </FormDisplay>
@@ -615,7 +641,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                               <FormRow2
                                 provider={provider}
                                 name={'instructorName'}
-                                element={<Input />}
+                                element={<InputFormField />}
                               />
                             ),
                           },
@@ -670,7 +696,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 provider={provider}
                 name={'coordinatorEmail'}
                 label={t('이메일')}
-                element={<Input />}
+                element={<InputFormField />}
               />
               {/*담당자 ID - hidden */}
               <FormRow2 provider={provider} name={'coordinatorId'} type={'hidden'} value={''} />
@@ -715,7 +741,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 provider={provider}
                 name={'operatorEmail'}
                 label={t('이메일')}
-                element={<Input />}
+                element={<InputFormField />}
               />
               {/*운영자 ID - hidden */}
               <FormRow2 provider={provider} name={'operatorId'} type={'hidden'} value={''} />
@@ -784,7 +810,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                               provider={provider}
                               name={'maxReviewPeriodMonths'}
                               element={
-                                <Input
+                                <InputFormField
                                   type={'number'}
                                   min={0}
                                   prefixText={t('학습 종료일 기준')}
@@ -865,7 +891,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                                 provider={provider}
                                 name={'maxDailyLearningProgress'}
                                 element={
-                                  <Input
+                                  <InputFormField
                                     type={'number'}
                                     min={0}
                                     prefixText={t('하루 기준')}
@@ -1015,13 +1041,17 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                                 <FormRow2
                                   provider={provider}
                                   name={'recognizedStudyCycles'}
-                                  element={<Input type={'number'} min={0} suffixText={t('회')} />}
+                                  element={
+                                    <InputFormField type={'number'} min={0} suffixText={t('회')} />
+                                  }
                                 />
                                 {/* // 인정학습시간(분) */}
                                 <FormRow2
                                   provider={provider}
                                   name={'recognizedStudyMinutes'}
-                                  element={<Input type={'number'} min={0} suffixText={t('분')} />}
+                                  element={
+                                    <InputFormField type={'number'} min={0} suffixText={t('분')} />
+                                  }
                                 />
                               </>
                             ),
@@ -1049,7 +1079,13 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                               <FormRow2
                                 provider={provider}
                                 name={'recognizedStudyPoint'}
-                                element={<Input type={'number'} min={0} suffixText={t('포인트')} />}
+                                element={
+                                  <InputFormField
+                                    type={'number'}
+                                    min={0}
+                                    suffixText={t('포인트')}
+                                  />
+                                }
                               />
                             ),
                           },
@@ -1137,7 +1173,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                                 provider={provider}
                                 name={'maxReviewPeriodMonths'}
                                 element={
-                                  <Input
+                                  <InputFormField
                                     type={'number'}
                                     min={0}
                                     prefixText={t('학습 종료일 기준')}
@@ -1219,7 +1255,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                                 provider={provider}
                                 name={'maxDailyLearningProgress'}
                                 element={
-                                  <Input
+                                  <InputFormField
                                     type={'number'}
                                     min={0}
                                     prefixText={t('하루 기준')}
@@ -1351,7 +1387,9 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                               provider={provider}
                               name={'trainingCostPerPerson'}
                               format={'number'}
-                              element={<Input type={'number'} min={0} suffixText={t('원')} />}
+                              element={
+                                <InputFormField type={'number'} min={0} suffixText={t('원')} />
+                              }
                             />
                           ),
                         },
@@ -1379,7 +1417,9 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                               provider={provider}
                               name={'employmentInsuranceRefund'}
                               format={'number'}
-                              element={<Input type={'number'} min={0} suffixText={t('원')} />}
+                              element={
+                                <InputFormField type={'number'} min={0} suffixText={t('원')} />
+                              }
                             />
                           ),
                         },

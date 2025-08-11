@@ -3,6 +3,7 @@ import {
   SequenceDetail,
   SequenceList,
 } from '@features/learning-operate/learning-sequence/sequence-management';
+import { useDynamicForm2 } from '@learnway/hooks';
 import { forwardRef, useEffect, useState } from 'react';
 import { useCourseDetailSubSequence } from '../../../../hooks/use-course-detail-sub-sequence';
 import {
@@ -21,10 +22,27 @@ const SequenceComponent = forwardRef<HTMLElement, CourseDetailTabBaseProps>((_, 
   const { courseCreateInfo } = useCourseStore();
   const { setCourseCreateInfo, setCheckDirtyForm } = useCourseActions();
 
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    onFormValid,
+    getValues,
+    setValue,
+    formState,
+    control,
+    formValues,
+    resetDirtyState,
+  } = useDynamicForm2();
+
   useEffect(() => {
     setCourseCreateInfo({
       contentViewType: mode === 'MAIN' ? ContentViewType.LIST : ContentViewType.DETAIL,
     }); // 탭
+    if (mode === 'MAIN') {
+      resetDirtyState();
+    }
   }, [mode]);
 
   useEffect(() => {
@@ -33,10 +51,9 @@ const SequenceComponent = forwardRef<HTMLElement, CourseDetailTabBaseProps>((_, 
   }, [sequenceId]);
 
   // form state 변경 시 폼 더티 체크 함수 설정
-  // useEffect(() => {
-  //   // console.log('use-course-create-sub-page : useEffect.formState', formState.isDirty);
-  //   setCheckDirtyForm(() => formState.isDirty);
-  // }, [formState.isDirty]);
+  useEffect(() => {
+    setCheckDirtyForm(() => formState.isDirty);
+  }, [formState.isDirty]);
 
   return courseCreateInfo.contentViewType === ContentViewType.LIST ? (
     <SequenceList
@@ -52,6 +69,12 @@ const SequenceComponent = forwardRef<HTMLElement, CourseDetailTabBaseProps>((_, 
       courseId={courseId}
       sequenceId={sequenceId}
       lastTriggered={lastTriggered}
+      provider={provider}
+      updateFormData={updateFormData}
+      onSubmit={onSubmit}
+      getValues={getValues}
+      formValues={formValues}
+      resetDirtyState={resetDirtyState}
     />
   );
 });

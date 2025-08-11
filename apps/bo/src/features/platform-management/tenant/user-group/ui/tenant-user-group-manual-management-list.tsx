@@ -12,7 +12,7 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { queryOptions as userGroupManualOptions } from '@entities/user-group/service/user-group.queries';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
-import { EnGlobalConst } from '@shared/types/enums';
+import { EnFormMode, EnGlobalConst } from '@shared/types/enums';
 import { CombineUserGroup } from '@shared/types/user-group';
 import { UserGroupChoiceModal } from '@shared/ui/modal';
 import { SearchBoxForm } from '@shared/ui/search-box';
@@ -51,6 +51,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = () => {
       state: {
         userGroupId,
         listParam: getValues(),
+        mode: EnFormMode.VIEW
       },
     });
   };

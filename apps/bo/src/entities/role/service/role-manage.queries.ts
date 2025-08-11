@@ -1,4 +1,4 @@
-import TenantMenuManageService from '@entities/menu/api/menu-tenant-manage';
+import { TenantMenuManageService } from '@entities/menu';
 import { getQuerySkipToken } from '@learnway/shared';
 import { Role } from '@shared/types/role';
 import { RoleApplicationParam } from '@shared/types/role-application';

@@ -1,6 +1,6 @@
-import { httpService } from '@learnway/shared';
+import { Category } from '@entities/category';
 import { LMSApiPrefix } from '@learnway/config';
-import { Category, CategoryDetail } from '@entities/category/model/category.types';
+import { httpService } from '@learnway/shared';
 import { TenantCategoryDetail } from '../model/tenant-category.types';
 
 export default class TenantCategoryService {
@@ -53,6 +53,8 @@ export default class TenantCategoryService {
    * @param tenantId
    */
   static fetchTenantCategoryTreePopup(tenantIds: Array<number>): Promise<Category> {
-    return httpService.get<Category>(`${LMSApiPrefix()}/tenant/${tenantIds.join(',')}/category/tree/popup`);
+    return httpService.get<Category>(
+      `${LMSApiPrefix()}/tenant/${tenantIds.join(',')}/category/tree/popup`,
+    );
   }
 }

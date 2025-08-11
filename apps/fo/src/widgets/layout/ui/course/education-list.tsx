@@ -5,14 +5,12 @@ import { Arrays } from '../../../../features/layout';
 import { Education } from '../../../../widgets/layout';
 
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/education.module.css';
-import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import { Button } from '@learnway/ui/button';
 import { Dropdown } from '@learnway/ui/dropdown';
 import { PopoverList } from '@learnway/ui/popover-list';
 import { t } from 'i18next';
 
 interface Props {
-  educationsTemp?: any;
   educations: any;
   courseEnrollCompletePopup: () => void;
   CourseCancelCompletePopup: () => void;
@@ -27,7 +25,6 @@ interface Props {
 const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
   (
     {
-      educationsTemp,
       educations,
       courseEnrollCompletePopup,
       CourseCancelCompletePopup,
@@ -47,17 +44,6 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
     };
     const handleIsAllArraySelect = (index: number | null) => {
       setIsAll(!!index);
-    };
-
-    // 교육일정 년도별 보기 popover
-    const DropdownPopoverCompoment = () => {
-      return (
-        <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
-          <Button>2025년</Button>
-          <Button>2024년</Button>
-          <Button>2023년</Button>
-        </div>
-      );
     };
 
     // mobile 년도별 보기 dropdown
@@ -93,19 +79,6 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
             >
               <Button type="button" variant="point" size="sm" label={String(dateValues)} />
             </PopoverList>
-            // <Popover
-            //   className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text} ${styles.drop_btn}`}
-            //   popoverContent={<DropdownPopoverCompoment />}
-            //   side="bottom"
-            //   align="start"
-            //   sideOffset={5}
-            //   onChange={(value) => {
-            //     console.log(value);
-            //   }}
-            // >
-            //   <span>{'2025년'}</span>
-            //   <IcoArrowDown width={16} height={16} stroke="#131C30" />
-            // </Popover>
           )}
 
           <div className={styles.filter}>
@@ -130,15 +103,6 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
         )}
         <div className={styles.education_box}>
           <ul>
-            {/* {educationsTemp.classes?.map((edu: any) => (
-              <li key={edu.id}>
-                <Education
-                  edu={edu}
-                  courseEnrollCompletePopup={courseEnrollCompletePopup}
-                  CourseCancelCompletePopup={CourseCancelCompletePopup}
-                />
-              </li>
-            ))} */}
             {educations && educations.length ? (
               (more ? educations : educations.slice(0, 3)).map((edu: any) => (
                 <li key={edu.courseSequenceId}>

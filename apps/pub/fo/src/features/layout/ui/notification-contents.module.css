@@ -51,7 +51,9 @@
         }
         .message_wrap {
           @apply mt-[12px];
-          .title,
+          .title {
+            @apply body-md-b;
+          }
           .message {
             @apply body-md;
           }

@@ -20,6 +20,7 @@ import { ChannelChoiceModal, ManagerChoiceModal, UserChoiceModal } from '@shared
 
 import { ContentCreateType, EnFormMode } from '@shared/types/enums';
 
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { User } from '@learnway/types';
 import { useTranslation } from 'react-i18next';
 
@@ -50,6 +51,7 @@ const LearningResourceBaseFormComponent = ({
   /** 교육자원 생성 타입 (수기/번역/공유) */
   createType?: ContentCreateType;
 }) => {
+  const { data: authUser } = useFetchAuthUser();
   const { t } = useTranslation();
 
   const { watch } = provider;
@@ -85,8 +87,16 @@ const LearningResourceBaseFormComponent = ({
                   tenantId: modalData.tenantId,
                 };
               }}
-              disabled={hasMapping}
             />
+          }
+          readOnly={
+            hasMapping ||
+            [
+              'CHANNEL_OWNER',
+              'CHANNEL_MEMBER',
+              'CHANNEL_GUEST_OPERATION',
+              'CHANNEL_GUEST_COURSE',
+            ].includes(authUser?.activeRole?.roleType ?? '')
           }
         />
         {/*언어*/}
@@ -266,6 +276,7 @@ const LearningResourceBaseFormComponent = ({
             label={t('학습 시간')}
             format="number"
             value={0}
+            validation={{ required: true }}
             element={<SecondDurationTimeFormField readOnly={readOnlyLessonTime || editDisabled} />}
           />
         </ContentsRow>

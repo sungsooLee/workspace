@@ -26,6 +26,7 @@ import { useRouter } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useCurrentRoute } from '@learnway/hooks';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui/tabs';
 
@@ -35,11 +36,14 @@ interface Props {
 }
 
 function ExamViewComponent({ content, hasMapping }: Props) {
+  const router = useRouter();
+  const {
+    state: { isTranslated },
+  } = useCurrentRoute();
   const { t } = useTranslation();
 
   const queryClient = new QueryClient();
 
-  const router = useRouter();
   const { alert, confirm: openConfirm } = useModal();
 
   const { basicInfoRef, questionInfoRef, questionGenType, setQuestionGenType } =
@@ -151,9 +155,9 @@ function ExamViewComponent({ content, hasMapping }: Props) {
   return (
     <form onSubmit={onSubmit(handleSubmit)}>
       <PageContainer
-        title={t('시험지 상세')}
+        title={`${t('시험지')} ${!isTranslated ? t('상세') : t('번역')}`}
         tooltipProps={{
-          show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
+          show: !isTranslated && (!!hasMapping || content?.createType !== ContentCreateType.MANUAL),
           content: t(getTooltipContent(content?.createType)),
           type: content?.createType,
         }}

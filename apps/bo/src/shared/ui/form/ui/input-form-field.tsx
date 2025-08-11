@@ -19,6 +19,7 @@ const InputFormFieldComponent = forwardRef<HTMLInputElement, BaseFormFieldProps<
       onFormFocus,
       watch,
       error,
+      onBlur,
       ...newProps
     } = props;
     const placeholderWatch = useWatch({ control, name: customConfig?.placeholder?.target || '' });

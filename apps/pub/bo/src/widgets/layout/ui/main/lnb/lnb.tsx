@@ -159,6 +159,17 @@ function LNBComponent() {
   //   setToggleLnb(true);
   //   setMenus(activeMenuDepth?.[0]?.children);
   // }, [activeMenuDepth?.[0]?.children]);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1280) {
+        setToggleLnb(false);
+      }
+    };
+
+    handleResize(); // 초기 체크
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // LNB 토글 시 body 클래스 제어
   useEffect(() => {

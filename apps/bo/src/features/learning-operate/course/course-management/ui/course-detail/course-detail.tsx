@@ -20,8 +20,14 @@ const Component = () => {
   const { alert } = useModal();
 
   // 커스텀 훅 사용
-  const { activeTab, courseType, changeTab, visibleButtons, moveEnrollmentManagementPage } =
-    useCourseDetailPage();
+  const {
+    activeTab,
+    courseType,
+    changeTab,
+    visibleButtons,
+    moveEnrollmentManagementPage,
+    handleBeforeChange,
+  } = useCourseDetailPage();
 
   const tabItems = useMemo(() => {
     const tabs = [
@@ -125,7 +131,7 @@ const Component = () => {
           onTabChange={handleTabChange}
           selectedTabKey={activeTab}
           showContentBorder={true}
-          // onBeforeTabChange={async (currentTabKey, nextTabKey) => await saveConfirm()}
+          // onBeforeTabChange={handleBeforeChange}
         />
       </MainContents>
     </PageContainer>

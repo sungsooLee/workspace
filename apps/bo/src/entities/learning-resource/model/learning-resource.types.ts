@@ -1,5 +1,5 @@
-import { CourseType } from '@features/learning-operate/course/course-management';
 import { PaginationRequest, PaginationResponse } from '@learnway/ui/type';
+import { CourseType } from '@shared/types';
 import {
   ContentAddInfoType,
   ContentCreateType,
@@ -210,6 +210,8 @@ export interface ContentInformation extends ContentBaseInfo {
 }
 
 export type GetContentDetailRes = ContentInformation;
+
+export type GetContentRemovableRes = 'REMOVABLE' | 'REASON_TRANSLATE' | 'REASON_SHARED';
 
 export type PostContentCopyRes = ContentInformation;
 
@@ -676,6 +678,37 @@ export interface QuestionSortReq {
   contentUuid: string;
   contentType: ContentType;
   mappingList: QuestionSortItem[];
+}
+
+export interface AssignmentSubmissionCreateReq {
+  contentUuid: string;
+  assignmentSubmissionText: string;
+  explainText: string;
+  attachFileUuid: string;
+  answerFileUuid: string;
+}
+
+export interface AssignmentSubmissionUpdateReq extends AssignmentSubmissionCreateReq {
+  assignmentSubmissionUuid: string;
+}
+
+export interface AssignmentSubmissionItem {
+  assignmentSubmissionUuid: string;
+  assignmentSubmissionText: string;
+  explainText: string;
+  attachFileUuid: string;
+  answerFileUuid: string;
+  attachFileName: string;
+  attachFileSize: number;
+  attachFilePath: string;
+  answerFileName: string;
+  answerFileSize: number;
+  answerFilePath: string;
+}
+
+export interface AssignmentSubmissionMutationReq {
+  contentUuid: string;
+  assignmentSubmissionUuidList: string[];
 }
 
 export interface MutationResponse {

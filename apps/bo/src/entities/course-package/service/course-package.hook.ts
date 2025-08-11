@@ -6,6 +6,10 @@ export function useFetchCoursePackages(params: any) {
   return useQuery(queryOptions.coursePackages(params));
 }
 
+export function useFetchCoursePackageTree(params: any) {
+  return useQuery(queryOptions.coursePackageTree(params));
+}
+
 export function useCreateCoursePackage(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.createCoursePackage(),

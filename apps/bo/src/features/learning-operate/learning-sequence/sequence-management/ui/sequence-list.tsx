@@ -5,6 +5,7 @@ import {
   useUpdateSequenceList,
 } from '@entities/learning-sequence/service/learning-sequence.hook';
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
+import { useCourseActions } from '@features/learning-operate/course/course-management';
 import { SequenceBatchModal } from '@features/learning-operate/learning-sequence/sequence-management';
 import { LMSApiPrefix } from '@learnway/config';
 import { useDynamicForm2 } from '@learnway/hooks';
@@ -76,6 +77,7 @@ const SequenceListComponent = ({
   const { deleteSequenceList } = useDeleteSequenceList({});
   const { copySequence } = useCopySequence({});
   const [changeData, setChangeData] = useState<any[]>([]);
+  const { setCheckDirtyForm } = useCourseActions();
 
   _global.linkClick = (payload: any) => {
     setMode(Mode.DETAIL);
@@ -89,6 +91,10 @@ const SequenceListComponent = ({
   });
   const { gridFetch, data: gridData, setGridData } = useGridBox(gridConfig);
   const [params, setParams] = useState<Record<string, any>>({});
+
+  useEffect(() => {
+    setCheckDirtyForm(() => changeData.length > 0);
+  }, [changeData]);
 
   useEffect(() => {
     const openYearColumn = [
@@ -277,6 +283,7 @@ const SequenceListComponent = ({
 
   const handleOnSearch = useCallback(() => {
     console.log('## handleOnSearch');
+    setChangeData([]);
     const payload = getSearchParam();
     setParams({
       ...payload,

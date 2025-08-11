@@ -5,7 +5,7 @@ import {
 } from '@features/learning-resource/learning-resource-management/service/assignment/type';
 import { LearningResourceAssignmentBasicInfo } from '@features/learning-resource/learning-resource-management/ui/learning-resource-assignment-basic-info';
 import { LearningResourceAssignmentSubmission } from '@features/learning-resource/learning-resource-management/ui/learning-resource-assignment-submission';
-import { useDynamicForm2 } from '@learnway/hooks';
+import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
 import { TabItemProps, Tabs } from '@learnway/ui/tabs';
 
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
@@ -16,6 +16,7 @@ import { ContentInformation } from '@entities/learning-resource';
 import { ContentTopButtons, getTooltipContent } from '@features/learning-resource';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { ContentCreateType } from '@shared/types/enums';
+import { useModal } from '@learnway/ui/modal';
 
 interface Props {
   content?: ContentInformation;
@@ -23,7 +24,11 @@ interface Props {
 }
 
 function AssignmentViewComponent({ content, hasMapping }: Props) {
+  const {
+    state: { isTranslated },
+  } = useCurrentRoute();
   const { t } = useTranslation();
+  const { alert, confirm: openConfirm } = useModal();
 
   const contentUuid = content?.contentUuid ?? '';
 
@@ -32,10 +37,6 @@ function AssignmentViewComponent({ content, hasMapping }: Props) {
 
   const basicInfoRef = useRef<AssignmentTabRef>(null);
   const assignmentInfoRef = useRef<AssignmentTabRef>(null);
-
-  const [selectedTabKey, setSelectedTabKey] = useState<string>(AssignmentTab.BASIC_INFO);
-
-  const handleTabChange = useCallback((tabKey: string) => setSelectedTabKey(tabKey), []);
 
   const [saved, setSaved] = useState<boolean>(false);
 
@@ -55,10 +56,34 @@ function AssignmentViewComponent({ content, hasMapping }: Props) {
       {
         title: t('과제물 관리'),
         key: AssignmentTab.SUBMISSION,
-        content: <LearningResourceAssignmentSubmission ref={assignmentInfoRef} />,
+        content: <LearningResourceAssignmentSubmission ref={assignmentInfoRef} content={content} />,
       },
     ],
     [basicInfoForm, content],
+  );
+
+  const [selectedTabKey, setSelectedTabKey] = useState<string>(AssignmentTab.BASIC_INFO);
+
+  const handleTabChange = useCallback((tabKey: string) => setSelectedTabKey(tabKey), []);
+
+  const handleBeforeTabChange = useCallback(
+    async (currentTabKey: string, nextTabKey: string) => {
+      if (nextTabKey === AssignmentTab.SUBMISSION && !saved) {
+        await alert({
+          title: t('입력한 정보를 저장하세요.'),
+          content: t('저장된 적 없는 경우 다음 단계로 이동할 수 없습니다.'),
+        });
+        return false;
+      } else if (saved) {
+        const result = await openConfirm({
+          title: t('이동 하시겠습니까?'),
+          content: t('입력 중인 항목이 초기화됩니다.'),
+        });
+        return result;
+      }
+      return true;
+    },
+    [saved],
   );
 
   const handleOnSubmit = (data: Record<string, any>) => {
@@ -78,9 +103,9 @@ function AssignmentViewComponent({ content, hasMapping }: Props) {
   return (
     <form onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer
-        title={t('과제 상세')}
+        title={`${t('과제')} ${!isTranslated ? t('상세') : t('번역')}`}
         tooltipProps={{
-          show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
+          show: !isTranslated && (!!hasMapping || content?.createType !== ContentCreateType.MANUAL),
           content: t(getTooltipContent(content?.createType)),
           type: content?.createType,
         }}
@@ -98,6 +123,7 @@ function AssignmentViewComponent({ content, hasMapping }: Props) {
                 selectedTabKey={selectedTabKey}
                 items={tabItems}
                 onTabChange={handleTabChange}
+                onBeforeTabChange={handleBeforeTabChange}
               />
             </div>
           </div>

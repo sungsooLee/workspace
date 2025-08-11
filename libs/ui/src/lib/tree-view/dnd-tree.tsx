@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDroppable } from '@dnd-kit/core';
-import { EnhancedTreeNode, TreeNode, TreeProps, SelectEventPayload } from './type';
-import { getNodeLevel } from './tree.service';
+import { cn } from '@learnway/shared';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useDndTreeLogic } from './dnd-tree-hooks';
+import { DndTreeNode } from './dnd-tree-node';
+import { TreeSkeleton } from './tree-skeleton';
 import { useTreeContext } from './tree.context';
 import styles from './tree.module.css';
-import { cn } from '@learnway/shared';
-import { DndTreeNode } from './dnd-tree-node';
-import { useDndTreeLogic } from './dnd-tree-hooks';
-import { TreeSkeleton } from './tree-skeleton';
+import { getNodeLevel } from './tree.service';
+import { EnhancedTreeNode, SelectEventPayload, TreeNode, TreeProps } from './type';
 
 export const DndTreeView: React.FC<TreeProps> = ({
   treeId,
@@ -242,14 +242,14 @@ export const DndTreeView: React.FC<TreeProps> = ({
               ref={setBottomDropRef}
               style={{
                 height: isOverBottom ? '72px' : '40px',
-                background: isOverBottom
-                  ? 'linear-gradient(135deg, rgba(33, 150, 243, 0.08), rgba(33, 150, 243, 0.15), rgba(33, 150, 243, 0.08))'
-                  : 'linear-gradient(135deg, rgba(148, 163, 184, 0.05), rgba(148, 163, 184, 0.1), rgba(148, 163, 184, 0.05))',
+                background:
+                  'linear-gradient(135deg, rgba(33, 150, 243, 0.08), rgba(33, 150, 243, 0.15), rgba(33, 150, 243, 0.08))',
+                // : 'linear-gradient(135deg, rgba(148, 163, 184, 0.05), rgba(148, 163, 184, 0.1), rgba(148, 163, 184, 0.05))',
                 borderRadius: '12px',
                 margin: '12px 0',
                 transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                 position: 'relative',
-                border: isOverBottom ? '3px dashed #2196f3' : '2px dashed rgba(148, 163, 184, 0.3)',
+                border: isOverBottom ? '3px dashed #2196f3' : '2px dashed #2196f3',
                 transform: isOverBottom ? 'scale(1.02) translateY(-2px)' : 'scale(1)',
                 boxShadow: isOverBottom
                   ? '0 8px 25px rgba(33, 150, 243, 0.2), 0 4px 15px rgba(33, 150, 243, 0.1)'

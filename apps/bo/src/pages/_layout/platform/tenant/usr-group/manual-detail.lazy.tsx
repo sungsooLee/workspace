@@ -22,14 +22,14 @@ import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 
 import {
-  useCreateUserGroupManual,
+  useCreateUserGroupManual, useDeleteUserGroupManual,
   useFetchUserGroupDetail,
   useUpdateUserGroupManual,
 } from '@entities/user-group';
 import { queryOptions } from '@entities/user-group/service/user-group.queries';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Tenant } from '@learnway/auth/types';
-import { FormDisplay, FormRow } from '@shared/ui/form';
+import { ContentsHistoryInfoFormField, FormDisplay, FormRow } from '@shared/ui/form';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
 import {
   ChannelListChoiceModal,
@@ -38,6 +38,10 @@ import {
 } from '@shared/ui/modal';
 import { SearchBox } from '@shared/ui/search-box';
 import { useWatch } from 'react-hook-form';
+import { useToast } from '@learnway/ui/toast';
+import { EnFormMode } from '@shared/types';
+import { cn } from '@learnway/shared';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
   component: RouteComponent,
@@ -60,22 +64,33 @@ function RouteComponent() {
     routerState.location.state?.userGroupId,
   );
 
-  const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const { openModal, confirm: openConfirm, } = useModal();
+  const { open: openToast } = useToast();
   const [tenantInfo, setTenantInfo] = useState<Tenant>();
+  const [roleId, setRoleId] = useState<number>(0);
   const [modalUserGroups, setModalUserGroups] = useState<any>(null);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const [userGroupSettings, setUserGroupSettings] = useState<any>();
+  const [assignmentTypeOptions, setAssignmentTypeOptions] = useState<any>();
 
   const { create } = useCreateUserGroupManual({
     onSuccess: async () => {
+      openToast({ title: t('저장 하였습니다.'), type: 'success' });
       router.navigate({ to: '/platform/tenant/usr-group/manual' });
     },
   });
   const { update } = useUpdateUserGroupManual({
     onSuccess: () => {
+      openToast({ title: t('저장 하였습니다.'), type: 'success' });
       refetch();
     },
   });
+  const { delete:deleteUserGroup } = useDeleteUserGroupManual({
+    onSuccess: () => {
+      openToast({ title: t('삭제 되었습니다.'), type: 'success' });
+      router.navigate({ to: '/platform/tenant/usr-group/manual' });
+    }
+  })
 
   const {
     provider: searchManualProvider,
@@ -113,6 +128,13 @@ function RouteComponent() {
     });
   };
 
+  const handleRemoveButtonClick = async () => {
+    if (await openConfirm(t('삭제 하시겠습니까?'))) {
+      if( routerState.location.state )
+        deleteUserGroup(routerState.location.state.userGroupId);
+    }
+  }
+
   const handleResetButtonClick = () => {
     onFormChange();
   };
@@ -145,10 +167,11 @@ function RouteComponent() {
 
     if (userGroupData) {
       if (!userGroupSettings || userGroupSettings.length === 0) {
-        openAlert({
+        openConfirm({
           title: t('유저그룹 대상자를 설정해 주세요.'),
           content: t('유저그룹 대상자는 최소 1명 이상 대상자가 있어야 등록이 가능합니다.'),
           type: 'complete',
+          isConfirm: false
         });
         return false;
       }
@@ -162,10 +185,11 @@ function RouteComponent() {
     } else {
       const tableRow = gridManualData.content;
       if (!tableRow || tableRow.length === 0) {
-        openAlert({
+        openConfirm({
           title: t('유저그룹 대상자를 설정해 주세요.'),
           content: t('유저그룹 대상자는 최소 1명 이상 대상자가 있어야 등록이 가능합니다.'),
           type: 'complete',
+          isConfirm: false
         });
         return false;
       }
@@ -273,11 +297,10 @@ function RouteComponent() {
     console.log('### loginUser', loginUser);
     if (loginUser) {
       setTenantInfo(loginUser.activeTenant);
+      setRoleId(loginUser.activeRole!.roleId)
       setValue('tenantName', loginUser.activeTenant?.tenantName);
     }
   }, [loginUser]);
-
-  const [assignmentTypeOptions, setAssignmentTypeOptions] = useState<any>();
 
   useEffect(() => {
     if (assignmentTypeWatch) {
@@ -293,7 +316,12 @@ function RouteComponent() {
             {t('목록')}
           </Button>
         </LinkBox>
-
+        {
+          routerState.location.state.mode === EnFormMode.VIEW &&
+          <Button onClick={handleRemoveButtonClick} variant="point" size="sm">
+            {t('삭제')}
+          </Button>
+        }
         <Button onClick={handleResetButtonClick} variant="point" size="sm">
           {t('초기화')}
         </Button>
@@ -328,7 +356,7 @@ function RouteComponent() {
                 element={
                   <ChipListModalSelectorFormField
                     modalConfig={{
-                      content: <ChannelListChoiceModal roleId={0} />,
+                      content: <ChannelListChoiceModal roleId={roleId} />,
                       title: '',
                       width: 'xl',
                     }}
@@ -393,6 +421,9 @@ function RouteComponent() {
           config={gManualConfig}
           columns={manualColumns()}
         />
+        <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+          <ContentsHistoryInfoFormField provider={provider}/>
+        </ContentsRow>
       </MainContents>
     </PageContainer>
   );

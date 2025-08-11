@@ -48,17 +48,17 @@ export const calculateNodeStyle = (params: NodeStyleParams): string => {
 
   // 선택된 노드 스타일
   if (isSelectedNode) {
-    styles.push('bg-[var(--secondary5)]');
+    styles.push('bg-[var(--secondary6)]');
   }
 
   // 셔틀 리스트 선택 스타일
   if (treeType === 'SHUTTLE_LIST' && isNodeSelected) {
-    styles.push('bg-[var(--secondary5)]');
+    styles.push('bg-[var(--secondary6)]');
   }
 
   // 표시할 선택 스타일
   if (shouldShowSelection) {
-    styles.push('bg-[var(--secondary5)]');
+    styles.push('bg-[var(--secondary6)]');
   }
 
   // 드롭 인사이드 스타일

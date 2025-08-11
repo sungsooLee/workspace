@@ -35,7 +35,7 @@
     @apply !bg-[var(--gray1)] !text-[var(--gray4)];
   }
   [class*='nlp-select__placeholder'] {
-    @apply !text-[var(--gray5)];
+    @apply truncate !text-[var(--gray5)];
   }
 
   &[class*='nlp--dropdown-xs'] {

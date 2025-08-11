@@ -12,7 +12,7 @@ interface SegmentedControlFormFieldProps extends BaseFormFieldProps<string> {
 const SegmentedControlFormFieldComponent = forwardRef<
   HTMLDivElement,
   SegmentedControlFormFieldProps
->(({ value, onChange, items }, ref) => {
+>(({ value, onChange, items, disabled }, ref) => {
   const handleOnTabChange = (tabKey: string) => {
     onChange?.(tabKey);
   };
@@ -27,6 +27,7 @@ const SegmentedControlFormFieldComponent = forwardRef<
           className={styles.tab_select}
           selectedTabKey={value}
           onTabChange={handleOnTabChange}
+          clickDisabled={disabled}
         />
       </div>
     </div>

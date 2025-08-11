@@ -32,7 +32,7 @@ function RootComponent() {
   const { closeAllModal } = useModalStore();
   const { data: authUser } = useFetchAuthUser();
   const router = useRouter();
-  const isUnderBreakpoint = useBreakpointModalClose(closeAllModal, 1000);
+  const isUnderBreakpoint = useBreakpointModalClose(closeAllModal, 1024);
 
   // Routing 상태 변경 시 Active menu depth 상태 정보 갱신
   useRenewalMenuStateFromRouting();

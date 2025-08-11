@@ -10,7 +10,7 @@ import {
   LearningResourceHtmlDetail,
 } from '@features/learning-resource';
 import { getPayloadFromHtmlMetadataSubmit } from '@features/learning-resource/learning-resource-management/service/learning-resource-html-form-submit';
-import { useDynamicForm2 } from '@learnway/hooks';
+import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType, ContentStatusCode } from '@shared/types/enums';
 
@@ -27,6 +27,9 @@ interface Props {
 
 function HtmlViewComponent({ content, hasMapping }: Props) {
   const router = useRouter();
+  const {
+    state: { isTranslated },
+  } = useCurrentRoute();
   const { t } = useTranslation();
 
   const { confirm: openConfirm } = useModal();
@@ -71,9 +74,9 @@ function HtmlViewComponent({ content, hasMapping }: Props) {
   return (
     <form onSubmit={onSubmit(handleSubmit)}>
       <PageContainer
-        title={t('HTML 상세')}
+        title={`${t('HTML')} ${!isTranslated ? t('상세') : t('번역')}`}
         tooltipProps={{
-          show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
+          show: !isTranslated && (!!hasMapping || content?.createType !== ContentCreateType.MANUAL),
           content: t(getTooltipContent(content?.createType)),
           type: content?.createType,
         }}

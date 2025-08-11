@@ -68,6 +68,7 @@ const TenantSelectComponent = () => {
                   onOptionSelect={(option: OptionCardItem) => {
                     setTenantValues(option);
                   }}
+                  className={styles.card}
                 />
               </div>
             </ContentsRow>

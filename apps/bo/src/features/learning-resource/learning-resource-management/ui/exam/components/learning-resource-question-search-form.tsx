@@ -8,6 +8,7 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import {
   DropdownFormField,
+  FormItem,
   FormRow2,
   TenantByRoleDropdownFormField,
   TenantChannelDropdownFormField,
@@ -59,8 +60,6 @@ const LearningResourceQuestionSearchFormComponent = ({
           type="text"
           element={<Input />}
         />
-      </ContentsRow>
-      <ContentsRow>
         <FormRow2
           provider={provider}
           name="languageCountryCode"
@@ -75,6 +74,8 @@ const LearningResourceQuestionSearchFormComponent = ({
             />
           }
         />
+      </ContentsRow>
+      <ContentsRow>
         <FormRow2
           provider={provider}
           name="questionType"
@@ -101,6 +102,8 @@ const LearningResourceQuestionSearchFormComponent = ({
             />
           }
         />
+        <FormItem />
+        <FormItem />
       </ContentsRow>
     </SearchBoxForm>
   );

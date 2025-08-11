@@ -17,11 +17,13 @@ import { GridBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
+import { NoticeBox } from '@shared/ui/notice-box';
 import { QUESTION_LEVELS, QUESTION_TYPES } from '../../service/exam-util';
 import {
   initStatisticRow,
   updateNewStatistics,
 } from '../../service/learning-resource-question-service';
+import { QuestionStatisticRow } from '@features/learning-resource/learning-resource-management';
 import { QuestionBankTabFormRef } from '../../service/question-bank/type';
 import { useQuestionBankInfoInput } from '../../service/question-bank/use-question-bank-info-input';
 import { LearningResourceQuestionShuttleModal } from './modal/learning-resource-question-shuttle-modal';
@@ -34,7 +36,6 @@ import { QuestionDragHandle } from './components/learning-resource-question-drag
 
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
-import { QuestionStatisticRow } from '../../service/test-paper/type';
 
 interface QuestionBankQuestionProps {
   content?: QuestionBasicInfoDetail;
@@ -74,6 +75,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
           <LearningResourceTestItemModal
             contentInfo={content}
             onSuccessCallback={questionCreateSuccessCallback}
+            hasMapping={isExamMapping}
           />
         ),
       });
@@ -89,6 +91,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
             contentInfo={content}
             questionItemGridRow={questionItemRow}
             onDeleteCallback={questionDeleteSuccessCallback}
+            hasMapping={isExamMapping}
           />
         ),
       });
@@ -119,6 +122,8 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
       setQuestionItemList(refetchResult.filter((q) => q.isUsed) as QuestionItem[]);
     }
   }, []);
+
+  const handleIsRowSelectable = useCallback(() => !isExamMapping, [isExamMapping]);
 
   const statisticColumns = useMemo<ColumnDef<QuestionStatisticRow, any>[]>(() => {
     // Table
@@ -170,18 +175,14 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
     const columnHelper = createColumnHelper<QuestionItemGridRow>();
     return [
       columnHelper.accessor('questionText', {
-        cell: (info) => {
-          return (
-            <Button
-              className="link"
-              onClick={() => {
-                handleViewQuestionButtonClick(info.row.original);
-              }}
-            >
-              {info.getValue()}
-            </Button>
-          );
-        },
+        cell: (info) => (
+          <span
+            className="cursor-pointer text-[var(--gray8)] underline"
+            onClick={() => handleViewQuestionButtonClick(info.row.original)}
+          >
+            {info.getValue()}
+          </span>
+        ),
         header: t('문항'),
         enableGrouping: false,
         meta: {
@@ -221,7 +222,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
         },
       }),
       columnHelper.accessor('orderChange', {
-        cell: (info) => <QuestionDragHandle />,
+        cell: (info) => <QuestionDragHandle hasMapping={isExamMapping} />,
         header: t('순서변경'),
         size: 104,
         enableGrouping: false,
@@ -232,7 +233,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
         },
       }),
     ];
-  }, []);
+  }, [isExamMapping]);
 
   useImperativeHandle(ref, () => ({
     complete: () => {
@@ -255,6 +256,16 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
 
   return (
     <div className={styles.wrap}>
+      {isExamMapping && (
+        <NoticeBox
+          iconVisible={false}
+          descriptions={[
+            t(
+              '시험지와 매핑된 문제은행은 문항을 추가하거나, 복사하거나, 삭제하거나, 순서를 변경할 수 없습니다.',
+            ),
+          ]}
+        />
+      )}
       <FormSubTitle label={t('기본정보')} noLine />
       <div className={cn(tableStyles.start, tableStyles.wrap)}>
         <table>
@@ -335,9 +346,10 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
               columns={questionListColumns}
               multiple
               showNumberingColumn
-              enableDragAndDrop
+              enableDragAndDrop={!isExamMapping}
               rowId="sortSeq"
               onRowsSelect={setSelectedQuestionRows}
+              isRowSelectable={handleIsRowSelectable}
               hideRowSelectionCheckBox={false}
               titleCustomNode={
                 <div className="custom_info_wrap pt-[1.2rem]">

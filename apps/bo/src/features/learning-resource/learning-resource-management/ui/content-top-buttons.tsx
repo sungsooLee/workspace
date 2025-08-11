@@ -1,6 +1,7 @@
 import {
   ContentExportRes,
   ContentInformation,
+  learningResourceQueryOptions,
   useDeleteContent,
   usePostContentExport,
 } from '@entities/learning-resource';
@@ -11,6 +12,7 @@ import { Divider } from '@learnway/ui/elements';
 import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType } from '@shared/types/enums';
 import { ContentCourseMappingModal } from '@shared/ui/modal';
+import { useQueryClient } from '@tanstack/react-query';
 import { useBlocker, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useCallback, useMemo } from 'react';
@@ -23,11 +25,12 @@ interface Props {
 
 const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => {
   const { data: authUser } = useFetchAuthUser();
+  const queryClient = useQueryClient();
 
   const { openModal, alert: openAlert, confirm: openConfirm } = useModal();
   const router = useRouter();
   const {
-    state: { listParam },
+    state: { listParam, isTranslated },
   } = useCurrentRoute();
   const { watch, getValues, formState } = provider;
 
@@ -65,15 +68,14 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
     },
   });
 
-  const detailUrl = useMemo(() => '/learning/learning-resource/view', [contentType]);
-
   const { exportContent } = usePostContentExport({
     onSuccess: (result: ContentExportRes) => {
       if (result.destContentUuid) {
         router.navigate({
-          to: detailUrl,
+          to: '/learning/learning-resource/view',
           state: {
             contentUuid: result.destContentUuid,
+            isTranslated: true,
             listParam: {
               ...listParam,
               tenantId: result.destTenantId,
@@ -108,6 +110,25 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
   }, [data]);
 
   const handleDelete = useCallback(async () => {
+    // 번역 항목이 있고 공유 항목이 있으면 삭제 불가 alert
+    const removable = await queryClient.fetchQuery(
+      learningResourceQueryOptions.getContentRemovable(contentUuid),
+    );
+
+    if (removable === 'REASON_TRANSLATE') {
+      await openAlert({
+        title: t('번역본을 가진 교육자원입니다.'),
+        content: t('번역본을 가진 교육자원은 삭제할 수 없습니다.'),
+      });
+      return;
+    } else if (removable === 'REASON_SHARED') {
+      await openAlert({
+        title: t('타채널에 공유 중입니다.'),
+        content: t('공유 중인 교육자원은 삭제할 수 없습니다.'),
+      });
+      return;
+    }
+
     if (isCourseUsed) {
       await openAlert({
         title: t('과정에서 사용 중입니다.'),
@@ -138,7 +159,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
 
   return (
     <>
-      {contentUuid && !isDrafted && (
+      {contentUuid && !isDrafted && !isTranslated && (
         <>
           <Button variant="gray" size="sm">
             {t('과정 개설')}
@@ -169,10 +190,12 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
         {t('목록')}
       </Button>
       <Divider orientation={'vertical'} />
-      <Button variant="point" size="sm" onClick={handleDelete} disabled={hasMapping}>
-        {t('삭제')}
-      </Button>
-      {contentUuid && !isDrafted && (
+      {!isTranslated && (
+        <Button variant="point" size="sm" onClick={handleDelete} disabled={hasMapping}>
+          {t('삭제')}
+        </Button>
+      )}
+      {contentUuid && !isDrafted && !isTranslated && (
         <Button
           variant="point"
           size="sm"
@@ -183,6 +206,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
         </Button>
       )}
       <Button type="submit" variant="primary" size="sm">
+        {/* 저장 완료 후 toast */}
         {t('저장')}
       </Button>
     </>

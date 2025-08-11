@@ -9,15 +9,11 @@ import { useDynamicForm2 } from '@learnway/hooks';
 import { useGridBox } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
 import { getCurrentAuthUser } from '@shared/lib/util/query-utils';
+import { CourseType } from '@shared/types';
 import { useRouter } from '@tanstack/react-router';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  CourseButtonState,
-  CourseManagementHookResult,
-  CourseSearchFormData,
-  CourseType,
-} from '../types/type';
+import { CourseButtonState, CourseManagementHookResult, CourseSearchFormData } from '../types/type';
 
 export const useCoursePage = (): CourseManagementHookResult => {
   const router = useRouter();

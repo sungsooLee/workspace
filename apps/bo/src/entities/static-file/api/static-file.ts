@@ -1,11 +1,17 @@
+import {
+  StaticFileParams,
+  StaticFileResponse,
+} from '@entities/static-file/types/static-file.types';
+import { PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
 import { PageableContent } from '@shared/types/page-meta';
-import { PMSApiPrefix } from '@learnway/config';
-import { StaticFileParams, StaticFileResponse } from '@entities/static-file/types/static-file.types';
 
-export default class StaticFileService {
+export class StaticFileService {
   static fetchListStaticFile(params: StaticFileParams) {
-    return httpService.get<PageableContent<StaticFileResponse>>(`${PMSApiPrefix()}/tenants/static-file`, {searchReqDto: params});
+    return httpService.get<PageableContent<StaticFileResponse>>(
+      `${PMSApiPrefix()}/tenants/static-file`,
+      { searchReqDto: params },
+    );
   }
   static fetchStaticFile(fileUuid: string) {
     return httpService.get(`${PMSApiPrefix()}/tenants/static-file/${fileUuid}`);

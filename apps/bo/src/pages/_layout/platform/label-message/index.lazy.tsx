@@ -1,5 +1,4 @@
-import { LabelMessagesQueryParams } from '@entities/label-messages';
-import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
+import { LabelMessagesQueryParams, queryOptions } from '@entities/label-messages';
 import { MessageDetail } from '@features/platform-management/platform/label-message-managemnet';
 import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { IcoPlus } from '@learnway/icons';

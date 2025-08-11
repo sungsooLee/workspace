@@ -1,4 +1,5 @@
-import { ContentBaseInfo } from '@entities/learning-resource';
+import { UseDynamicFormResult } from '@learnway/hooks';
+import { ContentBaseInfo, ContentInformation } from '@entities/learning-resource';
 
 export enum AssignmentTab {
   BASIC_INFO = 'BASIC_INFO',
@@ -12,4 +13,15 @@ export interface AssignmentTabRef {
 
 export interface AssignmentBasicInfoFormData extends ContentBaseInfo {
   contentUseDate?: { from: Date | undefined; to: Date | undefined };
+}
+
+export interface AssignmentBasicInfoProps {
+  basicInfoForm: UseDynamicFormResult;
+  content?: Partial<ContentInformation>;
+  hasMapping?: boolean;
+}
+
+export interface AssignmentSubmissionProps {
+  content?: Partial<ContentInformation>;
+  hasMapping?: boolean;
 }

@@ -1,11 +1,137 @@
-import { forwardRef } from 'react';
-import { AssignmentTabRef } from '../service/assignment/type';
+import { forwardRef, useMemo } from 'react';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { useTranslation } from 'react-i18next';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { GridBox } from '@learnway/ui/grid';
+import { cn } from '@learnway/shared';
+import { AssignmentSubmissionItem } from '@entities/learning-resource';
+import { AssignmentSubmissionProps, AssignmentTabRef } from '../service/assignment/type';
+import { useAssignmentSubmissionInputForm } from '../service/assignment/use-assignment-submission-input-form';
 
-const LearningResourceAssignmentSubmissionComponent = forwardRef<AssignmentTabRef, any>(
-  (props, ref) => {
-    return <div>과제물 관리</div>;
-  },
-);
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+import styles from '@learnway/styles/bo/pages/_layout/learning/assignment-detail.module.css';
+import { Button } from '@learnway/ui/button';
+import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
+
+const LearningResourceAssignmentSubmissionComponent = forwardRef<
+  AssignmentTabRef,
+  AssignmentSubmissionProps
+>(({ content, hasMapping = false }, ref) => {
+  const { t } = useTranslation();
+
+  const { submissionList } = useAssignmentSubmissionInputForm(content?.contentUuid ?? '');
+
+  const columns = useMemo(() => {
+    const columnHelper = createColumnHelper<AssignmentSubmissionItem>();
+    return [
+      columnHelper.accessor('assignmentSubmissionText', {
+        cell: (info) => (
+          <span className="cursor-pointer text-[var(--gray8)] underline">{info.getValue()}</span>
+        ),
+        header: t('과제물'),
+        enableGrouping: false,
+        meta: {
+          headerAlign: 'center',
+          cellAlign: 'left',
+          size: 'auto',
+        },
+      }),
+      columnHelper.accessor('attachFileUuid', {
+        cell: (info) => (info.getValue() ? 'Y' : 'N'),
+        header: t('첨부파일'),
+        size: 150,
+        enableGrouping: false,
+        meta: {
+          headerAlign: 'center',
+          cellAlign: 'center',
+        },
+      }),
+      columnHelper.accessor('answerFileUuid', {
+        cell: (info) => (info.getValue() ? 'Y' : 'N'),
+        header: t('답변파일'),
+        size: 150,
+        enableGrouping: false,
+        meta: {
+          headerAlign: 'center',
+          cellAlign: 'center',
+        },
+      }),
+    ] as ColumnDef<any, AssignmentSubmissionItem>[];
+  }, []);
+
+  return (
+    <div className={styles.wrap}>
+      <FormSubTitle label={t('기본 정보')} noLine />
+      <div className={cn(tableStyles.start, tableStyles.wrap)}>
+        <table>
+          <caption>{t('기본 정보')}</caption>
+          <colgroup>
+            <col style={{ width: '240px' }} />
+            <col />
+            <col style={{ width: '240px' }} />
+            <col />
+          </colgroup>
+          <tbody>
+            <tr>
+              <th scope="row">{t('테넌트')}</th>
+              <td>{content?.tenantName}</td>
+              <th scope="row">{t('채널')}</th>
+              <td>{content?.channelName}</td>
+            </tr>
+            <tr>
+              <th scope="row">{t('유형')}</th>
+              <td>{t(`cms.content.ContentType.${content?.contentType}`)}</td>
+              <th scope="row">{t('교육자원명')}</th>
+              <td>{content?.contentName}</td>
+            </tr>
+            <tr>
+              <th scope="row">{t('설문지 언어')}</th>
+              <td colSpan={3}>
+                {t(`pms.multilingual.LangCountryCode.${content?.languageCountryCode}`)}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <GridBox
+        title={t('과제물 목록')}
+        disabledSelectionToggle
+        tableMode
+        data={submissionList}
+        columns={columns}
+        multiple
+        showNumberingColumn
+        className={styles.list_table}
+        customButtonNode={
+          <>
+            <Button
+              type="button"
+              variant="text"
+              label={t('LABEL.grid.header.add', '추가')}
+              icon={<IcoPlus width={16} height={16} stroke="#4C515E" />}
+              disabled={hasMapping}
+            />
+            <Button
+              type="button"
+              variant="text"
+              label={t('LABEL.grid.header.copy', '복사')}
+              icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
+              disabled={!submissionList.length || hasMapping}
+            />
+            <Button
+              type="button"
+              variant="text"
+              label={t('LABEL.grid.header.remove', '삭제')}
+              icon={<IcoMinus width={16} height={16} stroke="#131C30" />}
+              disabled={!submissionList.length || hasMapping}
+            />
+          </>
+        }
+      />
+    </div>
+  );
+});
 
 LearningResourceAssignmentSubmissionComponent.displayName = 'LearningResourceAssignmentSubmission';
 

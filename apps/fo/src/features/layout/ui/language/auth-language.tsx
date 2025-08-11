@@ -1,19 +1,15 @@
+import { useSetLanguage } from '@features/layout';
+import { useCodeGroup, useLanguageStore } from '@learnway/hooks';
+import { IcoArrowDown, IcoCheck02, IcoClose02, IcoLang } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import popoverInnerStyles from '@learnway/styles/fo/features/layout/ui/popover-inner.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Popover } from '@learnway/ui/popover';
 import { lowerCase } from 'lodash-es';
 import { memo, useMemo } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
-
-import { useCodeGroup, useLanguageStore } from '@learnway/hooks';
-import { IcoArrowDown, IcoCheck02, IcoClose02, IcoLang } from '@learnway/icons';
-import { cn } from '@learnway/shared';
-import { Popover } from '@learnway/ui/popover';
-
-import { useSetLanguage } from '@features/layout/service/i18n.hook';
-
-import { Button } from '@learnway/ui/button';
-import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
-
-import popoverInnerStyles from '@learnway/styles/fo/features/layout/ui/popover-inner.module.css';
 import styles from './language.module.css';
 
 const LanguageContent = () => {

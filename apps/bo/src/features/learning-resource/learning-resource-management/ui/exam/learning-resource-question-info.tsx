@@ -11,6 +11,7 @@ import {
 
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
 import { FormRow2, SegmentedControlFormField } from '@shared/ui/form';
+import { NoticeBox } from '@shared/ui/notice-box';
 
 import { CMSApiPrefix } from '@learnway/config';
 import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
@@ -95,6 +96,8 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       handleQuestionMutationSuccessCallback,
     } = useExamQuestionInfoInput(data as TestPaperBasicInfoDetail);
 
+    const handleIsRowSelectable = useCallback(() => !hasMapping, [hasMapping]);
+
     const selectedQuestionCount =
       questionGenTypeByForm === ExamQuestionGenType.RANDOM
         ? selectedRandomQuestionCount
@@ -143,6 +146,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           <LearningResourceTestItemModal
             contentInfo={data as ContentInformation}
             onSuccessCallback={questionCreateSuccessCallback}
+            hasMapping={hasMapping}
           />
         ),
       });
@@ -239,7 +243,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                   ? randomCountUpdateData[info.row.original.type]?.hardLevelCount
                   : info.getValue()
               }
-              disabled={questionGenTypeByForm === ExamQuestionGenType.FIXED}
+              disabled={questionGenTypeByForm === ExamQuestionGenType.FIXED || hasMapping}
               suffixText={
                 questionGenTypeByForm === ExamQuestionGenType.RANDOM ? `/ ${info.getValue()}` : ''
               }
@@ -263,7 +267,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                   ? randomCountUpdateData[info.row.original.type]?.mediumLevelCount
                   : info.getValue()
               }
-              disabled={questionGenTypeByForm === ExamQuestionGenType.FIXED}
+              disabled={questionGenTypeByForm === ExamQuestionGenType.FIXED || hasMapping}
               suffixText={
                 questionGenTypeByForm === ExamQuestionGenType.RANDOM ? `/ ${info.getValue()}` : ''
               }
@@ -287,7 +291,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                   ? randomCountUpdateData[info.row.original.type]?.easyLevelCount
                   : info.getValue()
               }
-              disabled={questionGenTypeByForm === ExamQuestionGenType.FIXED}
+              disabled={questionGenTypeByForm === ExamQuestionGenType.FIXED || hasMapping}
               suffixText={
                 questionGenTypeByForm === ExamQuestionGenType.RANDOM ? `/ ${info.getValue()}` : ''
               }
@@ -356,18 +360,20 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
         columnHelper.accessor('isUsed', {
           cell: (info) => (
             <RadioGroupFormField
-              onChange={(value: boolean) =>
-                updateQuestionStatus({
-                  contentUuid: data?.examPoolUuid ?? '',
-                  examQuestionUuid: info.row.original.examQuestionUuid,
-                  isUsed: value,
-                })
-              }
+              onChange={(value: string) => {
+                value !== String(info.getValue()) &&
+                  updateQuestionStatus({
+                    contentUuid: data?.examPoolUuid ?? '',
+                    examQuestionUuid: info.row.original.examQuestionUuid,
+                    isUsed: JSON.parse(value),
+                  });
+              }}
               defaultValue={String(info.getValue())}
               options={[
                 { value: 'true', label: t('LABEL.common.enable') },
                 { value: 'false', label: t('LABEL.common.disable') },
               ]}
+              disabled={hasMapping}
             />
           ),
           header: t('LABEL.common.isUsed'),
@@ -379,7 +385,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           },
         }),
         columnHelper.accessor('orderChange', {
-          cell: (info) => <QuestionDragHandle />,
+          cell: (info) => <QuestionDragHandle hasMapping={hasMapping} />,
           header: t('순서변경'),
           enableGrouping: false,
           enableSorting: false,
@@ -389,7 +395,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           },
         }),
       ] as ColumnDef<any, QuestionItem>[];
-    }, []);
+    }, [hasMapping]);
 
     useImperativeHandle(ref, () => ({
       // 시험지 저장 완료 처리 및 문항 저장
@@ -407,6 +413,16 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
 
     return (
       <div className={styles.wrap}>
+        {hasMapping && (
+          <NoticeBox
+            iconVisible={false}
+            descriptions={[
+              t(
+                '과정에서 사용 중인 시험지는 문항을 추가하거나, 복사하거나, 삭제하거나, 순서를 변경할 수 없습니다.',
+              ),
+            ]}
+          />
+        )}
         <FormSubTitle label={t('기본 정보')} noLine />
         <div className={cn(tableStyles.start, tableStyles.wrap)}>
           <table>
@@ -447,6 +463,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               <SegmentedControlFormField
                 items={questionGenTypeOptions}
                 onChange={(tabKey: ExamQuestionGenType) => setQuestionGenType(tabKey)}
+                disabled={hasMapping}
               />
             }
           />
@@ -514,10 +531,11 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                 tableMode
                 data={questionList}
                 columns={questionListColumns}
+                isRowSelectable={handleIsRowSelectable}
                 onRowsSelect={setSelectedQuestionRows}
                 multiple
                 showNumberingColumn
-                enableDragAndDrop
+                enableDragAndDrop={!hasMapping}
                 rowId="sortSeq"
                 hideRowSelectionCheckBox={false}
                 titleCustomNode={
@@ -535,6 +553,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                       variant="text"
                       label={t('불러오기')}
                       onClick={handleClickRetrieveQuestionModal}
+                      disabled={hasMapping}
                     />
                     <GridExcelUploadButton
                       validateUrl={`/exam/questions/${data?.examPoolUuid}/upload`}
@@ -542,6 +561,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                       formDataName="multipartFile"
                       validationResultRequired={false}
                       onUpload={handleOnExcelUpload}
+                      disabled={hasMapping}
                     />
                     <GridExcelDownloadButton
                       method="post"
@@ -554,7 +574,8 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                       variant="text"
                       label={t('LABEL.grid.header.add', '추가')}
                       onClick={handleClickAddQuestionButton}
-                      icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+                      icon={<IcoPlus width={16} height={16} stroke="#4C515E" />}
+                      disabled={hasMapping}
                     />
                     <Button
                       type="button"
@@ -568,7 +589,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                       type="button"
                       variant="text"
                       label={t('LABEL.grid.header.remove', '삭제')}
-                      icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+                      icon={<IcoMinus width={16} height={16} stroke="#131C30" />}
                       onClick={handleOnDeleteQuestion}
                       disabled={!selectedQuestionRows.length}
                     />

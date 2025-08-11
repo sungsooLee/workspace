@@ -81,7 +81,7 @@ export const CategoryManage = () => {
   } = useModal();
 
   // 추후 현재 locale 정보 값 파라미터로 넘겨주기.
-  const { data, isLoading } = useFetchCategory();
+  const { data, isLoading, isFetching } = useFetchCategory();
   const { data: detailData } = useFetchCategoryDetail(selectedNode?.id);
 
   const { create } = useCreateCategory({});
@@ -104,7 +104,7 @@ export const CategoryManage = () => {
     if (!result) return DuplicateState.duplicated;
     return DuplicateState.ok;
   };
-
+  console.log('### treeData=>', treeData);
   useEffect(() => {
     // 이전 데이터와 현재 데이터가 다른 경우에만 처리 (데이터 로드 감지)
     if (data !== null && data !== undefined) {
@@ -454,7 +454,7 @@ export const CategoryManage = () => {
             return node && node.level !== 0;
           }}
           selectedNode={selectedNode}
-          isLoading={isLoading}
+          isLoading={isLoading || isFetching}
         />
       </TreeContainer>
       <div className={layoutStyles.inner}>

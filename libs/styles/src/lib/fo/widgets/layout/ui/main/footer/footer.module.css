@@ -23,7 +23,7 @@
             > li {
               @apply label-xl-b relative pl-[12px] text-[var(--gray35)];
               &::before {
-                @apply absolute left-[0] top-[0] block h-[16px] w-[1px] bg-[var(--gray75)];
+                @apply absolute left-[0] top-[4px] block h-[12px] w-[1px] bg-[var(--gray75)];
                 content: '';
               }
               &:first-child {
@@ -48,7 +48,7 @@
             }
 
             .address {
-              @apply mt-[8px];
+              @apply label-lg mt-[4px] text-[var(--gray35)];
               .tel {
               }
             }
@@ -80,12 +80,15 @@
             @apply pb-0;
 
             .info_box {
-              @apply mt-[16px];
+              @apply mt-[8px];
               .space {
-                @apply mb-[10px] block;
+                @apply mb-[4px] block;
               }
               .address {
                 @apply hidden;
+              }
+              .copyright {
+                @apply mt-[4px];
               }
             }
             .family_site_info {
