@@ -1,6 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { IcoClose, IcoDownload, IcoHeart, IcoPlus, IcoSearch, IcoShare } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
-import { IcoSearch, IcoPlus, IcoDownload, IcoClose, IcoHeart, IcoShare } from '@learnway/icons';
+import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_guide/guide/buttons')({
   component: RouteComponent,
@@ -483,14 +483,14 @@ import { Button } from '@learnway/ui/button';
           <div className="flex_box">
             <div className="desc">
               <Button
-                size="lg"
+                size="xl"
                 variant="heart"
                 icon={<IcoHeart width={20} height={20} stroke="#f58b75" fill="#f58b75" />}
                 label={'922'}
                 direction={'column'}
               />
               <Button
-                size="lg"
+                size="xl"
                 variant="heart"
                 icon={<IcoHeart width={20} height={20} stroke="#f58b75" fill="#f58b75" />}
                 label={'922'}
@@ -498,14 +498,14 @@ import { Button } from '@learnway/ui/button';
                 disabled
               />
               <Button
-                size="lg"
+                size="xl"
                 variant="share"
                 icon={<IcoShare width={20} height={20} stroke="#4D525C" />}
                 label={'공유'}
                 direction={'column'}
               />
               <Button
-                size="lg"
+                size="xl"
                 variant="share"
                 icon={<IcoShare width={20} height={20} stroke="#4D525C" />}
                 label={'공유'}
