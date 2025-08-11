@@ -46,6 +46,12 @@ export interface ModalConfig<T = any> {
   height?: ModalHeight;
 
   /**
+   * 모달의 z-index 설정
+   * global-indicator(9999) 보다 높게 모달을 띄울 경우 설정
+   */
+  zIndex?: number;
+
+  /**
    * 닫기 버튼 숨기기 여부
    * true로 설정하면 닫기 버튼이 표시되지 않음
    */

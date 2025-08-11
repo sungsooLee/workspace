@@ -60,7 +60,7 @@ const DynamicFormFieldComponent2: FC<DynamicFormFieldProps> = ({
       };
 
       const fieldOnBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
-        onChange(event?.target?.value);
+        // onChange(event?.target?.value);
         // await enhancedOnChange(event.target.value);
       };
 

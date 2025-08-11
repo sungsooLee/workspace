@@ -22,7 +22,6 @@ interface MediaInfoComponentProps {
 }
 
 const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoComponentProps) => {
-  if (isProcessingNone(status)) return null;
   return (
     <>
       <strong className={style.title}>{t('업로드 파일')}</strong>
@@ -47,22 +46,29 @@ const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoC
         </div>
       )}
       {/* 인코딩 실패 */}
-      {isProcessingFailed(status) && (
+      {(isProcessingFailed(status) || isProcessingNone(status)) && (
         <div className={style.status_wrap}>
           <IcoStatusFail className={style.fail} />
           <p className={style.text}>
-            <strong>
-              {type === LEARNING_TYPE.VIDEO && t('인코딩이 실패되었습니다.')}
-              {type === LEARNING_TYPE.SCORM && t('패키지 등록이 실패되었습니다.')}
-            </strong>
+            {isProcessingFailed(status) && (
+              <strong>
+                {type === LEARNING_TYPE.VIDEO && t('인코딩이 실패되었습니다.')}
+                {[LEARNING_TYPE.SCORM, LEARNING_TYPE.HTML5_VIDEO].includes(type) &&
+                  t('패키지 등록이 실패되었습니다.')}
+              </strong>
+            )}
+            {isProcessingNone(status) && ( // 컨텐츠 복사 후
+              <strong>{t('파일을 업로드 하세요.')}</strong>
+            )}
           </p>
           <div className={style.btn_box}>
-            <Button className={style.btn} variant="gray" size="sm">
-              {t('재시도')}
-            </Button>
+            {isProcessingFailed(status) && (
+              <Button className={style.btn} variant="gray" size="sm">
+                {t('재시도')}
+              </Button>
+            )}
             <Button className={style.btn} variant="primary" size="sm" onClick={buttons[1].onClick}>
-              {type === LEARNING_TYPE.VIDEO && t('동영상 변경')}
-              {type === LEARNING_TYPE.SCORM && t('파일 변경')}
+              {type === LEARNING_TYPE.VIDEO ? t('동영상 변경') : t('파일 변경')}
             </Button>
           </div>
         </div>

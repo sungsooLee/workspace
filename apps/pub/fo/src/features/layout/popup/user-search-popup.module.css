@@ -69,7 +69,7 @@
   @screen mobile {
     .start {
       &.user_search {
-        @apply m-0;
+        @apply m-0 -mt-[16px];
         .panel {
           @apply -mx-[16px] mb-[16px] !w-[calc(100%+32px)];
           & > div {
@@ -88,6 +88,22 @@
             }
             > :not([hidden]) ~ :not([hidden]) {
               @apply ml-0;
+            }
+          }
+        }
+        table {
+          th,
+          td {
+            @apply !min-w-auto !w-auto;
+          }
+          tbody {
+            tr {
+              td:nth-child(1) {
+                @apply title1-b text-[var(--gray10)];
+              }
+              td:nth-last-child(1) {
+                @apply px-0;
+              }
             }
           }
         }

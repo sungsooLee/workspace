@@ -1,10 +1,5 @@
 // IA102 / NLP_BO_CMS_1001
-import {
-  ContentInfo,
-  ContentInformation,
-  learningResourceQueryOptions,
-  usePostContentCopy,
-} from '@entities/learning-resource';
+import { ContentInfo, learningResourceQueryOptions } from '@entities/learning-resource';
 import { isContentCompleted } from '@features/learning-resource';
 import { LearningResourceShareShuttleModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-share-shuttle-modal';
 import { useFetchAuthUser } from '@learnway/auth/entities';
@@ -41,6 +36,7 @@ import { t } from 'i18next';
 import { first, get, map, some, uniq } from 'lodash-es';
 import { useEffect, useState } from 'react';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
+import { CopyModal } from './learning-resource-copy-modal';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 
@@ -53,21 +49,6 @@ function LearningResourceTableComponent() {
 
   const router = useRouter();
   const { openModal, alert } = useModal();
-
-  const { create: postContentCopy } = usePostContentCopy({
-    onSuccess: (result: ContentInformation) => {
-      router.navigate({
-        to: '/learning/learning-resource/view',
-        state: {
-          contentUuid: result.contentUuid,
-        },
-      });
-    },
-    onError: (error: any) => {
-      console.error(error);
-      // 에러 얼럿?
-    },
-  });
 
   const searchConfig: any = {
     builders: [
@@ -439,7 +420,7 @@ function LearningResourceTableComponent() {
     });
   }
 
-  function handleCopy() {
+  async function handleCopy() {
     if (selectedRows.length !== 1) {
       return alert({
         title: t('LABEL.alert.canNotCopy.title', '1개의 교육자원을 선택하세요'),
@@ -447,12 +428,12 @@ function LearningResourceTableComponent() {
       });
     }
 
-    postContentCopy(selectedRows[0].contentUuid);
-    // openModal({
-    //   width: 's',
-    //   hideCloseButton: true,
-    //   content: <CopyModal />,
-    // });
+    openModal({
+      zIndex: 10000,
+      width: 's',
+      hideCloseButton: true,
+      content: <CopyModal contentUuid={selectedRows[0].contentUuid} />,
+    });
   }
 
   return (

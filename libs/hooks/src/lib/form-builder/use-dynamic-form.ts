@@ -284,5 +284,6 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     getInitByBuilders,
     onReset: onFormChange,
     resetDirtyState,
+    clearAllValidators: () => null,
   };
 };
