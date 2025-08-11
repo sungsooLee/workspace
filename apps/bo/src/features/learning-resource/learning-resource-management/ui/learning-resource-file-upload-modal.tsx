@@ -38,12 +38,14 @@ const acceptFiles = {
   ],
   [LEARNING_TYPE.SCORM]: ['ZIP'],
   [LEARNING_TYPE.HTML5_VIDEO]: ['ZIP'],
-  [LEARNING_TYPE.ETC]: ['PPTX', 'DOX', 'DOCX', 'XLS', 'PSD', 'PDF', 'HWP', 'TXT'] };
+  [LEARNING_TYPE.ETC]: ['PPTX', 'DOX', 'DOCX', 'XLS', 'PSD', 'PDF', 'HWP', 'TXT'],
+};
 
 const LearningResourceFileUploadModalComponent: FC<Props> = ({
   channel,
   type,
-  maxFileCount = 100 }) => {
+  maxFileCount = 100,
+}) => {
   const { closeModal } = useModal();
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
     useS3Uploader({
@@ -51,7 +53,8 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({
       affairsType: 'CMS',
       maxFileCount,
       maxFileSize: 4 * 1024 * 1024 * 1024,
-      acceptFiles: acceptFiles[type] });
+      acceptFiles: acceptFiles[type],
+    });
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleAddFiles = (files: File[]) => {
@@ -83,8 +86,10 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({
     }
     if (stats.status === 'completed') {
       handleEncoding();
+      if (files.length === 1) onConfirm();
     }
   }, [stats]);
+
   return (
     <ModalContainer>
       <ModalTitle>{t('파일 업로드')}</ModalTitle>
