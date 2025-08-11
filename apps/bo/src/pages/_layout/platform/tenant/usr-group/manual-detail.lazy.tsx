@@ -5,10 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-import {
-  DynamicFormConfig,
-  useDynamicForm, useDynamicForm2,
-} from '@learnway/hooks';
+import { useDynamicForm2 } from '@learnway/hooks';
 import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { Checkbox } from '@learnway/ui/checkbox';
