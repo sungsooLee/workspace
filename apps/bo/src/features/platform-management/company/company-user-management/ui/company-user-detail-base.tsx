@@ -1,23 +1,26 @@
-import EnrollService from '@entities/enroll/api/enroll';
-import { DeliveryAddress } from '@entities/enroll/model/enroll.types';
-import { useUpdateUser } from '@entities/users';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import dayjs from 'dayjs';
+import { t } from 'i18next';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
-import { ContentsHistoryInfoFormField, DuplicateState, FormItem, FormRow } from '@shared/ui/form';
-
-import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormConfig, useDynamicForm2 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { GridBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
+
+import EnrollService from '@entities/enroll/api/enroll';
+import { DeliveryAddress } from '@entities/enroll/model/enroll.types';
+import { useUpdateUser } from '@entities/users';
 import { EnFormMode, EnGlobalConst } from '@shared/types/enums';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { t } from 'i18next';
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { ContentsHistoryInfoFormField, DuplicateState, FormItem } from '@shared/ui/form';
+
 import { getUserStatus } from '../service/company-user.service';
-import { CompanyUserDetailAccount } from './company-user-detail-account';
+import { CompanyUserDetailAccount2 } from './company-user-detail-account2';
 import { CompanyUserDetailAuthentication } from './company-user-detail-auth';
 import { CompanyUserDetailJob } from './company-user-detail-job';
 import { CompanyUserDetailPersonal } from './company-user-detail-personal';
@@ -38,8 +41,7 @@ function compareLatestDate(dates: string[]) {
 }
 
 const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: any) => {
-  const { provider, updateFormData, onSubmit, onFormChange, setFormError } =
-    useDynamicForm(formConfig());
+  const { provider, updateFormData, onSubmit, onFormChange, setFormError } = useDynamicForm2();
 
   const { confirm: openConfirm } = useModal();
   const { open: openToast } = useToast();
@@ -135,7 +137,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
         (user.jobRole && user.jobRole.length > 0) ||
         (user.jobDomain && user.jobDomain.length > 0)
       ) {
-        initialData.jobDomain = null;
+        initialData.jobDomain = '';
         initialData.jobRole = null;
         const maxLength = Math.max(user.jobRole.length, user.jobDomain.length);
         const result = Array.from({ length: maxLength }, (_, i) => ({
@@ -186,7 +188,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       name: data.name, // 이름
       engName: data.engName, // 영문 이름
       employeeNumber: data.employeeNumber, // 사번
-      birthday: data.birthday, // 생년월일
+      birthday: dayjs(data.birthday).format('YYYY-MM-DD'), // 생년월일
       gender: data.gender, // 성별
       phoneNumber: data.phoneNumber, // 휴대폰 번호
       companyPhoneNumber: data.companyPhoneNumber, // 연락처(사무실)
@@ -222,7 +224,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       payload.boTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('BO_PLATFORM');
     }
 
-    if (data.jobDomain !== '' && data.jobDomain.length !== 0) {
+    if (data.jobDomain && data.jobDomain !== '' && data.jobDomain.length !== 0) {
       payload.jobDomain = Array.of(data.jobDomain);
       payload.jobRole = [];
     } else {
@@ -266,32 +268,98 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
 
       <FormSubTitle label={t('회사/조직 정보')} lineType={'dark'} />
       <ContentsRow>
-        <FormRow provider={provider} name={'companyName'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'deptName'} element={<Input readOnly={true} />} />
+        <FormRow2
+          provider={provider}
+          name={'companyName'}
+          label={t('회사')}
+          placeholder={''}
+          element={<Input readOnly={true} />}
+        />
+        <FormRow2
+          provider={provider}
+          name={'deptName'}
+          label={t('소속')}
+          placeholder={''}
+          element={<Input readOnly={true} />}
+        />
         <FormItem />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'position'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'positionName'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'jobDomain'} element={<Input readOnly={true} />} />
+        <FormRow2
+          provider={provider}
+          name={'position'}
+          label={t('보직')}
+          placeholder={''}
+          element={<Input readOnly={true} />}
+        />
+        <FormRow2
+          provider={provider}
+          name={'positionName'}
+          label={t('호칭(직위)')}
+          placeholder={''}
+          element={<Input readOnly={true} />}
+        />
+        <FormRow2
+          provider={provider}
+          name={'jobDomain'}
+          label={t('직군')}
+          value={''}
+          placeholder={''}
+          element={<Input readOnly={true} />}
+        />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'joinDate'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'retireDate'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'promotionDate'} element={<Input readOnly={true} />} />
+        <FormRow2
+          provider={provider}
+          name={'joinDate'}
+          label={t('입사일')}
+          placeholder={''}
+          element={<Input readOnly={true} />}
+        />
+        <FormRow2
+          provider={provider}
+          name={'retireDate'}
+          label={t('퇴사일')}
+          placeholder={''}
+          element={<Input readOnly={true} />}
+        />
+        <FormRow2
+          provider={provider}
+          name={'promotionDate'}
+          label={t('최근 승진일')}
+          placeholder={''}
+          element={<Input readOnly={true} />}
+        />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'userStatus'} />
-        <FormRow provider={provider} name={'userModifyDate'} element={<Input disabled={true} />} />
+        <FormRow2
+          provider={provider}
+          name={'userStatus'}
+          label={t('재직 상태')}
+          element={
+            <RadioGroupFormField
+              optionsConfig={{
+                codeGroup: CODE_GROUP['pms.user.Status'],
+              }}
+            />
+          }
+        />
+        <FormRow2
+          provider={provider}
+          name={'userModifyDate'}
+          label={t('재직 상태 변경일')}
+          placeholder={''}
+          element={<Input disabled={true} />}
+        />
         <FormItem />
       </ContentsRow>
       {/* 직군/직무 정보 */}
       <CompanyUserDetailJob provider={provider} />
       {/* 계정 정보 */}
-      <CompanyUserDetailAccount provider={provider} formMode={EnFormMode.VIEW} />
+      <CompanyUserDetailAccount2 provider={provider} formMode={EnFormMode.VIEW} />
       {/* 로그인 및 인증 설정 정보 */}
       <CompanyUserDetailAuthentication provider={provider} />
-      <ContentsHistoryInfoFormField />
+      <ContentsHistoryInfoFormField provider={provider} />
     </form>
   );
 };
