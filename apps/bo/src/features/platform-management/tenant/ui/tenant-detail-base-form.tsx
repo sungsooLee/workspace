@@ -25,6 +25,7 @@ import {
 import { CompanyChoiceModal, UserChoiceModal } from '@shared/ui/modal';
 
 import { EnDeviceType, EnFormMode, EnUseCategory } from '@shared/types/enums';
+import { Input } from '@learnway/ui/input';
 
 /**
  * 화면번호: NLP_BO_TMS_1002 (테넌트기본 정보)
@@ -153,7 +154,7 @@ const TenantDetailBaseFormComponent = ({
             format: 'string',
             required: true,
           }}
-          element={<InputFormField />}
+          element={<Input />}
         />
       </ContentsRow>
       <ContentsRow>
