@@ -17,7 +17,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 're
 import { useWatch } from 'react-hook-form';
 
 import { CODE_GROUP, S3_PATH, useDynamicForm2 } from '@learnway/hooks';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormSubTitle, FormRow2 } from '@learnway/ui/base-form';
 import {
   InputModalSelectorFormField,
   RadioGroupFormField,
@@ -32,7 +32,6 @@ import {
   DuplicateCheckInputFormField,
   DuplicateState,
   FormDisplay,
-  FormRow2,
   InputFormField,
   PhoneNumberFormField,
 } from '@shared/ui/form';
