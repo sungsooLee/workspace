@@ -1,9 +1,8 @@
 import { useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
-import { CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
-import { DropdownFormField, FormRow2, InputFormField } from '@shared/ui/form';
+import { FormRow2 } from '@shared/ui/form';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -63,7 +62,7 @@ function RouteComponent() {
               validation={{ required: true }}
             />
           </ContentsRow>
-          <ContentsRow>
+          {/* <ContentsRow>
             <FormRow2
               provider={provider}
               name={'text2'}
@@ -111,7 +110,7 @@ function RouteComponent() {
               format={'array'}
               validation={{ required: true }}
             />
-          </ContentsRow>
+          </ContentsRow> */}
         </MainContents>
       </PageContainer>
     </form>
