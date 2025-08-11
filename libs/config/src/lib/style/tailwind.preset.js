@@ -522,7 +522,7 @@ module.exports = {
         '.headline2-b': {
           ...baseTitle,
           fontSize: '2.4rem',
-          fontWeight: '600',
+          fontWeight: '700',
         },
 
         '.headline3': {
@@ -582,7 +582,7 @@ module.exports = {
         '.title3-b': {
           ...baseTitle,
           fontSize: '1.6rem',
-          fontWeight: '600',
+          fontWeight: '700',
         },
 
         '.title4': {
@@ -594,7 +594,7 @@ module.exports = {
         '.title4-b': {
           ...baseTitle,
           fontSize: '1.8rem',
-          fontWeight: '600',
+          fontWeight: '700',
         },
 
         '.title5': {
@@ -618,7 +618,7 @@ module.exports = {
         '.body-xl-b': {
           ...bodyTitle,
           fontSize: '1.8rem',
-          fontWeight: '600',
+          fontWeight: '700',
         },
 
         '.body-lg': {
@@ -630,7 +630,7 @@ module.exports = {
         '.body-lg-b': {
           ...bodyTitle,
           fontSize: '1.6rem',
-          fontWeight: '600',
+          fontWeight: '700',
         },
 
         '.body-md': {

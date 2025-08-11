@@ -19,7 +19,7 @@
           }
         }
         .info {
-          @apply body-md mt-[20px] leading-[1.5] text-[var(--gray65)];
+          @apply body-sm mt-[20px] leading-[1.5] text-[var(--gray65)];
         }
       }
       .menu_list_div {
