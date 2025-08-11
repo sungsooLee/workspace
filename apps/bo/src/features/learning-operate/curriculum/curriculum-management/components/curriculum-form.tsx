@@ -1,13 +1,13 @@
 import { useGetCurriculumDetail } from '@entities/curriculum';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { DynamicFormProvider } from '@learnway/hooks';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { InputModalSelectorFormField, TextareaFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
 import { TreeNode } from '@learnway/ui/tree-view';
 import {
   DropdownFormField,
-  FormRow2,
   PhoneNumberFormFieldSimple,
   SwitchFormFieldSimple,
 } from '@shared/ui/form';

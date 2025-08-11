@@ -1,9 +1,9 @@
 import { useExternalEducationPopup } from '@features/external-education/hooks/use-external-education-popup';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { EditorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
-import { DateRangePickerFormField, FormRow2, SwitchFormField } from '@shared/ui/form';
+import { DateRangePickerFormField, SwitchFormField } from '@shared/ui/form';
 import { useEffect } from 'react';
 
 interface PopupProps {

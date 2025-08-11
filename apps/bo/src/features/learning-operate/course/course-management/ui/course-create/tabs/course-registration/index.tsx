@@ -1,8 +1,9 @@
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
-import { DropdownFormField, FormDisplay, FormRow2, SwitchFormField } from '@shared/ui/form';
+import { DropdownFormField, FormDisplay, SwitchFormField } from '@shared/ui/form';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';

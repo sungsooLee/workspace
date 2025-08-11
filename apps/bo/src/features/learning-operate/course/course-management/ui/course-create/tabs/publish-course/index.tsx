@@ -1,14 +1,9 @@
 import { CODE_GROUP, S3_PATH, useDynamicForm2 } from '@learnway/hooks';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
 
-import {
-  ChipListFormField,
-  FormRow2,
-  PeriodPickerFormField,
-  ThumbnailListFormField,
-} from '@shared/ui/form';
+import { ChipListFormField, PeriodPickerFormField, ThumbnailListFormField } from '@shared/ui/form';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';

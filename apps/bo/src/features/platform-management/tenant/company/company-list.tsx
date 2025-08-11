@@ -2,16 +2,17 @@ import { queryOptions } from '@entities/companies';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { FormRow2 } from '@learnway/ui/base-form';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { EnGlobalConst } from '@shared/types/enums';
+import { DropdownFormField, InputFormField, PeriodPickerFormField } from '@shared/ui/form';
 import { SearchBoxForm } from '@shared/ui/search-box';
 import { Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
-import { ContentsRow } from '@learnway/ui/contents-row';
-import { DropdownFormField, FormRow2, InputFormField, PeriodPickerFormField } from '@shared/ui/form';
 
 const TenantCompanyListComponent = () => {
   const { data: loginUser } = useFetchAuthUser();
@@ -25,18 +26,18 @@ const TenantCompanyListComponent = () => {
       companyType: data.companyType,
       name: data.name,
       isUsed: data.isUsed,
-      modifyStartDate: data.modifyDate &&  data.modifyDate.from &&
+      modifyStartDate:
+        data.modifyDate &&
+        data.modifyDate.from &&
         getDateToString(new Date(data.modifyDate.from), 'YYYYMMDD'),
-      modifyEndDate: data.modifyDate &&  data.modifyDate.from &&
+      modifyEndDate:
+        data.modifyDate &&
+        data.modifyDate.from &&
         getDateToString(new Date(data.modifyDate.to), 'YYYYMMDD'),
     };
     return searchData;
   };
-  const {
-    provider: searchProvider,
-    getValues,
-    onSubmit,
-  } = useDynamicForm2();
+  const { provider: searchProvider, getValues, onSubmit } = useDynamicForm2();
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, searchParam);
 
   const handleOnSearch = () => {

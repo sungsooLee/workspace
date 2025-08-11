@@ -1,8 +1,8 @@
+import { getConfig } from '@learnway/config';
 import { FormRowProps as BaseFormRowProps, FormRowFieldConfig } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
-import { BaseFormRow2 } from '@learnway/ui/base-form';
 import { FC, memo } from 'react';
-import { formFieldConfig } from '../form-field-config';
+import { BaseFormRow2 } from '.';
 
 /**
  * FormRowComponent
@@ -69,15 +69,14 @@ const FormRowComponent: FC<FormRowProps> = ({
     <BaseFormRow2
       provider={provider}
       name={name}
-      formFieldConfig={formFieldConfig}
       className={cn(className, cols && `flex-[${cols}]`)}
       children={children}
       element={element}
       infoNode={infoNode}
       fieldConfig={fieldConfig}
-      theme={'bo'}
+      theme={getConfig().APP_INFO === 'BO' ? 'bo' : 'fo'}
     />
   );
 };
 
-export const FormRow = memo(FormRowComponent);
+export const FormRow2 = memo(FormRowComponent);

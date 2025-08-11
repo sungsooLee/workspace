@@ -12,12 +12,13 @@ import {
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { IcoImage01 } from '@learnway/icons';
 import { Avatar } from '@learnway/ui/avatar';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 
 import { pageRouteConfig } from '@features/auth';
 import { MAIN_CONTAINERS } from '@widgets/layout';
 
-import { FormRow, NoticeBox } from '@shared/ui';
+import { NoticeBox } from '@shared/ui';
 
 import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/change-information.module.css';
 
@@ -99,28 +100,32 @@ function RouteComponent() {
         </div>
         <div className={styles.information}>
           <ContentsRow>
-            <FormRow provider={provider} name={'userIdEmail'} element={<ChangeUserIdFormField />} />
+            <FormRow2
+              provider={provider}
+              name={'userIdEmail'}
+              element={<ChangeUserIdFormField />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'nameEmployeeNumber'} />
+            <FormRow2 provider={provider} name={'nameEmployeeNumber'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'password'} element={<ChangePasswordFormField />} />
+            <FormRow2 provider={provider} name={'password'} element={<ChangePasswordFormField />} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'company'} />
+            <FormRow2 provider={provider} name={'company'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'company1'} />
+            <FormRow2 provider={provider} name={'company1'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'company2'} />
+            <FormRow2 provider={provider} name={'company2'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'company3'} />
+            <FormRow2 provider={provider} name={'company3'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'phoneNumber'}
               element={<ChangePhoneNumberFormField />}
