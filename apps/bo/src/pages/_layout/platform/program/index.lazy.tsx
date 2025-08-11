@@ -1,5 +1,5 @@
 import { pageRouteConfig } from '@features/auth';
-import { ApiTree } from '@features/platform-management/platform/api-managemnet/ui/api-tree';
+import { ApiManage } from '@features/platform-management/platform/api-managemnet';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui/tabs';
 import { MainContents, PageContainer, SectionLayout } from '@shared/ui/layout';
@@ -21,7 +21,7 @@ function RouteComponent() {
   const renderTabContent = (tabKey: string) => {
     return (
       <SectionLayout contentsRatio={'half'}>
-        <ApiTree menuScope={selectedTabKey} />
+        <ApiManage menuScope={selectedTabKey} />
       </SectionLayout>
     );
   };

@@ -1,12 +1,12 @@
+import { useModal } from '@learnway/ui/modal';
+import { optimisticallyUpdateTree } from '@learnway/ui/tree-view';
 import type { UseMutationResult } from '@tanstack/react-query';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useModal } from '@learnway/ui/modal';
 import {
   mutateOptions,
   queryKeys,
-  programManageQueryOptions as queryOptions
+  programManageQueryOptions as queryOptions,
 } from './program-manage.queries';
-import { optimisticallyUpdateTree } from '@learnway/ui/tree-view';
 
 type MutationHookOptions<TData = any, TError = Error, TVariables = any, TContext = unknown> = {
   onSuccess?: (data: TData, variables: TVariables, context: TContext) => void | Promise<void>;
@@ -46,15 +46,18 @@ export const useCreateProgram = (
       showSaveComplete();
       if (apiScope) {
         await queryClient.invalidateQueries({
-          queryKey: [...queryKeys.all, apiScope] });
+          queryKey: [...queryKeys.all, apiScope],
+        });
       } else {
         await queryClient.invalidateQueries({
-          queryKey: queryKeys.all });
+          queryKey: queryKeys.all,
+        });
       }
       if (options?.onSuccess) {
         await options.onSuccess(data, variables, context);
       }
-    } });
+    },
+  });
 };
 
 export const useUpdateProgram = (
@@ -71,15 +74,18 @@ export const useUpdateProgram = (
       showUpdateComplete();
       if (apiScope) {
         await queryClient.invalidateQueries({
-          queryKey: [...queryKeys.all, apiScope] });
+          queryKey: [...queryKeys.all, apiScope],
+        });
       } else {
         await queryClient.invalidateQueries({
-          queryKey: queryKeys.all });
+          queryKey: queryKeys.all,
+        });
       }
       if (options?.onSuccess) {
         await options.onSuccess(data, variables, context);
       }
-    } });
+    },
+  });
 };
 
 export const useDeleteProgram = (
@@ -96,15 +102,18 @@ export const useDeleteProgram = (
       showDeleteComplete();
       if (apiScope) {
         await queryClient.invalidateQueries({
-          queryKey: [...queryKeys.all, apiScope] });
+          queryKey: [...queryKeys.all, apiScope],
+        });
       } else {
         await queryClient.invalidateQueries({
-          queryKey: queryKeys.all });
+          queryKey: queryKeys.all,
+        });
       }
       if (options?.onSuccess) {
         await options.onSuccess(data, variables, context);
       }
-    } });
+    },
+  });
 };
 
 export const useDndProgram = (
@@ -119,7 +128,8 @@ export const useDndProgram = (
     onMutate: async (variables) => {
       const queryKey = apiScope ? [...queryKeys.all, apiScope] : queryKeys.all;
       await queryClient.cancelQueries({
-        queryKey });
+        queryKey,
+      });
       const previousData = queryClient.getQueryData(queryKey);
       if (previousData && variables) {
         if (Array.isArray(previousData)) {
@@ -127,7 +137,8 @@ export const useDndProgram = (
             actionType: variables.type || 'NODE_MOVE',
             sourceNode: variables.sourceNode,
             targetNode: variables.targetNode,
-            dropPosition: variables.position });
+            dropPosition: variables.position,
+          });
 
           queryClient.setQueryData(queryKey, newTreeData);
         }
@@ -158,5 +169,6 @@ export const useDndProgram = (
       if (options?.onSettled) {
         options.onSettled(data, error, variables, context?.userContext);
       }
-    } });
+    },
+  });
 };

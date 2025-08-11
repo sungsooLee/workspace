@@ -2,7 +2,7 @@ import { t } from 'i18next';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { useDynamicForm2 } from '@learnway/hooks';
 import { RadioGroupFormField } from '@learnway/ui/form-field';
 import {
   CustomDropValidator,
@@ -27,25 +27,36 @@ import {
   useUpdateProgram,
 } from '@entities/program';
 import { IcoMinus } from '@learnway/icons';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { Textarea } from '@learnway/ui/textarea';
-import { FormRow, SwitchFormField } from '@shared/ui/form';
+import { EnFormMode } from '@shared/types/enums';
+import { SwitchFormField } from '@shared/ui/form';
 import { useQueryClient } from '@tanstack/react-query';
 import { transformApiDataToApiTreeData } from '../../menu-managemnet';
 import { findNodeByApiId } from '../service/api.service';
 
-const FORM_MODE = {
-  NONE: 'NONE',
-  VIEW: 'VIEW',
-  ADD: 'ADD',
+const MAX_API_DEPTH = 5;
+const INITIAL_FORM_DATA = {
+  apiUuid: '',
+  parentId: '',
+  fullPath: '',
+  parentName: '',
+  apiId: '',
+  apiNodeType: 'FOLDER',
+  apiName: '',
+  apiDesc: '',
+  apiMethodCode: 'GET',
+  apiUrl: '',
+  isUsed: true,
 };
 
-const ApiTreeComponent: FC<any> = ({ menuScope }) => {
+const ApiManageComponent: FC<any> = ({ menuScope }) => {
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
-  const [formMode, setFormMode] = useState(FORM_MODE.NONE);
+  const [formMode, setFormMode] = useState<EnFormMode>(EnFormMode.NONE);
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [lastCreateApiId, setLastCreateApiId] = useState<string | null>(null);
@@ -64,11 +75,9 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
     clearFormError,
     control,
     setFormError,
-  } = useDynamicForm(formConfig);
-
-  const clearAllFormErrors = () => {
-    formConfig.builders.forEach((item) => clearFormError(item.name));
-  };
+    clearAllValidators,
+    getValues,
+  } = useDynamicForm2();
 
   const apiNodeType = useWatch({ control, name: 'apiNodeType' });
 
@@ -104,7 +113,6 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
             });
 
             setSelectedNode(newNode);
-
             setLastCreateApiId(null);
           }
         }
@@ -124,25 +132,20 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
         apiId: detailData?.apiId.toString() || 0,
         parentId: parentNode?.apiId.toString() || '',
       });
-      setFormMode(FORM_MODE.VIEW);
+      setFormMode(EnFormMode.VIEW);
     }
   }, [detailData]);
 
   const addNode = (node: any) => {
-    clearAllFormErrors();
-    const initData: { [key: string]: any } = {};
-    formConfig.builders.forEach((item) => {
-      initData[item.name] = item.value;
-    });
+    clearAllValidators();
 
     updateFormData({
-      ...initData,
+      ...INITIAL_FORM_DATA,
       fullPath: node?.fullPath,
       parentName: node?.apiName,
       parentId: node?.apiId.toString() || '',
     });
-
-    setFormMode(FORM_MODE.ADD);
+    setFormMode(EnFormMode.ADD);
   };
 
   const renderNodeButtons = (node: TreeNode, level: number) => (
@@ -156,7 +159,7 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
           variant="gray2"
           size={'xs'}
           type={'button'}
-          disabled={node.apiNodeType === 'API' || level >= 5}
+          disabled={node.apiNodeType === 'API' || level >= MAX_API_DEPTH}
         >
           {level === 0 ? t('LABEL.add', { type: 'API' }) : t('LABEL.addSub', { type: 'API' })}
         </Button>
@@ -207,6 +210,16 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
         if (nodeInfo) {
           const sortOrder = calculateSortOrder(nodeInfo);
 
+          // 드롭 시 타겟 노드가 FOLDER이고 INSIDE 포지션이면 해당 노드를 확장
+          if (nodeInfo.position === 'INSIDE' && nodeInfo.targetNode?.apiNodeType === 'FOLDER') {
+            setExpandedKeys((prev) => {
+              if (nodeInfo.targetNode && !prev.includes(nodeInfo.targetNode.key)) {
+                return [...prev, nodeInfo.targetNode.key];
+              }
+              return prev;
+            });
+          }
+
           const payload = {
             apiUuid: nodeInfo.sourceNode.apiUuid,
             destinationParentId:
@@ -224,6 +237,17 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
           dndProgram(payload, {
             onSuccess: async () => {
               // 낙관적 업데이트 결과 유지
+              // 현재 선택된 노드가 이동된 노드와 같다면 폼 데이터 업데이트
+              if (selectedNode && selectedNode.apiId === nodeInfo.sourceNode.apiId) {
+                // 쿼리 무효화하여 최신 데이터 가져오기
+                await queryClient.invalidateQueries({
+                  queryKey: [...queryKeys.all, menuScope],
+                });
+                // 개별 노드 데이터도 무효화
+                await queryClient.invalidateQueries({
+                  queryKey: [...queryKeys.all, selectedNode.apiUuid],
+                });
+              }
             },
             onError: async () => {
               await queryClient.invalidateQueries({
@@ -240,9 +264,9 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
   const handleSelectedNodeChange = (node: TreeNode | null) => {
     setSelectedNode(node);
     if (node) {
-      setFormMode(FORM_MODE.VIEW);
+      setFormMode(EnFormMode.VIEW);
     } else {
-      setFormMode(FORM_MODE.NONE);
+      setFormMode(EnFormMode.NONE);
     }
   };
 
@@ -258,17 +282,18 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
 
     setIsSubmitting(true);
 
-    if (formMode === FORM_MODE.VIEW) {
+    if (formMode === EnFormMode.VIEW) {
       openConfirm({
         title: t('LABEL.confirm.modify.title'),
         content: t('LABEL.confirm.modify.message'),
         onClose: (value: boolean) => {
           if (value) {
             updateProgram(
-              { ...node },
+              { ...getValues() },
               {
                 onSuccess: (data: any) => {
                   if (data && data.apiId) {
+                    setSelectedNode(null);
                     setLastCreateApiId(data.apiId.toString());
                   }
                   setIsSubmitting(false);
@@ -283,14 +308,14 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
           }
         },
       });
-    } else if (formMode === FORM_MODE.ADD) {
+    } else if (formMode === EnFormMode.ADD) {
       openConfirm({
         title: t('LABEL.confirm.save.title'),
         content: t('LABEL.confirm.save.message'),
         onClose: (value: boolean) => {
           if (value) {
             createProgram(
-              { ...node, apiScope: menuScope },
+              { ...getValues(), apiScope: menuScope },
               {
                 onSuccess: (data: any) => {
                   if (data && data.apiId) {
@@ -334,13 +359,9 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
           deleteProgram(selectedNode?.apiUuid, {
             onSuccess: async () => {
               setSelectedNode(null);
-              clearAllFormErrors();
-              const initData: { [key: string]: any } = {};
-              formConfig.builders.forEach((item) => {
-                initData[item.name] = item.value;
-              });
-              updateFormData({ ...initData });
-              setFormMode(FORM_MODE.NONE);
+              clearAllValidators();
+              updateFormData({ ...INITIAL_FORM_DATA });
+              setFormMode(EnFormMode.NONE);
             },
           });
         }
@@ -368,7 +389,7 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
           initLevel={2}
           handleSelectedNodeChange={handleSelectedNodeChange}
           customDropValidator={customDropValidator}
-          maxDepth={5}
+          maxDepth={MAX_API_DEPTH}
           isSelectableNode={(node: TreeNode) => {
             return node && node.level !== 0;
           }}
@@ -392,7 +413,7 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
                 size="sm"
                 className={layoutStyles.btn_text}
                 onClick={handleReset}
-                disabled={FORM_MODE.NONE === formMode}
+                disabled={EnFormMode.NONE === formMode}
               >
                 {t('LABEL.button.reset')}
               </Button>
@@ -400,7 +421,7 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
                 variant="text"
                 size="sm"
                 className={layoutStyles.btn_text}
-                disabled={FORM_MODE.VIEW !== formMode}
+                disabled={EnFormMode.VIEW !== formMode}
                 onClick={handleDelete}
                 icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
               >
@@ -410,7 +431,7 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
                 type="submit"
                 variant="save"
                 size="sm"
-                disabled={FORM_MODE.NONE === formMode || isSubmitting}
+                disabled={EnFormMode.NONE === formMode || isSubmitting}
               >
                 {t('LABEL.button.save')}
               </Button>
@@ -418,77 +439,117 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
           </div>
           <div className={layoutStyles.inner_contents}>
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'fullPath'}
-                element={<Input disabled={true} hiddenPlaceholder={formMode === FORM_MODE.NONE} />}
+                label={t('LABEL.program.location')}
+                value={''}
+                element={<Input disabled={true} hiddenPlaceholder={formMode === EnFormMode.NONE} />}
               />
             </ContentsRow>
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'parentName'}
-                element={<Input disabled={true} hiddenPlaceholder={formMode === FORM_MODE.NONE} />}
+                label={t('LABEL.program.parentApiName')}
+                value={''}
+                element={<Input disabled={true} hiddenPlaceholder={formMode === EnFormMode.NONE} />}
               />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'apiId'}
+                label={t('API ID')}
+                value={''}
+                placeholder={t('저장 시 자동 채번')}
                 element={
                   <Input
                     disabled={true}
                     className="text-left"
-                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    hiddenPlaceholder={formMode === EnFormMode.NONE}
                   />
                 }
               />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'apiNodeType'}
+                label={t('LABEL.program.type')}
+                value={'FOLDER'}
+                options={[
+                  {
+                    value: 'FOLDER',
+                    label: t('LABEL.program.folder'),
+                  },
+                  {
+                    value: 'API',
+                    label: t('LABEL.program.api'),
+                  },
+                ]}
                 element={
                   <RadioGroupFormField
-                    disabled={FORM_MODE.NONE === formMode || FORM_MODE.VIEW === formMode}
+                    disabled={EnFormMode.NONE === formMode || EnFormMode.VIEW === formMode}
                   />
                 }
               />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'apiName'}
+                label={t('LABEL.program.name')}
+                value={''}
+                maxLength={10}
                 element={
                   <Input
-                    disabled={FORM_MODE.NONE === formMode}
-                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    disabled={EnFormMode.NONE === formMode}
+                    hiddenPlaceholder={formMode === EnFormMode.NONE}
                   />
                 }
+                validation={{ required: true }}
               />
             </ContentsRow>
 
             {apiNodeType === 'API' && (
               <>
                 <ContentsRow>
-                  <FormRow
+                  <FormRow2
                     provider={provider}
                     name={'apiMethodCode'}
-                    element={<RadioGroupFormField disabled={FORM_MODE.NONE === formMode} />}
+                    label={t('LABEL.program.apiMethodType')}
+                    value={'GET'}
+                    options={[
+                      { value: 'GET', label: 'GET' },
+                      { value: 'POST', label: 'POST' },
+                      { value: 'PUT', label: 'PUT' },
+                      { value: 'DELETE', label: 'DELETE' },
+                    ]}
+                    element={<RadioGroupFormField disabled={EnFormMode.NONE === formMode} />}
+                    validation={{
+                      required: {
+                        fn: (values: Record<string, any>) => {
+                          return values.apiNodeType === 'API';
+                        },
+                      },
+                    }}
                   />
                 </ContentsRow>
                 <ContentsRow>
-                  <FormRow
+                  <FormRow2
                     provider={provider}
                     name={'apiUrl'}
+                    label={t('API URL')}
+                    value={''}
                     element={
                       <Input
                         id="apiUrl"
-                        disabled={FORM_MODE.NONE === formMode}
-                        hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                        disabled={EnFormMode.NONE === formMode}
+                        hiddenPlaceholder={formMode === EnFormMode.NONE}
                         type="url"
                         validation={{
                           onError: (msg) => setFormError('apiUrl', msg),
@@ -496,26 +557,41 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
                         }}
                       />
                     }
+                    validation={{
+                      required: {
+                        fn: (values: Record<string, any>) => {
+                          return values.apiNodeType === 'API';
+                        },
+                      },
+                    }}
                   />
                 </ContentsRow>
               </>
             )}
             {/* {apiNodeType === 'FOLDER' && ( */}
             <ContentsRow type={'horizontal'} className={'inactive'}>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'isUsed'}
-                element={<SwitchFormField disabled={formMode === FORM_MODE.NONE} />}
+                label={t('LABEL.program.isUsed')}
+                value={true}
+                tooltip={
+                  '사용여부 변경 시 메뉴관리에서 매핑한 메뉴의 해당 API 사용여부도 같이 변경되니 유의해 주세요.'
+                }
+                element={<SwitchFormField disabled={formMode === EnFormMode.NONE} />}
               />
             </ContentsRow>
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'apiDesc'}
+                label={t('LABEL.form.input.description')}
+                value={''}
+                maxLength={2000}
                 element={
                   <Textarea
-                    disabled={FORM_MODE.NONE === formMode}
-                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    disabled={EnFormMode.NONE === formMode}
+                    hiddenPlaceholder={formMode === EnFormMode.NONE}
                   />
                 }
               />
@@ -528,131 +604,4 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
   );
 };
 
-export const ApiTree = ApiTreeComponent;
-
-const formConfig: DynamicFormConfig = {
-  builders: [
-    {
-      name: 'apiUuid',
-      type: 'text',
-      label: () => t('apiUuid'),
-      value: '',
-    },
-    {
-      name: 'parentId',
-      type: 'text',
-      label: () => t('parentId'),
-      value: '',
-    },
-    {
-      name: 'fullPath',
-      type: 'text',
-      label: () => t('LABEL.program.location'),
-      value: '',
-    },
-    {
-      name: 'parentName',
-      type: 'text',
-      label: () => t('LABEL.program.parentApiName'),
-      value: '',
-    },
-    {
-      name: 'apiId',
-      type: 'number',
-      label: () => t('API ID'),
-      value: '',
-      placeholder: t('저장 시 자동 채번'),
-    },
-    {
-      name: 'apiNodeType',
-      type: 'radio-group',
-      label: () => t('LABEL.program.type'),
-      value: 'FOLDER',
-      options: [
-        {
-          value: 'FOLDER',
-          label: t('LABEL.program.folder'),
-        },
-        {
-          value: 'API',
-          label: t('LABEL.program.api'),
-        },
-      ],
-    },
-    {
-      name: 'apiName',
-      type: 'text',
-      label: () => t('LABEL.program.name'),
-      value: '',
-      maxLength: 10,
-    },
-    {
-      name: 'apiDesc',
-      type: 'textarea',
-      label: () => t('LABEL.form.input.description'),
-      value: '',
-      maxLength: 2000,
-    },
-    {
-      name: 'apiMethodCode',
-      type: 'radio-group',
-      label: () => t('LABEL.program.apiMethodType'),
-      value: 'GET',
-      options: [
-        {
-          value: 'GET',
-          label: 'GET',
-        },
-        {
-          value: 'POST',
-          label: 'POST',
-        },
-
-        {
-          value: 'PUT',
-          label: 'PUT',
-        },
-        {
-          value: 'DELETE',
-          label: 'DELETE',
-        },
-      ],
-    },
-    {
-      name: 'apiUrl',
-      type: 'text',
-      label: () => t('API URL'),
-      value: '',
-    },
-    {
-      name: 'isUsed',
-      type: 'switch',
-      label: () => t('LABEL.program.isUsed'),
-      value: true,
-      switchConfig: {
-        label: (value: boolean) => (value ? t('LABEL.common.enable') : t('LABEL.common.disable')),
-      },
-      tooltip:
-        '사용여부 변경 시 메뉴관리에서 매핑한 메뉴의 해당 API 사용여부도 같이 변경되니 유의해 주세요.',
-    },
-  ],
-  validator: {
-    apiName: {
-      required: true,
-    },
-    apiUrl: {
-      required: {
-        fn: (values) => {
-          return values.apiNodeType === 'API';
-        },
-      },
-    },
-    apiMethodCode: {
-      required: {
-        fn: (values) => {
-          return values.apiNodeType === 'API';
-        },
-      },
-    },
-  },
-};
+export const ApiManage = ApiManageComponent;

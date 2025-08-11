@@ -1,2 +1,2 @@
 export * from './service/api.service';
-export * from './ui/api-tree';
+export * from './ui/api-manage';
