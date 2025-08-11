@@ -13,7 +13,7 @@
       .menu_info {
         @apply w-[280px] shrink-0;
         .tit {
-          @apply headline1-b text-[gray9];
+          @apply title5-b text-[gray9];
           a {
             @apply flex items-center;
           }
