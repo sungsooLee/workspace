@@ -4,7 +4,7 @@ export * from './service/blog/use-blog-content-form';
 export * from './service/exam-util';
 export * from './service/learning-resource-blog-form-submit';
 export * from './service/learning-resource-html-form-submit';
-export * from './service/learning-resource-question-detail-from.hook';
+export * from './service/learning-resource-question-detail-form.hook';
 export * from './service/learning-resource-question-import.hook';
 export * from './service/learning-resource-question-service';
 export * from './service/learning-resource-question-sort.hook';
