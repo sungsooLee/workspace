@@ -5,6 +5,8 @@ export * from './exam/learning-resource-question-bank-detail';
 export * from './exam/learning-resource-question-bank-question';
 export * from './exam/learning-resource-question-info';
 export * from './exam/learning-resource-test-paper-info';
+export * from './assignment/learning-resource-assignment-basic-info';
+export * from './assignment/learning-resource-assignment-submission';
 export * from './learning-resource-blog-detail';
 export * from './learning-resource-etc-detail';
 export * from './learning-resource-file-upload-modal';

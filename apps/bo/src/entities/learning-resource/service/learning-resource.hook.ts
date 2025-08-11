@@ -1,5 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
+  AssignmentSubmissionCreateReq,
+  AssignmentSubmissionMutationReq,
+  AssignmentSubmissionUpdateReq,
   BlogCreateReq,
   BlogUpdateReq,
   ContentBaseInfo,
@@ -307,10 +310,10 @@ export function useUpdateExamPaperContent(options?: any) {
 
   const mutation = useMutation({
     ...mutateOptions.updateExamPaperContent(),
-    onSuccess: async (result: unknown) => {
+    onSuccess: async (result: string) => {
       if (result) {
         await queryClient.invalidateQueries({
-          queryKey: [...queryKeys.contentDetail(result as string)],
+          queryKey: [...queryKeys.contentDetail(result)],
         });
 
         if (options.onSuccess) {
@@ -383,6 +386,21 @@ export function useCreateQuestionItem(options?: any) {
     data: mutation.data,
   };
 }
+
+export function useUpdateQuestionItem(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateQuestionItem(),
+    ...options,
+  });
+
+  return {
+    update: (payload: QuestionItem, options?: any) => mutation.mutate(payload as any, options),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
 export function useGetQuestionItem(examQuestionUuid?: string, options?: any) {
   return useQuery<QuestionItem, any>({
     ...learningResourceQueryOptions.getQuestionItem(examQuestionUuid),
@@ -485,6 +503,48 @@ export function useUpdateAssignment(options?: any) {
 
   return {
     update: (params: ContentBaseInfo) => mutation.mutate(params as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+  };
+}
+
+export function useCreateAssignmentSubmissionItem(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.createAssignmentSubmissionItem(),
+    ...options,
+  });
+
+  return {
+    create: (params: AssignmentSubmissionCreateReq, options?: any) =>
+      mutation.mutate(params as any, options),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+  };
+}
+
+export function useUpdateAssignmentSubmissionItem(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateAssignmentSubmissionItem(),
+    ...options,
+  });
+
+  return {
+    update: (params: AssignmentSubmissionUpdateReq, options?: any) =>
+      mutation.mutate(params as any, options),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+  };
+}
+
+export function useDeleteAssignmentSubmissionItemList(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.deleteAssignmentSubmissionItemList(),
+    ...options,
+  });
+
+  return {
+    delete: (params: AssignmentSubmissionMutationReq, options?: any) =>
+      mutation.mutate(params as any, options),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
   };

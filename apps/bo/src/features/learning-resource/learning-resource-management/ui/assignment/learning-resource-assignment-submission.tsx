@@ -1,32 +1,85 @@
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
+import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { GridBox } from '@learnway/ui/grid';
-import { cn } from '@learnway/shared';
-import { AssignmentSubmissionItem } from '@entities/learning-resource';
-import { AssignmentSubmissionProps, AssignmentTabRef } from '../service/assignment/type';
-import { useAssignmentSubmissionInputForm } from '../service/assignment/use-assignment-submission-input-form';
+import { useModal } from '@learnway/ui/modal';
+import { cn, isEmptyData } from '@learnway/shared';
+import { AssignmentSubmissionItem, ContentInformation } from '@entities/learning-resource';
+import { AssignmentSubmissionProps, AssignmentTabRef } from '../../service/assignment/type';
+import { useAssignmentSubmissionInputForm } from '../../service/assignment/use-assignment-submission-input-form';
+import { LearningResourceAssignmentItemModal } from './modal/learning-resource-assignment-item-modal';
 
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/assignment-detail.module.css';
-import { Button } from '@learnway/ui/button';
-import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
 
 const LearningResourceAssignmentSubmissionComponent = forwardRef<
   AssignmentTabRef,
   AssignmentSubmissionProps
 >(({ content, hasMapping = false }, ref) => {
   const { t } = useTranslation();
+  const { openModal } = useModal();
 
-  const { submissionList } = useAssignmentSubmissionInputForm(content?.contentUuid ?? '');
+  const {
+    submissionList,
+    selectedSubmissionItems,
+    setSelectedSubmissionItems,
+    handleOnCreateSuccessCallback,
+    handleOnUpdateSuccessCallback,
+    handleOnDeleteSuccessCallback,
+  } = useAssignmentSubmissionInputForm(content?.contentUuid ?? '');
+
+  const handleIsRowSelectable = useCallback(() => !hasMapping, [hasMapping]);
+
+  const handleClickAddSubmissionButton = useCallback(async () => {
+    if (isEmptyData(content)) {
+      return;
+    }
+
+    await openModal({
+      width: 'xl',
+      content: (
+        <LearningResourceAssignmentItemModal
+          contentInfo={content as ContentInformation}
+          hasMapping={hasMapping}
+          onSuccessCallback={handleOnCreateSuccessCallback}
+        />
+      ),
+    });
+  }, [content]);
+
+  const handleClickViewSubmissionButton = useCallback(async (item: AssignmentSubmissionItem) => {
+    if (isEmptyData(item)) {
+      return;
+    }
+
+    await openModal({
+      width: 'xl',
+      content: (
+        <LearningResourceAssignmentItemModal
+          contentInfo={content as ContentInformation}
+          submissionRowItem={item}
+          hasMapping={hasMapping}
+          onSuccessCallback={handleOnUpdateSuccessCallback}
+          onDeleteCallback={handleOnDeleteSuccessCallback}
+        />
+      ),
+    });
+  }, []);
 
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<AssignmentSubmissionItem>();
     return [
       columnHelper.accessor('assignmentSubmissionText', {
         cell: (info) => (
-          <span className="cursor-pointer text-[var(--gray8)] underline">{info.getValue()}</span>
+          <span
+            className="cursor-pointer text-[var(--gray8)] underline"
+            onClick={() => handleClickViewSubmissionButton(info.row.original)}
+          >
+            {info.getValue()}
+          </span>
         ),
         header: t('과제물'),
         enableGrouping: false,
@@ -100,6 +153,8 @@ const LearningResourceAssignmentSubmissionComponent = forwardRef<
         tableMode
         data={submissionList}
         columns={columns}
+        isRowSelectable={handleIsRowSelectable}
+        onRowsSelect={setSelectedSubmissionItems}
         multiple
         showNumberingColumn
         className={styles.list_table}
@@ -110,6 +165,7 @@ const LearningResourceAssignmentSubmissionComponent = forwardRef<
               variant="text"
               label={t('LABEL.grid.header.add', '추가')}
               icon={<IcoPlus width={16} height={16} stroke="#4C515E" />}
+              onClick={handleClickAddSubmissionButton}
               disabled={hasMapping}
             />
             <Button
@@ -117,14 +173,14 @@ const LearningResourceAssignmentSubmissionComponent = forwardRef<
               variant="text"
               label={t('LABEL.grid.header.copy', '복사')}
               icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
-              disabled={!submissionList.length || hasMapping}
+              disabled={!selectedSubmissionItems.length || hasMapping}
             />
             <Button
               type="button"
               variant="text"
               label={t('LABEL.grid.header.remove', '삭제')}
               icon={<IcoMinus width={16} height={16} stroke="#131C30" />}
-              disabled={!submissionList.length || hasMapping}
+              disabled={!selectedSubmissionItems.length || hasMapping}
             />
           </>
         }

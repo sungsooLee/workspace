@@ -56,8 +56,18 @@ export const useCourseListGridConfig = () => {
       name: 'isBookmarks',
       label: () => t('LABEL.grid.column.favorite'),
       size: 40,
-      render: ({ row, getValue }) => {
-        return <CourseFavoriteIcon courseId={row?.original?.courseId} isFavorite={getValue()} />;
+      render: ({ table, row, cell, getValue }) => {
+        // return <CourseFavoriteIcon courseId={row?.original?.courseId} isFavorite={getValue()} />;
+        const handleSuccess = () => {
+          table.options.meta?.updateData(row.index, cell.column.id, getValue() ? false : true);
+        };
+        return (
+          <CourseFavoriteIcon
+            courseId={row.original.courseId}
+            isFavorite={getValue()}
+            onSuccess={handleSuccess}
+          />
+        );
       },
       meta: {
         cellAlign: 'center',
@@ -85,7 +95,7 @@ export const useCourseListGridConfig = () => {
     // 언어
     {
       name: 'language',
-      label: () => t('LABEL.grid.column.language'),
+      label: () => t('언어'),
       size: 90,
       render: (info: any) =>
         getCodeLabel(CODE_GROUP['pms.multilingual.LangCountryCode'], info.getValue()),

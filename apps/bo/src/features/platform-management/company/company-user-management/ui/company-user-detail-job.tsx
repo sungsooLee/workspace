@@ -1,10 +1,10 @@
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { CellContext } from '@tanstack/react-table';
+import { t } from 'i18next';
+
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { GridFormField } from '@learnway/ui/form-field';
 import { EditDropdownCell, EditSwitchCell } from '@learnway/ui/grid';
-import { FormRow } from '@shared/ui/form';
-import { CellContext } from '@tanstack/react-table';
-import { t } from 'i18next';
 
 /**
  * 회사 유저 상세 - 직군/직무 정보
@@ -72,9 +72,10 @@ const CompanyUserDetailJobComponent = ({ provider }: { provider: any }) => {
     <>
       <FormSubTitle label={t('직군/직무 정보')} lineType={'dark'} />
       <ContentsRow>
-        <FormRow
+        <FormRow2
           provider={provider}
           name={'jobDomains'}
+          value={[]}
           element={
             <GridFormField
               gridProps={{

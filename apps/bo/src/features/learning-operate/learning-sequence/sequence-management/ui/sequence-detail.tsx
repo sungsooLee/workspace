@@ -214,7 +214,6 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 name={'targetList'}
                 format={'object'}
                 label={t('학습대상(유저그룹)')}
-                validation={{ required: true }}
                 element={
                   <ChipListModalSelectorFormField
                     modalConfig={() => ({
