@@ -1,10 +1,10 @@
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { useDynamicForm2 } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
-import { FormRow2 } from '@shared/ui/form';
 import { useQueryClient } from '@tanstack/react-query';
 import { t } from 'i18next';
 import { useEffect } from 'react';

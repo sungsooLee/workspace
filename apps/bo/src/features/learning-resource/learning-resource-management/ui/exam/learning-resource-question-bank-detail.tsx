@@ -8,18 +8,18 @@ import { FormSubTitle } from '@learnway/ui/base-form';
 import { SplitPanel } from '@learnway/ui/elements';
 
 import { ContentBaseInfo, QuestionBasicInfoDetail } from '@entities/learning-resource';
+import { useLearningResourceQuestionDetailForm } from '@features/learning-resource/learning-resource-management';
 import { getQuestionBankRequestData } from '@features/learning-resource/learning-resource-management/service/question-bank/common';
 import {
   QuestionBankFormData,
   QuestionBankTabFormRef,
 } from '@features/learning-resource/learning-resource-management/service/question-bank/type';
 import { isLocalhost } from '@learnway/shared';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
-import { FormRow2 } from '@shared/ui/form';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
-import { useLearningResourceQuestionDetailForm } from '../../service/learning-resource-question-detail-from.hook';
 import { LearningResourceBaseForm } from '../learning-resource-base-form';
 
 type QuestionBankDetailProps = {

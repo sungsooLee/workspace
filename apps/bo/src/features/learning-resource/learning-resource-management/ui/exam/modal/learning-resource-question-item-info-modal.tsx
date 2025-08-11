@@ -5,7 +5,7 @@ import {
   QuestionItemOption,
   QuestionListForRetrieveRes,
 } from '@entities/learning-resource';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { GridFormField, TextareaFormField } from '@learnway/ui/form-field';
@@ -17,7 +17,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { FormDisplay, FormRow2 } from '@shared/ui/form';
+import { FormDisplay } from '@shared/ui/form';
 
 import {
   QUESTION_LEVELS,

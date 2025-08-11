@@ -1,7 +1,8 @@
 import { DynamicFormProvider, SelectOption } from '@learnway/hooks';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
-import { DropdownFormField, FormItem, FormRow2 } from '@shared/ui/form';
+import { DropdownFormField, FormItem } from '@shared/ui/form';
 import { SearchBoxForm } from '@shared/ui/search-box';
 import { t } from 'i18next';
 import { FormEventHandler } from 'react';

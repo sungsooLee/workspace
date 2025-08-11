@@ -80,10 +80,11 @@ const ChannelShuttleModalComponent = ({ roleId }: Props) => {
 
   const columnHelper = createColumnHelper<any>();
   const columns = [
-    columnHelper.accessor('tenantName', {
+    columnHelper.accessor('tenantList', {
       header: t('테넌트'),
       size: 132,
-      cell: (info) => info.getValue(),
+      cell: (info) =>
+        info.row.original.tenantList.map(({ tenantName }: any) => tenantName).join(','),
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
         cellAlign: 'left', // 셀은 오른쪽 정렬
@@ -94,10 +95,11 @@ const ChannelShuttleModalComponent = ({ roleId }: Props) => {
       size: 132,
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor('channelOwnerId', {
+    columnHelper.accessor('channelOwnerUserList', {
       header: t('채널 소유자'),
       size: 132,
-      cell: (info) => info.getValue(),
+      cell: (info) =>
+        info.row.original.channelOwnerUserList.map(({ userName }: any) => userName).join(','),
     }),
     columnHelper.accessor('isUsed', {
       header: t('사용여부'),
@@ -118,7 +120,9 @@ const ChannelShuttleModalComponent = ({ roleId }: Props) => {
   const [option, setOption] = useState<any>();
 
   const handleOnSearch = async (data: any) => {
-    const response = await queryClient.fetchQuery(queryOptions.list(roleId, data));
+    const response = await queryClient.fetchQuery(
+      queryOptions.all(roleId, { ...data, page: 0, size: 2000 }),
+    );
     setGrideData(response.content);
   };
 

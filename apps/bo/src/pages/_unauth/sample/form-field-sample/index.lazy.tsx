@@ -1,13 +1,13 @@
 import { ChannelListModal } from '@features/learning-operate/course/course-management';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { SelectOption } from '@learnway/shared';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { InputModalSelectorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
-import { FormRow2, PeriodPickerFormField } from '@shared/ui/form';
+import { PeriodPickerFormField } from '@shared/ui/form';
 import { DatePickerFormField2 } from '@shared/ui/form/ui/date-picker-form-field2';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createLazyFileRoute } from '@tanstack/react-router';

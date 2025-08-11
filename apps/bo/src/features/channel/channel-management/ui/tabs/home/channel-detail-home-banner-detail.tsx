@@ -2,7 +2,7 @@ import { useChannelHomeBannerDetail } from '@features/channel/channel-management
 import { CODE_GROUP, S3_PATH } from '@learnway/hooks';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
@@ -10,7 +10,6 @@ import {
   DateRangePickerFormField,
   DropdownFormField,
   FormItem,
-  FormRow2,
   SwitchFormField,
   ThumbnailListFormField,
 } from '@shared/ui/form';

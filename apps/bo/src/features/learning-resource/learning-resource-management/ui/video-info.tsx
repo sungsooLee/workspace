@@ -16,7 +16,7 @@ interface MovieInfoProps {
   provider: DynamicFormProvider;
 }
 
-const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
+const VideoInfoComponent = ({ provider }: MovieInfoProps) => {
   const { openModal } = useModal();
   const { fileDownload } = useFileManager();
   const { watch } = provider;
@@ -115,4 +115,4 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
   );
 };
 
-export const MovieInfo = MovieInfoComponent;
+export const VideoInfo = VideoInfoComponent;

@@ -1,9 +1,10 @@
 import { useCoursePackageDetailPackageInfo } from '@features/learning-operate/course-package/hooks/use-course-package-detail-package-info';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import { FormRow2 } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { TextareaFormField } from '@learnway/ui/form-field';
 import { useModal } from '@learnway/ui/modal';
-import { FormRow2, InputFormField } from '@shared/ui/form';
+import { InputFormField } from '@shared/ui/form';
 import { useTranslation } from 'react-i18next';
 
 const PackageSubPkgFormComponent = () => {

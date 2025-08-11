@@ -1,34 +1,39 @@
-import { useCreateCompany, useFetchCompany, useUpdateCompany } from '@entities/companies';
-import CompaniesService from '@entities/companies/api/companies';
-import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { cn, DATE_TIME_FORMAT, getDateToString, getStringToDate } from '@learnway/shared';
-import { FormGuideText, FormSubTitle } from '@learnway/ui/base-form';
-import { RadioGroupFormField } from '@learnway/ui/form-field';
-import { GridBox } from '@learnway/ui/grid';
-import { EnFormMode, EnGlobalConst } from '@shared/types/enums';
-import {
-  DuplicateCheckInputFormField,
-  DuplicateState,
-  FormDisplay,
-  FormRow,
-} from '@shared/ui/form';
-import { UserGroupChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui/modal';
-import { LoginRestrictTimeSettingModal } from '@shared/ui/modal/login-restrict-time-setting-modal';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import { t } from 'i18next';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+
+import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
+import { cn, DATE_TIME_FORMAT, getDateToString, getStringToDate } from '@learnway/shared';
+import { FormGuideText, FormRow2, FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow, ContentsRowItem } from '@learnway/ui/contents-row';
+import { CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { Switch } from '@learnway/ui/switch';
+import { useToast } from '@learnway/ui/toast';
+
+import { useCreateCompany, useFetchCompany, useUpdateCompany } from '@entities/companies';
+import CompaniesService from '@entities/companies/api/companies';
+import { getCurrentAuthUser } from '@shared/lib';
+import { EnFormMode, EnGlobalConst } from '@shared/types/enums';
+import {
+  DuplicateCheckInputFormField,
+  DuplicateState,
+  FormDisplay,
+  FormItem,
+  SwitchFormField,
+} from '@shared/ui/form';
+import { UserGroupChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui/modal';
+import { LoginRestrictTimeSettingModal } from '@shared/ui/modal/login-restrict-time-setting-modal';
+
 import { LoginAuthenticationSettingInformation } from './login-authentication-setting-information';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import { Button } from '@learnway/ui/button';
-import { ContentsRow, ContentsRowItem } from '@learnway/ui/contents-row';
-import { useModal } from '@learnway/ui/modal';
-import { Switch } from '@learnway/ui/switch';
-import { useToast } from '@learnway/ui/toast';
-import { getCurrentAuthUser } from '@shared/lib';
 
 const EMAIL_REGEX =
   /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
@@ -45,14 +50,13 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const { open: openToast } = useToast();
 
   const [tableInstance, setTableInstance] = useState<Table<any>>();
-  const { provider, updateFormData, onSubmit, onFormChange, getValues, control } =
-    useDynamicForm(formConfig());
+  const { provider, updateFormData, onSubmit, onFormChange, getValues } = useDynamicForm2();
 
   const tempLoginRestrictTimeSetting = React.useRef<any>(null);
   const [loginRestrictTimeSettings, setLoginRestrictTimeSettings] = useState<any[]>([]);
 
   useEffect(() => {
-    console.log('####', getValues());
+    console.log('####>>>>>>', getValues());
     if (props.mode === EnFormMode.VIEW && detailData) {
       console.log('detailData', detailData);
       const initialData = {
@@ -71,10 +75,6 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       // ]);
       console.log('##### initialData', initialData);
       updateFormData(initialData);
-      console.log('##### getValues', getValues());
-      // setTimeout(() => {
-      //   updateFormData(initialData);
-      // }, 10000);
 
       const loginRestrictions = detailData.companyLoginRestrictionList.map((limit: any) => ({
         ...limit,
@@ -115,10 +115,8 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
   useImperativeHandle(ref, () => ({
     saveData() {
-      console.log('saveData');
       const form = formRef.current;
       if (form) {
-        console.log('formValue');
         form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
       }
     },
@@ -143,6 +141,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const handleOnSubmit = async () => {
     // onSubmit에서 받아오는 데이터가 null -> 공백으로 넘어와서, getValues 사용
     const data = getValues();
+    console.log('handleOnSubmit', data);
     console.log('loginRestrictTimeSettings', loginRestrictTimeSettings);
 
     const loginRestrictions = loginRestrictTimeSettings.map((item) => ({
@@ -396,7 +395,6 @@ const CompanyDetailComponent = (props: any, ref: any) => {
     }),
     columnHelper.accessor('userGroupTarget', {
       cell: (info) => {
-        console.log('## row', info.row);
         return (
           <Button
             label={t('대상자')}
@@ -468,13 +466,37 @@ const CompanyDetailComponent = (props: any, ref: any) => {
         <>
           <FormSubTitle label={t('회사 인사 데이터 관리 정보')} lineType="dark" />
           <ContentsRow>
-            <FormRow provider={provider} name={'companyType'} element={<RadioGroupFormField />} />
+            <FormRow2
+              provider={provider}
+              name={'companyType'}
+              label={t('그룹 선택')}
+              value={'GLOBAL'}
+              format="string"
+              guideText={t(
+                '회원 가입하는 회사는 직접 등록하며, HR 시스템 연동 회사는 자동 등록됩니다.',
+              )}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{ codeGroup: CODE_GROUP['pms.company.CompanyType'] }}
+                />
+              }
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow
+            <FormRow2
               provider={provider}
               name={'hrInfoManageType'}
-              element={<RadioGroupFormField />}
+              label={t('인사 데이터 관리 방식')}
+              value={'MANUAL_MANAGE'}
+              format="string"
+              guideText={t(
+                '자동관리와 수동관리 선택에 따라서 아래 회원가입 유형의 옵션이 달라집니다.',
+              )}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{ codeGroup: CODE_GROUP['pms.company.HrInfoManageType'] }}
+                />
+              }
             />
           </ContentsRow>
           <FormDisplay
@@ -482,7 +504,31 @@ const CompanyDetailComponent = (props: any, ref: any) => {
             dependencies={[{ name: 'hrInfoManageType', value: 'MANUAL_MANAGE' }]}
           >
             <ContentsRow>
-              <FormRow provider={provider} name={'companyMemberJoinTypeList'} />
+              <FormRow2
+                provider={provider}
+                name={'companyMemberJoinTypeList'}
+                label={t('회원 가입 유형')}
+                value={['FO_JOIN_DEALER']}
+                guideText={t(
+                  '수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.',
+                )}
+                element={
+                  <CheckboxGroupFormField
+                    optionsConfig={{ codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'] }}
+                  />
+                }
+                validation={{
+                  required: true,
+                  conditions: [
+                    {
+                      fn: (values: Record<string, any>) =>
+                        values.hrInfoManageType === 'AUTO_MANAGE' &&
+                        values.companyMemberJoinTypeList.length !== 1,
+                      message: t('자동 관리는 하나의 유형만 선택할 수 있습니다.'),
+                    },
+                  ],
+                }}
+              />
             </ContentsRow>
           </FormDisplay>
           <FormDisplay
@@ -490,7 +536,21 @@ const CompanyDetailComponent = (props: any, ref: any) => {
             dependencies={[{ name: 'hrInfoManageType', value: 'AUTO_MANAGE' }]}
           >
             <ContentsRow>
-              <FormRow provider={provider} name={'linkageSystem'} />
+              <FormRow2
+                provider={provider}
+                name={'linkageSystem'}
+                label={t('회원 가입 유형')}
+                format={'object'}
+                value={'GIM'}
+                guideText={t(
+                  '수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.',
+                )}
+                element={
+                  <RadioGroupFormField
+                    optionsConfig={{ codeGroup: CODE_GROUP['pms.company.LinkageSystem'] }}
+                  />
+                }
+              />
             </ContentsRow>
           </FormDisplay>
         </>
@@ -498,29 +558,150 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
       <FormSubTitle label={t('회사 기본 정보')} lineType="dark" />
       <ContentsRow>
-        <FormRow
+        <FormRow2
           provider={provider}
           name={'companyCode'}
-          element={<DuplicateCheckInputFormField onDuplicationCheck={duplicateCheck} />}
+          label={t('회사 코드')}
+          format={'object'}
+          value={{ fieldValue: '', checkState: DuplicateState.needInput }}
+          element={
+            <DuplicateCheckInputFormField onDuplicationCheck={duplicateCheck} placeholder="" />
+          }
+          validation={{
+            format: 'object',
+            required: true,
+            conditions: [
+              {
+                fn: (values: Record<string, any>) => {
+                  const fieldValue = values.companyCode.fieldValue;
+                  if (fieldValue === '') return true;
+                  return false;
+                },
+                message: t('LABEL.form.validation.needInput', { code: t('회사 코드') }),
+              },
+              {
+                fn: (values: Record<string, any>) =>
+                  values.companyCode.checkState === DuplicateState.check ||
+                  values.companyCode.checkState === DuplicateState.needInput,
+                message: t('LABEL.form.validation.check', { code: t('회사 코드') }),
+              },
+              {
+                fn: (values: Record<string, any>) =>
+                  values.companyCode.checkState === DuplicateState.duplicated,
+                message: t('LABEL.form.validation.duplicated', { code: t('회사 코드') }),
+              },
+            ],
+          }}
         />
-
-        <FormRow provider={provider} name={'name'} />
-        <FormRow provider={provider} name={'engName'} />
+        <FormRow2
+          provider={provider}
+          name={'name'}
+          label={t('회사명')}
+          value={''}
+          element={<Input placeholder="" />}
+          validation={{ required: true }}
+        />
+        <FormRow2
+          provider={provider}
+          name={'engName'}
+          label={t('회사명(영문)')}
+          value={''}
+          element={<Input placeholder="" />}
+          validation={{ required: true }}
+        />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'brn'} />
-        <FormRow provider={provider} name={'rpsntrName'} />
-        <FormRow provider={provider} name={'abbreviationName'} />
+        <FormRow2
+          provider={provider}
+          name={'brn'}
+          label={t('사업자등록번호')}
+          value={''}
+          element={<Input placeholder="" />}
+          validation={{
+            required: true,
+            conditions: [
+              {
+                fn: (values: Record<string, any>) => {
+                  const regex = /\D/;
+                  return regex.test(values.brn);
+                },
+                message: t('사업자 등록번호는 숫자만 입력해 주세요.'),
+              },
+            ],
+          }}
+        />
+        <FormRow2
+          provider={provider}
+          name={'rpsntrName'}
+          label={t('대표자명')}
+          value={''}
+          element={<Input placeholder="" />}
+        />
+        <FormRow2
+          provider={provider}
+          name={'abbreviationName'}
+          label={t('법인 약어')}
+          value={''}
+          element={<Input placeholder="" />}
+        />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'companyEmail'} />
-        <FormRow provider={provider} name={'companyTelNo'} />
-        <FormRow provider={provider} name={'companyFaxNo'} />
+        <FormRow2
+          provider={provider}
+          name={'companyEmail'}
+          label={t('대표 이메일')}
+          value={''}
+          element={<Input placeholder="" />}
+          validation={{
+            required: false,
+            conditions: [
+              {
+                fn: (values: Record<string, any>) => {
+                  console.log('# values', values);
+                  if (!values.companyEmail || values.companyEmail.trim().length === 0) return false;
+                  const pattern = new RegExp(EMAIL_REGEX, 'i');
+                  console.log('### mail', values.companyEmail.trim());
+                  return !pattern.test(values.companyEmail.trim());
+                },
+                message: t('이메일 형식에 맞게 입력해 주세요.'),
+              },
+            ],
+          }}
+        />
+        <FormRow2
+          provider={provider}
+          name={'companyTelNo'}
+          label={t('대표 전화번호')}
+          format="string"
+          value={''}
+          element={<Input type="text" placeholder={t('대표 전화번호 입력 (02-234-5678)')} />}
+          validation={{ required: false, format: 'string' }}
+        />
+        <FormRow2
+          provider={provider}
+          name={'companyFaxNo'}
+          label={t('대표 팩스번호')}
+          value={''}
+          element={<Input type="text" placeholder={t('대표 팩스번호 입력 (070-2345-6789)')} />}
+          validation={{ required: false, format: 'string' }}
+        />
       </ContentsRow>
 
       <FormSubTitle label={t('플랫폼 계약 설정 정보')} lineType="dark" />
       <ContentsRow>
-        <FormRow provider={provider} name={'serviceTypeList'} />
+        <FormRow2
+          provider={provider}
+          name={'serviceTypeList'}
+          label={t('서비스 유형 선택')}
+          value={['BASIC']}
+          element={
+            <CheckboxGroupFormField
+              optionsConfig={{ codeGroup: CODE_GROUP['pms.company.PlatformServiceType'] }}
+              value={['BASIC']}
+            />
+          }
+          validation={{ required: true }}
+        />
       </ContentsRow>
 
       <FormSubTitle label={t('로그인 및 인증 설정 정보')} lineType="dark" />
@@ -549,32 +730,81 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
       <FormSubTitle label={t('보안 설정 정보')} lineType="dark" />
       <ContentsRow>
-        <FormRow
+        <FormRow2
           provider={provider}
           name={'isUseWatermark'}
+          label={t('워터 마크 사용')}
+          value={true}
+          guideText={t('워터마크는 학습창(동영상과 e-book)에서만 노출합니다.')}
           className={dynamicFormStyles.form_item_horizontal}
+          element={
+            <SwitchFormField
+              switchConfig={{ label: (value: boolean) => (value ? t('사용') : t('미사용')) }}
+            />
+          }
         />
       </ContentsRow>
       <FormDisplay provider={provider} dependencies={[{ name: 'isUseWatermark', value: true }]}>
         <ContentsRow>
-          <FormRow provider={provider} name={'watermarkText'} />
+          <FormRow2
+            provider={provider}
+            name={'watermarkText'}
+            label={t('워터마크 문구')}
+            value={''}
+            guideText={t('입력한 문구와 성명, 사번이 학습창에 노출됩니다.')}
+            element={<Input type="text" placeholder="" maxLength={10} />}
+            validation={{
+              required: {
+                fn: (values: Record<string, any>) => {
+                  return values.isUseWatermark === true;
+                },
+              },
+            }}
+          />
         </ContentsRow>
         <ContentsRow>
-          <FormRow provider={provider} name={'watermarkPosition'} />
+          <FormRow2
+            provider={provider}
+            name={'watermarkPosition'}
+            label={t('워터마크 노출 위치')}
+            value={'TOP_LEFT'}
+            guideText={t('워터마크 노출 위치를 지정할 수 있습니다.')}
+            element={
+              <RadioGroupFormField
+                optionsConfig={{ codeGroup: CODE_GROUP['pms.company.WatermarkPosition'] }}
+              />
+            }
+          />
         </ContentsRow>
       </FormDisplay>
       <ContentsRow>
         <ContentsRowItem>
-          <FormRow
+          <FormRow2
             provider={provider}
             name="isPlayerControlLimit"
+            label={t('동영상 탐색바 제한')}
+            value={true}
             className={dynamicFormStyles.form_item_horizontal}
+            element={
+              <SwitchFormField
+                switchConfig={{ label: (value: boolean) => (value ? t('사용') : t('미사용')) }}
+              />
+            }
           />
           <FormDisplay
             provider={provider}
             dependencies={[{ name: 'isPlayerControlLimit', value: true }]}
           >
-            <FormRow provider={provider} name="playerControlLimitType" />
+            <FormRow2
+              provider={provider}
+              name="playerControlLimitType"
+              value={'BASIS_COMPANY'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{ codeGroup: CODE_GROUP['pms.company.SettingBasisType'] }}
+                />
+              }
+            />
           </FormDisplay>
           <div className={cn(formStyles.form_item)}>
             <FormGuideText>
@@ -583,16 +813,33 @@ const CompanyDetailComponent = (props: any, ref: any) => {
           </div>
         </ContentsRowItem>
         <ContentsRowItem>
-          <FormRow
+          <FormRow2
             provider={provider}
             name="isPlayBackRateLimit"
+            label={t('동영상 배속 제한')}
+            value={true}
             className={dynamicFormStyles.form_item_horizontal}
+            element={
+              <SwitchFormField
+                switchConfig={{ label: (value: boolean) => (value ? t('사용') : t('미사용')) }}
+              />
+            }
           />
           <FormDisplay
             provider={provider}
             dependencies={[{ name: 'isPlayBackRateLimit', value: true }]}
           >
-            <FormRow provider={provider} name="playBackRateLimitType" />
+            <FormRow2
+              provider={provider}
+              name="playBackRateLimitType"
+              format={'object'}
+              value={'BASIS_COMPANY'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{ codeGroup: CODE_GROUP['pms.company.SettingBasisType'] }}
+                />
+              }
+            />
           </FormDisplay>
           <div className={cn(formStyles.form_item)}>
             <FormGuideText>
@@ -603,16 +850,32 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       </ContentsRow>
       <ContentsRow>
         <ContentsRowItem>
-          <FormRow
+          <FormRow2
             provider={provider}
             name="isCaptureBlockType"
+            label={t('학습창 캡쳐 방지')}
+            value={true}
             className={dynamicFormStyles.form_item_horizontal}
+            element={
+              <SwitchFormField
+                switchConfig={{ label: (value: boolean) => (value ? t('사용') : t('미사용')) }}
+              />
+            }
           />
           <FormDisplay
             provider={provider}
             dependencies={[{ name: 'isCaptureBlockType', value: true }]}
           >
-            <FormRow provider={provider} name="captureBlockType" />
+            <FormRow2
+              provider={provider}
+              name="captureBlockType"
+              value={'BASIS_COMPANY'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{ codeGroup: CODE_GROUP['pms.company.SettingBasisType'] }}
+                />
+              }
+            />
           </FormDisplay>
           <div className={cn(formStyles.form_item)}>
             <FormGuideText>
@@ -621,31 +884,126 @@ const CompanyDetailComponent = (props: any, ref: any) => {
           </div>
         </ContentsRowItem>
         <ContentsRowItem>
-          <FormRow provider={provider} name={'focusModeType'} />
+          <FormRow2
+            provider={provider}
+            name={'focusModeType'}
+            label={t('이러닝 집중 모드')}
+            value={'BASIS_COMPANY'}
+            guideText={t(
+              '사용 설정 시 학습창이 전체화면으로 노출되고 마우스 외부 이동이 불가합니다.',
+            )}
+            element={
+              <RadioGroupFormField
+                optionsConfig={{ codeGroup: CODE_GROUP['pms.company.SettingBasisType'] }}
+              />
+            }
+          />
         </ContentsRowItem>
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'ipAccessControlTypeFo'} />
-        <FormRow provider={provider} name={'ipAccessControlTypeBo'} />
+        <FormRow2
+          provider={provider}
+          name={'ipAccessControlTypeFo'}
+          label={t('IP 접근 제한 설정(FO)')}
+          value={'ACCESS_IN_SIDE'}
+          guideText={t('학습자 사이트의 IP 접근 제한을 설정합니다.')}
+          element={
+            <RadioGroupFormField
+              optionsConfig={{ codeGroup: CODE_GROUP['pms.company.IpAccessControlType'] }}
+            />
+          }
+        />
+        <FormRow2
+          provider={provider}
+          name={'ipAccessControlTypeBo'}
+          label={t('IP 접근 제한 설정(BO)')}
+          value={'ACCESS_IN_SIDE'}
+          guideText={t('HRD 센터의 IP 접근 제한을 설정합니다.')}
+          element={
+            <RadioGroupFormField
+              optionsConfig={{ codeGroup: CODE_GROUP['pms.company.IpAccessControlType'] }}
+            />
+          }
+        />
       </ContentsRow>
 
       <FormSubTitle label={t('회사 사용 설정')} lineType="dark" />
       <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} name={'isUsed'} />
-        <div className={cn(formStyles.form_item)}></div>
-        <div className={cn(formStyles.form_item)}></div>
+        <FormRow2
+          provider={provider}
+          name={'isUsed'}
+          label={t('사용 여부')}
+          value={true}
+          guideText={t('OFF인  경우 해당 회사 사용자는 테넌트에 로그인 할 수 없습니다.')}
+          element={
+            <SwitchFormField
+              switchConfig={{ label: (value: boolean) => (value ? t('사용') : t('미사용')) }}
+            />
+          }
+        />
+        <FormItem />
+        <FormItem />
       </ContentsRow>
 
       <FormSubTitle label={t('담당자 정보')} />
       <ContentsRow>
-        <FormRow provider={provider} name={'managerDept'} />
-        <FormRow provider={provider} name={'managerPosition'} />
-        <FormRow provider={provider} name={'managerName'} />
+        <FormRow2
+          provider={provider}
+          name={'managerDept'}
+          label={t('담당 부서')}
+          value={''}
+          element={<Input type="text" placeholder="" />}
+        />
+        <FormRow2
+          provider={provider}
+          name={'managerPosition'}
+          label={t('직위/직책')}
+          value={''}
+          element={<Input type="text" placeholder="" />}
+        />
+        <FormRow2
+          provider={provider}
+          name={'managerName'}
+          label={t('성명')}
+          value={''}
+          element={<Input type="text" placeholder="" />}
+        />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'managerEmail'} />
-        <FormRow provider={provider} name={'managerOfficeTel'} />
-        <FormRow provider={provider} name={'managerPhone'} />
+        <FormRow2
+          provider={provider}
+          name={'managerEmail'}
+          label={t('이메일')}
+          value={''}
+          element={<Input type="text" placeholder="hyundai@hyundai.com" />}
+          validation={{
+            required: false,
+            conditions: [
+              {
+                fn: (values: Record<string, any>) => {
+                  if (!values.managerEmail || values.managerEmail.trim().length === 0) return false;
+                  const pattern = new RegExp(EMAIL_REGEX, 'i');
+                  return !pattern.test(values.managerEmail.trim());
+                },
+                message: t('이메일 형식에 맞게 입력해 주세요.'),
+              },
+            ],
+          }}
+        />
+        <FormRow2
+          provider={provider}
+          name={'managerOfficeTel'}
+          label={t('전화번호(사무실)')}
+          value={''}
+          element={<Input type="text" placeholder={t('전화번호 입력 (02-234-5678)')} />}
+        />
+        <FormRow2
+          provider={provider}
+          name={'managerPhone'}
+          label={t('휴대폰 번호')}
+          value={''}
+          element={<Input type="text" placeholder={t('휴대폰번호 입력 (010-2345-6789)')} />}
+        />
       </ContentsRow>
       {/* {props.mode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />} */}
     </form>
@@ -653,483 +1011,3 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 };
 
 export const CompanyDetail = forwardRef(CompanyDetailComponent);
-
-const formConfig = (): DynamicFormConfig => ({
-  builders: [
-    {
-      name: 'companyType',
-      type: 'radio-group',
-      label: t('그룹 선택'),
-      value: 'GLOBAL',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.CompanyType'],
-      },
-      guideText: t('회원 가입하는 회사는 직접 등록하며, HR 시스템 연동 회사는 자동 등록됩니다.'),
-    },
-    {
-      name: 'hrInfoManageType',
-      type: 'radio-group',
-      label: t('인사 데이터 관리 방식'),
-      value: 'MANUAL_MANAGE',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
-      },
-      guideText: t('자동관리와 수동관리 선택에 따라서 아래 회원가입 유형의 옵션이 달라집니다.'),
-    },
-    {
-      name: 'companyMemberJoinTypeList',
-      type: 'checkbox-group',
-      label: t('회원 가입 유형'),
-      value: ['FO_JOIN_DEALER'],
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'],
-      },
-      guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
-    },
-    {
-      name: 'linkageSystem',
-      type: 'radio-group',
-      label: t('회원 가입 유형'),
-      format: 'object',
-      value: 'GIM',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.LinkageSystem'],
-      },
-      guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
-    },
-    {
-      name: 'companyCode',
-      type: 'custom',
-      label: t('회사 코드'),
-      value: { fieldValue: '', checkState: DuplicateState.needInput },
-      format: 'object',
-      placeholder: '',
-    },
-    {
-      name: 'name',
-      type: 'text',
-      label: t('회사명'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      name: 'engName',
-      type: 'text',
-      label: t('회사명(영문)'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      name: 'brn',
-      type: 'text',
-      label: t('사업자등록번호'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      name: 'rpsntrName',
-      type: 'text',
-      label: t('대표자명'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      name: 'abbreviationName',
-      type: 'text',
-      label: t('법인 약어'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      name: 'companyEmail',
-      type: 'text',
-      label: t('대표 이메일'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      label: t('대표 전화번호'),
-      name: 'companyTelNo',
-      type: 'phone-number',
-      format: 'string',
-      value: '',
-      fields: {
-        nationCode: 'companyTelNoCountryCode',
-        number: 'companyTelNo',
-      },
-      placeholder: t('대표 전화번호 입력 (02-234-5678)'),
-    },
-    {
-      label: '',
-      name: 'companyTelNoCountryCode',
-      type: 'hidden',
-      format: 'string',
-      value: 'KOR_82',
-    },
-    {
-      label: t('대표 팩스번호'),
-      name: 'companyFaxNo',
-      type: 'phone-number',
-      format: 'string',
-      value: '',
-      fields: {
-        nationCode: 'companyFaxNoCountryCode',
-        number: 'companyFaxNo',
-      },
-      placeholder: t('대표 팩스번호 입력 (070-2345-6789)'),
-    },
-    {
-      label: '',
-      name: 'companyFaxNoCountryCode',
-      type: 'hidden',
-      format: 'string',
-      value: 'KOR_82',
-    },
-    {
-      name: 'serviceTypeList',
-      type: 'checkbox-group',
-      label: t('서비스 유형 선택'),
-      value: ['BASIC'],
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.PlatformServiceType'],
-      },
-    },
-    {
-      name: 'isUseSso',
-      type: 'switch',
-      label: t('SSO 로그인 사용 및 SSO 로그인 유형'),
-      value: true,
-      switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
-      },
-    },
-    {
-      name: 'ssoTypeList',
-      type: 'checkbox-group',
-      label: '',
-      value: ['AES_Link'],
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.SsoType'],
-      },
-    },
-    {
-      name: 'passwordAuthType',
-      type: 'radio-group',
-      label: t('비밀번호 인증 유형'),
-      value: 'PLATFORM',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.PasswordAuthType'],
-      },
-      guideText: t(
-        '플랫폼은 플랫폼에서 비밀번호를 관리하고, 그외의 유형은 각 시스템에서 비밀번호를 관리합니다.',
-      ),
-    },
-    {
-      name: 'isUseTwoFactorAuth',
-      type: 'switch',
-      label: t('로그인 2차 인증 사용'),
-      value: true,
-      switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
-      },
-    },
-    {
-      name: 'twoFactorAuthType',
-      type: 'radio-group',
-      label: t('2차 인증 유형'),
-      value: 'GOOGLE_OTP',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.TwoFactorAuthType'],
-      },
-      guideText: t('로그인 2차 인증 사용하는 경우 2차 인증 유형을 선택할 수 있습니다.'),
-    },
-    {
-      name: 'twoFactorAuthPlatformTypeList',
-      type: 'checkbox-group',
-      label: '',
-      value: ['FO_PLATFORM', 'BO_PLATFORM'],
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.TwoFactorAuthPlatformType'],
-      },
-    },
-    {
-      name: 'isUseWatermark',
-      type: 'switch',
-      label: t('워터 마크 사용'),
-      value: true,
-      guideText: t('워터마크는 학습창(동영상과 e-book)에서만 노출합니다.'),
-      switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
-      },
-    },
-    {
-      name: 'watermarkText',
-      type: 'text',
-      label: t('워터마크 문구'),
-      value: '',
-      guideText: t('입력한 문구와 성명, 사번이 학습창에 노출됩니다.'),
-      placeholder: '',
-      maxLength: 10,
-    },
-    {
-      name: 'watermarkPosition',
-      type: 'radio-group',
-      label: t('워터마크 노출 위치'),
-      value: 'TOP_LEFT',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.WatermarkPosition'],
-      },
-      guideText: t('워터마크 노출 위치를 지정할 수 있습니다.'),
-    },
-    {
-      name: 'isPlayerControlLimit',
-      type: 'switch',
-      label: t('동영상 탐색바 제한'),
-      value: true,
-      switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
-      },
-    },
-    {
-      name: 'playerControlLimitType',
-      type: 'radio-group',
-      label: '',
-      value: 'BASIS_COMPANY',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.SettingBasisType'],
-      },
-    },
-    {
-      name: 'isPlayBackRateLimit',
-      type: 'switch',
-      label: t('동영상 배속 제한'),
-      value: true,
-      switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
-      },
-    },
-    {
-      name: 'playBackRateLimitType',
-      type: 'radio-group',
-      label: '',
-      format: 'object',
-      value: 'BASIS_COMPANY',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.SettingBasisType'],
-      },
-    },
-    {
-      name: 'focusModeType',
-      type: 'radio-group',
-      label: t('이러닝 집중 모드'),
-      value: 'BASIS_COMPANY',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.SettingBasisType'],
-      },
-      guideText: t('사용 설정 시 학습창이 전체화면으로 노출되고 마우스 외부 이동이 불가합니다.'),
-    },
-    {
-      name: 'isCaptureBlockType',
-      type: 'switch',
-      label: t('학습창 캡쳐 방지'),
-      value: true,
-      switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
-      },
-    },
-    {
-      name: 'captureBlockType',
-      type: 'radio-group',
-      label: '',
-      value: 'BASIS_COMPANY',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.SettingBasisType'],
-      },
-    },
-    {
-      name: 'ipAccessControlTypeFo',
-      type: 'radio-group',
-      label: t('IP 접근 제한 설정(FO)'),
-      value: 'ACCESS_IN_SIDE',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.IpAccessControlType'],
-      },
-      guideText: t('학습자 사이트의 IP 접근 제한을 설정합니다.'),
-    },
-    {
-      name: 'ipAccessControlTypeBo',
-      type: 'radio-group',
-      label: t('IP 접근 제한 설정(BO)'),
-      value: 'ACCESS_IN_SIDE',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.IpAccessControlType'],
-      },
-      guideText: t('HRD 센터의 IP 접근 제한을 설정합니다.'),
-    },
-    {
-      name: 'isUsed',
-      type: 'switch',
-      label: t('사용 여부'),
-      value: true,
-      guideText: t('OFF인  경우 해당 회사 사용자는 테넌트에 로그인 할 수 없습니다.'),
-      switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
-      },
-    },
-
-    {
-      name: 'managerDept',
-      type: 'text',
-      label: t('담당 부서'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      name: 'managerPosition',
-      type: 'text',
-      label: t('직위/직책'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      name: 'managerName',
-      type: 'text',
-      label: t('성명'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      name: 'managerEmail',
-      type: 'text',
-      label: t('이메일'),
-      value: '',
-      placeholder: 'hyundai@hyundai.com',
-    },
-    {
-      label: t('전화번호(사무실)'),
-      name: 'managerOfficeTel',
-      type: 'phone-number',
-      format: 'string',
-      value: '',
-      fields: {
-        nationCode: 'managerOfficeTelCountryCode',
-        number: 'managerOfficeTel',
-      },
-      placeholder: t('전화번호 입력 (02-234-5678)'),
-    },
-    {
-      label: '',
-      name: 'managerOfficeTelCountryCode',
-      type: 'hidden',
-      format: 'string',
-      value: 'KOR_82',
-    },
-    {
-      label: t('휴대폰 번호'),
-      name: 'managerPhone',
-      type: 'phone-number',
-      format: 'string',
-      value: '',
-      fields: {
-        nationCode: 'managerPhoneCountryCode',
-        number: 'managerPhone',
-      },
-      placeholder: t('휴대폰번호 입력 (010-2345-6789)'),
-    },
-    {
-      label: '',
-      name: 'managerPhoneCountryCode',
-      type: 'hidden',
-      format: 'string',
-      value: 'KOR_82',
-    },
-  ],
-  validator: {
-    companyMemberJoinTypeList: {
-      required: true,
-      conditions: [
-        {
-          fn: (values) =>
-            values.hrInfoManageType === 'AUTO_MANAGE' &&
-            values.companyMemberJoinTypeList.length !== 1,
-          message: t('자동 관리는 하나의 유형만 선택할 수 있습니다.'),
-        },
-      ],
-    },
-    companyCode: {
-      format: 'object',
-      required: true,
-      conditions: [
-        {
-          fn: (values) => {
-            const fieldValue = values.companyCode.fieldValue;
-            if (fieldValue === '') return true;
-            return false;
-          },
-          message: t('LABEL.form.validation.needInput', { code: t('회사 코드') }),
-        },
-        {
-          fn: (values: Record<string, any>) =>
-            values.companyCode.checkState === DuplicateState.check ||
-            values.companyCode.checkState === DuplicateState.needInput,
-          message: t('LABEL.form.validation.check', { code: t('회사 코드') }),
-        },
-        {
-          fn: (values: Record<string, any>) =>
-            values.companyCode.checkState === DuplicateState.duplicated,
-          message: t('LABEL.form.validation.duplicated', { code: t('회사 코드') }),
-        },
-      ],
-    },
-    name: true,
-    engName: true,
-    brn: {
-      required: true,
-      conditions: [
-        {
-          fn: (values) => {
-            const regex = /\D/;
-            return regex.test(values.brn);
-          },
-          message: t('사업자 등록번호는 숫자만 입력해 주세요.'),
-        },
-      ],
-    },
-    serviceTypeList: true,
-    watermarkText: {
-      required: {
-        fn: (values) => {
-          return values.isUseWatermark === true;
-        },
-      },
-    },
-    companyEmail: {
-      required: false,
-      conditions: [
-        {
-          fn: (values) => {
-            console.log('# values', values);
-            if (!values.companyEmail || values.companyEmail.trim().length === 0) return false;
-            const pattern = new RegExp(EMAIL_REGEX, 'i');
-            console.log('### mail', values.companyEmail.trim());
-            return !pattern.test(values.companyEmail.trim());
-          },
-          message: t('이메일 형식에 맞게 입력해 주세요.'),
-        },
-      ],
-    },
-    managerEmail: {
-      required: false,
-      conditions: [
-        {
-          fn: (values) => {
-            if (!values.managerEmail || values.managerEmail.trim().length === 0) return false;
-            const pattern = new RegExp(EMAIL_REGEX, 'i');
-            return !pattern.test(values.managerEmail.trim());
-          },
-          message: t('이메일 형식에 맞게 입력해 주세요.'),
-        },
-      ],
-    },
-  },
-});

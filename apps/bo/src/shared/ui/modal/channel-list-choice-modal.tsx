@@ -113,9 +113,10 @@ const ChannelListModalComponent = ({ roleId }: Props) => {
     query: (data: ChannelParam) => queryOptions.list(roleId, data),
     columns: [
       {
-        name: 'tenantName',
+        name: 'tenantList',
         label: t('테넌트'),
-        render: (info: any) => info.row.original.tenantName,
+        render: (info: any) =>
+          info.row.original.tenantList.map(({ tenantName }: any) => tenantName).join(','),
       },
       {
         name: 'channelName',
@@ -123,27 +124,30 @@ const ChannelListModalComponent = ({ roleId }: Props) => {
         render: (info: any) => info.row.original.channelName,
       },
       {
-        name: 'companyName',
+        name: 'companyNameList',
         label: t('회사'),
-        render: (info: any) => info.row.original.companyName,
+        render: (info: any) => info.row.original.companyNameList,
       },
       {
-        name: 'channelOwnerName',
+        name: 'channelOwnerUserList',
         label: t('채널 소유자'),
-        render: (info: any) => info.row.original.channelOwnerName,
+        render: (info: any) =>
+          info.row.original.channelOwnerUserList.map(({ userName }: any) => userName).join(','),
       },
       {
-        name: 'isUniversalChannel',
+        name: 'channelSecretType',
         label: t('채널구분'),
+        size: 64,
         render: (info: any) => {
-          return info.row.original.isUniversalChannel
-            ? t('LABEL.common.enable')
-            : t('LABEL.common.disable');
+          return info.row.original.channelSecretType === 'NOT_SECRET'
+            ? t('공개 채널')
+            : t('비밀 채널');
         },
       },
       {
         name: 'isUsed',
         label: '사용여부',
+        size: 64,
         render: (info: any) => {
           return info.row.original.isUsed ? t('LABEL.common.enable') : t('LABEL.common.disable');
         },

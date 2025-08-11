@@ -1178,5 +1178,6 @@ const formConfig = (): DynamicFormConfig => ({
     channelHomeImageFileGroupUuid: true,
     channelDesc: true,
     channelTagList: true,
+    channelOwnerUserList: true,
   },
 });

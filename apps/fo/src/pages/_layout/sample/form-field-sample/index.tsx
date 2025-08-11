@@ -1,10 +1,9 @@
 import { useDynamicForm2 } from '@learnway/hooks';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
-import { FormRow } from '@shared/ui/form';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_layout/sample/form-field-sample/')({
@@ -71,7 +70,7 @@ function RouteComponent() {
         <div>
           <FormSubTitle label={'Date Picker'} />
           <ContentsRow>
-            <FormRow provider={provider} name={'day'} label={'day'} element={<Input />} />
+            <FormRow2 provider={provider} name={'day'} label={'day'} element={<Input />} />
           </ContentsRow>
         </div>
       </div>

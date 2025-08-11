@@ -1,8 +1,9 @@
 import { queryOptions as companysQueryOptions } from '@entities/companies';
 import { CODE_GROUP } from '@learnway/hooks';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
-import { DateRangePickerFormField, DropdownFormField, FormRow2 } from '@shared/ui/form';
+import { DateRangePickerFormField, DropdownFormField } from '@shared/ui/form';
 import { SearchBoxForm } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';

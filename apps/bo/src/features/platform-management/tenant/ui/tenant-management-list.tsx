@@ -6,6 +6,7 @@ import { useWatch } from 'react-hook-form';
 
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { Divider } from '@learnway/ui/elements';
 import {
   createGridBoxColumnHelper,
@@ -27,7 +28,6 @@ import { useCreation } from 'ahooks';
 import {
   DropdownFormField,
   FormItem,
-  FormRow2,
   InputFormField,
   TenantByRoleDropdownFormField,
 } from '@shared/ui/form';

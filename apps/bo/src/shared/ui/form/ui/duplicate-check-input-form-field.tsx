@@ -67,6 +67,7 @@ export const DuplicateCheckInputFormField = forwardRef<
       clearFormError,
       error,
       type,
+      onBlur,
       ...props
     },
     ref,

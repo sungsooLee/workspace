@@ -1,4 +1,3 @@
-// import { useActiveMenuDepthState } from '../../../../auth/src/lib/entities/menu';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import { isFunction } from 'lodash-es';
@@ -60,10 +59,18 @@ export function initAxios(extendConfig?: axiosConfig) {
       // request 시 accessToken을 header로 전송
       onFulfilled: (config: InternalAxiosRequestConfig<any>) => {
         const accessToken = tokenService.accessToken;
-        // const state = useActiveMenuDepthState.getState().activeMenuDepthMenu;
-        const state = localStorage.getItem('last');
+        const tenantId = localStorage.getItem('GNB_TENANT_ID');
+        const roleId = localStorage.getItem('GNB_ROLE_ID');
+        const state = localStorage.getItem('MENU_ID');
+
         if (accessToken) {
           config.headers['Authorization'] = `Bearer ${accessToken}`;
+        }
+        if (tenantId) {
+          config.headers['Tenant-Id'] = tenantId;
+        }
+        if (roleId) {
+          config.headers['Role-Id'] = roleId;
         }
         if (state) {
           config.headers['Menu-Id'] = state;

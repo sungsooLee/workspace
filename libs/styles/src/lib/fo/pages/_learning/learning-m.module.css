@@ -22,15 +22,15 @@
     }
   }
   &.gallery_wrap {
-    @apply bg-[rgba(0,0,0,.8)];
+    @apply h-[calc(100%-52px)] bg-[rgba(0,0,0,.8)] py-[24px];
     .photo_wrap {
-      @apply relative flex h-[calc(100dvh-56px)] w-full flex-col justify-center overflow-hidden pb-[150px];
+      @apply relative flex h-full w-full flex-col justify-center overflow-hidden;
       .photo {
-        @apply relative flex items-center text-center;
+        @apply relative flex h-[calc(100%-120px)] items-center text-center;
         .img {
-          @apply mx-auto overflow-hidden !px-0;
+          @apply mx-auto max-h-full overflow-hidden !rounded-none !px-0;
           img {
-            @apply max-h-[calc((100dvh-56px-150px)/2)] w-full max-w-full rounded-none;
+            @apply max-h-[calc(100dvh-150px-56px-52px-120px-48px)] w-auto max-w-full rounded-none;
           }
         }
         .btn_prev,
@@ -45,7 +45,7 @@
         }
       }
       .swiper {
-        @apply w-full pt-[24px];
+        @apply w-full py-[24px];
         [class*='swiper-wrapper'] {
           @apply flex items-center;
         }

@@ -1,7 +1,7 @@
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
 import { CourseChoiceModal } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { SplitPanel } from '@learnway/ui/elements';
 import {
@@ -15,7 +15,6 @@ import {
   DropdownFormField,
   FormDisplay,
   FormRow,
-  FormRow2,
   PassOptionFormField,
   SwitchFormField,
 } from '@shared/ui/form';
