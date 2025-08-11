@@ -73,7 +73,7 @@
         }
       }
       .btn_more {
-        @apply !min-w-auto mt-[10px] !bg-transparent;
+        @apply !min-w-auto mt-[10px];
       }
     }
 
