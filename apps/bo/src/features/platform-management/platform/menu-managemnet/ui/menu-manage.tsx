@@ -9,17 +9,15 @@ import {
   useUpdateMenu,
 } from '@entities/menu';
 
-import {
-  DuplicateCheckInputFormField,
-  DuplicateState,
-  FormRow,
-  SwitchFormField,
-} from '@shared/ui/form';
+import { EnFormMode } from '@shared/types/enums';
+import { DuplicateCheckInputFormField, SwitchFormField } from '@shared/ui/form';
+import { DuplicateState } from '@shared/ui/form/ui/duplicate-check-input-form-field';
 
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { useDynamicForm2 } from '@learnway/hooks';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { CheckboxGroupFormField } from '@learnway/ui/form-field';
@@ -39,8 +37,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { isEqual } from 'lodash-es';
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import {
   findMenuPathById,
@@ -50,38 +47,40 @@ import {
 import { ApiInfoModal } from './api-info-modal';
 import { MenuApiMappingModal } from './menu-api-mapping-modal';
 
-const FORM_MODE = {
-  NONE: 'NONE',
-  VIEW: 'VIEW',
-  ADD: 'ADD',
-};
-
 const DEVICE_NAME = {
   PC: 'PC',
   Mobile: 'Mobile',
+} as const;
+
+const MAX_MENU_DEPTH = 5;
+const INITIAL_FORM_DATA = {
+  location: '',
+  parentCode: '',
+  code: { fieldValue: '', checkState: DuplicateState.needInput },
+  menuName: '',
+  path: '',
+  menuDesc: '',
+  isHiddenMenu: false,
+  deviceNames: [] as string[],
+  isPersoninfoInclusion: false,
+  isUsed: true,
+  apiMappingMenuList: [],
 };
 
 const columnHelper = createColumnHelper<any>();
 
-export interface MenuManageRef {
-  hasFormChanges: () => boolean;
-  setSkipConfirmation: (skip: boolean) => void;
-}
-
-export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ menuScope }, ref) => {
+export const MenuManage = ({ menuScope }: { menuScope: string }) => {
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
   const [parentNode, setParentNode] = useState<TreeNode | null>(null);
 
-  const [formMode, setFormMode] = useState(FORM_MODE.NONE);
+  const [formMode, setFormMode] = useState<EnFormMode>(EnFormMode.NONE);
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [lastCreatedMenuId, setLastCreatedMenuId] = useState<string | null>(null);
-  const [, setSkipConfirmation] = useState(false);
   const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const prevDataRef = useRef<any>(null);
   const router = useRouter();
   const { showSaveComplete, showDeleteComplete, showUpdateComplete } = useModal();
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { data, isLoading, isFetching } = useMenuTree(menuScope, 'ko');
   const { data: detailData } = useMenuManageDetail(selectedNode?.menuId || '');
@@ -94,18 +93,20 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
 
   const queryClient = useQueryClient();
 
-  const duplicateCheck = async (code: string) => {
-    try {
-      if (!menuScope || !code) {
+  const duplicateCheck = useCallback(
+    async (code: string) => {
+      try {
+        if (!menuScope || !code) {
+          return DuplicateState.needInput;
+        }
+        const result = await checkExists(menuScope, code);
+        return result ? DuplicateState.duplicated : DuplicateState.ok;
+      } catch (error) {
         return DuplicateState.needInput;
       }
-      const result = await checkExists(menuScope, code);
-      if (result) return DuplicateState.duplicated;
-      return DuplicateState.ok;
-    } catch (error) {
-      return DuplicateState.needInput;
-    }
-  };
+    },
+    [menuScope, checkExists],
+  );
 
   const {
     provider,
@@ -116,37 +117,10 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     control,
     getValues,
     setFormError,
-  } = useDynamicForm(createFormConfig());
+    clearAllValidators,
+  } = useDynamicForm2();
   const typeWatch = useWatch({ control, name: 'deviceNames' });
   const prevTypeWatchRef = useRef<string[]>([]);
-
-  const clearAllFormErrors = useCallback(() => {
-    createFormConfig().builders.forEach((item) => clearFormError(item.name));
-  }, [clearFormError]);
-
-  // const resetInputValidations = useCallback(() => {
-  //   clearAllFormErrors();
-  // }, [clearAllFormErrors]);
-
-  const hasFormChanges = () => {
-    const currentValues = getValues();
-
-    if (
-      (formMode === FORM_MODE.ADD || formMode === FORM_MODE.VIEW) &&
-      initialFromValuesRef.current
-    ) {
-      // 등록/수정 모드: 초기값과 현재값 비교
-      return !isEqual(initialFromValuesRef.current, currentValues);
-    }
-
-    return false;
-  };
-
-  // 외부에서 접근할 수 있도록 함수 노출
-  useImperativeHandle(ref, () => ({
-    hasFormChanges,
-    setSkipConfirmation,
-  }));
 
   const initialFromValuesRef = useRef<any>(null);
 
@@ -160,7 +134,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
         }
       });
     }
-    if (formMode === FORM_MODE.VIEW) {
+    if (formMode === EnFormMode.VIEW) {
       const updateData = {
         ...node,
         menuCode: node.code && node.code.fieldValue,
@@ -172,7 +146,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
         menuScope,
       };
       update(updateData);
-    } else if (formMode === FORM_MODE.ADD) {
+    } else if (formMode === EnFormMode.ADD) {
       //
       const createData = {
         ...node,
@@ -192,7 +166,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   };
 
   useEffect(() => {
-    if (typeWatch && detailData && formMode !== FORM_MODE.NONE) {
+    if (typeWatch && detailData && formMode !== EnFormMode.NONE) {
       const data = detailData as MenuDetail;
       const { parentId } = data;
 
@@ -230,7 +204,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
             });
             // 새 노드 선택
             setSelectedNode(newNode);
-            setFormMode(FORM_MODE.VIEW);
+            setFormMode(EnFormMode.VIEW);
             // 처리 완료 후 ID 초기화
             setLastCreatedMenuId(null);
           }
@@ -241,7 +215,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
 
   useEffect(() => {
     if (detailData && treeData) {
-      if (formMode === FORM_MODE.VIEW) {
+      if (formMode === EnFormMode.VIEW) {
         const data = detailData as MenuDetail;
         const deviceNames = [];
         if (data.isWebExposed) deviceNames.push(DEVICE_NAME.PC);
@@ -257,72 +231,45 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
         updateFormData({ ...formData });
         initialFromValuesRef.current = { ...formData };
         prevTypeWatchRef.current = deviceNames;
-        setFormMode(FORM_MODE.VIEW);
+        setFormMode(EnFormMode.VIEW);
       }
     }
   }, [detailData, formMode]);
 
-  const handleSelectedNodeChange = async (node: TreeNode | null) => {
-    // if (!skipConfirmation && node !== selectedNode && hasFormChanges()) {
-    //   const shouldProceed = await openConfirm({
-    //     title: '저장하지 않고 이동',
-    //     content: '변경된 내용이 있습니다. 저장하지 않고 이동하시겠습니까?',
-    //   });
+  const handleSelectedNodeChange = useCallback(
+    async (node: TreeNode | null) => {
+      clearAllValidators();
+      setSelectedNode(node);
 
-    //   if (!shouldProceed) {
-    //     return; // 취소 시 현재 상태 유지
-    //   }
-    // }
+      if (node) {
+        setFormMode(EnFormMode.VIEW);
+      } else {
+        setFormMode(EnFormMode.NONE);
+        initialFromValuesRef.current = null;
+      }
+    },
+    [clearAllValidators],
+  );
 
-    // 모든 검증 에러 클리어
-    clearAllFormErrors();
+  const addNode = useCallback(
+    async (node: any) => {
+      clearAllValidators();
+      setParentNode(node);
 
-    setSelectedNode(node);
-    if (node) {
-      setFormMode(FORM_MODE.VIEW);
-    } else {
-      setFormMode(FORM_MODE.NONE);
-      initialFromValuesRef.current = null; // 폼 모드가 NONE이 될 때 초기값 클리어
-    }
-  };
+      const location = findMenuPathById(treeData, node.menuId);
+      const addFormData = {
+        ...INITIAL_FORM_DATA,
+        location,
+        parentCode: node.title,
+        deviceNames: ['PC'],
+      };
 
-  const addNode = async (node: any) => {
-    // skipConfirmation이 true이거나 변경사항이 없는 경우 바로 진행
-    // if (!skipConfirmation && hasFormChanges()) {
-    //   const shouldProceed = await openConfirm({
-    //     title: '저장하지 않고 이동',
-    //     content: '변경된 내용이 있습니다. 저장하지 않고 이동하시겠습니까?',
-    //   });
-
-    //   if (!shouldProceed) {
-    //     return; // 취소 시 현재 상태 유지
-    //   }
-    // }
-
-    // 모든 검증 에러 클리어
-    clearAllFormErrors();
-
-    const initData: { [key: string]: any } = {};
-    createFormConfig().builders.forEach((item) => {
-      initData[item.name] = item.value;
-    });
-    setParentNode(node);
-    const location = findMenuPathById(treeData, node.menuId);
-    const addFormData = {
-      ...initData,
-      location,
-      // parentCode: node.menuCode,
-      parentCode: node.title,
-      deviceNames: ['PC'],
-    };
-
-    updateFormData(addFormData);
-
-    // 등록 모드에서 초기값 설정 (변경사항 감지를 위해)
-    initialFromValuesRef.current = { ...addFormData };
-
-    setFormMode(FORM_MODE.ADD);
-  };
+      updateFormData(addFormData);
+      initialFromValuesRef.current = { ...addFormData };
+      setFormMode(EnFormMode.ADD);
+    },
+    [clearAllValidators, treeData, updateFormData],
+  );
 
   const columns = [
     columnHelper.accessor('apiName', {
@@ -392,9 +339,6 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   };
 
   const update = (payload: any) => {
-    if (isSubmitting) return;
-
-    setIsSubmitting(true);
     openConfirm({
       title: t('LABEL.confirm.modify.title'),
       content: t('LABEL.confirm.modify.message'),
@@ -407,23 +351,14 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                 setSelectedNode(null);
                 setLastCreatedMenuId(data.menuId.toString());
               }
-              setIsSubmitting(false);
-            },
-            onError: () => {
-              setIsSubmitting(false);
             },
           });
-        } else {
-          setIsSubmitting(false);
         }
       },
     });
   };
 
   const create = (payload: any) => {
-    if (isSubmitting) return;
-
-    setIsSubmitting(true);
     openConfirm({
       title: t('LABEL.confirm.save.title'),
       content: t('LABEL.confirm.save.message'),
@@ -435,14 +370,8 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
               if (data && data.menuId) {
                 setLastCreatedMenuId(data.menuId.toString());
               }
-              setIsSubmitting(false);
-            },
-            onError: () => {
-              setIsSubmitting(false);
             },
           });
-        } else {
-          setIsSubmitting(false);
         }
       },
     });
@@ -526,7 +455,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
           variant="gray2"
           size={'xs'}
           type={'button'}
-          disabled={level >= 5}
+          disabled={level >= MAX_MENU_DEPTH}
         >
           {level === 0 ? t('LABEL.menu.add') : t('LABEL.menu.addSub')}
         </Button>
@@ -544,9 +473,9 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
     });
     if (isReset) {
       onFormChange();
-      if (FORM_MODE.ADD === formMode) {
+      if (EnFormMode.ADD === formMode) {
         updateFormData({ apiMappingMenuList: [] });
-      } else if (FORM_MODE.VIEW === formMode) {
+      } else if (EnFormMode.VIEW === formMode) {
         if (initialFromValuesRef.current) updateFormData({ ...initialFromValuesRef.current });
       }
     }
@@ -565,13 +494,9 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
             onSuccess: async () => {
               showDeleteComplete();
               setSelectedNode(null);
-              clearAllFormErrors();
-              const initData: { [key: string]: any } = {};
-              createFormConfig().builders.forEach((item) => {
-                initData[item.name] = item.value;
-              });
-              updateFormData({ ...initData });
-              setFormMode(FORM_MODE.NONE);
+              clearAllValidators();
+              updateFormData({ ...INITIAL_FORM_DATA });
+              setFormMode(EnFormMode.NONE);
             },
           });
         }
@@ -594,7 +519,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
           selectedNode={selectedNode}
           initLevel={1}
           handleSelectedNodeChange={handleSelectedNodeChange}
-          maxDepth={5}
+          maxDepth={MAX_MENU_DEPTH}
           isSelectableNode={(node: TreeNode) => {
             return node && node.level !== 0;
           }}
@@ -611,7 +536,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                 variant="text"
                 size="sm"
                 onClick={handleReset}
-                disabled={formMode === FORM_MODE.NONE}
+                disabled={formMode === EnFormMode.NONE}
                 className={layoutStyles.btn_text}
               >
                 {t('LABEL.button.reset')}
@@ -619,7 +544,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
               <Button
                 variant="text"
                 size="sm"
-                disabled={formMode === FORM_MODE.NONE || formMode === FORM_MODE.ADD}
+                disabled={formMode === EnFormMode.NONE || formMode === EnFormMode.ADD}
                 onClick={handleDelete}
                 className={layoutStyles.btn_text}
                 icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
@@ -630,7 +555,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                 type="submit"
                 variant="save"
                 size="sm"
-                disabled={formMode === FORM_MODE.NONE || isSubmitting}
+                disabled={formMode === EnFormMode.NONE}
               >
                 {t('LABEL.button.save')}
               </Button>
@@ -640,33 +565,41 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
 
           <div className={layoutStyles.inner_contents}>
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'location'}
-                element={<Input disabled={true} hiddenPlaceholder={formMode === FORM_MODE.NONE} />}
+                label={t('LABEL.menu.location')}
+                value={''}
+                element={<Input disabled={true} hiddenPlaceholder={formMode === EnFormMode.NONE} />}
               />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'parentCode'}
-                element={<Input disabled={true} hiddenPlaceholder={formMode === FORM_MODE.NONE} />}
+                label={t('LABEL.menu.parentName')}
+                value={''}
+                element={<Input disabled={true} hiddenPlaceholder={formMode === EnFormMode.NONE} />}
               />
             </ContentsRow>
 
             {/* 폼 필드 - code */}
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'code'}
+                label={t('LABEL.menu.code')}
+                format={'object'}
+                maxLength={150}
+                value={{ fieldValue: '', checkState: DuplicateState.needInput }}
                 element={
                   <DuplicateCheckInputFormField
                     id="code"
                     onDuplicationCheck={duplicateCheck}
-                    disabled={formMode === FORM_MODE.NONE}
+                    disabled={formMode === EnFormMode.NONE}
                     type={'alphanumeric'}
-                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    hiddenPlaceholder={formMode === EnFormMode.NONE}
                     validation={{
                       onError: (msg: string) => {
                         setFormError('code', msg);
@@ -675,26 +608,55 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                     }}
                   />
                 }
+                validation={{
+                  format: 'object',
+                  required: true,
+                  conditions: [
+                    {
+                      fn: (values: Record<string, any>) => {
+                        const fieldValue = values.code.fieldValue;
+                        if (fieldValue === '') return true;
+                        return false;
+                      },
+                      message: t('LABEL.form.validation.needInput', { code: t('LABEL.cdId') }),
+                    },
+                    {
+                      fn: (values: Record<string, any>) =>
+                        values.code.checkState === DuplicateState.check ||
+                        values.code.checkState === DuplicateState.needInput,
+                      message: t('LABEL.form.validation.check', { code: t('LABEL.cdId') }),
+                    },
+                    {
+                      fn: (values: Record<string, any>) =>
+                        values.code.checkState === DuplicateState.duplicated,
+                      message: t('LABEL.form.validation.duplicated', { code: t('LABEL.cdId') }),
+                    },
+                  ],
+                }}
               />
             </ContentsRow>
 
             {/* 폼 필드 - title */}
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'menuName'}
+                label={t('LABEL.menu.name')}
+                maxLength={10}
+                value={''}
                 element={
                   <Input
-                    disabled={formMode === FORM_MODE.NONE}
-                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    disabled={formMode === EnFormMode.NONE}
+                    hiddenPlaceholder={formMode === EnFormMode.NONE}
                   />
                 }
+                validation={{ required: true }}
               >
                 <Button
                   type="button"
                   variant="gray"
                   size="sm"
-                  disabled={formMode !== FORM_MODE.VIEW}
+                  disabled={formMode !== EnFormMode.VIEW}
                   onClick={() => {
                     const menuCode = getValues('menuCode');
                     const menuName = getValues('menuName');
@@ -711,19 +673,22 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                 >
                   {t('LABEL.button.multilingualManage')}{' '}
                 </Button>
-              </FormRow>
+              </FormRow2>
             </ContentsRow>
 
             {/* 폼 필드 - url */}
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'path'}
+                label={t('LABEL.menu.url')}
+                maxLength={50}
+                value={''}
                 element={
                   <Input
                     id="path"
-                    disabled={formMode === FORM_MODE.NONE}
-                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    disabled={formMode === EnFormMode.NONE}
+                    hiddenPlaceholder={formMode === EnFormMode.NONE}
                     type={'url'}
                     validation={{
                       onError: (msg) => setFormError('path', msg),
@@ -736,13 +701,16 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
 
             {/* 폼 필드 - description */}
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'menuDesc'}
+                label={t('LABEL.menu.description')}
+                maxLength={100}
+                value={''}
                 element={
                   <Textarea
-                    disabled={formMode === FORM_MODE.NONE}
-                    hiddenPlaceholder={formMode === FORM_MODE.NONE}
+                    disabled={formMode === EnFormMode.NONE}
+                    hiddenPlaceholder={formMode === EnFormMode.NONE}
                     inputType={'koreanPlus'}
                   />
                 }
@@ -750,39 +718,70 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
             </ContentsRow>
 
             <ContentsRow type={'horizontal'} className={'inactive'}>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'isHiddenMenu'}
-                element={<SwitchFormField disabled={formMode === FORM_MODE.NONE} />}
+                label={t('LABEL.menu.hide')}
+                tooltip={t('LABEL.menu.hideTooltip')}
+                value={false}
+                element={<SwitchFormField disabled={formMode === EnFormMode.NONE} />}
               />
             </ContentsRow>
 
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'deviceNames'}
-                element={<CheckboxGroupFormField disabled={formMode === FORM_MODE.NONE} />}
+                label={t('LABEL.menu.device')}
+                format={'array'}
+                value={[]}
+                element={<CheckboxGroupFormField disabled={formMode === EnFormMode.NONE} />}
+                options={[
+                  {
+                    value: DEVICE_NAME.PC,
+                    label: t('LABEL.menu.pc'),
+                  },
+                  {
+                    value: DEVICE_NAME.Mobile,
+                    label: t('LABEL.menu.mobile'),
+                  },
+                ]}
+                validation={{
+                  required: {
+                    fn: (values: Record<string, any>) => {
+                      return !values.isMobileExposed && !values.isWebExposed;
+                    },
+                    message: t('LABEL.form.validation.selectAtLeastCount', { count: 1 }),
+                  },
+                }}
               />
             </ContentsRow>
 
             <ContentsRow type={'horizontal'} className={'inactive'}>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'isPersoninfoInclusion'}
-                element={<SwitchFormField disabled={formMode === FORM_MODE.NONE} />}
+                label={t('LABEL.menu.personalInfo')}
+                tooltip={t('LABEL.menu.personalInfoTooltip')}
+                value={false}
+                element={<SwitchFormField disabled={formMode === EnFormMode.NONE} />}
               />
             </ContentsRow>
             <ContentsRow type={'horizontal'} className={'inactive'}>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'isUsed'}
-                element={<SwitchFormField disabled={formMode === FORM_MODE.NONE} />}
+                label={t('사용 여부')}
+                value={true}
+                element={<SwitchFormField disabled={formMode === EnFormMode.NONE} />}
               />
             </ContentsRow>
             <ContentsRow>
-              <FormRow
+              <FormRow2
                 provider={provider}
                 name={'apiMappingMenuList'}
+                format={'array'}
+                value={[]}
                 element={
                   <GridBox
                     data={getValues('apiMappingMenuList') || []}
@@ -794,7 +793,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                       <Button
                         variant="text"
                         onClick={() => handleApiMapping()}
-                        disabled={formMode === FORM_MODE.NONE}
+                        disabled={formMode === EnFormMode.NONE}
                         className={layoutStyles.btn_text}
                         icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
                       >
@@ -810,145 +809,4 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
       </div>
     </>
   );
-});
-
-const createFormConfig = (): DynamicFormConfig => ({
-  builders: [
-    {
-      name: 'location',
-      type: 'text',
-      label: t('LABEL.menu.location'),
-      value: '',
-    },
-    {
-      label: t('LABEL.menu.parentName'),
-      name: 'parentCode',
-      type: 'text',
-      value: '',
-    },
-    {
-      label: t('LABEL.menu.code'),
-      name: 'code',
-      type: 'custom',
-      format: 'object',
-      maxLength: 150,
-      value: { fieldValue: '', checkState: DuplicateState.needInput },
-    },
-    {
-      label: t('LABEL.menu.name'),
-      name: 'menuName',
-      type: 'text',
-      maxLength: 10,
-      value: '',
-    },
-    {
-      label: t('LABEL.menu.url'),
-      name: 'path',
-      type: 'text',
-      maxLength: 50,
-      value: '',
-    },
-    {
-      label: t('LABEL.menu.personalInfo'),
-      tooltip: t('LABEL.menu.personalInfoTooltip'),
-      name: 'isPersoninfoInclusion',
-      type: 'switch',
-      switchConfig: {
-        label: (value: boolean) =>
-          value ? t('LABEL.menu.personalInfo') : t('LABEL.menu.personalInfoNotIncluded'),
-      },
-      value: false,
-    },
-    {
-      label: t('LABEL.menu.hide'),
-      tooltip: t('LABEL.menu.hideTooltip'),
-      name: 'isHiddenMenu',
-      type: 'switch',
-      switchConfig: {
-        label: (value: boolean) => (value ? t('LABEL.common.enable') : t('LABEL.common.disable')),
-      },
-      value: false,
-    },
-    {
-      label: t('LABEL.menu.description'),
-      name: 'menuDesc',
-      type: 'textarea',
-      maxLength: 100,
-      value: '',
-    },
-
-    {
-      name: 'deviceNames',
-      type: 'checkbox-group',
-      label: t('LABEL.menu.device'),
-      format: 'array',
-      value: [],
-      options: [
-        {
-          value: DEVICE_NAME.PC,
-          label: t('LABEL.menu.pc'),
-        },
-        {
-          value: DEVICE_NAME.Mobile,
-          label: t('LABEL.menu.mobile'),
-        },
-      ],
-    },
-
-    {
-      name: 'isUsed',
-      type: 'switch',
-      label: t('사용 여부'),
-      value: true,
-      switchConfig: {
-        label: (value: boolean) => (value ? t('LABEL.common.enable') : t('LABEL.common.disable')),
-      },
-    },
-    {
-      name: 'apiMappingMenuList',
-      type: 'custom',
-      format: 'array',
-      value: [],
-    },
-  ],
-  validator: {
-    code: {
-      format: 'object',
-      required: true,
-      conditions: [
-        {
-          fn: (values) => {
-            const fieldValue = values.code.fieldValue;
-            if (fieldValue === '') return true;
-            return false;
-          },
-          message: t('LABEL.form.validation.needInput', { code: t('LABEL.cdId') }),
-        },
-        {
-          fn: (values: Record<string, any>) =>
-            values.code.checkState === DuplicateState.check ||
-            values.code.checkState === DuplicateState.needInput,
-          message: t('LABEL.form.validation.check', { code: t('LABEL.cdId') }),
-        },
-        {
-          fn: (values: Record<string, any>) => values.code.checkState === DuplicateState.duplicated,
-          message: t('LABEL.form.validation.duplicated', { code: t('LABEL.cdId') }),
-        },
-      ],
-    },
-    menuName: {
-      required: true,
-    },
-    // path: {
-    //   required: true,
-    // },
-    deviceNames: {
-      required: {
-        fn: (values) => {
-          return !values.isMobileExposed && !values.isWebExposed;
-        },
-        message: t('LABEL.form.validation.selectAtLeastCount', { count: 1 }),
-      },
-    },
-  },
-});
+};
