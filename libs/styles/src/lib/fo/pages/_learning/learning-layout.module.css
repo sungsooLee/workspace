@@ -13,7 +13,7 @@
       }
     }
     .lesson_box {
-      @apply mt-[56px] flex h-[52px] items-center bg-white px-[16px];
+      @apply flex h-[52px] items-center bg-white px-[16px];
       strong {
         @apply title3 ellipsis text-[#232326];
       }
