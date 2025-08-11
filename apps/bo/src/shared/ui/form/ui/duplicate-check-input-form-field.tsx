@@ -156,7 +156,7 @@ export const DuplicateCheckInputFormField = forwardRef<
       if (!fieldState?.isDirty && guideText) {
         onChangeGuideText('');
       }
-    }, [control, name, guideText, onChangeGuideText]);
+    }, [control, name, guideText, onChangeGuideText, value]);
 
     return (
       <div className="flex w-full gap-x-2">

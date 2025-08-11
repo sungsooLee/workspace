@@ -1,12 +1,11 @@
-import { MenuManage, MenuManageRef } from '@features/platform-management/platform/menu-managemnet';
+import { MenuManage } from '@features/platform-management/platform/menu-managemnet';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Button } from '@learnway/ui/button';
-import { useModal } from '@learnway/ui/modal';
 import { Tabs } from '@learnway/ui/tabs';
 import { ContentsButtons, MainContents, PageContainer, SectionLayout } from '@shared/ui/layout';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/platform/menu/')({
   component: RouteComponent,
@@ -15,28 +14,23 @@ export const Route = createLazyFileRoute('/_layout/platform/menu/')({
 function RouteComponent() {
   const router = useRouter();
   const [selectedTabKey, setSelectedTabKey] = useState<string>('FO');
-  const { confirm: openConfirm } = useModal();
-
-  // 각 탭의 MenuManage 컴포넌트 참조
-  const foMenuManageRef = useRef<MenuManageRef>(null);
-  const boMenuManageRef = useRef<MenuManageRef>(null);
 
   const items = [
     {
-      title: t('LABEL.common.learnerMenu'),
+      title: t('학습자 메뉴'),
       key: 'FO',
       content: (
         <SectionLayout contentsRatio={'half'}>
-          <MenuManage ref={foMenuManageRef} menuScope="FO" />
+          <MenuManage menuScope="FO" />
         </SectionLayout>
       ),
     },
     {
-      title: t('LABEL.common.hrdCenterMenu'),
+      title: t('HRD센터 메뉴'),
       key: 'BO',
       content: (
         <SectionLayout contentsRatio={'half'}>
-          <MenuManage ref={boMenuManageRef} menuScope="BO" />
+          <MenuManage menuScope="BO" />
         </SectionLayout>
       ),
     },
@@ -44,29 +38,6 @@ function RouteComponent() {
 
   const handleTabChange = (tabKey: string) => {
     setSelectedTabKey(tabKey);
-
-    // foMenuManageRef.current?.setSkipConfirmation(false);
-    // boMenuManageRef.current?.setSkipConfirmation(false);
-  };
-
-  const handleBeforeTabChange = async (currentTabKey: string, nextTabKey: string) => {
-    // 현재 활성 탭의 변경사항 확인
-    const currentMenuManageRef = currentTabKey === 'FO' ? foMenuManageRef : boMenuManageRef;
-
-    if (currentMenuManageRef.current?.hasFormChanges()) {
-      const shouldProceed = await openConfirm({
-        title: '저장하지 않고 이동',
-        content: '변경된 내용이 있습니다. 저장하지 않고 다른 탭으로 이동하시겠습니까?',
-      });
-
-      if (shouldProceed) {
-        currentMenuManageRef.current?.setSkipConfirmation(true);
-      }
-
-      return shouldProceed;
-    }
-
-    return true;
   };
 
   return (
@@ -85,7 +56,7 @@ function RouteComponent() {
             });
           }}
         >
-          {t('LABEL.button.multilingualManage')}
+          {t('다국어 관리')}
         </Button>
       </ContentsButtons>
       <MainContents>

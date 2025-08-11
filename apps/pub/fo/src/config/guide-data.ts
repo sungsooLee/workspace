@@ -776,11 +776,11 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_1001',
     screenName: '과정상세_공통_공유하기',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-introduction/detail',
+    pageType: 'Pop-up',
+    completionDate: '2025-08-11',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: 'course-share-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1002',
@@ -918,11 +918,11 @@ export const guideData = [
     screenId: 'NLP_FO_LEC_MA_1001',
     screenName: '과정상세_공통_공유하기',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-introduction/detail-m',
+    pageType: 'Pop-up',
+    completionDate: '2025-08-11',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- course-share-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1002',
