@@ -1,8 +1,9 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
 import styles from '@learnway/styles/fo/widgets/layout/ui/container/related-search.module.css';
-import { Navigation } from 'swiper/modules';
 import { Button } from '@learnway/ui/button';
+import { Carousel } from '@learnway/ui/carousel';
+import { Navigation } from 'swiper/modules';
 
 function RelatedSearchComponent() {
   const items = [
@@ -56,7 +57,7 @@ function RelatedSearchComponent() {
           spaceBetween={8}
           slidesPerView={'auto'}
           modules={[Navigation]}
-          navigation={true}
+          showNavigation={true}
         />
       </div>
     </div>

@@ -1,17 +1,21 @@
 .table {
   table {
-    @apply border-[#131C30];
     thead {
       tr {
         th {
-          @apply !body_3_r !h-[42px] !border-r-[0] text-[#131C30];
-          .th_cell {
+          @apply h-[48px] bg-white;
+          [class*='th_content'] {
+            @apply title3 text-[var(--gray10)];
           }
           svg {
+            @apply !ml-[4px] h-[8px] w-[8px] !fill-[var(--gray85)] !stroke-[var(--gray85)];
           }
           &:not(:first-child) {
             @apply border-l-[0];
           }
+        }
+        &:nth-last-child(1) th {
+          @apply !border-[var(--gray85)];
         }
       }
     }
@@ -19,10 +23,31 @@
     tbody {
       tr {
         td {
-          @apply !body_3_r !h-[42px] !min-h-[42px];
+          @apply body-lg !min-h-[76px] !border-[var(--gray95)] text-[var(--gray35)];
           &:not(:first-child) {
             @apply !border-l-[0];
           }
+        }
+        &:nth-last-child(1) td {
+          @apply !border-[var(--gray85)];
+        }
+      }
+    }
+  }
+  &.line {
+    border-top: 1px solid var(--gray10);
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .table {
+      table {
+        thead tr th {
+          @apply title2;
+        }
+        tbody tr td {
+          @apply body-sm !min-h-[44px];
         }
       }
     }

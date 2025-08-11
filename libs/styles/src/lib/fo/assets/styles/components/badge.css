@@ -1,26 +1,26 @@
 .nlp--badge {
   &.xs {
-    @apply h-[2.2rem] !p-0;
+    @apply h-[2.1rem] !p-0;
     .nlp--button {
-      @apply label-sm !px-[6px] !font-semibold !leading-normal;
+      @apply label-xs-b !px-[6px];
     }
   }
   &.sm {
-    @apply h-[2.4rem];
+    @apply h-[2.6rem];
     .nlp--button {
-      @apply label-lg !px-[10px];
+      @apply label-sm-b !px-[8px];
     }
   }
   &.md {
-    @apply h-[3.2rem] rounded-[6px];
+    @apply h-[2.8rem] rounded-[6px];
     .nlp--button {
-      @apply label-lg !px-[12px];
+      @apply label-md-b !px-[10px];
     }
   }
   &.lg {
-    @apply h-[4.4rem] rounded-[8px];
+    @apply h-[3.3rem] rounded-[8px];
     .nlp--button {
-      @apply label-xl !px-[20px];
+      @apply label-lg-b !px-[16px];
     }
   }
   &[class*='dot'] {

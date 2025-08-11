@@ -1,29 +1,37 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { CellContext } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-
-import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { CODE_GROUP, DynamicFormConfig, useDynamicForm2 } from '@learnway/hooks';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import { DatePicker } from '@learnway/ui/date-picker';
-import { ChipListModalSelectorFormField, GridFormField } from '@learnway/ui/form-field';
+import {
+  CheckboxGroupFormField,
+  ChipListModalSelectorFormField,
+  GridFormField,
+  RadioGroupFormField,
+} from '@learnway/ui/form-field';
+import { EditDropdownCell, EditSwitchCell } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 
 import { queryOptions as CompanyService } from '@entities/companies/service/companies.queries';
 import UsersService from '@entities/users/api/users';
 import { useCreateUser } from '@entities/users/service/users.hook';
 import { LoginAuthenticationSettingInformation } from '@features/platform-management/company';
-import { CompanyUserDetailAccount } from '@features/platform-management/company/company-user-management/ui/company-user-detail-account';
-import { Button } from '@learnway/ui/button';
-import { ContentsRow } from '@learnway/ui/contents-row';
-import { EditDropdownCell, EditSwitchCell } from '@learnway/ui/grid';
-import { Input } from '@learnway/ui/input';
-import { useModal } from '@learnway/ui/modal';
+import { CompanyUserDetailAccount2 } from '@features/platform-management/company/company-user-management/ui/company-user-detail-account2';
 import { EnFormMode } from '@shared/types/enums';
-import { DuplicateCheckInputFormField, DuplicateState, FormRow } from '@shared/ui/form';
+import {
+  DropdownFormField,
+  DuplicateCheckInputFormField,
+  DuplicateState,
+  FormItem,
+} from '@shared/ui/form';
 import { OrganizationChoiceTreeModal } from '@shared/ui/modal';
-import { useQueryClient } from '@tanstack/react-query';
 
 const EMAIL_REGEX =
   /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
@@ -67,7 +75,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
     control,
     clearFormError,
     setFormError,
-  } = useDynamicForm(formConfig());
+  } = useDynamicForm2();
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -222,7 +230,14 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle label={t('회사/조직 정보')} lineType="dark" />
       <ContentsRow>
-        <FormRow provider={provider} name="companyName" element={<Input disabled={true} />}>
+        <FormRow2
+          provider={provider}
+          name="companyName"
+          label={t('회사')}
+          value={''}
+          element={<Input disabled={true} />}
+          validation={{ required: true, format: 'string' }}
+        >
           <Button
             label={t('조회')}
             variant="gray"
@@ -230,54 +245,154 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
             stopPropagation
             onClick={handleCompanySearchButtonClick}
           />
-        </FormRow>
-        <FormRow provider={provider} name="firstDept" element={<Input disabled={true} />} />
-        <FormRow provider={provider} name="lastDept" element={<Input disabled={true} />} />
+        </FormRow2>
+        <FormRow2
+          provider={provider}
+          name="firstDept"
+          label={t('본부')}
+          element={<Input disabled={true} />}
+        />
+        <FormRow2
+          provider={provider}
+          name="lastDept"
+          label={t('소속')}
+          element={<Input disabled={true} />}
+          validation={{ required: true, format: 'string' }}
+        />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name="userPosition" />
-        <FormRow provider={provider} name="positionName" />
-        <FormRow provider={provider} name="jobDomain" />
+        <FormRow2
+          provider={provider}
+          name="userPosition"
+          label={t('보직')}
+          element={
+            <DropdownFormField
+              presetOptionLabel={t('LABEL.form.label.select')}
+              options={[
+                { value: '1', label: t('조직장') },
+                { value: '2', label: t('조직원') },
+              ]}
+            />
+          }
+        />
+        <FormRow2
+          provider={provider}
+          name="positionName"
+          label={t('호칭(지위)')}
+          element={
+            <DropdownFormField
+              presetOptionLabel={t('LABEL.form.label.select')}
+              optionsConfig={{
+                codeGroup: CODE_GROUP['pms.user.UserGroupType'],
+              }}
+            />
+          }
+        />
+        <FormRow2
+          provider={provider}
+          name="jobDomain"
+          label={t('직군')}
+          element={
+            <DropdownFormField
+              presetOptionLabel={t('LABEL.form.label.select')}
+              optionsConfig={{
+                codeGroup: CODE_GROUP['pms.user.UserGroupType'],
+              }}
+            />
+          }
+        />
       </ContentsRow>
       <ContentsRow>
-        <FormRow
+        <FormRow2
           provider={provider}
           name={'userJoining'}
+          label={t('입사일')}
+          format={'object'}
+          value={undefined}
           element={<DatePicker displayType="day" />}
         />
-        <FormRow
+        <FormRow2
           provider={provider}
           name={'userResignation'}
+          label={t('퇴사일')}
+          format={'object'}
+          value={undefined}
           element={<DatePicker displayType="day" />}
         />
-        <FormRow
+        <FormRow2
           provider={provider}
           name={'userPromotion'}
+          label={t('최근 승진일')}
+          format={'object'}
+          value={undefined}
           element={<DatePicker displayType="day" />}
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name="userState" />
-        <FormRow provider={provider} name="userModifyDate" element={<Input disabled={true} />} />
-        <div className={formStyles.form_item}></div>
+        <FormRow2
+          provider={provider}
+          name="userState"
+          label={t('재직 상태')}
+          value={'1'}
+          element={
+            <RadioGroupFormField
+              options={[
+                { label: t('재직'), value: '1' },
+                { label: t('정직'), value: '2' },
+                { label: t('휴직'), value: '3' },
+                { label: t('퇴사'), value: '4' },
+              ]}
+            />
+          }
+        />
+        <FormRow2
+          provider={provider}
+          name="userModifyDate"
+          label={t('재직 상태 변경일')}
+          value={''}
+          placeholder={''}
+          element={<Input disabled={true} />}
+        />
+        <FormItem />
       </ContentsRow>
 
       <FormSubTitle label={t('개인 정보')} lineType="dark" />
       <ContentsRow>
-        <FormRow provider={provider} name="name" />
-        <FormRow provider={provider} name="engName" />
-        <FormRow
+        <FormRow2
+          provider={provider}
+          name="name"
+          label={t('이름')}
+          value={''}
+          element={<Input />}
+          validation={{ required: true, format: 'string' }}
+        />
+        <FormRow2
+          provider={provider}
+          name="engName"
+          label={t('영문 이름')}
+          value={''}
+          element={<Input />}
+        />
+        <FormRow2
           provider={provider}
           name="employeeNumber"
+          label={t('사번')}
+          value={''}
+          format={'number'}
+          element={<Input maxLength={7} />}
+          validation={{ required: true, format: 'number' }}
           // element={
           //   <DuplicateCheckInputFormField onDuplicationCheck={duplicateCheckEmployeeNumber} />
           // }
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow
+        <FormRow2
           provider={provider}
           name="email"
+          label={t('아이디(이메일)')}
+          format={'object'}
+          value={{ fieldValue: '', checkState: DuplicateState.needInput }}
           element={
             <DuplicateCheckInputFormField
               onDuplicationCheck={duplicateCheckEmail}
@@ -288,21 +403,99 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
               }}
             />
           }
+          validation={{
+            required: true,
+            format: 'object',
+            conditions: [
+              {
+                fn: (values: Record<string, any>) => {
+                  const value =
+                    typeof values.email === 'string' ? values.email : values.email.fieldValue;
+                  if (!value || value.trim().length === 0) return false;
+                  const pattern = new RegExp(EMAIL_REGEX, 'i');
+                  return !pattern.test(value.trim());
+                },
+                message: t('이메일 형식에 맞게 입력해 주세요.'),
+              },
+              {
+                fn: (values: Record<string, any>) => {
+                  const fieldValue = values.email.fieldValue;
+                  if (fieldValue === '') return true;
+                  return false;
+                },
+                message: t('LABEL.form.validation.needInput', { code: t('아이디(이메일)') }),
+              },
+              {
+                fn: (values: Record<string, any>) =>
+                  values.email.checkState === DuplicateState.check ||
+                  values.email.checkState === DuplicateState.needInput,
+                message: t('LABEL.form.validation.check', { code: t('아이디(이메일)') }),
+              },
+              {
+                fn: (values: Record<string, any>) =>
+                  values.email.checkState === DuplicateState.duplicated,
+                message: t('LABEL.form.validation.duplicated', { code: t('아이디(이메일)') }),
+              },
+            ],
+          }}
         />
-        <FormRow provider={provider} name="birthday" element={<DatePicker displayType="day" />} />
-        <FormRow provider={provider} name="userGender" />
+        <FormRow2
+          provider={provider}
+          name="birthday"
+          label={t('생년월일')}
+          format={'object'}
+          value={undefined}
+          element={<DatePicker displayType="day" />}
+        />
+        <FormRow2
+          provider={provider}
+          name="userGender"
+          label={t('성별')}
+          value={'MALE'}
+          format={'object'}
+          element={
+            <DropdownFormField
+              optionsConfig={{
+                codeGroup: CODE_GROUP['pms.user.Gender'],
+              }}
+            />
+          }
+          validation={{
+            required: true,
+            format: 'object',
+          }}
+        />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name="region" element={<Input disabled={true} />} />
-        <FormRow provider={provider} name="phoneNumber" />
-        <FormRow provider={provider} name="companyNumber" />
+        <FormRow2
+          provider={provider}
+          name="region"
+          label={t('지역')}
+          placeholder={''}
+          element={<Input disabled={true} />}
+        />
+        <FormRow2
+          provider={provider}
+          name="phoneNumber"
+          label={t('휴대폰 번호')}
+          format={'number'}
+          element={<Input />}
+        />
+        <FormRow2
+          provider={provider}
+          name="companyNumber"
+          label={t('연락처(사무실)')}
+          format={'number'}
+          element={<Input />}
+        />
       </ContentsRow>
 
       <FormSubTitle label={t('직군/직무 정보')} lineType="dark" />
       <ContentsRow>
-        <FormRow
+        <FormRow2
           provider={provider}
           name="jobManagement"
+          value={[]}
           element={
             <GridFormField
               gridProps={{
@@ -319,11 +512,12 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
         />
       </ContentsRow>
 
-      <CompanyUserDetailAccount provider={provider} formMode={EnFormMode.ADD} />
+      <CompanyUserDetailAccount2 provider={provider} formMode={EnFormMode.ADD} />
       <ContentsRow>
-        <FormRow
+        <FormRow2
           provider={provider}
           name="tenant"
+          label={t('테넌트')}
           element={
             <ChipListModalSelectorFormField
               chipList={{
@@ -339,7 +533,23 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       <FormSubTitle label={t('로그인 및 인증 설정 정보')} lineType="dark" />
       <LoginAuthenticationSettingInformation provider={provider} />
       <ContentsRow>
-        <FormRow provider={provider} name="loginRestriction" />
+        <FormRow2
+          provider={provider}
+          name="loginRestriction"
+          label={t('로그인 제한')}
+          value={['2']}
+          guideText={t('로그인 시간 제한 선택 시 회사관리 제한 시간에는 로그인할 수 없습니다.')}
+          element={
+            <CheckboxGroupFormField
+              options={[
+                { label: t('로그인 제한 시간 설정'), value: '1' },
+                { label: t('근테 연동 로그인 제한'), value: '2' },
+                { label: t('제한 없음'), value: '3' },
+              ]}
+              disabled={true}
+            />
+          }
+        />
       </ContentsRow>
     </form>
   );

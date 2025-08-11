@@ -2,9 +2,9 @@ import React, { forwardRef, PropsWithChildren } from 'react';
 
 import { cn } from '@learnway/shared';
 
+import { Button } from '../button/button';
 import { SelectOption } from '../type';
 import styles from './badge.module.css';
-import { Button } from '../button/button';
 
 export interface BadgeComponentProps extends PropsWithChildren {
   option: SelectOption;
@@ -24,7 +24,7 @@ export interface BadgeComponentProps extends PropsWithChildren {
     | 'blue';
   size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
   rounded?: boolean;
-  labelType?: 'normal' | 'bold';
+  labelType?: 'regular' | 'bold';
   className?: string;
   onClick?: (option: SelectOption) => void;
 }
@@ -37,7 +37,7 @@ const BadgeComponent = forwardRef<HTMLElement, BadgeComponentProps>(
       size,
       status,
       rounded,
-      labelType,
+      labelType = 'bold',
       onClick,
       option: { label, value },
       ...props

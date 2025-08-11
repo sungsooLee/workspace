@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { createFileRoute, Link } from '@tanstack/react-router';
-import { Carousel } from '@learnway/ui/carousel';
 import bnrCImage1 from '@learnway/styles/fo/assets/images/banner/banner_category_01.png';
 import bnrCImage2 from '@learnway/styles/fo/assets/images/banner/banner_category_02.png';
+import { Carousel } from '@learnway/ui/carousel';
+import { createFileRoute, Link } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_layout/menu3/')({
   component: RouteComponent,
@@ -28,7 +27,7 @@ function RouteComponent() {
         loop={true}
         spaceBetween={20}
         slidesPerView={2.2}
-        navigation={true}
+        showNavigation={true}
         pagination={true}
         autoplay={{ delay: 4000 }}
       />

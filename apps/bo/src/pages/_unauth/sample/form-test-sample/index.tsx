@@ -1,16 +1,19 @@
-import { useDynamicForm2 } from '@learnway/hooks';
+import { SelectOption, useDynamicForm2 } from '@learnway/hooks';
 import { FormRow2 } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/_unauth/sample/form-test-sample/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useTranslation();
   const { provider, onSubmit, getValues, watch, onFormValid, updateFormData } = useDynamicForm2();
 
   const handleSetValue = () => {
@@ -60,6 +63,36 @@ function RouteComponent() {
               label={'text'}
               element={<Input />}
               validation={{ required: true }}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'radio'}
+              label={t('라디오 - 코드그룹 - 커스텀노드')}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: 'test',
+                    transformOptions: (options: SelectOption[]) => {
+                      return options.filter((option: SelectOption) => option.value !== 'test4');
+                    },
+                    optionsNode: [
+                      {
+                        value: 'test1',
+                        node: (
+                          <FormRow2
+                            provider={provider}
+                            name={'radio_input'}
+                            value={''}
+                            element={<Input />}
+                          />
+                        ),
+                      },
+                    ],
+                  }}
+                />
+              }
             />
           </ContentsRow>
           {/* <ContentsRow>
