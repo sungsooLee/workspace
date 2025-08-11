@@ -2,7 +2,7 @@ import { useCoursePackageDetailBasicInfo } from '@features/learning-operate/cour
 import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, S3_PATH } from '@learnway/hooks';
 import { Badge } from '@learnway/ui/badge';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import {
@@ -17,7 +17,6 @@ import {
   ChipListFormField,
   DateRangePickerFormField,
   DropdownFormField,
-  FormRow2,
   InputFormField,
   TenantByRoleChannelCheckboxFormField,
   TenantChannelDropdownFormField2,

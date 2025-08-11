@@ -7,7 +7,7 @@ import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.
 import styles from '@learnway/styles/bo/pages/_layout/learning/popup-question-detail.module.css';
 
 import { cn, isLocalhost } from '@learnway/shared';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { GridFormField, RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
 import {
   EditCheckboxCell,
@@ -31,25 +31,20 @@ import {
   useGetQuestionItem,
 } from '@entities/learning-resource';
 
-import {
-  EditSingleAttachmentCell,
-  FormDisplay,
-  FormRow2,
-  SingleAttachmentFormField,
-} from '@shared/ui/form';
+import { EditSingleAttachmentCell, FormDisplay, SingleAttachmentFormField } from '@shared/ui/form';
 
+import { useChangeQuestionOptionsOrder } from '@features/learning-resource/learning-resource-management/service/learning-resource-question-sort.hook';
 import { S3_PATH, useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ContentType, EnFormMode } from '@shared/types/enums';
-import { useChangeQuestionOptionsOrder } from '@features/learning-resource/learning-resource-management/service/learning-resource-question-sort.hook';
 
 // Drag and Drop 관련
-import { QuestionDragHandle } from '../components/learning-resource-question-drag-handle';
 import { closestCenter, DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { QuestionDragHandle } from '../components/learning-resource-question-drag-handle';
 
 const LearningResourceTestItemModalComponent = ({
   contentInfo,

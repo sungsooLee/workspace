@@ -1,10 +1,9 @@
 import { DynamicFormProvider } from '@learnway/hooks';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
-
 import { t } from 'i18next';
 import { CheckBoxFormField } from './checkbox-form-field';
 import { FormGroup } from './form-group';
-import { FormRow2 } from './form-row2';
 
 type ContentRequiredCheckProps = {
   provider: DynamicFormProvider;

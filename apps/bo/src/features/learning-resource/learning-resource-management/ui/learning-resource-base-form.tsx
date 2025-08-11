@@ -1,4 +1,5 @@
 import { CODE_GROUP, DynamicFormProvider } from '@learnway/hooks';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import {
   EditorFormField,
@@ -12,7 +13,6 @@ import {
   DateRangePickerFormField,
   DropdownFormField,
   FormDisplay,
-  FormRow2,
   SecondDurationTimeFormField,
   SwitchFormField,
 } from '@shared/ui/form';

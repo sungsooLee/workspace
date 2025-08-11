@@ -1,7 +1,8 @@
 import { generateYears } from '@learnway/shared';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
-import { DropdownFormField, FormRow2 } from '@shared/ui/form';
+import { DropdownFormField } from '@shared/ui/form';
 import { SearchBoxForm } from '@shared/ui/search-box';
 import React, { FormEventHandler } from 'react';
 import { useTranslation } from 'react-i18next';

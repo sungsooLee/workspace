@@ -6,7 +6,7 @@ import {
 } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, S3_PATH } from '@learnway/hooks';
 import { Badge } from '@learnway/ui/badge';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { SplitPanel } from '@learnway/ui/elements';
@@ -26,7 +26,6 @@ import {
   DropdownFormField,
   FormDisplay,
   FormRow,
-  FormRow2,
   PassOptionFormField,
   SwitchFormField,
   TenantByRoleChannelCheckboxFormField,

@@ -1,7 +1,7 @@
 import {
   DynamicFormContextProvider,
   FormConfig,
-  FormRowProps,
+  FormRowProps2,
   useDynamicFormContext,
   useFormRow2,
 } from '@learnway/hooks';
@@ -28,13 +28,12 @@ import { FormGuideText } from './form-guide-text';
  * @param children - 폼 필드들 (DynamicFormField 포함)
  * @param name - 명시적으로 지정한 name (없으면 내부의 첫번째 DynamicFormField의 name 사용)
  */
-const BaseFormRowComponent: FC<FormRowProps> = ({
+const BaseFormRowComponent: FC<FormRowProps2> = ({
   className,
   provider,
   children,
   name,
   element,
-  formFieldConfig,
   theme,
   infoNode,
   fieldConfig,
@@ -47,7 +46,6 @@ const BaseFormRowComponent: FC<FormRowProps> = ({
         children={children}
         name={name}
         element={element}
-        formFieldConfig={formFieldConfig}
         theme={theme}
         infoNode={infoNode}
         fieldConfig={fieldConfig}
@@ -58,13 +56,12 @@ const BaseFormRowComponent: FC<FormRowProps> = ({
 
 export const BaseFormRow2 = memo(BaseFormRowComponent);
 
-const DynamicFormContainer: FC<FormRowProps> = ({
+const DynamicFormContainer: FC<FormRowProps2> = ({
   className,
   provider,
   children,
   name,
   element,
-  formFieldConfig,
   theme = 'bo',
   infoNode,
   fieldConfig,

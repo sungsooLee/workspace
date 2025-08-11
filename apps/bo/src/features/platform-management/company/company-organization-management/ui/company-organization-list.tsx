@@ -12,11 +12,12 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { SearchBoxForm } from '@shared/ui/search-box';
 
 import { queryOptions as companyQueryOptions } from '@entities/companies';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
-import { EnGlobalConst } from '@shared/types/enums';
-import { useCreation } from 'ahooks';
-import { DropdownFormField, FormRow2, InputFormField, PeriodPickerFormField } from '@shared/ui/form';
 import { ContentsRow } from '@learnway/ui/contents-row';
+import { EnGlobalConst } from '@shared/types/enums';
+import { DropdownFormField, InputFormField, PeriodPickerFormField } from '@shared/ui/form';
+import { useCreation } from 'ahooks';
 
 const _global = {
   linkClick: (row: any) => {
@@ -112,15 +113,19 @@ const CompanyOrganizationListComponent = ({
 
   const searchParam = () => {
     const data = getValues();
-    console.log('####### => ', data)
+    console.log('####### => ', data);
     const searchData = {
       tenantId,
       companyType: data.companyType,
       name: data.name,
       isUsed: data.isUsed,
-      modifyStartDate: data.modifyDate && data.modifyDate.from &&
+      modifyStartDate:
+        data.modifyDate &&
+        data.modifyDate.from &&
         getDateToString(new Date(data.modifyDate.from), 'YYYYMMDD'),
-      modifyEndDate: data.modifyDate && data.modifyDate.to &&
+      modifyEndDate:
+        data.modifyDate &&
+        data.modifyDate.to &&
         getDateToString(new Date(data.modifyDate.to), 'YYYYMMDD'),
     };
     return searchData;

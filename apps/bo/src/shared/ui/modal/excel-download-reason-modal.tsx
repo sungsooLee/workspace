@@ -7,10 +7,11 @@ import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entiti
 import { CODE_GROUP, SelectOption, useCodeStore, useDynamicForm2 } from '@learnway/hooks';
 import { IcoAlertCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
 import { Tooltip } from '@learnway/ui/tooltip';
 
-import { ChipListFormField, DropdownFormField, FormRow2 } from '@shared/ui/form';
+import { ChipListFormField, DropdownFormField } from '@shared/ui/form';
 import { t } from 'i18next';
 import { first, flatten, get, isArray, map, mapValues, pick, values } from 'lodash-es';
 import { useEffect } from 'react';

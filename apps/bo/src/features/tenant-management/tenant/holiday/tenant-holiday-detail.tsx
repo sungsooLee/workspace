@@ -1,5 +1,5 @@
 import { useDynamicForm2 } from '@learnway/hooks';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { getCurrentAuthUser } from '@shared/lib';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
@@ -25,7 +25,6 @@ import {
   DateRangePickerFormField,
   DropdownFormField,
   FormItem,
-  FormRow2,
   InputFormField,
   SwitchFormField,
 } from '@shared/ui/form';

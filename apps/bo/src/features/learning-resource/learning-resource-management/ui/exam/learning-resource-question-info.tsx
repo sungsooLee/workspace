@@ -10,13 +10,13 @@ import {
 } from '@entities/learning-resource';
 
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
-import { FormRow2, SegmentedControlFormField } from '@shared/ui/form';
+import { SegmentedControlFormField } from '@shared/ui/form';
 import { NoticeBox } from '@shared/ui/notice-box';
 
 import { CMSApiPrefix } from '@learnway/config';
 import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
 import { cn, isEmptyData } from '@learnway/shared';
-import { FormSubTitle } from '@learnway/ui/base-form';
+import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { RadioGroupFormField } from '@learnway/ui/form-field';

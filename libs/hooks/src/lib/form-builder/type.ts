@@ -392,6 +392,17 @@ export interface FormRowProps {
   fieldConfig?: FormRowFieldConfig; // name이 optional인 필드 설정
 }
 
+export interface FormRowProps2 {
+  className?: string;
+  provider: DynamicFormProvider;
+  children?: ReactNode;
+  name: string;
+  element?: ReactElement;
+  theme?: 'bo' | 'fo';
+  infoNode?: ReactNode;
+  fieldConfig?: FormRowFieldConfig; // name이 optional인 필드 설정
+}
+
 /*===================================
     searchBox Type 정의
   ===================================*/

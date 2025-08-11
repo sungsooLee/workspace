@@ -5,6 +5,7 @@ import { PMSApiPrefix } from '@learnway/config';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { IcoDownload } from '@learnway/icons';
 import { DATE_TIME_FORMAT, fileDownload, getDateToString, SelectOption } from '@learnway/shared';
+import { FormRow2 } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Divider } from '@learnway/ui/elements';
@@ -12,8 +13,8 @@ import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { EnGlobalConst } from '@shared/types/enums';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
 import {
-  DropdownFormField, FormItem,
-  FormRow2,
+  DropdownFormField,
+  FormItem,
   InputFormField,
   PeriodPickerFormField,
   TenantByRoleDropdownFormField,
