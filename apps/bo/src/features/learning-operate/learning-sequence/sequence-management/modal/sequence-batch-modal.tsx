@@ -1,4 +1,4 @@
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { useDynamicForm2 } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import { FormRow2, FormSubTitle } from '@learnway/ui/base-form';
 import { SplitPanel } from '@learnway/ui/elements';
@@ -8,7 +8,12 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { DateRangePickerFormField, FormRow, SwitchFormField } from '@shared/ui/form';
+import {
+  DateRangePickerFormField,
+  FormDisplay,
+  InputFormField,
+  SwitchFormField,
+} from '@shared/ui/form';
 
 import { useBulkUpdateSequence } from '@entities/learning-sequence/service/learning-sequence.hook';
 import { Button } from '@learnway/ui/button';
@@ -55,7 +60,7 @@ const SequenceBatchModalComponent = ({
   const handleOnSearch = useCallback(() => {
     const data = [
       { key: 'isUsed', name: t('차수 사용 여부') },
-      { key: 'enrollmentRange', name: t('수강신청 기간') },
+      { key: 'enrollRange', name: t('수강신청 기간') },
       { key: 'learningStartType', name: t('학습 기간') },
       { key: 'isMaxEnrollQuotaRestricted', name: t('정원') },
     ];
@@ -66,92 +71,6 @@ const SequenceBatchModalComponent = ({
     }, 300);
   }, []);
 
-  const formConfig: DynamicFormConfig = {
-    builders: [
-      {
-        name: 'isUsed',
-        type: 'switch',
-        format: 'boolean',
-        label: () => t('차수 사용 여부'),
-        value: true,
-        switchConfig: {
-          label: (value: boolean) => (value ? t('사용') : t('미사용')),
-        },
-      },
-      {
-        name: 'enrollmentRange',
-        type: 'date-range',
-        format: 'object',
-        label: () => t('수강신청 기간'),
-        value: { from: undefined, to: undefined },
-      },
-      {
-        name: 'learningStartType',
-        type: 'object',
-        format: 'object',
-        label: () => t('학습 기간'),
-        value: false,
-      },
-      {
-        name: 'learningRange',
-        type: 'date-range',
-        format: 'object',
-        value: { from: undefined, to: undefined },
-      },
-      {
-        name: 'learningStartDays',
-        type: 'number',
-        value: undefined,
-      },
-      {
-        name: 'isMaxEnrollQuotaRestricted',
-        type: 'boolean',
-        format: 'object',
-        label: () => t('정원'),
-        value: false,
-      },
-      {
-        name: 'maxEnrollQuota',
-        type: 'number',
-        value: undefined,
-      },
-    ],
-    validator: {
-      isUsed: true,
-      enrollmentRange: {
-        required: true,
-        conditions: [
-          {
-            fn: (values) => {
-              console.log('values.enrollmentRange=>', values.enrollmentRange);
-              return !values.enrollmentRange.from || !values.enrollmentRange.to;
-            },
-            message: t('시작 및 종료 날짜를 선택하세요'),
-          },
-          {
-            fn: (values) => {
-              return values.enrollmentRange.from > values.enrollmentRange.to;
-            },
-            message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
-          },
-        ],
-      },
-      isMaxEnrollQuotaRestricted: {
-        required: true,
-        conditions: [
-          {
-            fn: (values) => {
-              if (values.isMaxEnrollQuotaRestricted) {
-                if (!values.maxEnrollQuota) return true;
-              }
-              return false;
-            },
-            message: t('정원을 입력해주세요.'),
-          },
-        ],
-      },
-    },
-  };
   const {
     provider,
     updateFormData,
@@ -162,7 +81,7 @@ const SequenceBatchModalComponent = ({
     setValue,
     formState,
     control,
-  } = useDynamicForm(formConfig);
+  } = useDynamicForm2();
 
   const handleOnSave = () => {
     const form = formRef.current;
@@ -187,8 +106,8 @@ const SequenceBatchModalComponent = ({
       courseId: courseIdProps,
       sequenceIds: selectedItems?.map((x: any) => x.courseSequenceId),
       isUsed: formData.isUsed,
-      enrollmentStartDateTime: formData.enrollmentRange.from,
-      enrollmentEndDateTime: formData.enrollmentRange.to,
+      enrollStartDateTime: formData.enrollRange ? formData.enrollRange.from : null,
+      enrollEndDateTime: formData.enrollRange ? formData.enrollRange.to : null,
       learningStartType: !formData.learningStartType ? 'FIXED_DATE' : 'DAYS_AFTER_ENROLL',
       learningStartDays: formData.learningStartType ? parseInt(formData.learningStartDays) : null,
       learningStartDateTime: !formData.learningStartType ? formData.learningRange.from : null,
@@ -239,26 +158,69 @@ const SequenceBatchModalComponent = ({
           <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
             <FormSubTitle label={t('설정')} lineType={'dark'} />
             <div className={layoutStyles.inner_contents}>
-              {selectedRowsKey.includes('isUsed') && (
+              <FormDisplay provider={provider} onDisplay={() => selectedRowsKey.includes('isUsed')}>
                 <ContentsRow type="horizontal">
-                  <FormRow provider={provider} name={'isUsed'} element={<SwitchFormField />} />
-                </ContentsRow>
-              )}
-              {selectedRowsKey.includes('enrollmentRange') && (
-                <ContentsRow>
-                  <FormRow
+                  <FormRow2
                     provider={provider}
-                    name="enrollmentRange"
-                    element={<DateRangePickerFormField />}
+                    name={'isUsed'}
+                    type={'switch'}
+                    format={'boolean'}
+                    label={t('차수 사용 여부')}
+                    value={true}
+                    switchConfig={{
+                      label: (value: boolean) => (value ? t('사용') : t('미사용')),
+                    }}
+                    element={<SwitchFormField />}
+                    validation={{ required: true }}
                   />
                 </ContentsRow>
-              )}
-              {selectedRowsKey.includes('learningStartType') && (
+              </FormDisplay>
+              <FormDisplay
+                provider={provider}
+                onDisplay={() => selectedRowsKey.includes('enrollRange')}
+              >
+                <ContentsRow>
+                  <FormRow2
+                    provider={provider}
+                    name="enrollRange"
+                    type={'date-range'}
+                    format={'object'}
+                    label={t('수강신청 기간')}
+                    // value{ from: undefined, to: undefined },
+                    element={<DateRangePickerFormField />}
+                    validation={{
+                      required: true,
+                      conditions: [
+                        {
+                          fn: (values: any) => {
+                            console.log('values.enrollRange=>', values.enrollRange);
+                            return !values.enrollRange.from || !values.enrollRange.to;
+                          },
+                          message: t('시작 및 종료 날짜를 선택하세요'),
+                        },
+                        {
+                          fn: (values: any) => {
+                            return values.enrollRange.from > values.enrollRange.to;
+                          },
+                          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+                        },
+                      ],
+                    }}
+                  />
+                </ContentsRow>
+              </FormDisplay>
+              <FormDisplay
+                provider={provider}
+                onDisplay={() => selectedRowsKey.includes('learningStartType')}
+              >
                 <ContentsRow>
                   <FormRow2
                     provider={provider}
                     name={'learningStartType'}
                     label={t('학습 기간')}
+                    type={'object'}
+                    format={'object'}
+                    value={false}
                     element={
                       <RadioGroupFormField
                         options={[
@@ -269,6 +231,7 @@ const SequenceBatchModalComponent = ({
                               <FormRow2
                                 provider={provider}
                                 name={'learningRange'}
+                                format={'object'}
                                 value={''}
                                 element={<DateRangePickerFormField />}
                               />
@@ -283,7 +246,7 @@ const SequenceBatchModalComponent = ({
                                 name={'learningStartDays'}
                                 value={''}
                                 element={
-                                  <Input
+                                  <InputFormField
                                     type="number"
                                     prefixText={t('학습 가능일로부터')}
                                     suffixText={t('일')}
@@ -297,13 +260,33 @@ const SequenceBatchModalComponent = ({
                     }
                   />
                 </ContentsRow>
-              )}
-              {selectedRowsKey.includes('isMaxEnrollQuotaRestricted') && (
+              </FormDisplay>
+              <FormDisplay
+                provider={provider}
+                onDisplay={() => selectedRowsKey.includes('isMaxEnrollQuotaRestricted')}
+              >
                 <ContentsRow>
                   <FormRow2
                     provider={provider}
                     name={'isMaxEnrollQuotaRestricted'}
                     label={t('정원')}
+                    type={'boolean'}
+                    format={'object'}
+                    value={false}
+                    validation={{
+                      required: true,
+                      conditions: [
+                        {
+                          fn: (values: any) => {
+                            if (values.isMaxEnrollQuotaRestricted) {
+                              if (!values.maxEnrollQuota) return true;
+                            }
+                            return false;
+                          },
+                          message: t('정원을 입력해주세요.'),
+                        },
+                      ],
+                    }}
                     element={
                       <RadioGroupFormField
                         optionsConfig={{
@@ -335,7 +318,7 @@ const SequenceBatchModalComponent = ({
                     }
                   />
                 </ContentsRow>
-              )}
+              </FormDisplay>
             </div>
           </form>
         </SplitPanel>
