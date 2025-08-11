@@ -22,17 +22,17 @@ export * from './ui/main/layout';
 export * from './popup/course-selection-popup';
 export * from './popup/notice-detail-popup';
 export * from './popup/review-popup';
-export * from './ui/course-introduction/course-fixed-button';
-export * from './ui/course-introduction/curriculum-study';
-export * from './ui/course-introduction/dashboard';
-export * from './ui/course-introduction/education-list';
-export * from './ui/course-introduction/introduction';
-export * from './ui/course-introduction/review';
-export * from './ui/course-introduction/review-option-popover';
-export * from './ui/curriculum';
-export * from './ui/education';
+export * from './ui/course/course-fixed-button';
+export * from './ui/course/curriculum';
+export * from './ui/course/curriculum-study';
+export * from './ui/course/dashboard';
+export * from './ui/course/education';
+export * from './ui/course/education-list';
+export * from './ui/course/introduction';
+export * from './ui/course/review';
+export * from './ui/course/review-list';
+export * from './ui/course/review-option-popover';
+export * from './ui/course/review-rating';
 export * from './ui/package-card-list';
-export * from './ui/review';
-export * from './ui/review-rating';
 
 

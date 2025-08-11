@@ -80,7 +80,17 @@ export default class CoursePackageService {
           sortSeq: 2,
           name: '서브패키지',
           depth: 1,
-          children: [],
+          children: [
+            {
+              id: 45,
+              itemName: '과정',
+              itemType: 'COURSE',
+              sortSeq: 1,
+              name: '과정',
+              depth: 2,
+              children: [],
+            },
+          ],
         },
       ],
     };

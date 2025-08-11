@@ -379,6 +379,7 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
             label={t('이메일')}
             value=""
             format="string"
+            placeholder={t('입력')}
             element={<InputFormField />}
           />
           <FormRow2
@@ -388,6 +389,7 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
             label={t('사번')}
             value=""
             format="string"
+            placeholder={t('입력')}
             element={<InputFormField />}
           />
         </ContentsRow>

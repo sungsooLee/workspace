@@ -35,3 +35,10 @@ export function usePostCourseWaiting(body: any) {
 export function useDeleteCourseWaiting(body: any) {
   return useMutation(queryOptions.deleteCourseWaiting(body));
 }
+
+export function useFetchEnrollStatusCheck(sequenceId: number) {
+  return useQuery({
+    ...queryOptions.enrollStatusCheck(sequenceId),
+    enabled: false,
+  });
+}

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   BlogCreateReq,
   BlogUpdateReq,
@@ -26,7 +26,11 @@ import {
   TestPaperBasicInfoSaveReq,
   UpdateQuestionBankCountInfoReq,
 } from '../model/learning-resource.types';
-import { learningResourceQueryOptions, mutateOptions } from './learning-resource.queries';
+import {
+  learningResourceQueryOptions,
+  mutateOptions,
+  queryKeys,
+} from './learning-resource.queries';
 
 export function usePostContentCopy(options?: any) {
   const mutation = useMutation({
@@ -299,8 +303,21 @@ export function useCreateExamPaperContent(options?: any) {
 }
 
 export function useUpdateExamPaperContent(options?: any) {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
     ...mutateOptions.updateExamPaperContent(),
+    onSuccess: async (result: unknown) => {
+      if (result) {
+        await queryClient.invalidateQueries({
+          queryKey: [...queryKeys.contentDetail(result as string)],
+        });
+
+        if (options.onSuccess) {
+          options.onSuccess(result);
+        }
+      }
+    },
     ...options,
   });
 

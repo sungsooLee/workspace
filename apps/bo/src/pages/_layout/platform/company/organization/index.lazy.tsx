@@ -1,0 +1,17 @@
+import { CompanyList } from '@features/platform-management/company';
+import { MainContents, PageContainer } from '@shared/ui/layout';
+import { createLazyFileRoute } from '@tanstack/react-router';
+
+export const Route = createLazyFileRoute('/_layout/platform/company/organization/')({
+  component: RouteComponent,
+});
+
+function RouteComponent() {
+  return (
+    <PageContainer>
+      <MainContents>
+        <CompanyList detailPath={'/platform/company/organization/detail'} />
+      </MainContents>
+    </PageContainer>
+  );
+}
