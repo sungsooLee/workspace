@@ -56,6 +56,6 @@ export * from './ui/legacy/blog-info';
 export * from './ui/legacy/ebook-info';
 export * from './ui/legacy/image-info';
 export * from './ui/media-info';
-export * from './ui/movie-info';
 export * from './ui/scorm-info';
+export * from './ui/video-info';
 export * from './ui/video-subtitles-form';
