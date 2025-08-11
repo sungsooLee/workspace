@@ -29,7 +29,7 @@ function RouteComponent() {
   const columns = [
     columnHelper.accessor('name', {
       meta: {
-        headerAlign: 'left', // 헤더 정렬
+        headerAlign: 'center', // 헤더 정렬
         cellAlign: 'left', // 셀 정렬
       },
     }),
@@ -58,9 +58,9 @@ function RouteComponent() {
             {`// 초기 import
   import { TableBox } from '@learnway/ui/grid';
   import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-  
+
   const columnHelper = createColumnHelper<any>();
-  
+
   // thead : 'value'
   const data: any[] = [
     {
@@ -76,7 +76,7 @@ function RouteComponent() {
       name4: 'dddd',
     },
   ];
-  
+
   // Thead 정의
   const columns = [
     columnHelper.accessor('name', {
@@ -94,8 +94,8 @@ function RouteComponent() {
     columnHelper.accessor('name3', {}),
     columnHelper.accessor('name4', {}),
   ] as ColumnDef<any, unknown>[];
-  
-  
+
+
     <TableBox
     data={data}
     columns={columns}

@@ -11,7 +11,7 @@
 }
 
 .btn {
-  @apply flex items-center;
+  @apply flex items-center bg-white;
   > span {
     @apply label-lg whitespace-nowrap text-[var(--gray35)];
   }
@@ -22,7 +22,7 @@
     @apply ml-[4px] transition-all;
   }
   &[data-state='open'] {
-    @apply border-[var(--gray7)];
+    @apply !border-[var(--blue50)];
     svg {
       @apply rotate-180;
     }

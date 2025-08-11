@@ -22,6 +22,9 @@
     }
     &.xl {
       @apply button_2_b !h-[48px] min-w-[80px] justify-center px-[12px];
+      &.column {
+        @apply min-w-[48px];
+      }
     }
     &.xl2 {
       @apply button_2_b !h-[52px] min-w-[80px] justify-center px-[12px];
