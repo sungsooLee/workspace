@@ -1,7 +1,7 @@
 .start {
   &.user_search {
     @apply -m-[8px];
-    & > div:nth-child(1) {
+    .panel {
       @apply mb-[24px];
       & > div {
         @apply rounded-[12px];
@@ -11,6 +11,12 @@
       @apply p-[32px];
       .btn_category {
         @apply w-[160px];
+      }
+      .box {
+        @apply flex flex-1 items-start;
+        button {
+          @apply ml-[8px];
+        }
       }
       div,
       button,
@@ -52,6 +58,37 @@
           @apply ml-[8px] !pl-[8px];
           &::before {
             @apply mr-[8px];
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.user_search {
+        @apply m-0;
+        .panel {
+          @apply -mx-[16px] mb-[16px] !w-[calc(100%+32px)];
+          & > div {
+            @apply rounded-none;
+          }
+        }
+        .form_item {
+          @apply p-[16px];
+          & > div {
+            @apply flex-wrap;
+            .btn_category {
+              @apply w-full;
+            }
+            .box {
+              @apply mt-[8px];
+            }
+            > :not([hidden]) ~ :not([hidden]) {
+              @apply ml-0;
+            }
           }
         }
       }

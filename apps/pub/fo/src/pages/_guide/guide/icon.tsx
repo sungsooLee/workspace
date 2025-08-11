@@ -64,6 +64,7 @@ import {
   IcoComplete02,
   IcoConfirm,
   IcoCopy,
+  IcoCopy02,
   IcoDelete03,
   IcoDelete04,
   IcoDivice,
@@ -116,6 +117,7 @@ import {
   IcoImage01,
   IcoImport,
   IcoInfoCircle,
+  IcoKakaoLine,
   IcoLang,
   IcoLearning01,
   IcoLearning02,
@@ -956,6 +958,11 @@ function RouteComponent() {
       file: 'ic_copy.svg',
     },
     {
+      name: 'IcoCopy02',
+      Component: <IcoCopy02 width={24} height={24} />,
+      file: 'ic_copy_02.svg',
+    },
+    {
       name: 'IcoLearning01',
       Component: <IcoLearning01 width={24} height={24} stroke="#4C515E" />,
       file: 'ic_learning_01.svg',
@@ -1344,6 +1351,11 @@ function RouteComponent() {
       name: 'IcoBookFill',
       Component: <IcoBookFill width={24} height={24} />,
       file: 'ic_book_fill.svg (색상변경금지)',
+    },
+    {
+      name: 'IcoKakaoLine',
+      Component: <IcoKakaoLine width={24} height={24} />,
+      file: 'ic_kakao_line.svg',
     },
   ];
   return (

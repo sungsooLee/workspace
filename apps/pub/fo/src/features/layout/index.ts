@@ -5,6 +5,7 @@ export * from './popup/category-depth-popup-m';
 export * from './popup/category-popup';
 export * from './popup/course-cancel-reason-popup';
 export * from './popup/course-selection-popup';
+export * from './popup/course-share-popup';
 export * from './popup/education-place-popup';
 export * from './popup/filter-popup';
 export * from './popup/gnb-popup-m';
