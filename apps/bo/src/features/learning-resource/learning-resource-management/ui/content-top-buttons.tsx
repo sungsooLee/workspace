@@ -21,9 +21,14 @@ import { TranslationListModal } from './learning-resource-translation-list-modal
 interface Props {
   provider: DynamicFormProvider;
   hasMapping?: boolean;
+  isExamMapping?: boolean;
 }
 
-const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => {
+const ContentTopButtonsComponent = ({
+  provider,
+  hasMapping = false,
+  isExamMapping = false,
+}: Props) => {
   const { data: authUser } = useFetchAuthUser();
   const queryClient = useQueryClient();
 
@@ -110,6 +115,10 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
   }, [data]);
 
   const handleDelete = useCallback(async () => {
+    if (isExamMapping) {
+      return;
+    }
+
     // 번역 항목이 있고 공유 항목이 있으면 삭제 불가 alert
     const removable = await queryClient.fetchQuery(
       learningResourceQueryOptions.getContentRemovable(contentUuid),
