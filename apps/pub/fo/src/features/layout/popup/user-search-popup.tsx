@@ -150,7 +150,7 @@ const UserSearchPopupComponent = () => {
       <ModalTitle>{'사용자 선택'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.user_search}`}>
-          <Panel hideHeaderUnderline className="w-full" type="rounded_fill">
+          <Panel hideHeaderUnderline className={`${styles.panel} w-full`} type="rounded_fill">
             <ContentsRow>
               <div className={`${formStyles.form_item} ${styles.form_item}`}>
                 <div className={formStyles.input_box}>
@@ -163,8 +163,10 @@ const UserSearchPopupComponent = () => {
                     isMulti={false}
                     size={'lg'}
                   />
-                  <Input type="text" value="김현대" inputSize={'lg'} />
-                  <Button variant="primary" size="lx" label="검색" />
+                  <div className={styles.box}>
+                    <Input type="text" value="김현대" inputSize={'lg'} />
+                    <Button variant="primary" size="lx" label="검색" />
+                  </div>
                 </div>
               </div>
             </ContentsRow>
@@ -190,27 +192,6 @@ const UserSearchPopupComponent = () => {
               </div>
             }
           />
-
-          {/* <GridBox
-            className={styles.grid}
-            data={data}
-            columns={columns}
-            title=" "
-            showTotalCount={false}
-            titleCustomNode={
-              <div className="custom_info_wrap">
-                <strong className={styles.count}>
-                  <em>5</em>건
-                </strong>
-              </div>
-            }
-            customButtonNode={
-              <div className={styles.btn_select}>
-                <Button variant="text" size="sm" label={'전체 선택'} />
-                <Button variant="text" size="sm" label={'전체 해제'} />
-              </div>
-            }
-          /> */}
         </div>
       </ModalBody>
       <ModalFooter>
