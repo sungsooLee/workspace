@@ -75,7 +75,7 @@
   input {
     @apply truncate pl-[12px] pr-[30px];
     &:focus {
-      @apply border-[#747D91];
+      @apply border-[var(--gray7)];
     }
   }
   &:has(.react-datepicker__close-icon) input {
@@ -332,9 +332,9 @@
 
 .nlp--datepicker-calendar .react-datepicker__input-container {
   input {
-    @apply input_3_r min-h-[32px] w-full rounded-[4px] border border-solid border-[#d6dae1] text-[var(--gray8)];
+    @apply input_3_r min-h-[32px] w-full rounded-[4px] border border-solid border-[var(--gray4)] text-[var(--gray8)];
     &:focus {
-      @apply border-[#747D91];
+      @apply border-[var(--gray7)];
     }
   }
 }

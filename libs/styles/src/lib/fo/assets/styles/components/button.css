@@ -4,22 +4,22 @@
     @apply !h-[2rem] text-[1.2rem];
   }
   &.sm {
-    @apply label-sm-b !h-[2.8rem];
+    @apply !label-sm !h-[2.8rem];
   }
   &.md {
-    @apply label-sm-b;
+    @apply !label-sm;
   }
   &.lg {
-    @apply label-lg-b !h-[4.4rem];
+    @apply !label-lg !h-[4.4rem];
   }
   &.xl {
-    @apply label-xl-b !h-[4.8rem];
+    @apply !label-xl !h-[4.8rem];
   }
   &.xl2 {
     @apply h-[5.2rem] text-[1.6rem];
   }
   &.primary {
-    @apply !rounded-[8px] !bg-[var(--blue50)] text-white;
+    @apply !rounded-[8px] bg-[var(--blue50)] text-white;
     &:hover {
       @apply bg-[var(--blue65)];
     }
@@ -27,7 +27,7 @@
       @apply bg-[var(--blue35)];
     }
     &:disabled {
-      @apply bg-[var(--gray95)] text-[var(--gray75)];
+      @apply bg-[var(--gray95)] !font-normal text-[var(--gray75)];
       svg {
         @apply stroke-[var(--gray75)];
       }
@@ -38,7 +38,7 @@
   }
   &.secondary,
   &.gray {
-    @apply !label-xl-b rounded-[4px] border border-solid border-[var(--gray75)] bg-[#fff] text-[var(--gray10)];
+    @apply rounded-[4px] border border-solid border-[var(--gray75)] bg-[#fff] !font-normal text-[var(--gray10)];
     &:hover {
       @apply bg-[var(--gray95)];
     }
