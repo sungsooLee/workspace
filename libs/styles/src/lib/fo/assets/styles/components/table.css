@@ -38,3 +38,18 @@
     border-top: 1px solid var(--gray10);
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .table {
+      table {
+        thead tr th {
+          @apply title2;
+        }
+        tbody tr td {
+          @apply body-sm !min-h-[44px];
+        }
+      }
+    }
+  }
+}
