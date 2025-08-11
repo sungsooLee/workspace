@@ -300,7 +300,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     fieldNames.forEach((fieldName) => {
       clearErrors(fieldName);
     });
-  }, [getValues, clearErrors]);
+  }, [dynamicValidator, clearErrors]);
 
   // control 확장: 기본 control에 isFieldRequired 메서드 추가
   const extendedControl: DynamicFormProvider['control'] = useMemo(

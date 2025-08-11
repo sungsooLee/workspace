@@ -31,7 +31,7 @@ export default class LearningSequenceService {
   }
 
   static bulkUpdateSequence(params: any) {
-    return httpService.put(`${LMSApiPrefix()}/sequence/bulk-update`, params);
+    return httpService.put(`${LMSApiPrefix()}/sequences/bulk-update`, params);
   }
 
   static updateSequenceList(params: any) {

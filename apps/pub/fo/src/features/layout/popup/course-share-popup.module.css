@@ -1,0 +1,50 @@
+.start {
+  &.course_share {
+    .txt {
+      @apply body-md mb-[16px] text-[var(--gray35)];
+    }
+    .btn_share {
+      & > button {
+        @apply !min-h-[117px] flex-1 !justify-center !pt-0;
+        [class*='icon'] {
+          @apply mb-[8px] h-[40px] w-[40px];
+          svg {
+            @apply mx-0 h-[40px] w-[40px] stroke-[#131416];
+            path {
+              @apply stroke-[#131416];
+            }
+          }
+        }
+        [class*='label'] {
+          @apply label-xl text-[var(--gray35)];
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.course_share {
+        .txt {
+          @apply rounded-[8px] bg-[var(--gray98)] px-[16px] py-[12px];
+        }
+        .btn_share {
+          & > button {
+            @apply !min-h-[92px];
+            [class*='icon'] {
+              @apply h-[32px] w-[32px];
+              svg {
+                @apply h-[32px] w-[32px];
+              }
+            }
+            [class*='label'] {
+              @apply label-lg;
+            }
+          }
+        }
+      }
+    }
+  }
+}

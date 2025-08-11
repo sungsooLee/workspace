@@ -157,6 +157,9 @@ function LearningResourceSharedTableComponent() {
           value: { from: undefined, to: undefined },
           format: 'object',
         },
+        {
+          type: 'empty',
+        },
       ],
     ],
     validator: {

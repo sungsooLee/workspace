@@ -701,7 +701,7 @@ module.exports = {
 
         '.label-md-b': {
           ...baseTitle,
-          fontSize: '1.3rem',
+          fontSize: '1.4rem',
           fontWeight: '700',
         },
 
