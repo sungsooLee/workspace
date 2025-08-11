@@ -2,7 +2,10 @@ import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
 import { omit, pick } from 'lodash-es';
 import {
+  AssignmentSubmissionCreateReq,
   AssignmentSubmissionItem,
+  AssignmentSubmissionMutationReq,
+  AssignmentSubmissionUpdateReq,
   BlogCreateReq,
   BlogUpdateReq,
   ChannelCodeType,
@@ -272,9 +275,19 @@ export default class LearningResourceService {
    * @param body
    * @returns
    */
-  static createQuestionItem(body: QuestionItem) {
-    return httpService.post<any>(`${CMSApiPrefix()}/exam/question`, body);
+  static createQuestionItem(body: QuestionItem): Promise<string> {
+    return httpService.post(`${CMSApiPrefix()}/exam/question`, body);
   }
+
+  /**
+   * 시험, 문제은행 문항 수정
+   * @param body
+   * @returns
+   */
+  static updateQuestionItem(body: QuestionItem): Promise<string> {
+    return httpService.put(`${CMSApiPrefix()}/exam/question`, body);
+  }
+
   /**
    * 문제은행 or 시험지의 문항 목록 조회
    * @param contentUuid
@@ -356,6 +369,42 @@ export default class LearningResourceService {
    */
   static fetchAssignmentSubmissionList(contentUuid: string): Promise<AssignmentSubmissionItem[]> {
     return httpService.get(`${CMSApiPrefix()}/assignment/submissions/${contentUuid}`);
+  }
+
+  /**
+   * 과제물 단건 상세 조회
+   * @param assignmentSubmissionUuid
+   */
+  static fetchAssignmentSubmissionItem(
+    assignmentSubmissionUuid: string,
+  ): Promise<AssignmentSubmissionItem> {
+    return httpService.get(`${CMSApiPrefix()}/assignment/submission/${assignmentSubmissionUuid}`);
+  }
+
+  /**
+   * 과제물 등록
+   * @param body
+   */
+  static createAssignmentSubmissionItem(body: AssignmentSubmissionCreateReq): Promise<string> {
+    return httpService.post(`${CMSApiPrefix()}/assignment/submission`, body);
+  }
+
+  /**
+   * 과제물 수정
+   * @param body
+   */
+  static updateAssignmentSubmissionItem(body: AssignmentSubmissionUpdateReq): Promise<unknown> {
+    return httpService.put(`${CMSApiPrefix()}/assignment/submission`, body);
+  }
+
+  /**
+   * 선택한 과제물 삭제
+   * @param body
+   */
+  static deleteAssignmentSubmissionItemList(
+    body: AssignmentSubmissionMutationReq,
+  ): Promise<unknown> {
+    return httpService.delete(`${CMSApiPrefix()}/assignment/submission`, body);
   }
 
   /**

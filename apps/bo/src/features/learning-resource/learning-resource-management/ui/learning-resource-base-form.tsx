@@ -46,7 +46,7 @@ const LearningResourceBaseFormComponent = ({
   readOnlyLessonTime?: boolean;
   /** 블로그 에디터 노출 여부 */
   showBlogEditor?: boolean;
-  /** 교육자원명 입력 가능한 글자수 (기본 최대 150자이나 다른 경우 존재함) */
+  /** 교육자원명 입력 가능한 글자수 (기본 최대 150자) */
   contentNameMaxLength?: number;
   /** 교육자원 생성 타입 (수기/번역/공유) */
   createType?: ContentCreateType;

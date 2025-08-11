@@ -3,8 +3,6 @@ import {
   AssignmentTab,
   AssignmentTabRef,
 } from '@features/learning-resource/learning-resource-management/service/assignment/type';
-import { LearningResourceAssignmentBasicInfo } from '@features/learning-resource/learning-resource-management/ui/learning-resource-assignment-basic-info';
-import { LearningResourceAssignmentSubmission } from '@features/learning-resource/learning-resource-management/ui/learning-resource-assignment-submission';
 import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
 import { TabItemProps, Tabs } from '@learnway/ui/tabs';
 
@@ -13,7 +11,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ContentInformation } from '@entities/learning-resource';
-import { ContentTopButtons, getTooltipContent } from '@features/learning-resource';
+import {
+  ContentTopButtons,
+  getTooltipContent,
+  LearningResourceAssignmentBasicInfo,
+  LearningResourceAssignmentSubmission,
+} from '@features/learning-resource';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { ContentCreateType } from '@shared/types/enums';
 import { useModal } from '@learnway/ui/modal';
