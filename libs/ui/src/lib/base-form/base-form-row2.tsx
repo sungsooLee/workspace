@@ -123,7 +123,6 @@ const DynamicFormContainer: FC<FormRowProps> = ({
 
   useEffect(() => {
     if (formInfoArea) {
-      console.log('formInfoArea', formInfoArea);
       onChangeInfoArea(formInfoArea);
     }
   }, [formInfoArea]);

@@ -47,13 +47,6 @@ const FormRowComponent: FC<FormRowProps> = ({
   cols,
   ...restProps
 }) => {
-  // validation prop이 있으면 동적으로 등록
-  // useEffect(() => {
-  //   if (validation && provider.addValidator && name) {
-  //     provider.addValidator(name, validation);
-  //   }
-  // }, [name, JSON.stringify(validation), provider.addValidator]); // JSON.stringify로 안전한 비교
-
   // 간단한 fieldConfig 구성
   const fieldConfig: FormRowFieldConfig = {
     name: name || '', // name 필드 추가

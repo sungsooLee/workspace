@@ -26,7 +26,6 @@ const InputFormFieldComponent = forwardRef<HTMLInputElement, BaseFormFieldProps<
     const [inputProps, setInputProps] = useState<any>(newProps);
 
     const handleOnChange = (e: any) => {
-      console.log('e => ', e);
       onChange(e.target.value);
     };
 
