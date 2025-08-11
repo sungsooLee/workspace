@@ -10,7 +10,7 @@ import { DynamicFormProvider, useCurrentRoute } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { useModal } from '@learnway/ui/modal';
-import { ContentCreateType } from '@shared/types/enums';
+import { ContentCreateType, ContentType } from '@shared/types/enums';
 import { ContentCourseMappingModal } from '@shared/ui/modal';
 import { useQueryClient } from '@tanstack/react-query';
 import { useBlocker, useRouter } from '@tanstack/react-router';
@@ -115,7 +115,12 @@ const ContentTopButtonsComponent = ({
   }, [data]);
 
   const handleDelete = useCallback(async () => {
-    if (isExamMapping) {
+    // 문제은행의 경우 1:1 매핑된 시험지가 있으면 삭제 불가
+    if (contentType === ContentType.EXAM_POOL && isExamMapping) {
+      await openAlert({
+        title: t('시험지에 매핑 중입니다.'),
+        content: t('시험지에 매핑 중인 문제은행은 삭제할 수 없습니다.'),
+      });
       return;
     }
 
