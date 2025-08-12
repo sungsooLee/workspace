@@ -92,12 +92,7 @@ const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoC
               <ReactPlayer url={url} controls width={416} />
             </div>
           )}
-          {type === LEARNING_TYPE.SCORM && (
-            <div className={style.media}>
-              <img src={'https://picsum.photos/320/180'} width="100%" />
-            </div>
-          )}
-          {type === LEARNING_TYPE.HTML5_VIDEO && (
+          {[LEARNING_TYPE.SCORM, LEARNING_TYPE.HTML5_VIDEO].includes(type) && (
             <div className={cn(style.media, 'max-w-[416px]')}>
               <img src={previewImg} width="100%" alt="" />
             </div>
