@@ -7,10 +7,17 @@ import { Button } from '@learnway/ui/button';
 import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { isMobile } from 'react-device-detect';
 import styles from './course-share-popup.module.css';
+import { UserSearchPopup } from './user-search-popup';
 
 const CourseSharePopupComponent = () => {
-  const { closeModal } = useModal();
+  const { openModal } = useModal();
   const [shareValue, setShareValue] = useState<string[]>();
+  const UserSearchPopupOpen = () => {
+    openModal({
+      width: isMobile ? 'm_full' : 'md',
+      content: <UserSearchPopup />,
+    });
+  };
 
   const shareOptionPc = [
     {
@@ -57,14 +64,30 @@ const CourseSharePopupComponent = () => {
             value={shareValue}
             size="lg"
             options={isMobile ? shareOptionMobile : shareOptionPc}
-            onOptionSelect={(option: OptionCardItem) => setShareValue(option.value)}
+            onOptionSelect={(option: OptionCardItem) => {
+              setShareValue(option.value);
+              // mobile에서 확인버튼 누르면 넘어감
+              if (!isMobile) {
+                UserSearchPopupOpen();
+              }
+            }}
           />
         </div>
       </ModalBody>
 
       {isMobile && (
         <ModalFooter>
-          <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
+          <Button
+            label={'확인'}
+            variant={'primary'}
+            size={'lg'}
+            onClick={() =>
+              openModal({
+                width: 'm_full',
+                content: <UserSearchPopup />,
+              })
+            }
+          />
         </ModalFooter>
       )}
     </ModalContainer>

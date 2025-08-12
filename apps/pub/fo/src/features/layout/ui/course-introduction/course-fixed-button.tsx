@@ -1,15 +1,15 @@
-import { memo, useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { isMobile } from 'react-device-detect';
-import { useModal } from '@learnway/ui/modal';
 import { IcoHeart, IcoShare } from '@learnway/icons';
+import { useModal } from '@learnway/ui/modal';
+import { memo, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 
 import {
-  CourseSelectionPopup, // 차수선택 팝업
+  CourseSelectionPopup,
+  CourseSharePopup, // 차수선택 팝업
 } from '../../../../features/layout';
 
-import styles from './course-fixed-button.module.css';
 import { Button } from '@learnway/ui/button';
+import styles from './course-fixed-button.module.css';
 
 interface CourseFixedButton {
   course?: boolean; // 차수 유/무
@@ -33,7 +33,14 @@ const CourseFixedButtonComponent = ({ course }: CourseFixedButton) => {
         />
         922
       </Button>
-      <Button>
+      <Button
+        onClick={() =>
+          openModal({
+            width: isMobile ? 'm_bottom_sheet' : 's',
+            content: <CourseSharePopup />,
+          })
+        }
+      >
         <IcoShare width={20} height={20} stroke="#4c515e" />
         공유
       </Button>

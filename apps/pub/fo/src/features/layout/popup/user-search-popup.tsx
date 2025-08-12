@@ -6,7 +6,10 @@ import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '@learnway/ui
 import { Panel } from '@learnway/ui/panel';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
+import { IcoFormRequired } from '@learnway/icons';
+import { cn, SelectOption } from '@learnway/shared';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
+import { ChipList } from '@learnway/ui/chips';
 import { Dropdown } from '@learnway/ui/dropdown';
 import { TableBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
@@ -145,6 +148,26 @@ const UserSearchPopupComponent = () => {
     }),
   ] as ColumnDef<any, unknown>[];
 
+  const chipsValues: SelectOption[] = [
+    { label: '현대자동차 A', value: 'A' },
+    { label: '현대자동차 B', value: 'B' },
+    { label: '현대자동차 C', value: 'C' },
+    { label: '현대자동차 D', value: 'E' },
+    { label: '현대자동차 F', value: 'F' },
+    { label: '현대자동차 G', value: 'G' },
+    { label: '현대자동차 H', value: 'H' },
+    { label: '현대자동차 I', value: 'I' },
+    { label: '현대자동차 J', value: 'J' },
+    { label: '현대자동차 K', value: 'K' },
+    { label: '현대자동차 L', value: 'L' },
+    { label: '현대자동차 M', value: 'M' },
+    { label: '현대자동차 N', value: 'N' },
+    { label: '현대자동차 O', value: 'O' },
+    { label: '현대자동차 P', value: 'P' },
+    { label: '현대자동차 Q', value: 'Q' },
+    { label: '현대자동차 R', value: 'R' },
+  ];
+
   return (
     <ModalContainer>
       <ModalTitle>{'사용자 선택'}</ModalTitle>
@@ -192,6 +215,38 @@ const UserSearchPopupComponent = () => {
               </div>
             }
           />
+
+          <div className={styles.detail_box}>
+            <strong className={styles.tit}>내 그룹 상세</strong>
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="group" className={formStyles.form_label}>
+                  <span className={formStyles.form_text}>그룹명</span>
+                  {/* 필수 케이스 */}
+                  <span className={cn(formStyles.status, formStyles.required)}>
+                    <IcoFormRequired width={14} height={14} />
+                  </span>
+                </label>
+                <div className={formStyles.input_box}>
+                  <Input id="group" type="text" placeholder="입력" value="" inputSize="lg" />
+                </div>
+              </div>
+            </ContentsRow>
+            <ContentsRow>
+              <div className={formStyles.form_item}>
+                <label htmlFor="group" className={`${formStyles.form_label}`}>
+                  <span className={formStyles.form_text}>그룹원</span>
+                  <span className={styles.count}>
+                    <em>150</em>명
+                  </span>
+                  <Button className={`${formStyles.comment} ${styles.btn_add}`}>추가</Button>
+                </label>
+                <div className={formStyles.input_box}>
+                  <ChipList options={chipsValues} className={styles.chip} />
+                </div>
+              </div>
+            </ContentsRow>
+          </div>
         </div>
       </ModalBody>
       <ModalFooter>
