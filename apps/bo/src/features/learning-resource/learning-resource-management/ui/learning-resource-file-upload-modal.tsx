@@ -86,7 +86,6 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({
     }
     if (stats.status === 'completed') {
       handleEncoding();
-      if (files.length === 1) onConfirm();
     }
   }, [stats]);
 

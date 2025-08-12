@@ -1,5 +1,3 @@
-import { useModal } from '@learnway/ui/modal';
-import { PageContainer } from '@shared/ui/layout';
 // IA105 / NLP_BO_CMS_1058 // IA105 / NLP_BO_CMS_1017 // IA106 / NLP_BO_CMS_1060
 import {
   PostDraftETCRes,
@@ -12,13 +10,18 @@ import {
   usePostDraftVideos,
 } from '@entities/learning-resource';
 import {
+  CreateModal,
   LearningResourceFileUploadModal,
   LearningTypeChoiceModal,
 } from '@features/learning-resource';
 import { getDefaultLang, LEARNING_TYPE } from '@learnway/config';
+import { useModal } from '@learnway/ui/modal';
+import { PageContainer } from '@shared/ui/layout';
 import { ChannelChoiceModal } from '@shared/ui/modal';
-import { useRouter, createLazyFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 
+import { useModalStore } from '@learnway/ui/stores';
+import { t } from 'i18next';
 import { pick } from 'lodash-es';
 import { useEffect, useState } from 'react';
 
@@ -28,7 +31,8 @@ export const Route = createLazyFileRoute('/_layout/learning/learning-resource/re
 
 function RouteComponent() {
   const router = useRouter();
-  const { openModal } = useModal();
+  const { openModal, alert: openAlert } = useModal();
+  const { closeModal } = useModalStore();
 
   const [selectedType, setSelectedType] = useState<LEARNING_TYPE>('');
 
@@ -36,8 +40,37 @@ function RouteComponent() {
     { tenantId: string; channelUuid: string } | undefined
   >();
 
+  const openCreateModal = async () => {
+    console.log('🚀 ~ CreateModal opened');
+    openModal({
+      zIndex: 10000,
+      width: 's',
+      hideCloseButton: true,
+      content: <CreateModal />,
+    });
+
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  };
+
+  const closeCreateModal = () => {
+    console.log('🚀 ~ CreateModal closed');
+    closeModal();
+  };
+
+  const openFailAlert = async () => {
+    await openAlert({
+      title: t('교육자원 생성이 실패되었습니다.'),
+      content: t(`'확인' 선택 시 목록으로 이동합니다.`),
+    });
+    router.navigate({
+      to: '/learning/learning-resource',
+      replace: true,
+    });
+  };
+
   const { create: postDraftVideos } = usePostDraftVideos({
     onSuccess: (result: PostDraftVideosRes) => {
+      closeCreateModal();
       if (result.contents.length === 1) {
         return router.navigate({
           to: '/learning/learning-resource/view',
@@ -56,13 +89,16 @@ function RouteComponent() {
       });
     },
     onError: (error: any) => {
+      closeCreateModal();
       console.error(error);
       // 에러 얼럿 띄우면서 다시 리스트 화면으로?
+      openFailAlert();
     },
   });
 
   const { create: postDraftScorm } = usePostDraftScorm({
     onSuccess: (result: PostDraftScormRes) => {
+      closeCreateModal();
       if (result.contents.length === 1) {
         return router.navigate({
           to: '/learning/learning-resource/view',
@@ -81,13 +117,16 @@ function RouteComponent() {
       });
     },
     onError: (error: any) => {
+      closeCreateModal();
       console.error(error);
       // 에러 얼럿 띄우면서 다시 리스트 화면으로?
+      openFailAlert();
     },
   });
 
   const { upload: postDraftHTMLVideo } = usePostDraftHTMLVideo({
     onSuccess: (result: PostDraftHtmlVideoRes) => {
+      closeCreateModal();
       if (result.contentUuid) {
         return router.navigate({
           to: '/learning/learning-resource/view',
@@ -105,10 +144,16 @@ function RouteComponent() {
         replace: true,
       });
     },
+    onError: (error: any) => {
+      closeCreateModal();
+      console.error(error);
+      openFailAlert();
+    },
   });
 
   const { create: postDraftETC } = usePostDraftETC({
     onSuccess: (result: PostDraftETCRes) => {
+      closeModal();
       return router.navigate({
         to: '/learning/learning-resource/view',
         state: {
@@ -118,8 +163,10 @@ function RouteComponent() {
       });
     },
     onError: (error: any) => {
+      closeModal();
       console.error(error);
       // 에러 얼럿 띄우면서 다시 리스트 화면으로?
+      openFailAlert();
     },
   });
 
@@ -142,6 +189,7 @@ function RouteComponent() {
     }
 
     setListParam(pick(channelInfo, ['tenantId', 'channelUuid']));
+    await openCreateModal();
     postDraftVideos({
       languageCountryCode: getDefaultLang().toUpperCase(),
       tenantId: channelInfo.tenantId,
@@ -169,6 +217,7 @@ function RouteComponent() {
     }
 
     setListParam(pick(channelInfo, ['tenantId', 'channelUuid']));
+    await openCreateModal();
     postDraftScorm({
       languageCountryCode: getDefaultLang().toUpperCase(),
       tenantId: channelInfo.tenantId,
@@ -204,7 +253,7 @@ function RouteComponent() {
     }
 
     setListParam(pick(channelInfo, ['tenantId', 'channelUuid']));
-
+    await openCreateModal();
     postDraftHTMLVideo({
       languageCountryCode: getDefaultLang().toUpperCase(),
       tenantId: channelInfo.tenantId,
@@ -238,6 +287,7 @@ function RouteComponent() {
     }
 
     setListParam(pick(channelInfo, ['tenantId', 'channelUuid']));
+    await openCreateModal();
     postDraftETC({
       languageCountryCode: getDefaultLang().toUpperCase(),
       tenantId: channelInfo.tenantId,

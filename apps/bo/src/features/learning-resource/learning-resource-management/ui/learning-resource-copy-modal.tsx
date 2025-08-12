@@ -51,7 +51,7 @@ const CopyModalComponent = ({ contentUuid }: { contentUuid: string }) => {
   ) : (
     <div>
       <Button variant="primary" size="lg" onClick={() => closeModal()}>
-        t('확인')
+        {t('확인')}
       </Button>
     </div>
   );
