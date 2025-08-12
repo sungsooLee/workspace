@@ -1,0 +1,9 @@
+/* toggle-action-button-list.module.css */
+.start {
+  &.wrap {
+    @apply flex w-full flex-wrap whitespace-normal;
+    .item {
+      @apply mr-[4px];
+    }
+  }
+}

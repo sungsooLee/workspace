@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styles from './toggle-action-button.module.css';
 
 import { IcoClose02 } from '@learnway/icons';
+import { Avatar } from '@learnway/ui/avatar';
 import { Button } from '@learnway/ui/button';
 
 interface ToggleActionButtonProps {
@@ -10,8 +11,10 @@ interface ToggleActionButtonProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   rounded?: boolean;
   disabled?: boolean;
+  imageUrl?: string;
   iconNode?: React.ReactNode;
   showCloseButton?: boolean;
+  className?: string;
 }
 
 export const ToggleActionButton: React.FC<ToggleActionButtonProps> = ({
@@ -19,8 +22,10 @@ export const ToggleActionButton: React.FC<ToggleActionButtonProps> = ({
   size = 'md',
   rounded = false,
   disabled = false,
+  imageUrl,
   iconNode,
   showCloseButton = false,
+  className,
 }) => {
   const [isActive, setIsActive] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -44,16 +49,21 @@ export const ToggleActionButton: React.FC<ToggleActionButtonProps> = ({
         rounded && styles.rounded,
         disabled && styles.disabled,
         isActive ? styles.active : null,
+        'nlp--toggle-action-btn',
+        className,
       )}
     >
       <Button
         className={styles.btn}
         icon={iconNode}
+        iconAlign={'left'}
         onClick={handleToggle}
-        label={label}
         disabled={disabled}
-      />
-      {showCloseButton && !disabled && (
+      >
+        {imageUrl && <Avatar imageUrl={imageUrl} className={styles.image_wrap} size={'sm'} />}
+        <span className={styles.label}>{label}</span>
+      </Button>
+      {showCloseButton && (
         <Button
           className={styles.close}
           onClick={handleClose}
