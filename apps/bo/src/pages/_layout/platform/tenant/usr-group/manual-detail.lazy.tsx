@@ -239,8 +239,10 @@ function RouteComponent() {
 
   // 유저 그룹 설정 목록에서 추가된 데이터 기반으로 검색하는 기능
   const handleOnSearchManual = () => {
-    const payload = searchParams();
-    gridManualFetch(payload);
+    if (modalUserGroups) {
+      const payload = searchParams();
+      gridManualFetch(payload);
+    }
   };
 
   const handleListButtonClick = () => {
@@ -320,9 +322,16 @@ function RouteComponent() {
         return { userUuid: row.userUuid };
       });
 
-      console.log('payload {} => ', payload);
+      const filteredPayload = Object.fromEntries(
+        Object.entries(payload).filter(
+          ([_, value]) => value !== null && value !== undefined && value !== '' &&
+            !(Array.isArray(value) && value.length === 0) &&
+            !(Array.isArray(value) && value.length === 1 && value[0] === undefined),
+        ),
+      );
+      console.log('payload {} => ', filteredPayload);
       if (await openConfirm(t('저장 하시겠습니까?'))) {
-        create(payload);
+        create(filteredPayload);
       }
     }
   };
