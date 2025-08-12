@@ -13,6 +13,7 @@ import { Spinner } from '@learnway/ui/spinner';
 import { ProcessingStatus } from '@shared/types/enums';
 import { t } from 'i18next';
 import ReactPlayer from 'react-player';
+import { cn } from '@learnway/shared';
 
 interface MediaInfoComponentProps {
   status: ProcessingStatus;
@@ -97,7 +98,7 @@ const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoC
             </div>
           )}
           {type === LEARNING_TYPE.HTML5_VIDEO && (
-            <div className={style.media}>
+            <div className={cn(style.media, 'max-w-[416px]')}>
               <img src={previewImg} width="100%" alt="" />
             </div>
           )}

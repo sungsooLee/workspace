@@ -37,7 +37,6 @@ const BlogDetailComponent = ({
   const { provider, getValues, updateFormData, onFormChange, watch } = form;
 
   const createType = watch('createType');
-  console.log('createType', createType);
 
   const { data: loginUser } = useFetchAuthUser();
 
@@ -48,7 +47,7 @@ const BlogDetailComponent = ({
         ...getValues(),
         coordinatorUuid: loginUser?.uuid,
         coordinatorName: loginUser?.name,
-        coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
+        // coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
         coordinatorTelNo: loginUser?.phoneNumber,
       });
     },
