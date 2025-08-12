@@ -25,7 +25,7 @@ body {
 }
 
 strong {
-  @apply font-[600];
+  @apply font-[700];
 }
 
 img {

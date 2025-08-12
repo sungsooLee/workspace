@@ -58,7 +58,7 @@ export const PAGE_META_BY_PATH: Record<string, PageMeta> = {
   },
   '/pb-fo/password-modify': {
     title: '비밀번호 변경',
-    info: '기존 비밀번호를 변경하세요.',
+    info: '',
   },
   '/pb-fo/search-id-success': {
     title: '아이디찾기',
