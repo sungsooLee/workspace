@@ -92,9 +92,10 @@ const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoC
               <ReactPlayer url={url} controls width={416} />
             </div>
           )}
+          {/* FIXME: 추후 유형별 기본 이미지로 변경 예정 */}
           {type === LEARNING_TYPE.SCORM && (
-            <div className={style.media}>
-              <img src={'https://picsum.photos/320/180'} width="100%" />
+            <div className={cn(style.media, 'max-w-[416px]')}>
+              <img src={previewImg} width="100%" alt="" />
             </div>
           )}
           {type === LEARNING_TYPE.HTML5_VIDEO && (
