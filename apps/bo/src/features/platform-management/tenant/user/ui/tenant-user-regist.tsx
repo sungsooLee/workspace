@@ -23,7 +23,7 @@ import { queryOptions as CompanyService } from '@entities/companies/service/comp
 import UsersService from '@entities/users/api/users';
 import { useCreateUser } from '@entities/users/service/users.hook';
 import { LoginAuthenticationSettingInformation } from '@features/platform-management/company';
-import { CompanyUserDetailAccount2 } from '@features/platform-management/company/company-user-management/ui/company-user-detail-account2';
+import { CompanyUserDetailAccount } from '@features/platform-management/company/company-user-management/ui/company-user-detail-account';
 import { EnFormMode } from '@shared/types/enums';
 import {
   DropdownFormField,
@@ -512,7 +512,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
         />
       </ContentsRow>
 
-      <CompanyUserDetailAccount2 provider={provider} formMode={EnFormMode.ADD} />
+      <CompanyUserDetailAccount provider={provider} formMode={EnFormMode.ADD} />
       <ContentsRow>
         <FormRow2
           provider={provider}

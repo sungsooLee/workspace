@@ -20,7 +20,7 @@ import { EnFormMode, EnGlobalConst } from '@shared/types/enums';
 import { ContentsHistoryInfoFormField, DuplicateState, FormItem } from '@shared/ui/form';
 
 import { getUserStatus } from '../service/company-user.service';
-import { CompanyUserDetailAccount2 } from './company-user-detail-account2';
+import { CompanyUserDetailAccount } from './company-user-detail-account';
 import { CompanyUserDetailAuthentication } from './company-user-detail-auth';
 import { CompanyUserDetailJob } from './company-user-detail-job';
 import { CompanyUserDetailPersonal } from './company-user-detail-personal';
@@ -63,6 +63,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       setDeliveryList(data);
     };
     if (props.userInfo) {
+      console.log('### props.userInfo', props.userInfo);
       const user = props.userInfo;
       const dates = [user.lockedDate, user.dormantDate, user.deletedDate];
       const latestDate = compareLatestDate(dates);
@@ -146,8 +147,10 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
           role2: user.jobRole[i] ?? null,
         }));
         initialData.jobDomains = result;
+      } else {
+        initialData.jobDomain = '';
       }
-
+      console.log('### initialData', initialData);
       updateFormData(initialData);
       initDeliveryList();
     }
@@ -180,7 +183,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
     const payload = {
       userUuid: props.userInfo.uuid,
       companyId: props.userInfo.company.companyId, //회사 id
-      departmentId: props.userInfo.dept.deptId, // 부서 id
+      departmentId: props.userInfo.dept?.deptId, // 부서 id
       // 회사/조직 정보
       isOnLeave: false, // 재직 상태: (휴직)
       isSuspended: false, // 재직 상태: (정직)
@@ -356,7 +359,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       {/* 직군/직무 정보 */}
       <CompanyUserDetailJob provider={provider} />
       {/* 계정 정보 */}
-      <CompanyUserDetailAccount2 provider={provider} formMode={EnFormMode.VIEW} />
+      <CompanyUserDetailAccount provider={provider} formMode={EnFormMode.VIEW} />
       {/* 로그인 및 인증 설정 정보 */}
       <CompanyUserDetailAuthentication provider={provider} />
       <ContentsHistoryInfoFormField provider={provider} />
