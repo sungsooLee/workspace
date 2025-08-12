@@ -103,6 +103,13 @@ function ExamPoolViewComponent({ content, hasMapping }: Props) {
     if (baseInfoRef.current) {
       baseInfoRef.current?.save?.(data);
     } else if (questionInfoRef.current) {
+      if (hasMapping) {
+        await alert({
+          title: t('과정에서 사용 중입니다.'),
+          content: t('과정에서 사용 중인 교육자원은 수정할 수 없습니다.'),
+        });
+        return;
+      }
       questionInfoRef.current?.complete?.();
     }
   };

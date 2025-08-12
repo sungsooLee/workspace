@@ -1,8 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 
-import previewImg from '@learnway/styles/bo/assets/images/temp/img_exam_basic.jpg';
-import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
-
 import { UseDynamicFormResult } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { SplitPanel } from '@learnway/ui/elements';
@@ -21,6 +18,9 @@ import { useModal } from '@learnway/ui/modal';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { LearningResourceBaseForm } from '../learning-resource-base-form';
+
+import defaultImage from '@learnway/styles/bo/assets/images/cms/exam_pool.jpg';
+import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 
 type QuestionBankDetailProps = {
   form: UseDynamicFormResult;
@@ -97,7 +97,7 @@ const LearningResourceQuestionBankDetailComponent = forwardRef<
       <div key="base2">
         <FormSubTitle noLine label={t('문제은행')} />
         <div className={movieInfoStyles.media}>
-          <img src={previewImg} width="100%" alt="" />
+          <img src={defaultImage} width="100%" alt="" />
         </div>
       </div>
     </SplitPanel>

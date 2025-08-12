@@ -21,7 +21,6 @@ import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType } from '@shared/types/enums';
 
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
-import { QueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -41,8 +40,6 @@ function ExamViewComponent({ content, hasMapping }: Props) {
     state: { isTranslated },
   } = useCurrentRoute();
   const { t } = useTranslation();
-
-  const queryClient = new QueryClient();
 
   const { alert, confirm: openConfirm } = useModal();
 
@@ -65,19 +62,21 @@ function ExamViewComponent({ content, hasMapping }: Props) {
         });
       }
     },
-    // onUpdateSuccess: async (result?: unknown) => {
-    //   const refetchedData = await queryClient.fetchQuery(
-    //     learningResourceQueryOptions.getContent<TestPaperBasicInfoDetail>(contentUuid),
-    //   );
-    // },
   });
 
   const { provider, onSubmit } = basicInfoForm;
 
-  const handleSubmit = (data: Record<string, any>) => {
+  const handleSubmit = async (data: Record<string, any>) => {
     if (basicInfoRef.current) {
       basicInfoRef.current?.save?.(data);
     } else if (questionInfoRef.current) {
+      if (hasMapping) {
+        await alert({
+          title: t('과정에서 사용 중입니다.'),
+          content: t('과정에서 사용 중인 교육자원은 수정할 수 없습니다.'),
+        });
+        return;
+      }
       questionInfoRef.current?.complete?.();
     }
   };

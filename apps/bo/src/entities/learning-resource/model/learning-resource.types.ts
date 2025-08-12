@@ -664,10 +664,12 @@ export interface QuestionListForRetrieveRes {
   channelName: string;
 }
 
-export interface QuestionsCopyReq {
+export interface QuestionsRetrieveReq {
   examPoolContentUuid: string;
   questionUuidList: string[];
 }
+
+export type QuestionsCopyReq = QuestionsRetrieveReq;
 
 export interface QuestionSortItem {
   examQuestionUuid: string;

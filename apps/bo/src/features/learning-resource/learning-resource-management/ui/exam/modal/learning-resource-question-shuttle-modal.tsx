@@ -31,7 +31,7 @@ const LearningResourceQuestionShuttleComponent = ({
     onSubmit,
     gridData,
     handleSelectQuestions,
-    handleCopyQuestions,
+    handleRetrieveQuestions,
   } = useQuestionImport(examPoolUuid);
 
   const handleViewQuestionButtonClick = useCallback(async (item: QuestionListForRetrieveRes) => {
@@ -47,7 +47,7 @@ const LearningResourceQuestionShuttleComponent = ({
   }, []);
 
   const handleClickSaveButton = () => {
-    handleCopyQuestions();
+    handleRetrieveQuestions();
   };
 
   const columns = useMemo(() => {
