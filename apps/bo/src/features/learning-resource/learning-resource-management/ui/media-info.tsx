@@ -8,6 +8,7 @@ import { LEARNING_TYPE } from '@learnway/config';
 import { IcoStatusFail } from '@learnway/icons';
 import scormDefaultImage from '@learnway/styles/bo/assets/images/cms/scom.jpg';
 import htmlVideoDefaultImage from '@learnway/styles/bo/assets/images/cms/html.jpg';
+import etcDefaultImage from '@learnway/styles/bo/assets/images/cms/etc.jpg';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import { Button } from '@learnway/ui/button';
 import { Spinner } from '@learnway/ui/spinner';
@@ -103,6 +104,11 @@ const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoC
           {type === LEARNING_TYPE.HTML5_VIDEO && (
             <div className={cn(style.media, 'max-w-[416px]')}>
               <img src={htmlVideoDefaultImage} width="100%" alt="" />
+            </div>
+          )}
+          {type === LEARNING_TYPE.ETC && (
+            <div className={cn(style.media, 'max-w-[416px]')}>
+              <img src={etcDefaultImage} width="100%" alt="" />
             </div>
           )}
           {/* info_list */}
