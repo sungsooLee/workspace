@@ -5,6 +5,7 @@ import { API_FO_URI, initAxios, initI18N, initZod, setConfig } from '@learnway/c
 
 import { useFetchCodeGroups, useFetchI18nResource } from '@entities/platform';
 
+import { useCodeStore } from '@learnway/hooks';
 import { Spinner } from '@learnway/ui/spinner';
 import '../styles.css';
 
@@ -26,11 +27,15 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const { data: i18nData } = useFetchI18nResource();
   // const { reissue } = useAuthSignin();
   // const { alert } = useModal();
+  const { reset: resetCode } = useCodeStore();
 
   useMount(async () => {
-    // set api prefix by fo
+    // 글로벌 컨피그 세팅 BO/FO
     setConfig('APP_INFO', 'FO');
+    // set api prefix by fo
     setConfig('APP_API_URI', API_FO_URI);
+    // 공통코드 삭제
+    resetCode();
     // tokenService.refreshToken && (await reissue());
   });
 

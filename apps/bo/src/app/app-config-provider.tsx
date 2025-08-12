@@ -14,6 +14,7 @@ import { useFetchCodeGroups, useFetchI18nResource } from '../entities/platform';
 import { useAuthSignin } from '../features/auth';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useCodeStore } from '@learnway/hooks';
 import { Spinner } from '@learnway/ui/spinner';
 import '../styles.css';
 
@@ -35,12 +36,14 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const { data: i18nData } = useFetchI18nResource();
   const { reissue } = useAuthSignin();
   const { data: authUser } = useFetchAuthUser();
+  const { reset: resetCode } = useCodeStore();
 
   useMount(async () => {
+    // 글로벌 컨피그 세팅 BO/FO
     setConfig('APP_INFO', 'BO');
-    // console.log('### useMount start');
+    // 공통코드 삭제
+    resetCode();
     // tokenService.refreshToken && (await reissue());
-    // console.log('### useMount end');
   });
 
   useEffect(() => {
