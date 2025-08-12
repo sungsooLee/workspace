@@ -88,12 +88,23 @@ const UserGroupModalComponent = ({ groups }: Pick<BlackwhiteUsersParam, 'groups'
       cell: (info) => info.getValue(),
       header: '이름',
     }),
-    columnHelper.accessor('status', {
-      cell: (info) => info.getValue(),
+    columnHelper.accessor('userStatus', {
+      cell: (info) => {
+        const { userStatus } = info.row.original;
+        if (userStatus === 'ACTIVE') return t('재직');
+        // else if (isOnLeave && retireDate) return t('퇴직');
+        else return t('휴직');
+      },
       header: '재직여부',
     }),
     columnHelper.accessor('accountStatus', {
-      cell: (info) => info.getValue(),
+      cell: (info) => {
+        const { accountStatus } = info.row.original;
+        if (accountStatus === 'NORMAL') return t('정상');
+        // else if (accountStatus !== null) return t('잠김');
+        // else if (dormantDate !== null) return t('휴면');
+        return t('휴면');
+      },
       header: '계정상태',
     }),
   ] as ColumnDef<any, unknown>[];
