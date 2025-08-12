@@ -1,0 +1,36 @@
+.start {
+  &.dormant_info {
+    .btn_wrap {
+      @apply mt-[60px];
+    }
+    .dormant {
+      i {
+        &[class*='ico'] {
+          @apply h-[80px] w-[80px] rounded-full bg-[var(--gray95)];
+        }
+      }
+    }
+  }
+}
+
+/* mobile */
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.dormant_info {
+        .btn_wrap {
+        }
+        .dormant {
+          i {
+            &[class*='ico'] {
+              @apply h-[56px] w-[56px];
+              svg {
+                @apply w-[30px];
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
