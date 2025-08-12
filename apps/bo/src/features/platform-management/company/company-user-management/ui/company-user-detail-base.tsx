@@ -76,8 +76,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
           fieldValue: user.email,
           checkState: DuplicateState.okStart,
         },
-        gender:
-          user.gender && t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Gender.${user.gender}`),
+        gender: user.gender,
         area: user.locale?.displayCountry,
         birthday: user.birthday ? new Date(user.birthday) : '',
         position: user.isLeader ? t('조직장') : t('조직원'),
@@ -150,6 +149,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       } else {
         initialData.jobDomain = '';
       }
+
       console.log('### initialData', initialData);
       updateFormData(initialData);
       initDeliveryList();
@@ -191,13 +191,16 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       name: data.name, // 이름
       engName: data.engName, // 영문 이름
       employeeNumber: data.employeeNumber, // 사번
-      birthday: dayjs(data.birthday).format('YYYY-MM-DD'), // 생년월일
+      birthday: data.birthday ? dayjs(data.birthday).format('YYYY-MM-DD') : null, // 생년월일
       gender: data.gender, // 성별
       phoneNumber: data.phoneNumber, // 휴대폰 번호
       companyPhoneNumber: data.companyPhoneNumber, // 연락처(사무실)
       // 직군/직무: 직군 선택에 따른 직무 - 현재 공통 코드로만 존재할지 아니면 따로 관리를 할지를 협의해야한다고 해서 구현 못 함.
-      jobDomain: [''],
-      jobRole: [''],
+      // jobDomain: [''],
+      // jobRole: [''],
+      jobDomain: '',
+      jobRole: '',
+
       // 계정 정보
       linkageSystem: data.hrInfoManageType !== 'MANUAL_MANAGE' ? data.hrInfoManageType : null,
       accountStatus: 'NORMAL',
@@ -205,9 +208,9 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       // 로그인 및 인증 설정 정보
       ssoType: data.isUseSso ? data.ssoTypeList : null,
       authType: data.authType,
-      twoFactorAuthType: data['2FAType'],
-      foTwoFactorAuthEnabled: false,
-      boTwoFactorAuthEnabled: false,
+      // twoFactorAuthType: data['2FAType'],
+      // foTwoFactorAuthEnabled: false,
+      // boTwoFactorAuthEnabled: false,
     };
 
     if (data.userState === '2') {
@@ -222,14 +225,16 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       payload.linkageSystem = data.linkageSystem;
     }
 
-    if (data.isUseTwoFactorAuth) {
-      payload.foTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('FO_PLATFORM');
-      payload.boTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('BO_PLATFORM');
-    }
+    // if (data.isUseTwoFactorAuth) {
+    //   payload.foTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('FO_PLATFORM');
+    //   payload.boTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('BO_PLATFORM');
+    // }
 
     if (data.jobDomain && data.jobDomain !== '' && data.jobDomain.length !== 0) {
-      payload.jobDomain = Array.of(data.jobDomain);
-      payload.jobRole = [];
+      // payload.jobDomain = Array.of(data.jobDomain);
+      // payload.jobRole = [];
+      payload.jobDomain = data.jobDomain;
+      payload.jobRole = '';
     } else {
       if (data.jobDomains) {
         const jobDomains: any[] = [];
@@ -238,8 +243,10 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
           jobDomains.push(job.role1);
           jobRoleNames.push(job.role2);
         });
-        payload.jobDomain = [...jobDomains];
-        payload.jobRole = [...jobRoleNames];
+        // payload.jobDomain = [...jobDomains];
+        // payload.jobRole = [...jobRoleNames];
+        payload.jobDomain = jobDomains.join(',');
+        payload.jobRole = jobRoleNames.join(',');
       }
     }
 
@@ -271,6 +278,8 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
 
       <FormSubTitle label={t('회사/조직 정보')} lineType={'dark'} />
       <ContentsRow>
+        <FormRow2 provider={provider} name={'companyId'} type={'hidden'}/>
+        <FormRow2 provider={provider} name={'deptId'} type={'hidden'}/>
         <FormRow2
           provider={provider}
           name={'companyName'}
