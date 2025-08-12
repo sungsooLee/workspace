@@ -48,7 +48,11 @@ import {
 
 import { MobileContainerFooter } from '@shared/m.ui';
 
-import { useChannelDetail } from '@entities/channel';
+import {
+  useChannelDetail,
+  useChannelSubscription,
+  useChannelUnsubscription,
+} from '@entities/channel';
 import { useGetCurriculumnDetail } from '@entities/curriculum';
 import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail-m.module.css';
 import { t } from 'i18next';
@@ -331,11 +335,37 @@ export function CourseDetailMobile({ courseId, courseData }: { courseId: any; co
     });
   };
 
+  // 채널 구독 API
+  const { mutateAsync: channelSubscription } = useChannelSubscription();
+  const { mutateAsync: channelUnsubscription } = useChannelUnsubscription();
+  const handleSubscribe = async () => {
+    await channelSubscription(courseData?.channelUuid, {
+      onSuccess: (data) => {
+        console.log('채널 구독 성공', data);
+        handleSubscribeToast('채널을 구독하였습니다');
+      },
+      onError: (err) => {
+        console.log('채널 구독 에러', err);
+      },
+    });
+  };
+  const handleUnsubscribe = async () => {
+    await channelUnsubscription(courseData?.channelUuid, {
+      onSuccess: (data) => {
+        console.log('채널 구독 해지 성공', data);
+        handleSubscribeToast('채널을 구독을 취소하였습니다');
+      },
+      onError: (err) => {
+        console.log('채널 구독 해지 에러', err);
+      },
+    });
+  };
+
   // toast popup (공통)
   const { open: openToast } = useToast();
-  const handleSubscribeToast = () => {
+  const handleSubscribeToast = (title: string) => {
     openToast({
-      title: '채널을 구독하였습니다.',
+      title: title,
       // actionLabel: '버튼',
       type: 'success',
       // onActionClick: () => {
@@ -676,14 +706,24 @@ export function CourseDetailMobile({ courseId, courseData }: { courseId: any; co
               <strong className={packageInformationStyles.channel_name}>
                 {channelData.channelName}
               </strong>
-              {/* <Button
+              <Button
                 className={packageInformationStyles.btn_subscribe}
                 variant="primary"
-                size="md"
-                onClick={() => handleSubscribeToast()}
+                size="xl"
+                // onClick={() => handleSubscribeToast()}
+                onClick={() => handleSubscribe()}
               >
                 구독하기
-              </Button> */}
+              </Button>
+              <Button
+                className={packageInformationStyles.btn_subscribe}
+                variant="line"
+                size="xl"
+                // onClick={() => handleSubscribeToast()}
+                onClick={() => handleUnsubscribe()}
+              >
+                구독해지
+              </Button>
             </div>
           )}
         </div>

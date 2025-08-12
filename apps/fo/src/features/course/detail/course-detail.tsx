@@ -49,7 +49,11 @@ import {
   default as listImage1,
 } from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
-import { useChannelDetail } from '@entities/channel';
+import {
+  useChannelDetail,
+  useChannelSubscription,
+  useChannelUnsubscription,
+} from '@entities/channel';
 import { useGetCurriculumnDetail } from '@entities/curriculum';
 import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail.module.css';
 import { Panel } from '@learnway/ui/panel';
@@ -328,11 +332,37 @@ export function CourseDetail({ courseId, courseData }: { courseId: any; courseDa
     },
   ];
 
+  // 채널 구독 API
+  const { mutateAsync: channelSubscription } = useChannelSubscription();
+  const { mutateAsync: channelUnsubscription } = useChannelUnsubscription();
+  const handleSubscribe = async () => {
+    await channelSubscription(courseData?.channelUuid, {
+      onSuccess: (data) => {
+        console.log('채널 구독 성공', data);
+        handleSubscribeToast('채널을 구독하였습니다');
+      },
+      onError: (err) => {
+        console.log('채널 구독 에러', err);
+      },
+    });
+  };
+  const handleUnsubscribe = async () => {
+    await channelUnsubscription(courseData?.channelUuid, {
+      onSuccess: (data) => {
+        console.log('채널 구독 해지 성공', data);
+        handleSubscribeToast('채널을 구독을 취소하였습니다');
+      },
+      onError: (err) => {
+        console.log('채널 구독 해지 에러', err);
+      },
+    });
+  };
+
   // toast popup (공통)
   const { open: openToast } = useToast();
-  const handleSubscribeToast = () => {
+  const handleSubscribeToast = (title: string) => {
     openToast({
-      title: '채널을 구독하였습니다.',
+      title: title,
       // actionLabel: '버튼',
       type: 'success',
       // onActionClick: () => {
@@ -751,15 +781,24 @@ export function CourseDetail({ courseId, courseData }: { courseId: any; courseDa
                   <strong className={packageInformationStyles.channel_name}>
                     {channelData.channelName}
                   </strong>
-                  {/* <Button
+                  <Button
                     className={packageInformationStyles.btn_subscribe}
                     variant="primary"
                     size="xl"
-                    onClick={() => handleSubscribeToast()}
+                    // onClick={() => handleSubscribeToast()}
+                    onClick={() => handleSubscribe()}
                   >
                     구독하기
-                  </Button> */}{' '}
-                  {/* 채널 구독정보 아직 미완 */}
+                  </Button>
+                  <Button
+                    className={packageInformationStyles.btn_subscribe}
+                    variant="line"
+                    size="xl"
+                    // onClick={() => handleSubscribeToast()}
+                    onClick={() => handleUnsubscribe()}
+                  >
+                    구독해지
+                  </Button>
                 </div>
               )}
               {/* 학습정보 */}

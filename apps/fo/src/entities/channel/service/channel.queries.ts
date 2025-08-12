@@ -14,4 +14,13 @@ export const queryOptions = {
 };
 
 export const mutateOptions = {
+  // 채널 구독
+  subscription: () => ({
+    mutationFn: (uuid: string) => ChannelService.subscription(uuid),
+  }),
+
+  // 채널 구독 취소
+  unsubscription: () => ({
+    mutationFn: (uuid: string) => ChannelService.unsubscription(uuid),
+  }),
 };
