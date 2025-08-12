@@ -13,7 +13,7 @@ import {
 import { useAssignmentBasicInfoForm } from '../../service/assignment/use-assignment-basic-info-form';
 import { LearningResourceBaseForm } from '../learning-resource-base-form';
 
-import previewImg from '@learnway/styles/bo/assets/images/temp/img_exam_basic.jpg';
+import defaultImage from '@learnway/styles/bo/assets/images/cms/assignment.jpg';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/assignment-detail.module.css';
 
@@ -79,7 +79,7 @@ const LearningResourceAssignmentBasicInfoComponent = forwardRef<
       <div key="base2">
         <FormSubTitle noLine label={t('cms.content.ContentType.ASSIGNMENT')} />
         <div className={movieInfoStyles.media}>
-          <img src={previewImg} width="100%" alt="" />
+          <img src={defaultImage} width="100%" alt="" />
         </div>
       </div>
     </SplitPanel>
