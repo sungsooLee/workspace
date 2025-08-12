@@ -47,6 +47,12 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
     };
 
     // 사전 필수 과정 아코디언
+    const curriculumDefaultOpenValue =
+      curriculum && curriculum.moduleList
+        ? curriculum.moduleList
+            .filter((item: any) => item.isDummy)
+            .map((item: any) => String(item.moduleId))
+        : [];
     const [aforetimeValue, setAforetimeValue] = useState<string>(preRequired?.[0].id || '');
     const [aforetimeView, setAforetimeView] = useState<boolean>(false);
     const aforetimeValueItems =
@@ -94,7 +100,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
     const curriculumValueItems = curriculum?.moduleList
       ?.filter((item: any) => item.lessonList && item.lessonList.length)
       .map((module: any) => ({
-        value: module.moduleId,
+        value: String(module.moduleId),
         isDummy: module.isDummy,
         title: (
           <div className={styles.title}>
@@ -104,7 +110,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
             </p>
           </div>
         ),
-        children: module.lessonList ? <Curriculum curriculumData={module.lessonList} /> : undefined,
+        children: <Curriculum curriculumData={module.lessonList} />,
       }));
 
     // 과정 정보 더보기
@@ -187,10 +193,10 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
               <div className={styles.curriculum_box}>
                 <Accordion
                   items={curriculumValueItems}
-                  value={curriculumValue}
                   className={styles.acc_curriculum}
                   onValueChange={(value) => setCurriculumValue(value as string)}
                   type="multiple"
+                  defaultValue={curriculumDefaultOpenValue}
                 />
               </div>
             </div>

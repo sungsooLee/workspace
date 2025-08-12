@@ -45,9 +45,9 @@ const AccordionComponent = forwardRef<
     ref,
   ) => {
     //Prop exception value
-    const editionValue: string | string[] = useCreation(() => {
+    const editionValue: string | string[] | undefined = useCreation(() => {
       if (!value) {
-        return type === 'single' ? '' : [];
+        return undefined;
       }
       return type === 'single'
         ? ((isArray(value) && value?.length ? value[0] : value) as string)
@@ -85,6 +85,7 @@ const AccordionComponent = forwardRef<
             >
               <Primitive.Trigger
                 className={cn(styles.accordion_btn, item.children && 'has_children')}
+                style={item.isDummy ? { display: 'none' } : {}}
               >
                 <span className={cn('accordion_title', item?.active === true ? 'active' : '')}>
                   {item.children && editionValue?.includes(item.value) ? (
