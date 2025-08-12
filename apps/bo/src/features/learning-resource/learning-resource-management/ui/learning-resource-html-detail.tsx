@@ -32,7 +32,7 @@ const HtmlDetailComponent = ({ form, data = {}, hasMapping = false }: HtmlDetail
         ...getValues(),
         coordinatorUuid: loginUser?.uuid,
         coordinatorName: loginUser?.name,
-        coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
+        // coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
         coordinatorTelNo: loginUser?.phoneNumber,
       });
     },
