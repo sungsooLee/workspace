@@ -36,6 +36,7 @@ import {
   QuestionListForRetrieveReq,
   QuestionsCopyReq,
   QuestionSortReq,
+  QuestionsRetrieveReq,
   QuestionStatusUpdateReq,
   TestPaperBasicInfoSaveReq,
   UpdateQuestionBankCountInfoReq,
@@ -349,6 +350,10 @@ export const mutateOptions = {
   updateExamPaperQuestionCountInfo: () => ({
     mutationFn: (params: ExamPaperQuestionCountUpdateReq) =>
       LearningResourceService.updateExamPaperQuestionCountInfo(params),
+  }),
+  importQuestionsToExamPaper: () => ({
+    mutationFn: (params: QuestionsRetrieveReq) =>
+      LearningResourceService.importQuestionsToExamPaper(params),
   }),
   copyQuestionsToExamPaper: () => ({
     mutationFn: (params: QuestionsCopyReq) =>

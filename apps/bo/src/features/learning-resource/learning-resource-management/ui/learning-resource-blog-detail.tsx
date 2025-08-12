@@ -1,10 +1,11 @@
+import { useCallback, useEffect } from 'react';
+import { t } from 'i18next';
+import dayjs from 'dayjs';
 import { BlogDetailRes } from '@entities/learning-resource';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { UseDynamicFormResult } from '@learnway/hooks';
 import { cn, isEmptyData } from '@learnway/shared';
-import dayjs from 'dayjs';
-import { useCallback, useEffect } from 'react';
 import { useRoleInfo } from '../service/util';
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 
@@ -13,11 +14,10 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 
 import { ContentsHistoryInfoFormField, MediaContentRequiredCheckFormField } from '@shared/ui/form';
 import { SplitPanel } from '@learnway/ui/elements';
-import { t } from 'i18next';
-import styles from '@widgets/learning/learning-resource/ui/blog-detail.module.css';
-import defaultImage from '@learnway/styles/bo/assets/images/temp/img_exam_basic.jpg';
 import { PreviewLearningWindow } from '@shared/ui/modal';
 import { useModal } from '@learnway/ui/modal';
+import styles from '@widgets/learning/learning-resource/ui/blog-detail.module.css';
+import defaultImage from '@learnway/styles/bo/assets/images/cms/blog.jpg';
 
 type BlogDetailProps = {
   form: UseDynamicFormResult;

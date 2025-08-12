@@ -8,7 +8,7 @@ import { Input } from '@learnway/ui/input';
 import { t } from 'i18next';
 import { forwardRef, useEffect, useImperativeHandle, useMemo } from 'react';
 
-import previewImg from '@learnway/styles/bo/assets/images/temp/img_exam_basic.jpg';
+import defaultImg from '@learnway/styles/bo/assets/images/cms/exam.jpg';
 
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import { CheckBoxFormField, FormDisplay, SwitchFormField } from '@shared/ui/form';
@@ -338,7 +338,7 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
         <div key="base2">
           <FormSubTitle noLine label={t('cms.content.ContentType.EXAM')} />
           <div className={movieInfoStyles.media}>
-            <img src={previewImg} width="100%" alt="" />
+            <img src={defaultImg} width="100%" alt="" />
           </div>
         </div>
       </SplitPanel>

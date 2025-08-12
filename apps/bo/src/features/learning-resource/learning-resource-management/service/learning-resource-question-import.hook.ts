@@ -7,8 +7,8 @@ import {
   MutationResponse,
   QuestionListForRetrieveReq,
   QuestionListForRetrieveRes,
-  QuestionsCopyReq,
-  useCopyQuestionsToExamPaper,
+  QuestionsRetrieveReq,
+  useImportQuestionsToExamPaper,
 } from '@entities/learning-resource';
 import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
@@ -21,12 +21,11 @@ export const useQuestionImport = (examPoolUuid: string) => {
   const { open: openToast } = useToast();
 
   const [gridData, setGridData] = useState<QuestionListForRetrieveRes[]>([]);
-  const [questionsToCopy, setQuestionsToCopy] = useState<string[]>([]);
+  const [questionsToImport, setQuestionsToImport] = useState<string[]>([]);
 
   const { provider, onSubmit } = useDynamicForm2();
 
   const handleOnSearch = useCallback(async (params: Record<string, any>) => {
-    console.log(params);
     Object.assign(params, { examPoolUuid });
     const response = await queryClient.fetchQuery(
       learningResourceQueryOptions.getQuestionListForRetrieve(params as QuestionListForRetrieveReq),
@@ -35,10 +34,10 @@ export const useQuestionImport = (examPoolUuid: string) => {
   }, []);
 
   const handleSelectQuestions = useCallback((data: QuestionListForRetrieveRes[]) => {
-    setQuestionsToCopy(data.map((item) => item.examQuestionUuid));
+    setQuestionsToImport(data.map((item) => item.examQuestionUuid));
   }, []);
 
-  const { copy: copyQuestionsToExam } = useCopyQuestionsToExamPaper({
+  const { retrieve: importQuestionsToExam } = useImportQuestionsToExamPaper({
     onSuccess: ({ result }: MutationResponse) => {
       if (result) {
         openToast({
@@ -53,22 +52,22 @@ export const useQuestionImport = (examPoolUuid: string) => {
     },
   });
 
-  const handleCopyQuestions = useCallback(() => {
-    const payload: QuestionsCopyReq = {
+  const handleRetrieveQuestions = useCallback(() => {
+    const payload: QuestionsRetrieveReq = {
       examPoolContentUuid: examPoolUuid,
-      questionUuidList: questionsToCopy,
+      questionUuidList: questionsToImport,
     };
 
-    copyQuestionsToExam(payload);
-  }, [examPoolUuid, questionsToCopy]);
+    importQuestionsToExam(payload);
+  }, [examPoolUuid, questionsToImport]);
 
   return {
     provider,
     onSubmit,
     handleOnSearch,
     gridData,
-    questionsToCopy,
+    questionsToImport,
     handleSelectQuestions,
-    handleCopyQuestions,
+    handleRetrieveQuestions,
   };
 };

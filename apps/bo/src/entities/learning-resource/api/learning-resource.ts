@@ -70,6 +70,7 @@ import {
   QuestionListForRetrieveRes,
   QuestionsCopyReq,
   QuestionSortReq,
+  QuestionsRetrieveReq,
   QuestionStatusUpdateReq,
   TenantCodeType,
   TestPaperBasicInfoSaveReq,
@@ -331,6 +332,14 @@ export default class LearningResourceService {
     params: QuestionListForRetrieveReq,
   ): Promise<QuestionListForRetrieveRes[]> {
     return httpService.get(`${CMSApiPrefix()}/exam/questions/pool`, params);
+  }
+
+  /**
+   * 문항가져오기 - 문항 등록
+   * @param body
+   */
+  static importQuestionsToExamPaper(body: QuestionsRetrieveReq): Promise<MutationResponse> {
+    return httpService.post(`${CMSApiPrefix()}/exam/questions/pool`, body);
   }
 
   /**

@@ -6,7 +6,8 @@ import {
 } from '@entities/learning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
 import { IcoStatusFail } from '@learnway/icons';
-import previewImg from '@learnway/styles/bo/assets/images/temp/img_exam_basic.jpg';
+import scormDefaultImage from '@learnway/styles/bo/assets/images/cms/scom.jpg';
+import htmlVideoDefaultImage from '@learnway/styles/bo/assets/images/cms/html.jpg';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import { Button } from '@learnway/ui/button';
 import { Spinner } from '@learnway/ui/spinner';
@@ -92,15 +93,16 @@ const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoC
               <ReactPlayer url={url} controls width={416} />
             </div>
           )}
-          {/* FIXME: 추후 유형별 기본 이미지로 변경 예정 */}
+          {/* 스콤 영역 */}
           {type === LEARNING_TYPE.SCORM && (
             <div className={cn(style.media, 'max-w-[416px]')}>
-              <img src={previewImg} width="100%" alt="" />
+              <img src={scormDefaultImage} width="100%" alt="" />
             </div>
           )}
+          {/* HTML5 영역 */}
           {type === LEARNING_TYPE.HTML5_VIDEO && (
             <div className={cn(style.media, 'max-w-[416px]')}>
-              <img src={previewImg} width="100%" alt="" />
+              <img src={htmlVideoDefaultImage} width="100%" alt="" />
             </div>
           )}
           {/* info_list */}
