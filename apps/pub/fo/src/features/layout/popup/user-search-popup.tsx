@@ -27,7 +27,7 @@ const UserSearchPopupComponent = () => {
       name3: '김현대',
       name4: '책임',
       name5: (
-        <Button size="xs" variant="primary">
+        <Button size="xs" variant="line">
           선택
         </Button>
       ),
@@ -38,7 +38,7 @@ const UserSearchPopupComponent = () => {
       name3: '김현대',
       name4: '책임',
       name5: (
-        <Button size="xs" variant="primary">
+        <Button size="xs" variant="line">
           선택
         </Button>
       ),
@@ -49,7 +49,7 @@ const UserSearchPopupComponent = () => {
       name3: '김현대',
       name4: '책임',
       name5: (
-        <Button size="xs" variant="primary">
+        <Button size="xs" variant="line">
           선택
         </Button>
       ),
@@ -60,7 +60,7 @@ const UserSearchPopupComponent = () => {
       name3: '김현대',
       name4: '책임',
       name5: (
-        <Button size="xs" variant="primary">
+        <Button size="xs" variant="line">
           선택
         </Button>
       ),
@@ -71,7 +71,7 @@ const UserSearchPopupComponent = () => {
       name3: '김현대',
       name4: '책임',
       name5: (
-        <Button size="xs" variant="primary">
+        <Button size="xs" variant="line">
           선택
         </Button>
       ),
@@ -82,7 +82,7 @@ const UserSearchPopupComponent = () => {
       name3: '김현대',
       name4: '책임',
       name5: (
-        <Button size="xs" variant="primary">
+        <Button size="xs" variant="line">
           선택
         </Button>
       ),
@@ -93,7 +93,7 @@ const UserSearchPopupComponent = () => {
       name3: '김현대',
       name4: '책임',
       name5: (
-        <Button size="xs" variant="primary">
+        <Button size="xs" variant="line">
           선택
         </Button>
       ),
