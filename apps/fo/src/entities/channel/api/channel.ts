@@ -6,4 +6,13 @@ export default class ChannelService {
   static async fetch(uuid: string) {
     return await httpService.get(`${PMSApiPrefix()}/channel/${uuid}`);
   }
+  // 채널 구독
+  static async subscription(uuid: string) {
+    return await httpService.post(`${PMSApiPrefix()}/channel/${uuid}/subscription`, {});
+  }
+
+  // 채널 구독 취소
+  static async unsubscription(uuid: string) {
+    return await httpService.delete(`${PMSApiPrefix()}/channel/${uuid}/subscription`);
+  }
 }
