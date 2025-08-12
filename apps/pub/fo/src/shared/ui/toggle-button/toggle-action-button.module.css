@@ -3,9 +3,15 @@
   &.wrap {
     @apply inline-flex items-center justify-center rounded-[4px] border border-solid border-[var(--gray90)] bg-white px-[8px] py-[5px] align-top;
     .btn {
-      @apply !px-0 font-normal text-[var(--gray10)];
+      @apply !px-0;
       svg {
         @apply !ml-0 h-[12px] w-[12px] fill-[var(--gray10)] stroke-[var(--gray10)];
+      }
+      .label {
+        @apply font-normal text-[var(--gray10)];
+      }
+      .image_wrap {
+        @apply mr-[8px] h-[34px] w-[34px];
       }
     }
     .close {
@@ -20,9 +26,11 @@
     &.active {
       @apply bg-[var(--gray10)];
       .btn {
-        @apply font-bold text-white;
         svg {
           @apply fill-white stroke-white;
+        }
+        .label {
+          @apply font-bold text-white;
         }
       }
       .icon_close {
@@ -32,7 +40,15 @@
     &.disabled {
       @apply border-[var(--gray95)] bg-[var(--gray90)];
       .btn {
-        @apply text-[var(--gray75)];
+        .label {
+          @apply text-[var(--gray75)];
+        }
+        svg {
+          @apply fill-[var(--gray75)] stroke-[var(--gray75)];
+        }
+        .image_wrap {
+          @apply opacity-50;
+        }
       }
       .close {
         .icon_close {
@@ -43,13 +59,17 @@
     &.sm {
       @apply h-[2.8rem];
       .btn {
-        @apply label-sm;
+        .label {
+          @apply label-sm;
+        }
       }
     }
     &.md {
       @apply h-[3.6rem] px-[12px] py-[8px];
       .btn {
-        @apply label-md;
+        .label {
+          @apply label-md;
+        }
         svg {
           @apply h-[16px] w-[16px];
         }
@@ -61,7 +81,9 @@
     &.lg {
       @apply h-[4.5rem] p-[12px];
       .btn {
-        @apply label-lg;
+        .label {
+          @apply label-lg;
+        }
         svg {
           @apply h-[16px] w-[16px];
         }
@@ -73,7 +95,9 @@
     &.xl {
       @apply h-[5.4rem] p-[16px];
       .btn {
-        @apply label-xl;
+        .label {
+          @apply label-xl;
+        }
         svg {
           @apply h-[20px] w-[20px];
         }

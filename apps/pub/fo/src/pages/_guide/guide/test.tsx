@@ -7,6 +7,7 @@ import { getRandomId } from '@learnway/shared';
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
 import { Badge } from '@learnway/ui/badge';
 import { ToggleActionButton } from '../../../shared/ui/toggle-button/toggle-action-button';
+import { ToggleActionButtonList } from '../../../shared/ui/toggle-button/toggle-action-button-list';
 
 export const Route = createFileRoute('/_guide/guide/test')({
   component: RouteComponent,
@@ -431,6 +432,17 @@ function RouteComponent() {
   //   );
   // };
 
+  const items = [
+    { label: 'Button 1', iconNode: <IcoHeart /> },
+    {
+      label: 'Button 2',
+      showCloseButton: true,
+      imageUrl: 'https://github.com/shadcn.png',
+      disabled: true,
+    },
+    { label: 'Button 3', disabled: true },
+  ];
+
   return (
     <div>
       <ThumbnailList stacked={false} items={item} cols={4} />
@@ -449,6 +461,8 @@ function RouteComponent() {
       <p>테스트</p> */}
       <ToggleActionButton label="111" showCloseButton iconNode={<IcoHeart />} />
       <ToggleActionButton label="111" showCloseButton disabled rounded />
+
+      <ToggleActionButtonList items={items} commonProps={{ size: 'lg', rounded: true }} />
     </div>
   );
 }
