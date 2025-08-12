@@ -210,7 +210,9 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
 
     const filteredPayload = Object.fromEntries(
       Object.entries(payload).filter(
-        ([_, value]) => value !== null && value !== undefined && value !== '',
+        ([_, value]) => value !== null && value !== undefined && value !== '' &&
+          !(Array.isArray(value) && value.length === 0) &&
+          !(Array.isArray(value) && value.length === 1 && value[0] === undefined),
       ),
     );
     console.log('payload: {} => ', filteredPayload);
@@ -230,6 +232,8 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle label={t('회사/조직 정보')} lineType="dark" />
       <ContentsRow>
+        <FormRow2 provider={provider} name={'companyId'} type={'hidden'}/>
+        <FormRow2 provider={provider} name={'deptId'} type={'hidden'}/>
         <FormRow2
           provider={provider}
           name="companyName"

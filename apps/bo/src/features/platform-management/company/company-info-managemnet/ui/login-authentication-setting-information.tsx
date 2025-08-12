@@ -37,9 +37,9 @@ const LoginAuthenticationSettingInformationComponent: FC<any> = ({
             <FormRow2
               provider={provider}
               name="ssoTypeList"
-              value={['AES_Link']}
+              value={'AES_Link'}
               element={
-                <CheckboxGroupFormField
+                <RadioGroupFormField
                   optionsConfig={{ codeGroup: CODE_GROUP['pms.company.SsoType'] }}
                 />
               }
