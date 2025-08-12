@@ -144,8 +144,13 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       deptId: data.deptId, // 부서 id
       isLeader: data.userPosition === '1',
       positionName: data.positionName, // 호칭(직위),
-      jobDomain: [''],
-      jobRole: [''],
+
+      // 직군/직무 관련 클라이언트와의 커뮤니케이션이 완료되고 있지 않아 SWAGGER 상의 api 에 맞춤
+      // jobDomain: [''],
+      // jobRole: [''],
+      jobDomain: '',
+      jobRole: '',
+
       joinDate: data.userJoining, // 입사일
       // 퇴사일
       promotionDate: data.userPromotion, // 최근 승진일
@@ -176,10 +181,6 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       boTwoFactorAuthEnabled: data.twoFactorAuthPlatformTypeList.includes('BO_PLATFORM'),
     };
 
-    // 현재 회사(조직)조회 팝업에 데이터가 없어 임시로 테스트하기 위해 넣음: 추후 삭제
-    // payload.companyId = 54;
-    // payload.deptId = 2;
-
     if (data.userState === '2') {
       payload.isOnLeave = true;
       payload.isSuspended = false;
@@ -193,8 +194,10 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
     }
 
     if (data.jobDomain !== '') {
-      payload.jobDomain = Array.of(data.jobDomain);
-      payload.jobRole = [];
+      // payload.jobDomain = Array.of(data.jobDomain);
+      // payload.jobRole = [];
+      payload.jobDomain = data.jobDomain;
+      payload.jobRole = '';
     } else {
       if (data.jobManagement) {
         const jobDomains: any[] = [];
@@ -203,8 +206,10 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
           jobDomains.push(job.jobDomainName);
           jobRoleNames.push(job.jobRoleName);
         });
-        payload.jobDomain = [...jobDomains];
-        payload.jobRole = [...jobRoleNames];
+        // payload.jobDomain = [...jobDomains];
+        // payload.jobRole = [...jobRoleNames];
+        payload.jobDomain = jobDomains.join(',');
+        payload.jobRole = jobRoleNames.join(',');
       }
     }
 
