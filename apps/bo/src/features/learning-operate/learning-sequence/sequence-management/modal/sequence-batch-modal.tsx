@@ -102,20 +102,53 @@ const SequenceBatchModalComponent = ({
     const confirm = await openConfirm(t('일괄설정 하시겠습니까?'));
     if (!confirm) return;
 
+    const selected = (key: string) => selectedRowsKey.includes(key);
+
     const payload = {
       courseId: courseIdProps,
       sequenceIds: selectedItems?.map((x: any) => x.courseSequenceId),
-      isUsed: formData.isUsed,
-      enrollStartDateTime: formData.enrollRange ? formData.enrollRange.from : null,
-      enrollEndDateTime: formData.enrollRange ? formData.enrollRange.to : null,
-      learningStartType: !formData.learningStartType ? 'FIXED_DATE' : 'DAYS_AFTER_ENROLL',
-      learningStartDays: formData.learningStartType ? parseInt(formData.learningStartDays) : null,
-      learningStartDateTime: !formData.learningStartType ? formData.learningRange.from : null,
-      learningEndDateTime: !formData.learningStartType ? formData.learningRange.to : null,
-      isMaxEnrollQuotaRestricted: formData.isMaxEnrollQuotaRestricted,
-      maxEnrollQuota: formData.isMaxEnrollQuotaRestricted
-        ? parseInt(formData.maxEnrollQuota)
-        : null,
+
+      isCheckUsed: selected('isUsed'),
+      isCheckEnrollDateTime: selected('enrollRange'),
+      isCheckLearningDateTime: selected('learningStartType'),
+      isCheckMaxEnrollQuota: selected('isMaxEnrollQuotaRestricted'),
+
+      isUsed: selected('isUsed') ? formData.isUsed : undefined,
+
+      enrollStartDateTime: selected('enrollRange')
+        ? (formData.enrollRange?.from ?? null)
+        : undefined,
+      enrollEndDateTime: selected('enrollRange') ? (formData.enrollRange?.to ?? null) : undefined,
+
+      learningStartType: selected('learningStartType')
+        ? formData.learningStartType
+          ? 'DAYS_AFTER_ENROLL'
+          : 'FIXED_DATE'
+        : undefined,
+      learningStartDays: selected('learningStartType')
+        ? formData.learningStartType
+          ? parseInt(formData.learningStartDays)
+          : null
+        : undefined,
+      learningStartDateTime: selected('learningStartType')
+        ? formData.learningStartType
+          ? null
+          : (formData.learningRange?.from ?? null)
+        : undefined,
+      learningEndDateTime: selected('learningStartType')
+        ? formData.learningStartType
+          ? null
+          : (formData.learningRange?.to ?? null)
+        : undefined,
+
+      isMaxEnrollQuotaRestricted: selected('isMaxEnrollQuotaRestricted')
+        ? formData.isMaxEnrollQuotaRestricted
+        : undefined,
+      maxEnrollQuota: selected('isMaxEnrollQuotaRestricted')
+        ? formData.isMaxEnrollQuotaRestricted
+          ? parseInt(formData.maxEnrollQuota)
+          : null
+        : undefined,
     };
 
     console.log('## payload=>', payload);
