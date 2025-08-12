@@ -307,7 +307,7 @@
     }
   }
   &.underline {
-    @apply !bg-transparent !bg-white !px-0 !font-normal text-[var(--gray35)] underline-offset-4;
+    @apply !bg-transparent !px-0 !font-normal text-[var(--gray35)] underline-offset-4;
     text-decoration: underline;
     &:hover {
       @apply text-[var(--gray50)];

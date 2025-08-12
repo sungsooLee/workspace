@@ -9,12 +9,12 @@ import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/goo
 import styles from '@learnway/styles/fo/pages/_auth/change-password.module.css';
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import { GoogleCertGuidePopup } from '../../features/auth';
-import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
+import { AuthTitle, GoogleCertGuidePopup } from '../../features/auth';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 
 export const Route = createFileRoute('/_auth/password-modify')({
   component: RouteComponent,
@@ -26,10 +26,15 @@ function RouteComponent() {
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_modify}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
+          <AuthTitle />
           <div className={styles.success_info}>
-            {/* 퍼블수정 20250312 : 모듈화로 인한 className변경 */}
             <div className={`${hightlightMessageBoxStyles.start} ${styles.noti_box}`}>
-              마지막 변경일 : <strong>2025-01-01(목) 12:50:52</strong>
+              <div className={hightlightMessageBoxStyles.info_txt_box}>
+                <span className={hightlightMessageBoxStyles.info_txt}>
+                  <span>마지막 변경일</span>
+                  <strong>2025-01-01(목) 12:50:52</strong>
+                </span>
+              </div>
             </div>
           </div>
           <div className={cn(styles.auth_form, 'no_line', 'col')}>
@@ -84,10 +89,6 @@ function RouteComponent() {
             </ContentsRow>
           </div>
 
-          <div className={styles.noti_info_txt}>
-            <Button className={styles.btn_txt}>1개월 후 변경</Button>
-          </div>
-
           <div
             className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}
           >
@@ -131,7 +132,7 @@ function RouteComponent() {
           <BrowserView>
             <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
               <Button variant="gray" size="xl">
-                취소
+                취소 {/* 1개월 후 변경 */}
               </Button>
               <Button variant="primary" size="xl">
                 확인

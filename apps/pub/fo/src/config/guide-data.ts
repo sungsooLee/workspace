@@ -780,7 +780,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-08-11',
     lastUpdateDate: '',
-    remarks: 'course-share-popup.tsx',
+    remarks: '- course-share-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1002',
@@ -1939,7 +1939,7 @@ export const guideData = [
     pageType: 'Pop-up',
     completionDate: '2025-08-11',
     lastUpdateDate: '',
-    remarks: '- user-search-popup.tsx',
+    remarks: '- user-search-popup.tsx\n- modal size : (mobile : m_full), (pc : md)',
   },
   {
     screenId: 'NLP_FO_LOG_2020',
